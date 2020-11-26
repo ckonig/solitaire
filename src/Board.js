@@ -9,6 +9,11 @@ class Board extends Component {
         };
     }
 
+    disown = (card) => {
+        console.log('disowning card', card);
+        this.props.removeCard(card);
+    }
+
     render() {
         return (
             <div>
@@ -17,7 +22,8 @@ class Board extends Component {
                         key={card.key}
                         type={card.type}
                         face={card.face}
-                        isSelected={this.props.currentCard == card}
+                        owner={this}
+                        isSelected={this.props.currentCard != null && this.props.currentCard.key == card.key}
                         clickCard={(props) => this.props.handler(props)} />
                 ))}
             </div>

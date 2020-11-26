@@ -1,6 +1,21 @@
 import { Component } from "react";
 
 class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      owner: props.owner,
+    };
+  }
+
+  setOwner = (owner) => {
+    if (this.state.owner != null) {
+      this.state.owner.disown(this);
+    }
+    this.setState((state, props) => {
+      return { ...state, owner: owner };
+    });
+  }
 
   render() {
 
@@ -73,7 +88,7 @@ class Card extends Component {
     }
 
     return (
-      <div style={getCardStyle(this.props.type.color)} onClick={() => this.props.clickCard(this.props)}>
+      <div style={getCardStyle(this.props.type.color)} onClick={() => this.props.clickCard(this)}>
         <div>
           <div style={iconStyles['tl']}> {this.props.type.icon}</div>
           <div style={iconLabelStyles['tl']}> {this.props.face}</div>

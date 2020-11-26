@@ -38,12 +38,24 @@ class Solitaire extends Component {
   }
 
   handler = (props) => {
-    for (var i = 0; i < this.state.cards.length; i++) {
-      var card = this.state.cards[i];
-      if (card.face == props.face && card.type.icon == props.type.icon) {
-        this.handleCardClick(card);
-      }
-    }
+    this.handleCardClick(props);
+  }
+
+  removeFromBoard = (card) => {
+    this.setState((state, props) => {
+      console.log('remvoe: ', card);
+
+      var cards = state.cards.filter((value, index, arr) => {
+        if (value.face !== card.props.face || value.type.icon !== card.props.type.icon) {
+          return true;
+        }
+        console.log('filtered out')
+        console.log(value, card.props);
+        return false;
+      });
+      console.log('filtered: ' + cards.length);
+      return { ...state, cards, currentCard: null };
+    });
   }
 
   render() {
@@ -99,7 +111,11 @@ class Solitaire extends Component {
             </tr>
             <tr>
               <td colSpan="3">
-                <Board handler={this.handler} cards={this.state.cards} currentCard={this.state.currentCard} />
+                <Board
+                  handler={this.handler}
+                  cards={this.state.cards}
+                  currentCard={this.state.currentCard}
+                  removeCard={(card) => this.removeFromBoard(card)} />
               </td>
             </tr>
           </tbody>
