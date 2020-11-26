@@ -3,19 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Solitaire from './Solitaire';
 import reportWebVitals from './reportWebVitals';
-
-const state = { 
-  currentCard: null,
-  color: 'black'
- };
-
-const newContext = React.createContext(state);
-const { Provider, Consumer } = newContext;
+import { Provider, GameState } from './GameState';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider value={state}>
-      <Solitaire/>
+    <Provider value={GameState}>
+      <Solitaire />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -72,12 +72,8 @@ class Card extends Component {
       return st;
     }
 
-    function handler(props) {
-      props.handler(props);
-    }
-
     return (
-      <div style={getCardStyle(this.props.type.color)} onClick={() => handler(this.props)}>
+      <div style={getCardStyle(this.props.type.color)} onClick={() => this.props.clickCard(this.props)}>
         <div>
           <div style={iconStyles['tl']}> {this.props.type.icon}</div>
           <div style={iconLabelStyles['tl']}> {this.props.face}</div>

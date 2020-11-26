@@ -18,7 +18,7 @@ class Board extends Component {
                         type={card.type}
                         face={card.face}
                         isSelected={this.props.currentCard == card}
-                        handler={(props) => this.props.handler(props)} />
+                        clickCard={(props) => this.props.handler(props)} />
                 ))}
             </div>
         );
