@@ -104,13 +104,19 @@ class Solitaire extends Component {
               </td>
               <td>
                 <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+              </td>
+              <td>
                 <TargetStack onStackClick={this.onStackClick} icon="♦" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+              </td>
+              <td>
                 <TargetStack onStackClick={this.onStackClick} icon="♣" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
+              </td>
+              <td>
                 <TargetStack onStackClick={this.onStackClick} icon="♠" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
               </td>
             </tr>
             <tr>
-              <td colSpan="3">
+              <td colSpan="6">
                 <Board
                   handler={this.handler}
                   cards={this.state.cards}

@@ -57,8 +57,12 @@ class TargetStack extends Component {
             top: '0px',
         };
 
+        var localOuterStyle = {
+            position: 'relative',
+        };
+
         return (
-            <div>
+            <div style={localOuterStyle}>
                 <div style={this.props.cardStyle} onClick={() => this.props.onStackClick(this)}>
                     <div style={this.props.faceStyle} >
                         <h1>
@@ -66,8 +70,13 @@ class TargetStack extends Component {
                     </h1>
                     </div>
                 </div>
-                {this.state.stack.map(card => (<Card style={localStyle} type={card.props.type} face={card.props.face} clickCard={() => { }} />))}
-
+                {this.state.stack.map(card => (
+                    <div style={localStyle}>
+                        <Card
+                            type={card.props.type}
+                            face={card.props.face}
+                            clickCard={() => this.props.onStackClick(this)} />
+                    </div>))}
             </div>
 
         );
