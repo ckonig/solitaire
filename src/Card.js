@@ -31,6 +31,11 @@ class Card extends Component {
       cardStyle['borderColor'] = 'yellow';
     }
 
+    if (this.props.offset) {
+      cardStyle['top'] = this.props.offset;
+      cardStyle['left'] = this.props.offset;
+    }
+
     var iconLabelStyles = {
       tl: { ...iconBaseStyles.tl },
       br: { ...iconBaseStyles.br },

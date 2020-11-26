@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { targetStackStyle } from './styles';
 import Card from './Card';
+import { MyContext, defaultValue } from './MyContext';
 
 class MainStack extends Component {
     constructor(props) {
@@ -48,19 +49,23 @@ class MainStack extends Component {
 
 
         return (
-            <div>
-                <div style={styles.cardStyle}>&nbsp;</div>
-                {this.props.stack.map(card => (
-                    <div style={localStyle}>
-                        <Card type={card.type}
-                            face={card.face}
-                            owner={this}
-                            clickCard={(c) => this.onStackClick(c)}
-                            isSelected={this.props.currentCard != null && this.props.currentCard.props.face == card.face && this.props.currentCard.props.type.icon == card.type.icon}
-                        />
+            <MyContext.Consumer>
+                {ctx =>
+                    <div>
+                        <div style={styles.cardStyle}>&nbsp;</div>
+                        {this.props.stack.map((card, index) => (
+                            <div style={localStyle}>
+                                <Card type={card.type}
+                                    face={card.face}
+                                    offset={index}
+                                    owner={this}
+                                    clickCard={(c) => this.onStackClick(c)}
+                                    isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
+                                />
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                }</MyContext.Consumer>
         );
     }
 }

@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { getDeck } from './CardTypes';
 import { targetStackStyle } from './styles';
 import PlayStack from './PlayStack';
+import { MyContext } from './MyContext';
 
 class Solitaire extends Component {
 
@@ -70,45 +71,52 @@ class Solitaire extends Component {
       ...targetStackStyle
     };
 
-    return (
-      <div style={styles.tableStyle}>
+    var ctxState = {
+      currentCard: this.state.currentCard,
+      resetCurrentCard: () => this.unselect(),
+    }
 
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <MainStack stack={this.state.stack} onStackClick={(c) => this.onMainstackClick(c)} currentCard={this.state.currentCard} unselectCard={this.unselect} />
-              </td>
-              <td>
-                <PlayStack stack={this.state.playStack} />
-              </td>
-              <td>
-                <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
-              </td>
-              <td>
-                <TargetStack onStackClick={this.onStackClick} icon="♦" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
-              </td>
-              <td>
-                <TargetStack onStackClick={this.onStackClick} icon="♣" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
-              </td>
-              <td>
-                <TargetStack onStackClick={this.onStackClick} icon="♠" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan="6">
-                <Board
-                  deck={this.state.deck}
-                  handler={this.handler}
-                  cards={this.state.cards}
-                  unselectCard={this.unselect}
-                  currentCard={this.state.currentCard}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    return (
+      <MyContext.Provider value={ctxState}>
+        <div style={styles.tableStyle}>
+
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <MainStack stack={this.state.stack} onStackClick={(c) => this.onMainstackClick(c)} unselectCard={this.unselect} />
+                </td>
+                <td>
+                  <PlayStack stack={this.state.playStack} />
+                </td>
+                <td>
+                  <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+                </td>
+                <td>
+                  <TargetStack onStackClick={this.onStackClick} icon="♦" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+                </td>
+                <td>
+                  <TargetStack onStackClick={this.onStackClick} icon="♣" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
+                </td>
+                <td>
+                  <TargetStack onStackClick={this.onStackClick} icon="♠" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="6">
+                  <Board
+                    deck={this.state.deck}
+                    handler={this.handler}
+                    cards={this.state.cards}
+                    unselectCard={this.unselect}
+                    currentCard={this.state.currentCard}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </MyContext.Provider>
     );
   }
 }

@@ -1,5 +1,6 @@
 export const cardBaseStyle = {
     borderStyle: 'solid',
+    borderWidth: '1px',
     borderColor: 'black',
     width: '80px',
     height: '120px',
