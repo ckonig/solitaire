@@ -61,9 +61,15 @@ class TargetStack extends Component {
             position: 'relative',
         };
 
+        var localCardStyle = { ...this.props.cardStyle };
+
+        if (this.state.blinkFor > 0) {
+            localCardStyle['borderColor'] = 'red';
+        }
+
         return (
             <div style={localOuterStyle}>
-                <div style={this.props.cardStyle} onClick={() => this.props.onStackClick(this)}>
+                <div style={localCardStyle} onClick={() => this.props.onStackClick(this)}>
                     <div style={this.props.faceStyle} >
                         <h1>
                             {this.props.icon} ({this.state.stack.length}) ({this.state.acceptedCards.length})
@@ -73,6 +79,7 @@ class TargetStack extends Component {
                 {this.state.stack.map(card => (
                     <div style={localStyle}>
                         <Card
+                            blink={this.state.blinkFor}
                             type={card.props.type}
                             face={card.props.face}
                             clickCard={() => this.props.onStackClick(this)} />

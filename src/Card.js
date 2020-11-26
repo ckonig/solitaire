@@ -81,9 +81,13 @@ class Card extends Component {
     iconLabelStyles['tl']['left'] = '20px';
     iconLabelStyles['br']['right'] = '20px';
 
-    function getCardStyle(color) {
+    const getCardStyle = (color) => {
       var st = cardStyle;
       st['color'] = color;
+      if (this.props.blink) {
+        st['borderColor'] = 'red';
+        console.log('blinking card')
+      }
       return st;
     }
 
