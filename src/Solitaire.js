@@ -16,11 +16,14 @@ class Solitaire extends Component {
     this.state = {
       currentCard: null,
       stack: stack,
+      playStack: [],
       deck: board,
     };
   }
 
   handleCardClick = (card) => {
+    console.log('card was clicked');
+    console.log(card);
     if (this.state.currentCard == null) {
       this.setState((state, props) => {
         return { ...state, currentCard: card };
@@ -46,6 +49,12 @@ class Solitaire extends Component {
     }
   }
 
+  onMainstackClick = (card) => {
+    console.log(card);
+    console.log('was cl;iocke');
+    this.handleCardClick(card);
+  }
+
   handler = (props) => {
     this.handleCardClick(props);
   }
@@ -68,10 +77,10 @@ class Solitaire extends Component {
           <tbody>
             <tr>
               <td>
-                <MainStack />
+                <MainStack stack={this.state.stack} onStackClick={(c) => this.onMainstackClick(c)} currentCard={this.state.currentCard} unselectCard={this.unselect} />
               </td>
               <td>
-                <PlayStack />
+                <PlayStack stack={this.state.playStack} />
               </td>
               <td>
                 <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
