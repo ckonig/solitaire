@@ -6,24 +6,39 @@ class Board extends Component {
         super(props);
         this.state = {
             stacks: [[], [], [], [], [], []],
+            cards: props.deck
         };
     }
 
     disown = (card) => {
         console.log('disowning card', card);
-        this.props.removeCard(card);
+        this.removeFromBoard(card);
+    }
+
+    removeFromBoard = (card) => {
+        this.setState((state, props) => {
+            var cards = state.cards.filter((value, index, arr) => {
+                if (value.face !== card.props.face || value.type.icon !== card.props.type.icon) {
+                    return true;
+                }
+
+                return false;
+            });
+            return { ...state, cards };
+        });
+        this.props.unselectCard();
     }
 
     render() {
         return (
             <div>
-                {this.props.cards.map(card => (
+                {this.state.cards.map(card => (
                     <Card
                         key={card.key}
                         type={card.type}
                         face={card.face}
                         owner={this}
-                        isSelected={this.props.currentCard != null && this.props.currentCard.key == card.key}
+                        isSelected={this.props.currentCard != null && this.props.currentCard.props.face == card.face && this.props.currentCard.props.type.icon == card.type.icon}
                         clickCard={(props) => this.props.handler(props)} />
                 ))}
             </div>

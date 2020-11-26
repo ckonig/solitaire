@@ -11,6 +11,8 @@ class Card extends Component {
   setOwner = (owner) => {
     if (this.state.owner != null) {
       this.state.owner.disown(this);
+    } else {
+      console.log('no owner to disown');
     }
     this.setState((state, props) => {
       return { ...state, owner: owner };

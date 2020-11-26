@@ -1,3 +1,4 @@
+import MainStack from './MainStack';
 import Board from './Board';
 import TargetStack from './TargetStack';
 import React, { Component } from 'react';
@@ -7,13 +8,18 @@ class Solitaire extends Component {
 
   constructor(props) {
     super(props);
+    var deck = getDeck();
+    var stack = deck.slice(0,15);
+    var board = deck.slice(15);
     this.state = {
       currentCard: null,
-      cards: getDeck()
+      stack: stack,
+      deck: board,
     };
   }
 
   handleCardClick = (card) => {
+    console.log('current card is ', this.state.currentCard);
     if (this.state.currentCard == null) {
       console.log('select')
       this.setState((state, props) => {
@@ -41,20 +47,9 @@ class Solitaire extends Component {
     this.handleCardClick(props);
   }
 
-  removeFromBoard = (card) => {
+  unselect = () => {
     this.setState((state, props) => {
-      console.log('remvoe: ', card);
-
-      var cards = state.cards.filter((value, index, arr) => {
-        if (value.face !== card.props.face || value.type.icon !== card.props.type.icon) {
-          return true;
-        }
-        console.log('filtered out')
-        console.log(value, card.props);
-        return false;
-      });
-      console.log('filtered: ' + cards.length);
-      return { ...state, cards, currentCard: null };
+      return { ...state, currentCard: null };
     });
   }
 
@@ -97,7 +92,7 @@ class Solitaire extends Component {
           <tbody>
             <tr>
               <td>
-                <div style={styles.cardStyle}>&nbsp;</div>
+                <MainStack cardStyle={styles.cardStyle} />
               </td>
               <td>
                 <div style={styles.cardStyle}>&nbsp;</div>
@@ -118,10 +113,12 @@ class Solitaire extends Component {
             <tr>
               <td colSpan="6">
                 <Board
+                  deck={this.state.deck}
                   handler={this.handler}
                   cards={this.state.cards}
+                  unselectCard={this.unselect}
                   currentCard={this.state.currentCard}
-                  removeCard={(card) => this.removeFromBoard(card)} />
+                />
               </td>
             </tr>
           </tbody>
