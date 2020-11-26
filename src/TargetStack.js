@@ -57,6 +57,10 @@ class TargetStack extends Component {
             top: '0px',
         };
 
+        var localFaceStyle = { ...this.props.faceStyle };
+        localFaceStyle['fontSize'] = '30px';
+        localFaceStyle['top'] = '0px';
+
         var localOuterStyle = {
             position: 'relative',
         };
@@ -70,10 +74,10 @@ class TargetStack extends Component {
         return (
             <div style={localOuterStyle}>
                 <div style={localCardStyle} onClick={() => this.props.onStackClick(this)}>
-                    <div style={this.props.faceStyle} >
+                    <div style={localFaceStyle} >
                         <h1>
-                            {this.props.icon} ({this.state.stack.length}) ({this.state.acceptedCards.length})
-                    </h1>
+                            {this.props.icon}
+                        </h1>
                     </div>
                 </div>
                 {this.state.stack.map(card => (
