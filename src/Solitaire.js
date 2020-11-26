@@ -1,4 +1,5 @@
 import Board from './Board';
+import TargetStack from './TargetStack';
 import React, { Component } from 'react';
 import { getDeck } from './CardTypes';
 
@@ -27,6 +28,12 @@ class Solitaire extends Component {
       } else {
         console.log('todo implement');
       }
+    }
+  }
+
+  onStackClick = (stack) => {
+    if (this.state.currentCard !== null) {
+      stack.offer(this.state.currentCard);
     }
   }
 
@@ -84,10 +91,10 @@ class Solitaire extends Component {
                 <div style={styles.cardStyle}>&nbsp;</div>
               </td>
               <td>
-                <div style={styles.cardStyle}><div style={styles.faceStyleRed} ><h1>♥</h1></div></div>
-                <div style={styles.cardStyle}><div style={styles.faceStyleRed} ><h1>♦</h1></div></div>
-                <div style={styles.cardStyle}><div style={styles.faceStyle} ><h1>♣</h1></div></div>
-                <div style={styles.cardStyle}><div style={styles.faceStyle} ><h1>♠</h1></div></div>
+                <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+                <TargetStack onStackClick={this.onStackClick} icon="♦" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+                <TargetStack onStackClick={this.onStackClick} icon="♣" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
+                <TargetStack onStackClick={this.onStackClick} icon="♠" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
               </td>
             </tr>
             <tr>
