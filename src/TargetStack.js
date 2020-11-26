@@ -57,9 +57,11 @@ class TargetStack extends Component {
             top: '0px',
         };
 
-        var localFaceStyle = { ...this.props.faceStyle };
-        localFaceStyle['fontSize'] = '30px';
-        localFaceStyle['top'] = '0px';
+        var localFaceStyle = {
+            ...this.props.faceStyle,
+            fontSize: '30px',
+            top: '0px',
+        };
 
         var localOuterStyle = {
             position: 'relative',

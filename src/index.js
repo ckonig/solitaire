@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Solitaire from './Solitaire';
+import ContextDemo from './ContextDemo';
 import reportWebVitals from './reportWebVitals';
 import { Provider, GameState } from './GameState';
 
@@ -9,6 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider value={GameState}>
       <Solitaire />
+      <ContextDemo />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
