@@ -1,109 +1,117 @@
 import Card from './Card';
+import React, { Component } from 'react';
+import { getDeck } from './CardTypes';
 
-//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+class Solitaire extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCard: null,
+      cards: getDeck()
+    };
+    this.setStyles();
   }
-}
 
-function Solitaire() {
-  var stock = [];
-  var activeStack = [];
+  setStyles() {
+    var faceStyle = {
+      textAlign: 'center',
+      position: 'absolute',
+      top: '20px',
+      width: '80px',
+    };
 
-  var finalStacks = [];
-  var playStacks = [];
+    this.styles = {
+      cardStyle: {
+        borderStyle: 'dashed',
+        borderColor: 'gray',
+        width: '80px',
+        height: '120px',
+        float: 'left',
+        margin: '10px',
+        borderRadius: '5px',
+        position: 'relative',
+      },
 
-  var types = [
-    { name: 'pik', color: 'black' },
-    { name: 'herz', color: 'red' },
-    { name: 'karo', color: 'red' },
-    { name: 'kreuz', color: 'black' }
-  ];
+      faceStyle: {
+        ...faceStyle
+      },
+      faceStyleRed: {
+        ...faceStyle,
+        color: 'red'
+      },
+      tableStyle: {
+        backgroundColor: 'darkgreen',
+      },
+    };
+  }
 
-  var cardRange = [
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    'J',
-    'Q',
-    'K',
-    'A'
-  ];
-
-  var deck = [];
-  for (var i = 0; i < cardRange.length; i++) {
-    for (var j = 0; j < types.length; j++) {
-      deck.push({
-        'face': cardRange[i],
-        'type': types[j]
+  handleCardClick(card) {
+    if (this.state.currentCard == null) {
+      this.setState((state, props) => {
+        return {...state, currentCard: card};
       });
+    } else {
+      if (this.state.currentCard == card) {
+        this.setState((state, props) => {
+          return {...state, currentCard: null};
+        });
+      } else {
+        console.log('todo implement');
+      }
     }
   }
 
-  shuffleArray(deck);
-
-  var output = [];
-
-  for (var i = 0; i < deck.length; i++) {
-    var card = deck[i];
-    output.push(<Card type={card.type} face={card.face} />);
+  handler(props) {
+    console.log(props);
+    console.log(this.state.cards);
+    for (var i = 0; i < this.state.cards.length; i++) {
+      var card = this.state.cards[i];
+      if (card.face == props.face && card.type.icon == props.type.icon) {
+        console.log(' found in deck ');
+        this.handleCardClick(card);
+      }
+    }
   }
 
-  var cardStyle = {
-    borderStyle: 'dashed',
-    borderColor: 'gray',
-    width: '80px',
-    height: '120px',
-    float: 'left',
-    margin: '10px',
-    borderRadius: '5px',
-    position: 'relative',
-  };
+  render() {
+    console.log('re-render');
+    return (
+      <div style={this.styles.tableStyle}>
 
-  var faceStyle = {
-    textAlign: 'center',
-    position: 'absolute',
-    top: '20px',
-    width: '80px',
-  };
-
-  var faceStyleRed = { ...faceStyle, color: 'red' };
-
-  var headStyle = {
-    display: 'block',
-  };
-
-  return (
-    <table>
-      <tr>
-        <td>
-          <div style={cardStyle}>&nbsp;</div>
-        </td>
-        <td>
-          <div style={cardStyle}>&nbsp;</div>
-        </td>
-        <td>
-          <div style={cardStyle}><div style={faceStyleRed} ><h1>♥</h1></div></div>
-          <div style={cardStyle}><div style={faceStyleRed} ><h1>♦</h1></div></div>
-          <div style={cardStyle}><div style={faceStyle} ><h1>♣</h1></div></div>
-          <div style={cardStyle}><div style={faceStyle} ><h1>♠</h1></div></div>
-        </td>
-      </tr>
-      <tr>
-        <td colSpan="3">
-          {output}
-        </td>
-      </tr>
-    </table>
-  );
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div style={this.styles.cardStyle}>&nbsp;</div>
+              </td>
+              <td>
+                <div style={this.styles.cardStyle}>&nbsp;</div>
+              </td>
+              <td>
+                <div style={this.styles.cardStyle}><div style={this.styles.faceStyleRed} ><h1>♥</h1></div></div>
+                <div style={this.styles.cardStyle}><div style={this.styles.faceStyleRed} ><h1>♦</h1></div></div>
+                <div style={this.styles.cardStyle}><div style={this.styles.faceStyle} ><h1>♣</h1></div></div>
+                <div style={this.styles.cardStyle}><div style={this.styles.faceStyle} ><h1>♠</h1></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan="3">
+                {this.state.cards.map(card => (
+                  <Card
+                    key={card.key}
+                    type={card.type}
+                    face={card.face}
+                    isSelected={this.state.currentCard == card}
+                    handler={(props) => this.handler(props)} />
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 }
 
 export default Solitaire;

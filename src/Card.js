@@ -1,81 +1,95 @@
-import Draggable from 'react-draggable';
+import { Component } from "react";
 
-function Card(props) {
+class Card extends Component {
 
-  var cardStyle = {
-    borderStyle: 'solid',
-    borderColor: 'black',
-    width: '80px',
-    height: '120px',
-    float: 'left',
-    margin: '10px',
-    borderRadius: '5px',
-    position: 'relative',
-    backgroundColor:'white',
-  };
+  render() {
 
-  var faceStyle = {
-    textAlign: 'center',
-    position: 'absolute',
-    top: '20px',
-    width: '80px',
-  }
+    var cardStyle = {
+      borderStyle: 'solid',
+      borderColor: 'black',
+      width: '80px',
+      height: '120px',
+      float: 'left',
+      margin: '10px',
+      borderRadius: '5px',
+      position: 'relative',
+      backgroundColor: 'white',
+    };
 
-  var iconStyles = {
-    tl: {
-      position: 'absolute',
-      display: 'inline-block',
-      left: '5px',
-      top: '0px',
-    },
-    tr: {
-      position: 'absolute',
-      display: 'inline-block',
-      right: '5px',
-      top: '0px',
-    },
-    bl: {
-      position: 'absolute',
-      display: 'inline-block',
-      left: '5px',
-      bottom: '0px',
-    },
-    br: {
-      position: 'absolute',
-      display: 'inline-block',
-      right: '5px',
-      bottom: '0px',
+    if (this.props.isSelected) {
+      cardStyle['backgroundColor'] = 'lightgray';
+      cardStyle['borderColor'] = 'yellow';
     }
-  };
 
-  var icons = {
-    'herz': '♥',
-    'karo': '♦',
-    'kreuz': '♣',
-    'pik': '♠'
-  };
+    var faceStyle = {
+      textAlign: 'center',
+      position: 'absolute',
+      top: '15px',
+      width: '80px',
+      fontSize: '60px',
+      fontWeight: 'bold',
+    }
 
-  function getIcon(face) {
-    return icons[face]
-  };
+    var baseIconStyle = {
+      position: 'absolute',
+      display: 'inline-block',
+      fontSize: '20px',
+    }
 
-  function getCardStyle(color) {
-    var st = cardStyle;
-    st['color'] = color;
-    return st;
-  }
+    var iconStyles = {
+      tl: {
+        ...baseIconStyle,
+        left: '5px',
+        top: '0px',
+      },
+      tr: {
+        ...baseIconStyle,
+        right: '5px',
+        top: '0px',
+      },
+      bl: {
+        ...baseIconStyle,
+        left: '5px',
+        bottom: '0px',
+      },
+      br: {
+        ...baseIconStyle,
+        right: '5px',
+        bottom: '0px',
+      }
+    };
+    var iconLabelStyles = {
+      tl: { ...iconStyles.tl },
+      br: { ...iconStyles.br },
+    };
 
-  return (
-    <Draggable>
-      <div style={getCardStyle(props.type.color)}>
-        <div style={iconStyles['tl']}> {getIcon(props.type.name)}</div>
-        <div style={iconStyles['tr']}> {getIcon(props.type.name)}</div>
-        <div style={faceStyle}> <h1>{props.face}</h1></div>
-        <div style={iconStyles['bl']}> {getIcon(props.type.name)}</div>
-        <div style={iconStyles['br']}> {getIcon(props.type.name)}</div>
+    iconLabelStyles['tl']['left'] = '20px';
+    iconLabelStyles['br']['right'] = '20px';
+
+    function getCardStyle(color) {
+      var st = cardStyle;
+      st['color'] = color;
+      return st;
+    }
+
+    function handler(props) {
+      props.handler(props);
+    }
+
+    return (
+      <div style={getCardStyle(this.props.type.color)} onClick={() => handler(this.props)}>
+        <div>
+          <div style={iconStyles['tl']}> {this.props.type.icon}</div>
+          <div style={iconLabelStyles['tl']}> {this.props.face}</div>
+          <div style={iconStyles['tr']}> {this.props.type.icon}</div>
+          <div style={faceStyle}> <a>{this.props.face}</a></div>
+          <div style={iconStyles['bl']}> {this.props.type.icon}</div>
+          <div style={iconLabelStyles['br']}> {this.props.face}</div>
+          <div style={iconStyles['br']}> {this.props.type.icon}</div>
+        </div>
       </div>
-    </Draggable>
-  );
+    );
+  }
 };
 
 export default Card;
