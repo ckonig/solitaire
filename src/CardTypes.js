@@ -6,7 +6,7 @@ function shuffleArray(array) {
    }
 }
 
-export const CardTypes = {
+const CardTypes = {
    'herz': {
       'icon': '♥',
       'color': 'red',
@@ -23,11 +23,6 @@ export const CardTypes = {
       'icon': '♠',
       'color': 'black',
    },
-};
-
-export const getIcon = (face) => {
-   console.log('looking for icon of ' + face)
-   return CardTypes[face].icon;
 };
 
 export const getDeck = () => {
