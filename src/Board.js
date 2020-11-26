@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
+import { MyContext } from './MyContext';
 
 class Board extends Component {
     constructor(props) {
@@ -31,17 +32,22 @@ class Board extends Component {
 
     render() {
         return (
-            <div>
-                {this.state.cards.map(card => (
-                    <Card
-                        key={card.key}
-                        type={card.type}
-                        face={card.face}
-                        owner={this}
-                        isSelected={this.props.currentCard != null && this.props.currentCard.props.face == card.face && this.props.currentCard.props.type.icon == card.type.icon}
-                        clickCard={(props) => this.props.handler(props)} />
-                ))}
-            </div>
+            <MyContext.Consumer>
+                {ctx => <div>
+                    {
+                        this.state.cards.map(card => (
+                            <Card
+                                key={card.key}
+                                type={card.type}
+                                face={card.face}
+                                owner={this}
+                                isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
+                                clickCard={(props) => this.props.handler(props)} />
+                        ))
+                    }
+                </div>
+                }
+            </MyContext.Consumer>
         );
     }
 }

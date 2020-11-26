@@ -17,7 +17,7 @@ class Solitaire extends Component {
     this.state = {
       currentCard: null,
       stack: stack,
-      playStack: [],
+      playStack: [], //leaving this to load from cookie maybe
       deck: board,
     };
   }
@@ -109,7 +109,6 @@ class Solitaire extends Component {
                     handler={this.handler}
                     cards={this.state.cards}
                     unselectCard={this.unselect}
-                    currentCard={this.state.currentCard}
                   />
                 </td>
               </tr>
