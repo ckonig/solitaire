@@ -1,3 +1,5 @@
+import Draggable from 'react-draggable';
+
 function Card(props) {
 
   var cardStyle = {
@@ -5,17 +7,18 @@ function Card(props) {
     borderColor: 'black',
     width: '80px',
     height: '120px',
-    float:'left',
-    margin:'10px',
+    float: 'left',
+    margin: '10px',
     borderRadius: '5px',
-    position:'relative',
+    position: 'relative',
+    backgroundColor:'white',
   };
 
   var faceStyle = {
     textAlign: 'center',
-    position:'absolute',
-    top:'20px',
-    width:'80px',
+    position: 'absolute',
+    top: '20px',
+    width: '80px',
   }
 
   var iconStyles = {
@@ -63,13 +66,15 @@ function Card(props) {
   }
 
   return (
-    <div style={getCardStyle(props.type.color)}>
-      <div style={iconStyles['tl']}> {getIcon(props.type.name)}</div>
-      <div style={iconStyles['tr']}> {getIcon(props.type.name)}</div>
-      <div style={faceStyle}> <h1>{props.face}</h1></div>
-      <div style={iconStyles['bl']}> {getIcon(props.type.name)}</div>
-      <div style={iconStyles['br']}> {getIcon(props.type.name)}</div>
-    </div>
+    <Draggable>
+      <div style={getCardStyle(props.type.color)}>
+        <div style={iconStyles['tl']}> {getIcon(props.type.name)}</div>
+        <div style={iconStyles['tr']}> {getIcon(props.type.name)}</div>
+        <div style={faceStyle}> <h1>{props.face}</h1></div>
+        <div style={iconStyles['bl']}> {getIcon(props.type.name)}</div>
+        <div style={iconStyles['br']}> {getIcon(props.type.name)}</div>
+      </div>
+    </Draggable>
   );
 };
 
