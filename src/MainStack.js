@@ -35,19 +35,6 @@ class MainStack extends Component {
             top: '0px',
         };
 
-        var localFaceStyle = {
-            ...this.props.faceStyle,
-            fontSize: '30px',
-            top: '0px',
-        };
-
-        var localOuterStyle = {
-            position: 'relative',
-        };
-
-        var localCardStyle = { ...this.props.cardStyle };
-
-
         return (
             <MyContext.Consumer>
                 {ctx =>
