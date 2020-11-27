@@ -76,5 +76,6 @@ export const targetStackStyle = {
     },
     tableStyle: {
         backgroundColor: 'darkgreen',
+        height: '600px'
     },
 }

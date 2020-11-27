@@ -95,6 +95,7 @@ class BoardStack extends Component {
                                 <Card type={card.type}
                                     face={card.face}
                                     offsetTop={index*20}
+                                    isHidden={card.hidden}
                                     blink={this.state.blinkFor}
                                     owner={this}
                                     clickCard={(c) => this.onStackClick(c)}

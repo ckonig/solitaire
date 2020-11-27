@@ -6,6 +6,7 @@ class Card extends Component {
     super(props);
     this.state = {
       owner: props.owner,
+      isHidden: props.isHidden
     };
   }
 
@@ -20,6 +21,13 @@ class Card extends Component {
     });
   }
 
+  onClick() {
+    this.setState((state, props) => {
+      return { ...state, isHidden: false };
+    });
+    this.props.clickCard(this);
+  }
+
   render() {
 
     var cardStyle = {
@@ -29,6 +37,10 @@ class Card extends Component {
     if (this.props.isSelected) {
       cardStyle['backgroundColor'] = 'lightgray';
       cardStyle['borderColor'] = 'yellow';
+    }
+    var className = '';
+    if (this.state.isHidden) {
+      className = 'karo';
     }
 
     if (this.props.offset) {
@@ -57,18 +69,22 @@ class Card extends Component {
       }
       return st;
     }
+    var content = <div></div>;
+    if (!this.state.isHidden) {
+      content = <div>
+        <div style={iconBaseStyles['tl']}> {this.props.type.icon}</div>
+        <div style={iconLabelStyles['tl']}> {this.props.face}</div>
+        <div style={iconBaseStyles['tr']}> {this.props.type.icon}</div>
+        <div style={faceBaseStyle}> <a>{this.props.face}</a></div>
+        <div style={iconBaseStyles['bl']}> {this.props.type.icon}</div>
+        <div style={iconLabelStyles['br']}> {this.props.face}</div>
+        <div style={iconBaseStyles['br']}> {this.props.type.icon}</div>
+      </div>;
+    }
 
     return (
-      <div style={getCardStyle(this.props.type.color)} onClick={() => this.props.clickCard(this)}>
-        <div>
-          <div style={iconBaseStyles['tl']}> {this.props.type.icon}</div>
-          <div style={iconLabelStyles['tl']}> {this.props.face}</div>
-          <div style={iconBaseStyles['tr']}> {this.props.type.icon}</div>
-          <div style={faceBaseStyle}> <a>{this.props.face}</a></div>
-          <div style={iconBaseStyles['bl']}> {this.props.type.icon}</div>
-          <div style={iconLabelStyles['br']}> {this.props.face}</div>
-          <div style={iconBaseStyles['br']}> {this.props.type.icon}</div>
-        </div>
+      <div style={getCardStyle(this.props.type.color)} className={className} onClick={() => this.onClick()}>
+        { content}
       </div>
     );
   }

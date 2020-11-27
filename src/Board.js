@@ -7,22 +7,32 @@ function getRndInteger(min, max) {
 class Board extends Component {
     constructor(props) {
         super(props);
+        for(var i = 0; i < props.deck.length; i++) {
+            props.deck[i].hidden = true;
+        }
         var pointer = 0;
-        var oldpointer = pointer; pointer += getRndInteger(4, 7);;
+        var oldpointer = pointer; pointer += getRndInteger(4, 7);
         var stacks = [[], [], [], [], [], [], []];
         stacks[6] = props.deck.slice(oldpointer, pointer);
+        stacks[6][stacks[6].length-1].hidden=false;
         oldpointer = pointer; pointer += getRndInteger(4, 7);
         stacks[5] = props.deck.slice(oldpointer, pointer);
+        stacks[5][stacks[5].length-1].hidden=false;
         oldpointer = pointer; pointer += getRndInteger(4, 7);
         stacks[4] = props.deck.slice(oldpointer, pointer);
+        stacks[4][stacks[4].length-1].hidden=false;
         oldpointer = pointer; pointer += getRndInteger(4, 7);
         stacks[3] = props.deck.slice(oldpointer, pointer);
+        stacks[3][stacks[3].length-1].hidden=false;
         oldpointer = pointer; pointer += getRndInteger(4, 7);
         stacks[2] = props.deck.slice(oldpointer, pointer);
+        stacks[2][stacks[2].length-1].hidden=false;
         oldpointer = pointer; pointer += getRndInteger(4, 7);
         stacks[1] = props.deck.slice(oldpointer, pointer);
+        stacks[1][stacks[1].length-1].hidden=false;
         oldpointer = pointer; pointer += getRndInteger(4, 7);
         stacks[0] = props.deck.slice(oldpointer, props.deck.length-1);
+        stacks[0][stacks[0].length-1].hidden=false;
         this.state = {
             stacks,
             cards: props.deck

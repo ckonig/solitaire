@@ -6,6 +6,7 @@ import { getDeck } from './CardTypes';
 import { targetStackStyle } from './styles';
 import PlayStack from './PlayStack';
 import { MyContext } from './MyContext';
+import './App.css';
 
 class Solitaire extends Component {
 
@@ -25,7 +26,8 @@ class Solitaire extends Component {
     console.log('card was clicked');
     console.log(card);
     if (this.state.currentCard == null) {
-      this.setState((state, props) => {
+       this.setState((state, props) => {
+        
         return { ...state, currentCard: card };
       });
     } else {
