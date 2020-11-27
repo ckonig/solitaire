@@ -105,7 +105,8 @@ class BoardStack extends Component {
                         <div style={localCardStyle} onClick={() => this.onStackClick()}>{this.state.stack.length}</div>
                         {this.state.stack.map((card, index) => (
                             <div className="localstyl0r" style={localStyle}>
-                                <Card type={card.type}
+                                <Card 
+                                    type={card.type}
                                     face={card.face}
                                     offsetTop={index * 20}
                                     isHidden={card.hidden}

@@ -7,7 +7,7 @@ class PlayStack extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            stack: [],
+            stack: [...props.stack],
         };
     }
 

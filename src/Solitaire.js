@@ -18,15 +18,9 @@ class Solitaire extends Component {
     this.state = {
       currentCard: null,
       stack: stack,
+      playStack: [],
       deck: board,
     };
-  }
-
-  onMainstackClick = (card) => {
-    if (!card || card == null) {
-      console.log('todo: transfer playstack to mainstack')
-    }
-    this.setCurrentCard(card);
   }
 
   onPlayStackCLick = (card) => {
@@ -41,10 +35,6 @@ class Solitaire extends Component {
       // select card if there is one
       this.setCurrentCard(card);
     }
-  }
-
-  handler = (props) => {
-    this.setCurrentCard(props);
   }
 
   unselect = () => {
@@ -83,10 +73,10 @@ class Solitaire extends Component {
             <tbody>
               <tr>
                 <td>
-                  <MainStack stack={this.state.stack} onStackClick={(c) => this.onMainstackClick(c)} unselectCard={this.unselect} />
+                  <MainStack stack={this.state.stack} setCurrentCard={(c) => this.setCurrentCard(c)} unselectCard={this.unselect} />
                 </td>
                 <td>
-                  <PlayStack onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
+                  <PlayStack stack={this.state.playStack} onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
                 </td>
                 <td>
                   <TargetStack currentCard={ctxState.currentCard} icon="♥" />
@@ -105,7 +95,7 @@ class Solitaire extends Component {
                 <td colSpan="6">
                   <Board
                     deck={this.state.deck}
-                    handler={this.handler}
+                    handler={this.setCurrentCard}
                     cards={this.state.cards}
                     unselectCard={this.unselect}
                   />

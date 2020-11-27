@@ -12,7 +12,7 @@ class MainStack extends Component {
     }
 
     onStackClick = (card) => {
-        this.props.onStackClick(card);
+        this.props.setCurrentCard(card);
     }
 
     disown() {
