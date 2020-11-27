@@ -9,7 +9,8 @@ class TargetStack extends Component {
         this.state = {
             blinkFor: 0,
             stack: [],
-            acceptedCards: [...CardRange.reverse()],
+            // @todo the order of accepted cards must be A,2,3,4,...
+            acceptedCards: [...CardRange.reverse()], 
         };
     }
 
