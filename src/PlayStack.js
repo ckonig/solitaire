@@ -14,11 +14,15 @@ class PlayStack extends Component {
     disown = (card) => {
         console.log('disowning card', card);
         this.removeFromStack(card);
+        this.props.unselectCard();
     }
 
     removeFromStack = (card) => {
         this.setState((state, props) => {
-            return { ...state };
+            var stack = state.stack.filter((value, index, arr) => {
+                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+            });
+            return { ...state, stack };
         });
     }
 

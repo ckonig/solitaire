@@ -109,7 +109,7 @@ class Solitaire extends Component {
                   <MainStack stack={this.state.stack} onStackClick={(c) => this.onMainstackClick(c)} unselectCard={this.unselect} />
                 </td>
                 <td>
-                  <PlayStack onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} />
+                  <PlayStack onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
                 </td>
                 <td>
                   <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />

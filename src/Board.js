@@ -19,11 +19,7 @@ class Board extends Component {
     removeFromBoard = (card) => {
         this.setState((state, props) => {
             var cards = state.cards.filter((value, index, arr) => {
-                if (value.face !== card.props.face || value.type.icon !== card.props.type.icon) {
-                    return true;
-                }
-
-                return false;
+                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
             });
             return { ...state, cards };
         });
