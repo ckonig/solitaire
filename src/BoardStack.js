@@ -14,12 +14,8 @@ class BoardStack extends Component {
     }
     validate = (current, top) => {
         var range = [...CardRange];
-        console.log('comparing ' + current.props.face + 'with ' + top.props.face);
-        console.log(range);
-        console.log(top);
         var currentIndex = range.indexOf(current.props.face);
         var topIndex = range.indexOf(top.props.face);
-        console.log('comparing ' + currentIndex + 'with ' + topIndex);
         return currentIndex + 1 == topIndex && current.props.type.color != top.props.type.color;
 
     }
@@ -38,13 +34,10 @@ class BoardStack extends Component {
             } else {
                 this.blinkRed();
             }
-        } else {
-            console.log('what is happening')
-        }
+        } 
         this.props.onStackClick(card);
     }
     disown = (card) => {
-        console.log('disowning card', card);
         this.removeFromStack(card);
         this.props.unselectCard();
     }

@@ -13,9 +13,7 @@ class Card extends Component {
   setOwner = (owner) => {
     if (this.state.owner != null) {
       this.state.owner.disown(this);
-    } else {
-      console.log('no owner to disown');
-    }
+    } 
     this.setState((state, props) => {
       return { ...state, owner: owner };
     });
@@ -65,7 +63,6 @@ class Card extends Component {
       st['color'] = color;
       if (this.props.blink) {
         st['borderColor'] = 'red';
-        console.log('blinking card')
       }
       return st;
     }

@@ -12,7 +12,6 @@ class PlayStack extends Component {
     }
 
     disown = (card) => {
-        console.log('disowning card', card);
         this.removeFromStack(card);
         this.props.unselectCard();
     }
@@ -27,11 +26,7 @@ class PlayStack extends Component {
     }
 
     onStackClick = (card) => {
-        console.log('playstack')
-        console.log(card);
         if (this.props.currentCard != null && this.props.currentCard != card) {
-
-            console.log('current card', this.props.currentCard);
             this.props.currentCard.setOwner(this);
             this.setState((state, props) => {
                 if (this.props.currentCard != null && state.stack.indexOf(card) == -1) {
@@ -56,8 +51,6 @@ class PlayStack extends Component {
         var localOuterStyle = {
             position: 'relative',
         };
-        console.log('about o render')
-        console.log(this.state.stack)
         return (
             <MyContext.Consumer>
                 {ctx =>

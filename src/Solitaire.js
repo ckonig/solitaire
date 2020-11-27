@@ -23,8 +23,6 @@ class Solitaire extends Component {
   }
 
   handleCardClick = (card) => {
-    console.log('card was clicked');
-    console.log(card);
     if (this.state.currentCard == null) {
        this.setState((state, props) => {
         return { ...state, currentCard: card };
@@ -45,8 +43,6 @@ class Solitaire extends Component {
   }
 
   onMainstackClick = (card) => {
-    console.log(card);
-    console.log('was cl;iocke');
     if (!card || card == null) {
       console.log('todo: transfer playstack to mainstack')
     }
@@ -54,8 +50,6 @@ class Solitaire extends Component {
   }
 
   onPlayStackCLick = (card) => {
-    console.log(card);
-    console.log('was cl;iocke');
     if (this.state.currentCard) {
       if (this.state.currentCard == card) {
         // deselect

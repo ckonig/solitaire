@@ -40,7 +40,6 @@ class Board extends Component {
     }
 
     disown = (card) => {
-        console.log('disowning card', card);
         this.removeFromBoard(card);
     }
 

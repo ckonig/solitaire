@@ -15,13 +15,10 @@ class TargetStack extends Component {
 
     offer(card) {
         if (this.props.icon == card.props.type.icon) {
-            console.log('matching icon');
             var currentAccepted = this.state.acceptedCards[this.state.acceptedCards.length - 1];
             if (currentAccepted == card.props.face) {
-                console.log('yayayayayaya');
                 this.setState((state, props) => {
                     if (state.stack.indexOf(card) == -1) {
-                        console.log('update state', card);
                         state.stack.push(card);
                         state.acceptedCards.pop();
                         card.setOwner(this);
@@ -29,11 +26,9 @@ class TargetStack extends Component {
                     return { ...state };
                 });
             } else {
-                console.log('only accepting ' + currentAccepted);
                 this.blinkRed();
             }
         } else {
-            console.log('meh');
             this.blinkRed();
         }
     }

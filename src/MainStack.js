@@ -12,7 +12,6 @@ class MainStack extends Component {
     }
 
     onStackClick = (card) => {
-        console.log(card);
         this.props.onStackClick(card);
     }
 
