@@ -39,7 +39,7 @@ class MainStack extends Component {
             <MyContext.Consumer>
                 {ctx =>
                     <div>
-                        <div style={styles.cardStyle}>&nbsp;</div>
+                        <div style={styles.cardStyle} onClick={() => this.onStackClick()}>&nbsp;</div>
                         {this.props.stack.map((card, index) => (
                             <div style={localStyle}>
                                 <Card type={card.type}

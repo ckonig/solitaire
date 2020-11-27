@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { targetStackStyle } from './styles';
+import Card from './Card';
+import { MyContext } from './MyContext';
 
 class PlayStack extends Component {
     constructor(props) {
@@ -9,12 +11,68 @@ class PlayStack extends Component {
         };
     }
 
+    disown = (card) => {
+        console.log('disowning card', card);
+        this.removeFromStack(card);
+    }
+
+    removeFromStack = (card) => {
+        this.setState((state, props) => {
+            return { ...state };
+        });
+    }
+
+    onStackClick = (card) => {
+        console.log('playstack')
+        console.log(card);
+        if (this.props.currentCard != null && this.props.currentCard != card) {
+
+            console.log('current card', this.props.currentCard);
+            this.props.currentCard.setOwner(this);
+            this.setState((state, props) => {
+                if (this.props.currentCard != null && state.stack.indexOf(card) == -1) {
+                    state.stack.push(this.props.currentCard.props);
+                }
+                return { ...state };
+            });
+
+        }
+        this.props.onStackClick(card);
+    }
+
     render() {
         var styles = {
             ...targetStackStyle
         };
+        var localStyle = {
+            position: 'absolute',
+            left: '0px',
+            top: '0px',
+        };
+        var localOuterStyle = {
+            position: 'relative',
+        };
+        console.log('about o render')
+        console.log(this.state.stack)
         return (
-            <div style={styles.cardStyle}>&nbsp;</div>
+            <MyContext.Consumer>
+                {ctx =>
+                    <div style={localOuterStyle}>
+                        <div style={styles.cardStyle} onClick={() => this.onStackClick()}>{this.state.stack.length}</div>
+                        {this.state.stack.map((card, index) => (
+                            <div style={localStyle}>
+                                <Card type={card.type}
+                                    face={card.face}
+                                    offset={index}
+                                    owner={this}
+                                    clickCard={(c) => this.onStackClick(c)}
+                                    isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
+                                />
+                            </div>
+
+                        ))}
+                    </div>
+                }</MyContext.Consumer>
         );
     }
 }

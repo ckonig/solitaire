@@ -17,7 +17,6 @@ class Solitaire extends Component {
     this.state = {
       currentCard: null,
       stack: stack,
-      playStack: [], //leaving this to load from cookie maybe
       deck: board,
     };
   }
@@ -36,7 +35,7 @@ class Solitaire extends Component {
         });
       } else {
         // current card is selected, but another card is clicked.
-        // this type of card click should only happen on the board
+        // this type of card click should only happen on the board, can we handle it there?
         // if user clicks on card on TargetStack  or MainStack it's handled there.
         // if user clicks on playStack it's handled by that too, activating the top card.
         console.log('todo implement');
@@ -53,7 +52,30 @@ class Solitaire extends Component {
   onMainstackClick = (card) => {
     console.log(card);
     console.log('was cl;iocke');
+    if (!card || card == null) {
+      console.log('todo: transfer playstack to mainstack')
+    }
     this.handleCardClick(card);
+  }
+
+  onPlayStackCLick = (card) => {
+    console.log(card);
+    console.log('was cl;iocke');
+    if (this.state.currentCard) {
+      if (this.state.currentCard == card) {
+        // deselect
+        this.setState((state, props) => {
+          return { ...state, currentCard: null };
+        });
+      } else {
+        // drop card on stack
+
+      }
+    } else {
+      // select card if there is one
+      this.handleCardClick(card);
+    }
+
   }
 
   handler = (props) => {
@@ -87,7 +109,7 @@ class Solitaire extends Component {
                   <MainStack stack={this.state.stack} onStackClick={(c) => this.onMainstackClick(c)} unselectCard={this.unselect} />
                 </td>
                 <td>
-                  <PlayStack stack={this.state.playStack} />
+                  <PlayStack onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} />
                 </td>
                 <td>
                   <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
