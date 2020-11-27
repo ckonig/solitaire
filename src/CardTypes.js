@@ -41,6 +41,10 @@ export const CardRange =  [
    'A'
 ];
 
+export const getTargetOrder = () => {
+  return ['A', ...CardRange.slice(0, CardRange.length-2)].reverse();
+}
+
 export const getDeck = () => {
    var cardRange = CardRange;
 

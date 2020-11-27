@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CardRange } from './CardTypes';
+import { getTargetOrder } from './CardTypes';
 import Card from './Card';
 
 class TargetStack extends Component {
@@ -9,8 +9,7 @@ class TargetStack extends Component {
         this.state = {
             blinkFor: 0,
             stack: [],
-            // @todo the order of accepted cards must be A,2,3,4,...
-            acceptedCards: [...CardRange.reverse()], 
+            acceptedCards: [...getTargetOrder()], 
         };
     }
 
