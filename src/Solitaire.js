@@ -27,7 +27,6 @@ class Solitaire extends Component {
     console.log(card);
     if (this.state.currentCard == null) {
        this.setState((state, props) => {
-        
         return { ...state, currentCard: card };
       });
     } else {
@@ -35,12 +34,6 @@ class Solitaire extends Component {
         this.setState((state, props) => {
           return { ...state, currentCard: null };
         });
-      } else {
-        // current card is selected, but another card is clicked.
-        // this type of card click should only happen on the board, can we handle it there?
-        // if user clicks on card on TargetStack  or MainStack it's handled there.
-        // if user clicks on playStack it's handled by that too, activating the top card.
-        console.log('todo implement');
       }
     }
   }
