@@ -17,11 +17,12 @@ class BoardStack extends Component {
         var range = [...CardRange];
         var currentIndex = range.indexOf(current.props.face);
         var topIndex = range.indexOf(top.props.face);
-        return currentIndex + 1 == topIndex && current.props.type.color != top.props.type.color;
+        console.log('comparing ' + currentIndex + ' to ' + topIndex)
+        return (currentIndex + 1) == topIndex && (current.props.type.color != top.props.type.color);
     }
 
     onStackClick = (card) => {
-       if (card && this.props.currentCard != null && this.props.currentCard != card) {
+        if (card && this.props.currentCard != null && this.props.currentCard != card) {
             if (this.validate(this.props.currentCard, card)) {
                 this.setState((state, props) => {
                     if (this.props.currentCard != null && state.stack.indexOf(this.props.currentCard.props) == -1) {
@@ -33,8 +34,22 @@ class BoardStack extends Component {
             } else {
                 this.blinkRed();
             }
-        } 
+        }
         this.props.onStackClick(card);
+    }
+
+    addCardToStack(card) {
+        this.setState((state, props) => {
+            if (this.props.currentCard != null && state.stack.indexOf(this.props.currentCard.props) == -1) {
+                this.props.currentCard.setOwner(this);
+                state.stack.push(this.props.currentCard.props);
+            }
+            return { ...state };
+        });
+        if (card.getChild()) {
+            console.log('adding child too');
+            this.addCardToStack(card.getChild());
+        }
     }
 
     disown = (card) => {
@@ -80,7 +95,7 @@ class BoardStack extends Component {
         var localCardStyle = { ...styles.cardStyle };
 
         if (this.state.blinkFor > 0) {
-            localCardStyle['borderColor'] = 'red';
+            localCardStyle.borderColor = 'red';
         }
 
         return (
@@ -89,10 +104,10 @@ class BoardStack extends Component {
                     <div style={localOuterStyle}>
                         <div style={localCardStyle} onClick={() => this.onStackClick()}>{this.state.stack.length}</div>
                         {this.state.stack.map((card, index) => (
-                            <div style={localStyle}>
+                            <div className="localstyl0r" style={localStyle}>
                                 <Card type={card.type}
                                     face={card.face}
-                                    offsetTop={index*20}
+                                    offsetTop={index * 20}
                                     isHidden={card.hidden}
                                     blink={this.state.blinkFor}
                                     owner={this}

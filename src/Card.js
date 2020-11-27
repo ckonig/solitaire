@@ -6,6 +6,7 @@ class Card extends Component {
     super(props);
     this.state = {
       owner: props.owner,
+      child: null,
       isHidden: props.isHidden
     };
   }
@@ -13,16 +14,24 @@ class Card extends Component {
   setOwner = (owner) => {
     if (this.state.owner != null) {
       this.state.owner.disown(this);
-    } 
+    }
     this.setState((state, props) => {
       return { ...state, owner: owner };
     });
   }
 
+  getChild = () => {
+    return this.state.child;
+  }
+
   onClick() {
-    this.setState((state, props) => {
-      return { ...state, isHidden: false };
-    });
+    console.log('clicked');
+    console.log(this.props);
+    if (this.state.isHidden  && !this.state.child) {
+      this.setState((state, props) => {
+        return { ...state, isHidden: false };
+      });
+    }
     this.props.clickCard(this);
   }
 
@@ -61,6 +70,7 @@ class Card extends Component {
     const getCardStyle = (color) => {
       var st = { ...cardStyle };
       st['color'] = color;
+      st.zIndex = this.props.offsetTop
       if (this.props.blink) {
         st['borderColor'] = 'red';
       }

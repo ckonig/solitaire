@@ -58,12 +58,10 @@ class Solitaire extends Component {
       this.setState((state, props) => {
         return { ...state, currentCard: card };
       });
-    } else {
-      if (this.state.currentCard == card) {
-        this.setState((state, props) => {
-          return { ...state, currentCard: null };
-        });
-      }
+    } else if (this.state.currentCard == card) {
+      this.setState((state, props) => {
+        return { ...state, currentCard: null };
+      });
     }
   }
 
