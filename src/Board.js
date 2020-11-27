@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
-import Card from './Card';
+import BoardStack from './BoardStack';
 import { MyContext } from './MyContext';
-
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 class Board extends Component {
     constructor(props) {
         super(props);
+        var pointer = 0;
+        var oldpointer = pointer; pointer += getRndInteger(4, 7);;
+        var stacks = [[], [], [], [], [], [], []];
+        stacks[6] = props.deck.slice(oldpointer, pointer);
+        oldpointer = pointer; pointer += getRndInteger(4, 7);
+        stacks[5] = props.deck.slice(oldpointer, pointer);
+        oldpointer = pointer; pointer += getRndInteger(4, 7);
+        stacks[4] = props.deck.slice(oldpointer, pointer);
+        oldpointer = pointer; pointer += getRndInteger(4, 7);
+        stacks[3] = props.deck.slice(oldpointer, pointer);
+        oldpointer = pointer; pointer += getRndInteger(4, 7);
+        stacks[2] = props.deck.slice(oldpointer, pointer);
+        oldpointer = pointer; pointer += getRndInteger(4, 7);
+        stacks[1] = props.deck.slice(oldpointer, pointer);
+        oldpointer = pointer; pointer += getRndInteger(4, 7);
+        stacks[0] = props.deck.slice(oldpointer, props.deck.length-1);
         this.state = {
-            stacks: [[], [], [], [], [], []],
+            stacks,
             cards: props.deck
         };
     }
@@ -30,17 +48,18 @@ class Board extends Component {
         return (
             <MyContext.Consumer>
                 {ctx => <div>
-                    {
-                        this.state.cards.map(card => (
-                            <Card
-                                key={card.key}
-                                type={card.type}
-                                face={card.face}
-                                owner={this}
-                                isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
-                                clickCard={(props) => this.props.handler(props)} />
-                        ))
-                    }
+                    <table><tbody><tr>
+                        {this.state.stacks.map((stack, index) => (
+                            <td>
+                                <BoardStack
+                                    stack={stack}
+                                    currentCard={ctx.currentCard}
+                                    unselectCard={this.props.unselectCard}
+                                    onStackClick={(props) => this.props.handler(props)}
+                                     /></td>))
+                        }
+                    </tr></tbody></table>
+
                 </div>
                 }
             </MyContext.Consumer>
