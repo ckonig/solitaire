@@ -12,21 +12,20 @@ class BoardStack extends Component {
             stack: [...props.stack],
         };
     }
+
     validate = (current, top) => {
         var range = [...CardRange];
         var currentIndex = range.indexOf(current.props.face);
         var topIndex = range.indexOf(top.props.face);
         return currentIndex + 1 == topIndex && current.props.type.color != top.props.type.color;
-
     }
+
     onStackClick = (card) => {
        if (card && this.props.currentCard != null && this.props.currentCard != card) {
             if (this.validate(this.props.currentCard, card)) {
-              
                 this.setState((state, props) => {
                     if (this.props.currentCard != null && state.stack.indexOf(this.props.currentCard.props) == -1) {
                         this.props.currentCard.setOwner(this);
-                        //@todo fancy validation of boardstack logic
                         state.stack.push(this.props.currentCard.props);
                     }
                     return { ...state };
@@ -37,6 +36,7 @@ class BoardStack extends Component {
         } 
         this.props.onStackClick(card);
     }
+
     disown = (card) => {
         this.removeFromStack(card);
         this.props.unselectCard();
@@ -61,6 +61,7 @@ class BoardStack extends Component {
             return { ...state, stack };
         });
     }
+
     render() {
         var styles = {
             ...targetStackStyle
@@ -71,13 +72,17 @@ class BoardStack extends Component {
             left: '0px',
             top: '0px',
         };
+
         var localOuterStyle = {
             position: 'relative',
         };
+
         var localCardStyle = { ...styles.cardStyle };
+
         if (this.state.blinkFor > 0) {
             localCardStyle['borderColor'] = 'red';
         }
+
         return (
             <MyContext.Consumer>
                 {ctx =>

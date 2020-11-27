@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getTargetOrder } from './CardTypes';
 import Card from './Card';
+import { targetStackStyle } from './styles';
 
 class TargetStack extends Component {
 
@@ -12,6 +13,12 @@ class TargetStack extends Component {
             acceptedCards: [...getTargetOrder()], 
         };
     }
+
+    onTargetStackClick = (stack) => {
+        if (this.props.currentCard !== null) {
+          this.offer(this.props.currentCard);
+        }
+      }
 
     offer(card) {
         if (this.props.icon == card.props.type.icon) {
@@ -46,6 +53,10 @@ class TargetStack extends Component {
 
     render() {
 
+        var styles = {
+            ...targetStackStyle
+          };
+
         var localStyle = {
             position: 'absolute',
             left: '0px',
@@ -53,7 +64,7 @@ class TargetStack extends Component {
         };
 
         var localFaceStyle = {
-            ...this.props.faceStyle,
+            ...styles.faceStyle,
             fontSize: '30px',
             top: '0px',
         };
@@ -62,15 +73,15 @@ class TargetStack extends Component {
             position: 'relative',
         };
 
-        var localCardStyle = { ...this.props.cardStyle };
+        var localCardStyle = { ...styles.cardStyle };
 
         if (this.state.blinkFor > 0) {
-            localCardStyle['borderColor'] = 'red';
+            localCardStyle.borderColor = 'red';
         }
 
         return (
             <div style={localOuterStyle}>
-                <div style={localCardStyle} onClick={() => this.props.onStackClick(this)}>
+                <div style={localCardStyle} onClick={() => this.onTargetStackClick(this)}>
                     <div style={localFaceStyle} >
                         <h1>
                             {this.props.icon}
@@ -83,7 +94,7 @@ class TargetStack extends Component {
                             blink={this.state.blinkFor}
                             type={card.props.type}
                             face={card.props.face}
-                            clickCard={() => this.props.onStackClick(this)} />
+                            clickCard={() => this.onTargetStackClick(this)} />
                     </div>))}
             </div>
 

@@ -22,9 +22,40 @@ class Solitaire extends Component {
     };
   }
 
-  handleCardClick = (card) => {
+  onMainstackClick = (card) => {
+    if (!card || card == null) {
+      console.log('todo: transfer playstack to mainstack')
+    }
+    this.setCurrentCard(card);
+  }
+
+  onPlayStackCLick = (card) => {
+    if (this.state.currentCard) {
+      if (this.state.currentCard == card) {
+        // deselect
+        this.setState((state, props) => {
+          return { ...state, currentCard: null };
+        });
+      }
+    } else {
+      // select card if there is one
+      this.setCurrentCard(card);
+    }
+  }
+
+  handler = (props) => {
+    this.setCurrentCard(props);
+  }
+
+  unselect = () => {
+    this.setState((state, props) => {
+      return { ...state, currentCard: null };
+    });
+  }
+
+  setCurrentCard = (card) => {
     if (this.state.currentCard == null) {
-       this.setState((state, props) => {
+      this.setState((state, props) => {
         return { ...state, currentCard: card };
       });
     } else {
@@ -36,47 +67,6 @@ class Solitaire extends Component {
     }
   }
 
-  onStackClick = (stack) => {
-    if (this.state.currentCard !== null) {
-      stack.offer(this.state.currentCard);
-    }
-  }
-
-  onMainstackClick = (card) => {
-    if (!card || card == null) {
-      console.log('todo: transfer playstack to mainstack')
-    }
-    this.handleCardClick(card);
-  }
-
-  onPlayStackCLick = (card) => {
-    if (this.state.currentCard) {
-      if (this.state.currentCard == card) {
-        // deselect
-        this.setState((state, props) => {
-          return { ...state, currentCard: null };
-        });
-      } else {
-        // drop card on stack
-
-      }
-    } else {
-      // select card if there is one
-      this.handleCardClick(card);
-    }
-
-  }
-
-  handler = (props) => {
-    this.handleCardClick(props);
-  }
-
-  unselect = () => {
-    this.setState((state, props) => {
-      return { ...state, currentCard: null };
-    });
-  }
-
   render() {
     var styles = {
       ...targetStackStyle
@@ -85,12 +75,12 @@ class Solitaire extends Component {
     var ctxState = {
       currentCard: this.state.currentCard,
       resetCurrentCard: () => this.unselect(),
+      setCurrentCard: (card) => this.setCurrentCard(card),
     }
 
     return (
       <MyContext.Provider value={ctxState}>
         <div style={styles.tableStyle}>
-
           <table>
             <tbody>
               <tr>
@@ -101,16 +91,16 @@ class Solitaire extends Component {
                   <PlayStack onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
                 </td>
                 <td>
-                  <TargetStack onStackClick={this.onStackClick} icon="♥" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+                  <TargetStack currentCard={ctxState.currentCard} icon="♥" />
                 </td>
                 <td>
-                  <TargetStack onStackClick={this.onStackClick} icon="♦" cardStyle={styles.cardStyle} faceStyle={styles.faceStyleRed} />
+                  <TargetStack currentCard={ctxState.currentCard} icon="♦" />
                 </td>
                 <td>
-                  <TargetStack onStackClick={this.onStackClick} icon="♣" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
+                  <TargetStack currentCard={ctxState.currentCard} icon="♣" />
                 </td>
                 <td>
-                  <TargetStack onStackClick={this.onStackClick} icon="♠" cardStyle={styles.cardStyle} faceStyle={styles.faceStyle} />
+                  <TargetStack currentCard={ctxState.currentCard} icon="♠" />
                 </td>
               </tr>
               <tr>
