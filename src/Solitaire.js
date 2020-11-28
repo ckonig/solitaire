@@ -39,7 +39,7 @@ class Solitaire extends Component {
       },
       onBoardStackClick: this.engine.onBoardStackClick,
       onTargetStackClick: this.engine.onTargetStackClick,
-      unselect: this.engine.unselect,
+      clickMainStack: this.engine.clickMainStack,
       setCurrentCard: this.engine.setCurrentCard,
       addToPlayStack: this.engine.addToPlayStack,
       requestReset: this.engine.requestReset,
@@ -49,27 +49,29 @@ class Solitaire extends Component {
   render() {
     return (
       <MyContext.Provider value={this.state}>
-        <Hand currentCard={this.state.currentCard} stack={this.state.hand.stack} setCurrentCard={this.state.setCurrentCard} />
+        <Hand
+          currentCard={this.state.currentCard}
+          stack={this.state.hand.stack}
+          setCurrentCard={this.state.setCurrentCard} />
         <div style={targetStackStyle.tableStyle}>
           <table>
             <tbody>
               <tr>
                 <td>
-                  <MainStack stack={this.state.stack} setCurrentCard={(c) => this.state.setCurrentCard(c)}
-                    unselectCard={this.state.unselect} requestReset={this.state.requestReset} />
+                  <MainStack stack={this.state.stack} />
                 </td>
                 <td>
-                  <PlayStack addToPlayStack={this.state.addToPlayStack} stack={this.state.playStack} currentCard={this.state.currentCard}
-                    unselectCard={this.state.unselect} />
+                  <PlayStack stack={this.state.playStack} />
                 </td>
                 {this.state.targetStacks.map((targetStack, index) => (
                   <td>
-                    <TargetStack stack={targetStack.stack} onTargetStackClick={(c) => this.state.onTargetStackClick(index, c)} currentCard={this.state.currentCard} icon={targetStack.icon} />
+                    <TargetStack
+                      stack={targetStack.stack}
+                      icon={targetStack.icon}
+                      onTargetStackClick={(c) => this.state.onTargetStackClick(index, c)}
+                    />
                   </td>
                 ))}
-                <td>
-                  
-                </td>
               </tr>
               <tr>
                 <td colSpan="6">

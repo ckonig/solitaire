@@ -58,6 +58,7 @@ export const getDeck = () => {
             'face': cardRange[i],
             'type': type,
             'key': key,
+            'hidden': true,
             toString: () => key,
          });
       }
@@ -71,9 +72,6 @@ function getRndInteger(min, max) {
 }
 
 export const getStacks = (deck) => {
-   for (var i = 0; i < deck.length; i++) {
-      deck[i].hidden = true;
-   }
    var pointer = 0;
    var oldpointer = pointer; pointer += getRndInteger(4, 7);
    var stacks = [[], [], [], [], [], [], []];

@@ -2,29 +2,6 @@ import { Component } from "react";
 import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "./styles";
 
 class Card extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isHidden: props.isHidden
-    };
-  }
-
-  //@todo move to engine
-
-  onClick() {
-    //@todo unhide behavior depends on stack: is it blocked by being the source of the current hand?
-    if (this.state.isHidden && this.props.canUncover) {
-      this.setState((state, props) => {
-        console.debug("card unhide onclick")
-        return { ...state, isHidden: false };
-      });
-    } else if (!this.state.isHidden || this.props.canUncover) {
-      this.props.clickCard(this);
-      console.debug("card delegated onclick")
-    } else {
-      console.debug("card catchall onclick")
-    }
-  }
 
   render() {
 
@@ -35,9 +12,10 @@ class Card extends Component {
     if (this.props.isSelected) {
       cardStyle['backgroundColor'] = 'lightgray';
       cardStyle['borderColor'] = 'yellow';
+      cardStyle.opacity = '0.95';
     }
     var className = '';
-    if (this.state.isHidden) {
+    if (this.props.isHidden) {
       className = 'karo';
     }
 
@@ -61,14 +39,14 @@ class Card extends Component {
     const getCardStyle = (color) => {
       var st = { ...cardStyle };
       st['color'] = color;
-      st.zIndex = this.props.offsetTop+2;
+      st.zIndex = this.props.offsetTop + 2;
       if (this.props.blink) {
         st['borderColor'] = 'red';
       }
       return st;
     }
     var content = <div></div>;
-    if (!this.state.isHidden) {
+    if (!this.props.isHidden) {
       content = <div>
         <div style={iconBaseStyles['tl']}> {this.props.type.icon}</div>
         <div style={iconLabelStyles['tl']}> {this.props.face}</div>
@@ -81,7 +59,7 @@ class Card extends Component {
     }
 
     return (
-      <div style={getCardStyle(this.props.type.color)} className={className} onClick={() => this.onClick()}>
+      <div style={getCardStyle(this.props.type.color)} className={className} onClick={(e) => this.props.clickCard(this)}>
         { content}
       </div>
     );

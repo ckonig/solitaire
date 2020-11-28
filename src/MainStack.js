@@ -21,14 +21,16 @@ class MainStack extends Component {
             <MyContext.Consumer>
                 {ctx =>
                     <div style={localOuterStyle}>
-                        <div style={targetStackStyle.cardStyle} onClick={() => this.props.requestReset()}>&nbsp;</div>
+                        <div style={targetStackStyle.cardStyle} onClick={ctx.requestReset}>&nbsp;</div>
                         {this.props.stack.map((card, index) => (
                             <div style={localStyle}>
                                 <Card type={card.type}
                                     face={card.face}
                                     source="main"
                                     offset={index}
-                                    clickCard={(c) => this.props.setCurrentCard(c)}
+                                    isHidden={card.hidden}
+                                    canUncover={index == this.props.stack.length - 1}
+                                    clickCard={ctx.clickMainStack}
                                     isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
                                 />
                             </div>
