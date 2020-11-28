@@ -67,6 +67,7 @@ class Solitaire extends Component {
                   <td>
                     <TargetStack
                       stack={targetStack.stack}
+                      blinkFor={targetStack.blinkFor}
                       icon={targetStack.icon}
                       onTargetStackClick={(c) => this.state.onTargetStackClick(index, c)}
                     />

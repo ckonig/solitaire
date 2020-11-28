@@ -50,13 +50,27 @@ export default class Engine {
                         return { ...state, currentCard: null, hand: [] };
                     });
                 } else {
-                    //@todo blink via state machine model(?)
-                    //this.blinkRed();
+                    this.blinkTargetStack(index);
                 }
             } else {
-                //this.blinkRed();
+                this.blinkTargetStack(index);
             }
         }
+    }
+
+    blinkTargetStack = (index) => {
+        this.stateHolder.setState((state, props) => {
+            console.debug('turn on blinking');
+            state.targetStacks[index].blinkFor = 10;
+            return { ...state };
+        }, () =>
+            setTimeout(() => {
+                console.debug('turn off blinking');
+                this.stateHolder.setState((state, props) => {
+                    state.targetStacks[index].blinkFor = 0;
+                    return { ...state };
+                });
+            }, 100));
     }
 
     removeFromAll(cb, card) {
@@ -194,7 +208,7 @@ export default class Engine {
                     this.unselect();
                 });
             } else {
-                // this.blinkRed(); @todo fix
+                this.blinkBoardStack(index);
             }
         } else if (!card && this.stateHolder.state.currentCard && this.stateHolder.state.currentCard.props && this.stateHolder.state.currentCard.props.face == 'K') {
             this.stateHolder.setState((state, props) => {
@@ -215,6 +229,21 @@ export default class Engine {
 
         this.setCurrentCard(card);
     }
+
+    blinkBoardStack = (index) => {
+        this.stateHolder.setState((state, props) => {
+            state.stacks[index].blinkFor = 10;
+            return { ...state };
+        }, () =>
+            setTimeout(() => {
+                this.stateHolder.setState((state, props) => {
+                    state.stacks[index].blinkFor = 0;
+                    return { ...state };
+                });
+            }, 100));
+    }
+
+
 
     filterOut(stacks, card) {
         for (var i = 0; i < stacks.length; i++) {

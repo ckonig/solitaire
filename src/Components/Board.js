@@ -14,6 +14,7 @@ class Board extends Component {
                                 <BoardStack
                                     stackIndex={index}
                                     stack={stack.stack}
+                                    blinkFor={stack.blinkFor}
                                     currentCard={ctx.currentCard}
                                     unselectCard={ctx.unselect}
                                     onBoardStackClick={(card) => ctx.onBoardStackClick(card, index)}

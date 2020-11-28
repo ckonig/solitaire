@@ -4,26 +4,6 @@ import { targetStackStyle } from '../styles';
 
 class TargetStack extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            blinkFor: 0,
-        };
-    }
-
-    //@todo move to engine component
-
-    blinkRed() {
-        this.setState((state, props) => {
-            return { ...state, blinkFor: 10 };
-        });
-        setTimeout(() => {
-            this.setState((state, props) => {
-                return { ...state, blinkFor: 0 };
-            });
-        }, 100);
-    }
-
     render() {
 
         var styles = {
@@ -48,8 +28,9 @@ class TargetStack extends Component {
 
         var localCardStyle = { ...styles.cardStyle };
 
-        if (this.state.blinkFor > 0) {
+        if (this.props.blinkFor > 0) {
             localCardStyle.borderColor = 'red';
+            console.log('setting RED border color');
         }
 
         return (
@@ -64,7 +45,7 @@ class TargetStack extends Component {
                 {this.props.stack.map(card => (
                     <div style={localStyle}>
                         <Card
-                            blink={this.state.blinkFor}
+                            blink={this.props.blinkFor}
                             type={card.props.type}
                             face={card.props.face}
                             clickCard={(c) => this.props.onTargetStackClick(c)} />
