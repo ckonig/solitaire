@@ -26,6 +26,7 @@ class MainStack extends Component {
                             <div style={localStyle}>
                                 <Card type={card.type}
                                     face={card.face}
+                                    source="main"
                                     offset={index}
                                     clickCard={(c) => this.props.setCurrentCard(c)}
                                     isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}

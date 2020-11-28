@@ -54,6 +54,7 @@ class BoardStack extends Component {
                                     type={card.type}
                                     face={card.face}
                                     offsetTop={index * 20}
+                                    source={"board-"+index}
                                     isHidden={card.hidden}
                                     blink={this.state.blinkFor}
                                     canUncover={index == this.props.stack.length - 1}

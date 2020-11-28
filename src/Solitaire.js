@@ -1,5 +1,6 @@
 import MainStack from './MainStack';
 import Board from './Board';
+import Hand from './Hand';
 import TargetStack from './TargetStack';
 import React, { Component } from 'react';
 import { getDeck, getStacks, getTargetOrder } from './CardTypes';
@@ -32,6 +33,10 @@ class Solitaire extends Component {
       targetStacks: [getStack("♥"), getStack("♦"), getStack("♣"), getStack("♠")],
       deck: board,
       stacks: stacks,
+      hand: {
+        stack: null,
+        source: null
+      },
       onBoardStackClick: this.engine.onBoardStackClick,
       onTargetStackClick: this.engine.onTargetStackClick,
       unselect: this.engine.unselect,
@@ -44,6 +49,7 @@ class Solitaire extends Component {
   render() {
     return (
       <MyContext.Provider value={this.state}>
+        <Hand currentCard={this.state.currentCard} stack={this.state.hand.stack} setCurrentCard={this.state.setCurrentCard} />
         <div style={targetStackStyle.tableStyle}>
           <table>
             <tbody>
@@ -61,6 +67,9 @@ class Solitaire extends Component {
                     <TargetStack stack={targetStack.stack} onTargetStackClick={(c) => this.state.onTargetStackClick(index, c)} currentCard={this.state.currentCard} icon={targetStack.icon} />
                   </td>
                 ))}
+                <td>
+                  
+                </td>
               </tr>
               <tr>
                 <td colSpan="6">

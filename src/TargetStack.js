@@ -14,8 +14,6 @@ class TargetStack extends Component {
 
     //@todo move to engine component
 
-    
-
     blinkRed() {
         this.setState((state, props) => {
             return { ...state, blinkFor: 10 };

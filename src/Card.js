@@ -10,13 +10,19 @@ class Card extends Component {
   }
 
   //@todo move to engine
+
   onClick() {
+    //@todo unhide behavior depends on stack: is it blocked by being the source of the current hand?
     if (this.state.isHidden && this.props.canUncover) {
       this.setState((state, props) => {
+        console.debug("card unhide onclick")
         return { ...state, isHidden: false };
       });
     } else if (!this.state.isHidden || this.props.canUncover) {
       this.props.clickCard(this);
+      console.debug("card delegated onclick")
+    } else {
+      console.debug("card catchall onclick")
     }
   }
 

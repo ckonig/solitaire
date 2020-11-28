@@ -17,7 +17,7 @@ export default class Engine {
                             state.targetStacks[index].stack.push(this.stateHolder.state.currentCard);
                             state.targetStacks[index].acceptedCards.pop();
                         }
-                        return { ...state, currentCard: null };
+                        return { ...state, currentCard: null, hand: [] };
                     });
                 } else {
                     //@todo blink via state machine model(?)
@@ -29,10 +29,13 @@ export default class Engine {
         }
     }
 
-    removeFromAll(card) {
-        this.removeFromMainStack(card);
-        this.removeFromPlayStack(card);
-        this.removeFromBoardStacks(card);
+    removeFromAll(card, cb) {
+        this.removeFromMainStack(card, () => {
+            this.removeFromPlayStack(card, () => {
+                this.removeFromBoardStacks(card, cb)
+            }
+            )
+        });
     }
 
     removeFromPlayStack = (card, callback) => {
@@ -81,7 +84,7 @@ export default class Engine {
     unselect = () => {
         this.stateHolder.setState((state, props) => {
             console.debug('unselect')
-            return { ...state, currentCard: null };
+            return { ...state, currentCard: null, hand: [] };
         });
     }
 
@@ -98,50 +101,64 @@ export default class Engine {
     }
 
     setCurrentCard = (card) => {
+        console.debug('setCurrentCard()')
         if (this.stateHolder.state.currentCard == null) {
-            this.stateHolder.setState((state, props) => {
-                console.debug('setCurrentCard set')
-                return { ...state, currentCard: card };
-            });
+            this.removeFromAll(card, () =>
+                this.stateHolder.setState((state, props) => {
+                    console.debug('setCurrentCard set')
+                    state.hand.stack = [card]
+                    state.hand.source = card.props.source;
+                    return { ...state, currentCard: card };
+                }));
         } else if (this.stateHolder.state.currentCard == card) {
             this.stateHolder.setState((state, props) => {
                 console.debug('setCurrentCard unset')
+                state.hand.stack = []
+                state.hand.source = null;
                 return { ...state, currentCard: null };
             });
+        } else {
+            console.debug('setCurrentCard catchall')
+            console.debug(this.stateHolder.state.currentCard)
+            console.debug(card)
         }
     }
 
     addToPlayStack = (card) => {
         console.debug('addToPlayStack')
         if (this.stateHolder.state.currentCard != null && this.stateHolder.state.currentCard != card) {
-            if (this.stateHolder.state.currentCard != null && this.stateHolder.state.stack.indexOf(card) == -1
-                && this.stateHolder.state.stack[this.stateHolder.state.stack.length - 1].face == this.stateHolder.state.currentCard.props.face
-                && this.stateHolder.state.stack[this.stateHolder.state.stack.length - 1].type.icon == this.stateHolder.state.currentCard.props.type.icon
+            if (this.stateHolder.state.currentCard != null && this.stateHolder.state.hand.source == 'main' || this.stateHolder.state.hand.source == 'play'
+                // && this.stateHolder.state.stack[this.stateHolder.state.stack.length - 1].face == this.stateHolder.state.currentCard.props.face
+                // && this.stateHolder.state.stack[this.stateHolder.state.stack.length - 1].type.icon == this.stateHolder.state.currentCard.props.type.icon
             ) {
                 console.debug("  #1");
-                console.debug('   way before', this.stateHolder.state.playStack.length, this.stateHolder.state.stack.length);
+                console.debug(this.stateHolder.state.currentCard)
+                console.debug('   way before', this.stateHolder.state.playStack.length);
                 this.stateHolder.setState((state, props) => {
-                    console.debug('   before', state.playStack.length, state.stack.length);
+                    console.debug('   before', state.playStack.length);
                     var current = state.currentCard;
-                    var top = state.stack[state.stack.length - 1];
-                    if (current && top && top.face == current.props.face && top.type.icon == current.props.type.icon) {
-                        state.playStack.push(state.stack.pop());
+                    var top = this.stateHolder.state.playStack[this.stateHolder.state.playStack.length - 1];
+                    if (current && !top || top.face !== current.props.face || top.type.icon !== current.props.type.icon) {
+                        state.playStack.push(this.stateHolder.state.currentCard.props);
                     }
-                    console.debug('   after', state.playStack.length, state.stack.length);
+                    console.debug('   after', state.playStack.length);
+                    state.hand.stack = []
                     return { ...state, currentCard: null };
                 }, () => {
-                    console.debug('   way after', this.stateHolder.state.playStack.length, this.stateHolder.state.stack.length);
+                    console.debug('   way after', this.stateHolder.state.playStack.length);
                 });
+            } else {
+                console.debug('#44')
+                console.debug(this.stateHolder.state.currentCard)
             }
         } else if (card && this.stateHolder.state.currentCard == card) {
             console.debug("  #2");
             this.unselect();
         } else if (card && this.stateHolder.state.currentCard == null) {
             console.debug("  #3");
-            this.stateHolder.setState((state, props) => {
-                state.currentCard = card;
-                return { ...state };
-            });
+            this.setCurrentCard(card);
+        } else {
+            console.debug('%4')
         }
     }
 
@@ -182,6 +199,7 @@ export default class Engine {
                     this.removeFromMainStack(this.stateHolder.state.currentCard);
                     state.stacks = this.filterOut(state.stacks, this.stateHolder.state.currentCard)
                     state.stacks[index].push(this.stateHolder.state.currentCard.props);
+                    state.hand.stack = []
                     return { ...state, currentCard: null };
                 }
             }, () => {

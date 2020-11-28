@@ -24,6 +24,7 @@ class PlayStack extends Component {
                                 <Card type={card.type}
                                     face={card.face}
                                     offset={index}
+                                    source="play"
                                     clickCard={(c) => this.props.addToPlayStack(c)}
                                     isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
                                 />
