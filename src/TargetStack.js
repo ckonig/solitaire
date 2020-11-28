@@ -10,15 +10,17 @@ class TargetStack extends Component {
         this.state = {
             blinkFor: 0,
             stack: [],
-            acceptedCards: [...getTargetOrder()], 
+            acceptedCards: [...getTargetOrder()],
         };
     }
 
+    //@todo move to solitaire component
+
     onTargetStackClick = (stack) => {
         if (this.props.currentCard !== null) {
-          this.offer(this.props.currentCard);
+            this.offer(this.props.currentCard);
         }
-      }
+    }
 
     offer(card) {
         if (this.props.icon == card.props.type.icon) {
@@ -33,6 +35,7 @@ class TargetStack extends Component {
                     return { ...state };
                 });
             } else {
+                //@todo blink via state machine model(?)
                 this.blinkRed();
             }
         } else {
@@ -55,7 +58,7 @@ class TargetStack extends Component {
 
         var styles = {
             ...targetStackStyle
-          };
+        };
 
         var localStyle = {
             position: 'absolute',

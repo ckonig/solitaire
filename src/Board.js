@@ -13,10 +13,10 @@ class Board extends Component {
                             <td>
                                 <BoardStack
                                     stack={stack}
-                                    disown={(card) => this.props.disownBoardStack(index, card)}
+                                    disown={(card) => ctx.disownBoardStack(index, card)}
                                     currentCard={ctx.currentCard}
-                                    unselectCard={this.props.unselectCard}
-                                    onBoardStackClick={(card) => this.props.onBoardStackClick(card, index)}
+                                    unselectCard={ctx.unselect}
+                                    onBoardStackClick={(card) => ctx.onBoardStackClick(card, index)}
                                 /></td>))
                         }
                     </tr></tbody></table>

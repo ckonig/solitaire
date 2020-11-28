@@ -53,10 +53,12 @@ export const getDeck = () => {
    for (var i = 0; i < cardRange.length; i++) {
       for (var j = 0; j < keys.length; j++) {
          var type = CardTypes[keys[j]];
+         var key = cardRange[i] + "" + type.icon;
          deck.push({
             'face': cardRange[i],
             'type': type,
-            'key': cardRange[i] + "" + type.icon,
+            'key': key,
+            toString: () => key,
          });
       }
    }
