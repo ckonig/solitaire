@@ -13,11 +13,10 @@ export default class Hand extends Component {
         console.log('component mounted')
         console.log(node);
         document.addEventListener('mousemove', (e) => {
-            console.log('moving')
             var x = e.clientX,
                 y = e.clientY;
             node.style.top = (y) + 'px';
-            node.style.left = (x ) + 'px';
+            node.style.left = (x) + 'px';
             node.style.position = 'relative'
         });
     }

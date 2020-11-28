@@ -6,8 +6,6 @@ export default class Engine {
     }
 
     tryUncover = (card, cb) => {
-        //@todo unhide behavior depends on stack: 
-        // is it blocked by being the source of the current hand?
         if (this.stateHolder.state.hand.source && card.props.source == this.stateHolder.state.hand.source) {
             cb && cb();
             return false;
@@ -202,9 +200,7 @@ export default class Engine {
                     state.stacks[index].stack.push(state.currentCard.props);
                     return { ...state };
                 }
-            }, () => {
-                this.unselect();
-            });
+            }, this.unselect);
         } else if (card && this.stateHolder.state.currentCard != null && this.stateHolder.state.currentCard != card) {
             if (this.validateBoardStackMove(this.stateHolder.state.currentCard, card)) {
                 this.stateHolder.setState((state, props) => {
@@ -213,11 +209,7 @@ export default class Engine {
                         state.stacks[index].stack.push(state.currentCard.props);
                         return { ...state };
                     }
-                }, () => {
-                    this.removeFromPlayStack();
-                    this.removeFromMainStack();
-                    this.unselect();
-                });
+                }, this.unselect);
             } else {
                 this.blinkBoardStack(index);
             }
@@ -231,11 +223,7 @@ export default class Engine {
                     state.hand.stack = []
                     return { ...state, currentCard: null };
                 }
-            }, () => {
-                // this.removeFromPlayStack();
-                // this.removeFromMainStack();
-                this.unselect();
-            });
+            }, this.unselect);
         }
 
         this.setCurrentCard(card);
@@ -254,8 +242,6 @@ export default class Engine {
             }, 100));
     }
 
-
-
     filterOut(stacks, card) {
         for (var i = 0; i < stacks.length; i++) {
             var filtered = stacks[i].stack.filter((value, index, arr) => {
@@ -263,7 +249,7 @@ export default class Engine {
             });
             stacks[i].stack = filtered;
         }
+
         return stacks;
     }
-
 }
