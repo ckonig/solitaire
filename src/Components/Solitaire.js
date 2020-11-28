@@ -1,7 +1,6 @@
 import '../App.css';
 
 import React, { Component } from 'react';
-import { getDeck, getStacks, } from '../Deck/Deck';
 
 import Board from './Board';
 import Engine from '../Game/Engine';
@@ -10,43 +9,14 @@ import MainStack from './MainStack';
 import { MyContext } from '../MyContext';
 import PlayStack from './PlayStack';
 import TargetStack from './TargetStack';
-import {getTargetOrder} from '../Deck/CardRange';
 import { targetStackStyle } from '../styles';
 
 class Solitaire extends Component {
 
   constructor(props) {
     super(props);
-    var deck = getDeck();
-    var stack = deck.slice(0, 20);
-    var board = deck.slice(20);
-    var stacks = getStacks([...board]);
     this.engine = new Engine(this);
-    var getStack = (icon) => {
-      return {
-        stack: [],
-        acceptedCards: [...getTargetOrder()],
-        icon,
-      };
-    };
-    this.state = {
-      currentCard: null,
-      stack: stack,
-      playStack: [],
-      targetStacks: [getStack("♥"), getStack("♦"), getStack("♣"), getStack("♠")],
-      deck: board,
-      stacks: stacks,
-      hand: {
-        stack: [],
-        source: null
-      },
-      onBoardStackClick: this.engine.onBoardStackClick,
-      onTargetStackClick: this.engine.onTargetStackClick,
-      clickMainStack: this.engine.clickMainStack,
-      pickup: this.engine.pickup,
-      clickOnPlayStack: this.engine.clickOnPlayStack,
-      requestReset: this.engine.requestReset,
-    };
+    this.state = this.engine.getInitialState();
   }
 
   render() {
