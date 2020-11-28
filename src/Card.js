@@ -5,20 +5,11 @@ class Card extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      owner: props.owner,
       isHidden: props.isHidden
     };
   }
 
-  setOwner = (owner) => {
-    if (this.state.owner != null) {
-      this.state.owner.disown(this);
-    }
-    this.setState((state, props) => {
-      return { ...state, owner: owner };
-    });
-  }
-
+  //@todo move to engine
   onClick() {
     if (this.state.isHidden && this.props.canUncover) {
       this.setState((state, props) => {

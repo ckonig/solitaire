@@ -11,11 +11,6 @@ class BoardStack extends Component {
         };
     }
 
-    disown = (card) => {
-        this.props.disown(card);
-        this.props.unselectCard();
-    }
-
     blinkRed() {
         this.setState((state, props) => {
             return { ...state, blinkFor: 10 };
@@ -61,7 +56,6 @@ class BoardStack extends Component {
                                     offsetTop={index * 20}
                                     isHidden={card.hidden}
                                     blink={this.state.blinkFor}
-                                    owner={this}
                                     canUncover={index == this.props.stack.length - 1}
                                     clickCard={(c) => this.props.onBoardStackClick(c)}
                                     isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}

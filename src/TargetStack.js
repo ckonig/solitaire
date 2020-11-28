@@ -9,39 +9,12 @@ class TargetStack extends Component {
         super(props);
         this.state = {
             blinkFor: 0,
-            stack: [],
-            acceptedCards: [...getTargetOrder()],
         };
     }
 
-    //@todo move to solitaire component
+    //@todo move to engine component
 
-    onTargetStackClick = (stack) => {
-        if (this.props.currentCard !== null) {
-            this.offer(this.props.currentCard);
-        }
-    }
-
-    offer(card) {
-        if (this.props.icon == card.props.type.icon) {
-            var currentAccepted = this.state.acceptedCards[this.state.acceptedCards.length - 1];
-            if (currentAccepted == card.props.face) {
-                this.setState((state, props) => {
-                    if (state.stack.indexOf(card) == -1) {
-                        state.stack.push(card);
-                        state.acceptedCards.pop();
-                        card.setOwner(this);
-                    }
-                    return { ...state };
-                });
-            } else {
-                //@todo blink via state machine model(?)
-                this.blinkRed();
-            }
-        } else {
-            this.blinkRed();
-        }
-    }
+    
 
     blinkRed() {
         this.setState((state, props) => {
@@ -84,20 +57,20 @@ class TargetStack extends Component {
 
         return (
             <div style={localOuterStyle}>
-                <div style={localCardStyle} onClick={() => this.onTargetStackClick(this)}>
+                <div style={localCardStyle} onClick={() => this.props.onTargetStackClick()}>
                     <div style={localFaceStyle} >
                         <h1>
                             {this.props.icon}
                         </h1>
                     </div>
                 </div>
-                {this.state.stack.map(card => (
+                {this.props.stack.map(card => (
                     <div style={localStyle}>
                         <Card
                             blink={this.state.blinkFor}
                             type={card.props.type}
                             face={card.props.face}
-                            clickCard={() => this.onTargetStackClick(this)} />
+                            clickCard={(c) => this.props.onTargetStackClick(c)} />
                     </div>))}
             </div>
 

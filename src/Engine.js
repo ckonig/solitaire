@@ -5,6 +5,32 @@ export default class Engine {
         this.stateHolder = stateholder;
     }
 
+    onTargetStackClick = (index) => {
+        console.log(index, this.stateHolder.state.targetStacks);
+        if (this.stateHolder.state.currentCard !== null) {
+            if (this.stateHolder.state.targetStacks[index].icon == this.stateHolder.state.currentCard.props.type.icon) {
+                var currentAccepted = this.stateHolder.state.targetStacks[index].acceptedCards[this.stateHolder.state.targetStacks[index].acceptedCards.length - 1];
+                if (currentAccepted == this.stateHolder.state.currentCard.props.face) {
+                    this.stateHolder.setState((state, props) => {
+                        if (state.targetStacks[index].stack.indexOf(this.stateHolder.state.currentCard) == -1) {
+                            this.removeFromBoardStacks(this.stateHolder.state.currentCard)
+                            this.removeFromMainStack(this.stateHolder.state.currentCard)
+                            this.removeFromPlayStack(this.stateHolder.state.currentCard)
+                            state.targetStacks[index].stack.push(this.stateHolder.state.currentCard);
+                            state.targetStacks[index].acceptedCards.pop();
+                        }
+                        return { ...state, currentCard: null };
+                    });
+                } else {
+                    //@todo blink via state machine model(?)
+                    //this.blinkRed();
+                }
+            } else {
+                //this.blinkRed();
+            }
+        }
+    }
+
     removeFromPlayStack = (card) => {
         this.stateHolder.setState((state, props) => {
             console.debug('removeFromPlayStack')
@@ -16,6 +42,19 @@ export default class Engine {
 
             state.playStack = filtered;
             console.debug('  after ' + state.playStack.length)
+            return { ...state };
+        });
+    }
+
+    removeFromBoardStacks = (card) => {
+        this.stateHolder.setState((state, props) => {
+            console.debug('removeFromBoardStacks')
+            for (var i = 0; i < state.stacks.length; i++) {
+                var filtered = state.stacks[i].filter((value, index, arr) => {
+                    return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+                });
+                state.stacks[i] = filtered;
+            }
             return { ...state };
         });
     }
@@ -62,35 +101,6 @@ export default class Engine {
                 return { ...state, currentCard: null };
             });
         }
-    }
-
-    disownPlayStack = (card) => {
-        this.stateHolder.setState((state, props) => {
-            console.debug('disownPlayStack')
-            var playStack = state.playStack.filter((value, index, arr) => {
-                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-            });
-            return { ...state, playStack, currentCard: null };
-        });
-    }
-
-    disownMainStack = () => {
-        this.stateHolder.setState((state, props) => {
-            console.debug('disownMainStack')
-            state.stack && state.stack.pop();
-            return { ...state, currentCard: null };
-        });
-    }
-
-    disownBoardStack = (index, card) => {
-        this.stateHolder.setState((state, props) => {
-            console.debug('disownBoardStack')
-            var stack = state.stacks[index].filter((value, index, arr) => {
-                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-            });
-            state.stacks[index] = stack;
-            return { ...state, currentCard: null };
-        });
     }
 
     addToPlayStack = (card) => {

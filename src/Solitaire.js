@@ -2,7 +2,7 @@ import MainStack from './MainStack';
 import Board from './Board';
 import TargetStack from './TargetStack';
 import React, { Component } from 'react';
-import { getDeck, getStacks, CardRange } from './CardTypes';
+import { getDeck, getStacks, getTargetOrder } from './CardTypes';
 import { targetStackStyle } from './styles';
 import PlayStack from './PlayStack';
 import { MyContext } from './MyContext';
@@ -18,16 +18,22 @@ class Solitaire extends Component {
     var board = deck.slice(20);
     var stacks = getStacks([...board]);
     this.engine = new Engine(this);
+    var getStack = (icon) => {
+      return {
+        stack: [],
+        acceptedCards: [...getTargetOrder()],
+        icon,
+      };
+    };
     this.state = {
       currentCard: null,
       stack: stack,
       playStack: [],
+      targetStacks: [getStack("♥"), getStack("♦"), getStack("♣"), getStack("♠")],
       deck: board,
       stacks: stacks,
-      disownMainStack: this.engine.disownMainStack,
-      disownPlayStack: this.engine.disownPlayStack,
-      disownBoardStack: this.engine.disownBoardStack,
       onBoardStackClick: this.engine.onBoardStackClick,
+      onTargetStackClick: this.engine.onTargetStackClick,
       unselect: this.engine.unselect,
       setCurrentCard: this.engine.setCurrentCard,
       addToPlayStack: this.engine.addToPlayStack,
@@ -43,25 +49,18 @@ class Solitaire extends Component {
             <tbody>
               <tr>
                 <td>
-                  <MainStack disown={this.state.disownMainStack} stack={this.state.stack} setCurrentCard={(c) => this.state.setCurrentCard(c)}
+                  <MainStack stack={this.state.stack} setCurrentCard={(c) => this.state.setCurrentCard(c)}
                     unselectCard={this.state.unselect} requestReset={this.state.requestReset} />
                 </td>
                 <td>
-                  <PlayStack addToPlayStack={this.state.addToPlayStack} disown={this.state.disownPlayStack} stack={this.state.playStack} currentCard={this.state.currentCard}
+                  <PlayStack addToPlayStack={this.state.addToPlayStack} stack={this.state.playStack} currentCard={this.state.currentCard}
                     unselectCard={this.state.unselect} />
                 </td>
-                <td>
-                  <TargetStack currentCard={this.state.currentCard} icon="♥" />
-                </td>
-                <td>
-                  <TargetStack currentCard={this.state.currentCard} icon="♦" />
-                </td>
-                <td>
-                  <TargetStack currentCard={this.state.currentCard} icon="♣" />
-                </td>
-                <td>
-                  <TargetStack currentCard={this.state.currentCard} icon="♠" />
-                </td>
+                {this.state.targetStacks.map((targetStack, index) => (
+                  <td>
+                    <TargetStack stack={targetStack.stack} onTargetStackClick={(c) => this.state.onTargetStackClick(index, c)} currentCard={this.state.currentCard} icon={targetStack.icon} />
+                  </td>
+                ))}
               </tr>
               <tr>
                 <td colSpan="6">
