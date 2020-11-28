@@ -2,7 +2,7 @@ import MainStack from './MainStack';
 import Board from './Board';
 import TargetStack from './TargetStack';
 import React, { Component } from 'react';
-import { getDeck, getStacks } from './CardTypes';
+import { getDeck, getStacks, CardRange } from './CardTypes';
 import { targetStackStyle } from './styles';
 import PlayStack from './PlayStack';
 import { MyContext } from './MyContext';
@@ -13,8 +13,8 @@ class Solitaire extends Component {
   constructor(props) {
     super(props);
     var deck = getDeck();
-    var stack = deck.slice(0, 15);
-    var board = deck.slice(15);
+    var stack = deck.slice(0, 20);
+    var board = deck.slice(20);
     var stacks = getStacks([...board]);
     this.state = {
       currentCard: null,
@@ -61,6 +61,41 @@ class Solitaire extends Component {
       return { ...state };
     });
     this.unselect();
+  }
+
+  validateBoardStackMove = (current, top) => {
+    var range = [...CardRange];
+    var currentIndex = range.indexOf(current.props.face);
+    var topIndex = range.indexOf(top.props.face);
+    console.log('comparing ' + currentIndex + ' to ' + topIndex)
+    return (currentIndex + 1) == topIndex && (current.props.type.color != top.props.type.color);
+  }
+
+  onBoardStackClick = (card, index) => {
+    if (card && this.state.currentCard != null && this.state.currentCard != card) {
+      if (this.validateBoardStackMove(this.state.currentCard, card)) {
+        if (this.state.currentCard != null && this.state.stacks[index].indexOf(this.state.currentCard.props) == -1) {
+          this.state.currentCard.setOwner(this);
+          this.state.stacks[index].push(this.state.currentCard.props);
+        }
+      } else {
+        this.blinkRed();
+      }
+    }
+
+    if (!card && this.state.currentCard && this.state.currentCard.props && this.state.currentCard.props.face == 'K') {
+      if (this.state.currentCard != null && this.state.stacks[index].indexOf(this.state.currentCard.props) == -1) {
+        this.state.currentCard.setOwner(this);
+        this.state.stacks[index].push(this.state.currentCard.props);
+      }
+    }
+
+    this.setCurrentCard(card);
+  }
+
+  addCardToStack(card) {
+    this.props.currentCard.setOwner(this);
+    this.props.stack.push(this.props.currentCard.props);
   }
 
   disownBoardStack = (index, card) => {
@@ -146,7 +181,7 @@ class Solitaire extends Component {
                     disownBoardStack={this.disownBoardStack}
                     stacks={this.state.stacks}
                     deck={this.state.deck}
-                    handler={this.setCurrentCard}
+                    onBoardStackClick={this.onBoardStackClick}
                     cards={this.state.cards}
                     unselectCard={this.unselect}
                   />
