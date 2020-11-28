@@ -1,5 +1,6 @@
-import { Component } from "react";
 import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "../styles";
+
+import { Component } from "react";
 
 class Card extends Component {
 

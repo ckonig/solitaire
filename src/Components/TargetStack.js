@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Card from './Card';
 import { targetStackStyle } from '../styles';
 

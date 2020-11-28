@@ -1,6 +1,7 @@
+import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Solitaire from './Components/Solitaire';
 import reportWebVitals from './reportWebVitals';
 

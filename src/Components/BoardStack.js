@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+
+import Card from './Card';
 import { MyContext } from '../MyContext';
 import { targetStackStyle } from '../styles';
-import Card from './Card';
 
 class BoardStack extends Component {
 

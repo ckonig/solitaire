@@ -1,14 +1,16 @@
-import MainStack from './MainStack';
-import Board from './Board';
-import Hand from './Hand';
-import TargetStack from './TargetStack';
+import '../App.css';
+
 import React, { Component } from 'react';
 import { getDeck, getStacks, getTargetOrder } from '../CardTypes';
-import { targetStackStyle } from '../styles';
-import PlayStack from './PlayStack';
-import { MyContext } from '../MyContext';
-import '../App.css';
+
+import Board from './Board';
 import Engine from '../Engine';
+import Hand from './Hand';
+import MainStack from './MainStack';
+import { MyContext } from '../MyContext';
+import PlayStack from './PlayStack';
+import TargetStack from './TargetStack';
+import { targetStackStyle } from '../styles';
 
 class Solitaire extends Component {
 
