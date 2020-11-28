@@ -11,10 +11,6 @@ export default class Engine {
         if (this.stateHolder.state.hand.source && card.props.source == this.stateHolder.state.hand.source) {
             cb && cb();
             return false;
-        } else {
-            console.log('HAND')
-            console.log(this.stateHolder.state.hand.source)
-            console.log(card.props.source)
         }
         if (card.props.isHidden && card.props.canUncover) {
             this.stateHolder.setState((state, props) => {
@@ -133,7 +129,7 @@ export default class Engine {
 
     setCurrentCard = (card) => {
         if (card && this.tryUncover(card)) {
-            console.log('success uncover')
+            console.debug('success uncover')
         } else if (this.stateHolder.state.currentCard == null) {
             this.removeFromAll(() =>
                 this.stateHolder.setState((state, props) => {
