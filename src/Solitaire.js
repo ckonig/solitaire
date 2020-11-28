@@ -2,7 +2,7 @@ import MainStack from './MainStack';
 import Board from './Board';
 import TargetStack from './TargetStack';
 import React, { Component } from 'react';
-import { getDeck } from './CardTypes';
+import { getDeck, getStacks } from './CardTypes';
 import { targetStackStyle } from './styles';
 import PlayStack from './PlayStack';
 import { MyContext } from './MyContext';
@@ -15,11 +15,13 @@ class Solitaire extends Component {
     var deck = getDeck();
     var stack = deck.slice(0, 15);
     var board = deck.slice(15);
+    var stacks = getStacks([...board]);
     this.state = {
       currentCard: null,
       stack: stack,
       playStack: [],
       deck: board,
+      stacks: stacks,
     };
   }
 
@@ -121,6 +123,7 @@ class Solitaire extends Component {
               <tr>
                 <td colSpan="6">
                   <Board
+                    stacks={this.state.stacks}
                     deck={this.state.deck}
                     handler={this.setCurrentCard}
                     cards={this.state.cards}

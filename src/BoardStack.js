@@ -60,7 +60,12 @@ class BoardStack extends Component {
     }
 
     disown = (card) => {
-        this.removeFromStack(card);
+        this.setState((state, props) => {
+            var stack = state.stack.filter((value, index, arr) => {
+                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+            });
+            return { ...state, stack };
+        });
         this.props.unselectCard();
     }
 
@@ -73,15 +78,6 @@ class BoardStack extends Component {
                 return { ...state, blinkFor: 0 };
             });
         }, 100);
-    }
-
-    removeFromStack = (card) => {
-        this.setState((state, props) => {
-            var stack = state.stack.filter((value, index, arr) => {
-                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-            });
-            return { ...state, stack };
-        });
     }
 
     render() {

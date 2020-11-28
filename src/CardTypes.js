@@ -25,7 +25,7 @@ const CardTypes = {
    },
 };
 
-export const CardRange =  [
+export const CardRange = [
    '2',
    '3',
    '4',
@@ -42,7 +42,7 @@ export const CardRange =  [
 ];
 
 export const getTargetOrder = () => {
-  return ['A', ...CardRange.slice(0, CardRange.length-2)].reverse();
+   return ['A', ...CardRange.slice(0, CardRange.length - 2)].reverse();
 }
 
 export const getDeck = () => {
@@ -62,4 +62,38 @@ export const getDeck = () => {
    }
    shuffleArray(deck);
    return deck;
+}
+
+function getRndInteger(min, max) {
+   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export const getStacks = (deck) => {
+   for (var i = 0; i < deck.length; i++) {
+      deck[i].hidden = true;
+   }
+   var pointer = 0;
+   var oldpointer = pointer; pointer += getRndInteger(4, 7);
+   var stacks = [[], [], [], [], [], [], []];
+   stacks[6] = deck.slice(oldpointer, pointer);
+   stacks[6][stacks[6].length - 1].hidden = false;
+   oldpointer = pointer; pointer += getRndInteger(4, 7);
+   stacks[5] = deck.slice(oldpointer, pointer);
+   stacks[5][stacks[5].length - 1].hidden = false;
+   oldpointer = pointer; pointer += getRndInteger(4, 7);
+   stacks[4] = deck.slice(oldpointer, pointer);
+   stacks[4][stacks[4].length - 1].hidden = false;
+   oldpointer = pointer; pointer += getRndInteger(4, 7);
+   stacks[3] = deck.slice(oldpointer, pointer);
+   stacks[3][stacks[3].length - 1].hidden = false;
+   oldpointer = pointer; pointer += getRndInteger(4, 7);
+   stacks[2] = deck.slice(oldpointer, pointer);
+   stacks[2][stacks[2].length - 1].hidden = false;
+   oldpointer = pointer; pointer += getRndInteger(4, 7);
+   stacks[1] = deck.slice(oldpointer, pointer);
+   stacks[1][stacks[1].length - 1].hidden = false;
+   oldpointer = pointer; pointer += getRndInteger(4, 7);
+   stacks[0] = deck.slice(oldpointer, deck.length - 1);
+   stacks[0][stacks[0].length - 1].hidden = false;
+   return stacks;
 }
