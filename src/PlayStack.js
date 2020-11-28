@@ -25,7 +25,7 @@ class PlayStack extends Component {
             <MyContext.Consumer>
                 {ctx =>
                     <div style={localOuterStyle}>
-                        <div style={styles.cardStyle} onClick={() => this.onStackClick()}>{this.props.stack.length}</div>
+                        <div style={styles.cardStyle} onClick={() => this.props.addToPlayStack()}>{this.props.stack.length}</div>
                         {this.props.stack.map((card, index) => (
                             <div style={localStyle}>
                                 <Card type={card.type}
