@@ -74,28 +74,71 @@ class Solitaire extends Component {
   onBoardStackClick = (card, index) => {
     if (card && this.state.currentCard != null && this.state.currentCard != card) {
       if (this.validateBoardStackMove(this.state.currentCard, card)) {
-        if (this.state.currentCard != null && this.state.stacks[index].indexOf(this.state.currentCard.props) == -1) {
-          this.state.currentCard.setOwner(this);
-          this.state.stacks[index].push(this.state.currentCard.props);
+
+        this.setState((state, props) => {
+          if (this.state.currentCard != null && this.state.stacks[index].indexOf(this.state.currentCard.props) == -1) {
+            this.removeFromPlayStack(this.state.currentCard);
+            this.removeFromMainStack(this.state.currentCard);
+            for (var i = 0; i < state.stacks.length; i++) {
+              var filtered = state.stacks[i].filter((value, index, arr) => {
+                return value.face !== state.currentCard.props.face || value.type.icon !== state.currentCard.props.type.icon;
+              });
+              state.stacks[i] = filtered;
+            }
+
+            state.stacks[index].push(state.currentCard.props);
+            return { ...state };
+          }
         }
+        );
+        this.unselect();
+
       } else {
-        this.blinkRed();
+        // this.blinkRed(); @todo fix
       }
     }
 
     if (!card && this.state.currentCard && this.state.currentCard.props && this.state.currentCard.props.face == 'K') {
-      if (this.state.currentCard != null && this.state.stacks[index].indexOf(this.state.currentCard.props) == -1) {
-        this.state.currentCard.setOwner(this);
-        this.state.stacks[index].push(this.state.currentCard.props);
+      this.setState((state, props) => {
+        if (this.state.currentCard != null && this.state.stacks[index].indexOf(this.state.currentCard.props) == -1) {
+          this.removeFromPlayStack(this.state.currentCard);
+          this.removeFromMainStack(this.state.currentCard);
+          for (var i = 0; i < state.stacks.length; i++) {
+            var filtered = state.stacks[i].filter((value, index, arr) => {
+              return value.face !== state.currentCard.props.face || value.type.icon !== state.currentCard.props.type.icon;
+            });
+            state.stacks[i] = filtered;
+          }
+
+          state.stacks[index].push(state.currentCard.props);
+          return { ...state };
+        }
       }
+      );
+      this.unselect();
     }
 
     this.setCurrentCard(card);
   }
 
-  addCardToStack(card) {
-    this.props.currentCard.setOwner(this);
-    this.props.stack.push(this.props.currentCard.props);
+  removeFromPlayStack = (card) => {
+    this.setState((state, props) => {
+      var filtered = state.playStack.filter((value, index, arr) => {
+        return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+      });
+      state.playStack = filtered;
+      return { ...state };
+    });
+  }
+
+  removeFromMainStack = (card) => {
+    this.setState((state, props) => {
+      var filtered = state.stack.filter((value, index, arr) => {
+        return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+      });
+      state.stack = filtered;
+      return { ...state };
+    });
   }
 
   disownBoardStack = (index, card) => {

@@ -64,7 +64,7 @@ class Card extends Component {
     const getCardStyle = (color) => {
       var st = { ...cardStyle };
       st['color'] = color;
-      st.zIndex = this.props.offsetTop
+      st.zIndex = this.props.offsetTop+2;
       if (this.props.blink) {
         st['borderColor'] = 'red';
       }
