@@ -35,6 +35,17 @@ class BoardStack extends Component {
                 this.blinkRed();
             }
         }
+
+        if (!card && this.props.currentCard && this.props.currentCard.props && this.props.currentCard.props.face == 'K') {
+            this.setState((state, props) => {
+                if (this.props.currentCard != null && state.stack.indexOf(this.props.currentCard.props) == -1) {
+                    this.props.currentCard.setOwner(this);
+                    state.stack.push(this.props.currentCard.props);
+                }
+                return { ...state };
+            });
+        }
+
         this.props.onStackClick(card);
     }
 
@@ -46,10 +57,6 @@ class BoardStack extends Component {
             }
             return { ...state };
         });
-        if (card.getChild()) {
-            console.log('adding child too');
-            this.addCardToStack(card.getChild());
-        }
     }
 
     disown = (card) => {
@@ -105,13 +112,14 @@ class BoardStack extends Component {
                         <div style={localCardStyle} onClick={() => this.onStackClick()}>{this.state.stack.length}</div>
                         {this.state.stack.map((card, index) => (
                             <div className="localstyl0r" style={localStyle}>
-                                <Card 
+                                <Card
                                     type={card.type}
                                     face={card.face}
                                     offsetTop={index * 20}
                                     isHidden={card.hidden}
                                     blink={this.state.blinkFor}
                                     owner={this}
+                                    canUncover={index == this.state.stack.length - 1}
                                     clickCard={(c) => this.onStackClick(c)}
                                     isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
                                 />

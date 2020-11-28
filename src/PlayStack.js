@@ -4,36 +4,17 @@ import Card from './Card';
 import { MyContext } from './MyContext';
 
 class PlayStack extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            stack: [...props.stack],
-        };
-    }
 
     disown = (card) => {
-        this.removeFromStack(card);
-        this.props.unselectCard();
-    }
-
-    removeFromStack = (card) => {
-        this.setState((state, props) => {
-            var stack = state.stack.filter((value, index, arr) => {
-                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-            });
-            return { ...state, stack };
-        });
+        this.props.disown(card);
     }
 
     onStackClick = (card) => {
         if (this.props.currentCard != null && this.props.currentCard != card) {
             this.props.currentCard.setOwner(this);
-            this.setState((state, props) => {
-                if (this.props.currentCard != null && state.stack.indexOf(card) == -1) {
-                    state.stack.push(this.props.currentCard.props);
-                }
-                return { ...state };
-            });
+            if (this.props.currentCard != null && this.props.stack.indexOf(card) == -1) {
+                this.props.stack.push(this.props.currentCard.props);
+            }
 
         }
         this.props.onStackClick(card);
@@ -55,8 +36,8 @@ class PlayStack extends Component {
             <MyContext.Consumer>
                 {ctx =>
                     <div style={localOuterStyle}>
-                        <div style={styles.cardStyle} onClick={() => this.onStackClick()}>{this.state.stack.length}</div>
-                        {this.state.stack.map((card, index) => (
+                        <div style={styles.cardStyle} onClick={() => this.onStackClick()}>{this.props.stack.length}</div>
+                        {this.props.stack.map((card, index) => (
                             <div style={localStyle}>
                                 <Card type={card.type}
                                     face={card.face}

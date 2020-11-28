@@ -37,9 +37,36 @@ class Solitaire extends Component {
     }
   }
 
+  disownPlayStack = (card) => {
+    this.setState((state, props) => {
+      var playStack = state.playStack.filter((value, index, arr) => {
+        return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+      });
+      return { ...state, playStack };
+    });
+    this.unselect();
+  }
+
+  disownMainStack = () => {
+    this.setState((state, props) => {
+      state.stack && state.stack.pop();
+      return { ...state };
+    });
+    this.unselect();
+  }
+
   unselect = () => {
     this.setState((state, props) => {
       return { ...state, currentCard: null };
+    });
+  }
+
+  requestReset = () => {
+    console.log('RESET NOW')
+    this.setState((state, props) => {
+      state.stack = [...state.playStack];
+      state.playStack = [];
+      return { ...state };
     });
   }
 
@@ -73,10 +100,10 @@ class Solitaire extends Component {
             <tbody>
               <tr>
                 <td>
-                  <MainStack stack={this.state.stack} setCurrentCard={(c) => this.setCurrentCard(c)} unselectCard={this.unselect} />
+                  <MainStack disown={this.disownMainStack} stack={this.state.stack} setCurrentCard={(c) => this.setCurrentCard(c)} unselectCard={this.unselect} requestReset={this.requestReset} />
                 </td>
                 <td>
-                  <PlayStack stack={this.state.playStack} onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
+                  <PlayStack disown={this.disownPlayStack} stack={this.state.playStack} onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
                 </td>
                 <td>
                   <TargetStack currentCard={ctxState.currentCard} icon="♥" />

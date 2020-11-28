@@ -6,7 +6,6 @@ class Card extends Component {
     super(props);
     this.state = {
       owner: props.owner,
-      child: null,
       isHidden: props.isHidden
     };
   }
@@ -20,19 +19,14 @@ class Card extends Component {
     });
   }
 
-  getChild = () => {
-    return this.state.child;
-  }
-
   onClick() {
-    console.log('clicked');
-    console.log(this.props);
-    if (this.state.isHidden  && !this.state.child) {
+    if (this.state.isHidden && this.props.canUncover) {
       this.setState((state, props) => {
         return { ...state, isHidden: false };
       });
+    } else if (!this.state.isHidden || this.props.canUncover) {
+      this.props.clickCard(this);
     }
-    this.props.clickCard(this);
   }
 
   render() {

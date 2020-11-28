@@ -4,23 +4,17 @@ import Card from './Card';
 import { MyContext, defaultValue } from './MyContext';
 
 class MainStack extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            stack: this.props.stack,
-        };
-    }
 
     onStackClick = (card) => {
-        this.props.setCurrentCard(card);
+        if (card) {
+            this.props.setCurrentCard(card);
+        } else {
+            this.props.requestReset();
+        }
     }
 
     disown() {
-        this.setState((state, props) => {
-            state.stack && state.stack.pop();
-            return { ...state };
-        });
-        this.props.unselectCard();
+        this.props.disown();
     }
 
     render() {
@@ -41,7 +35,7 @@ class MainStack extends Component {
         return (
             <MyContext.Consumer>
                 {ctx =>
-                  <div style={localOuterStyle}>
+                    <div style={localOuterStyle}>
                         <div style={styles.cardStyle} onClick={() => this.onStackClick()}>&nbsp;</div>
                         {this.props.stack.map((card, index) => (
                             <div style={localStyle}>

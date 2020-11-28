@@ -40,10 +40,6 @@ class Board extends Component {
     }
 
     disown = (card) => {
-        this.removeFromBoard(card);
-    }
-
-    removeFromBoard = (card) => {
         this.setState((state, props) => {
             var cards = state.cards.filter((value, index, arr) => {
                 return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
