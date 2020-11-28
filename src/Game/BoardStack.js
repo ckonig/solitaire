@@ -27,38 +27,39 @@ export default class BoardStack extends Base {
         var stackIsEmpty = !!!card;
         if (card && this.tryUncover(card, index)) {
             // can't put card directly onto previously hidden card
-        } else if (card && !this.tryUncover(card, index) && this.state().hand.source && card.props.source == this.state().hand.source) {
+        } else if (card && !this.tryUncover(card, index) && this.hand.isFromCurrentSource(card)) {
             // put back onto orignal stack
             this.stateHolder.setState((state, props) => {
                 if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                     state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
                     state.stacks[index].stack.push(state.currentCard.props); //@todo push from hand stack
-                    return { ...state };
+                    return { ...this.unselectCard(state) };
                 }
-            }, this.unselect);
+            });
         } else if (card && this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
+            // try put on other stack
             if (this.validateBoardStackMove(this.state().currentCard, card)) {
                 this.stateHolder.setState((state, props) => {
                     if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                         state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
                         state.stacks[index].stack.push(state.currentCard.props); //@todo push from hand stack
-                        return { ...state };
+                        return { ...this.unselectCard(state) };
                     }
-                }, this.unselect);
+                });
             } else {
                 this.blink(index);
             }
         } else if (stackIsEmpty && this.hand.isHoldingKing()) {
+            // try create new stack
             this.stateHolder.setState((state, props) => {
                 if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                     this.removeFromPlayStack();
                     this.removeFromMainStack();
                     state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
                     state.stacks[index].stack.push(this.hand.currentCard().props);
-                    state.hand.stack = []
-                    return { ...state, currentCard: null };
+                    return { ...this.unselectCard(state) };
                 }
-            }, this.unselect);
+            });
         } else {
             this.pickup(card);
         }

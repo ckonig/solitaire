@@ -10,12 +10,15 @@ export default class Base {
         return this.stateHolder.state;
     }
 
+    filterNotEqual(stack, card) {
+        return stack.filter((value, index, arr) => {
+            return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+        });
+    }
+
     filterOut = (stacks, card) => {
         for (var i = 0; i < stacks.length; i++) {
-            var filtered = stacks[i].stack.filter((value, index, arr) => {
-                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-            });
-            stacks[i].stack = filtered;
+            stacks[i].stack = this.filterNotEqual(stacks[i].stack, card);
         }
 
         return stacks;
@@ -63,12 +66,6 @@ export default class Base {
         return state;
     }
 
-    unselect = () => {
-        this.stateHolder.setState((state, props) => {
-            return { ...this.unselectCard(state) };
-        });
-    }
-
     removeFromAll(cb, card) {
         var c = card || this.hand.currentCard();
         this.removeFromMainStack(() => {
@@ -78,46 +75,36 @@ export default class Base {
         }, c);
     }
 
-    removeFromPlayStack = (callback, card) => {
+    removeFromXStack = (callback, modifier, card) => {
         if (card)
             this.stateHolder.setState((state, props) => {
-                var filtered = state.playStack.filter((value, index, arr) => {
-                    return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-                });
-
-                state.playStack = filtered;
+                state = modifier(state)
                 return { ...state };
             }, () => {
                 callback && callback()
             });
         else
             callback && callback()
+    }
+
+    removeFromPlayStack = (callback, card) => {
+        this.removeFromXStack(callback, (state) => {
+            state.playStack = this.filterNotEqual(state.playStack, card);
+            return state;
+        }, card);
     }
 
     removeFromMainStack = (callback, card) => {
-        if (card)
-            this.stateHolder.setState((state, props) => {
-                var filtered = state.stack.filter((value, index, arr) => {
-                    return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-                });
-                state.stack = filtered;
-                return { ...state };
-            }, () => {
-                callback && callback()
-            });
-        else
-            callback && callback()
+        this.removeFromXStack(callback, (state) => {
+            state.stack = this.filterNotEqual(state.stack, card);
+            return state;
+        }, card);
     }
 
     removeFromBoardStacks = (callback, card) => {
-        if (card)
-            this.stateHolder.setState((state, props) => {
-                state.stacks = this.filterOut(state.stacks, card);
-                return { ...state };
-            }, () => {
-                callback && callback()
-            });
-        else
-            callback && callback()
+        this.removeFromXStack(callback, (state) => {
+            state.stacks = this.filterOut(state.stacks, card);
+            return state;
+        }, card);
     }
 }

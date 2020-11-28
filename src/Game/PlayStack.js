@@ -19,8 +19,6 @@ export default class PlayStack extends Base {
                     return { ...state, currentCard: null };
                 });
             }
-        } else if (this.hand.isCurrentCard(card)) {
-            this.unselect();
         } else if (card && !this.hand.isHoldingCard()) {
             this.pickup(card);
         }
