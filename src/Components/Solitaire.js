@@ -37,14 +37,14 @@ class Solitaire extends Component {
       deck: board,
       stacks: stacks,
       hand: {
-        stack: null,
+        stack: [],
         source: null
       },
       onBoardStackClick: this.engine.onBoardStackClick,
       onTargetStackClick: this.engine.onTargetStackClick,
       clickMainStack: this.engine.clickMainStack,
-      setCurrentCard: this.engine.setCurrentCard,
-      addToPlayStack: this.engine.addToPlayStack,
+      pickup: this.engine.pickup,
+      clickOnPlayStack: this.engine.clickOnPlayStack,
       requestReset: this.engine.requestReset,
     };
   }
@@ -55,7 +55,7 @@ class Solitaire extends Component {
         <Hand
           currentCard={this.state.currentCard}
           stack={this.state.hand.stack}
-          setCurrentCard={this.state.setCurrentCard} />
+          pickup={this.state.pickup} />
         <div style={targetStackStyle.tableStyle}>
           <table>
             <tbody>

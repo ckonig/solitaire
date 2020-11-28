@@ -36,7 +36,7 @@ export default class Hand extends Component {
 
                     {this.props.stack && this.props.stack.map((card, index) => (
                         <Card
-                            clickCard={this.props.setCurrentCard}
+                            clickCard={this.props.pickup}
                             type={card.props.type}
                             offsetTop="100"
                             face={card.props.face}
