@@ -1,12 +1,16 @@
-import { CardRange } from './CardTypes';
+import {CardRange} from '../Deck/CardRange';
 
 export default class Engine {
     constructor(stateholder) {
         this.stateHolder = stateholder;
     }
 
+    state() {
+        return this.stateHolder.state;
+    }
+
     tryUncover = (card, cb) => {
-        if (this.stateHolder.state.hand.source && card.props.source == this.stateHolder.state.hand.source) {
+        if (this.state().hand.source && card.props.source == this.state().hand.source) {
             cb && cb();
             return false;
         }
@@ -35,14 +39,14 @@ export default class Engine {
     }
 
     onTargetStackClick = (index) => {
-        if (this.stateHolder.state.currentCard !== null) {
-            if (this.stateHolder.state.targetStacks[index].icon == this.stateHolder.state.currentCard.props.type.icon) {
-                var currentAccepted = this.stateHolder.state.targetStacks[index].acceptedCards[this.stateHolder.state.targetStacks[index].acceptedCards.length - 1];
-                if (currentAccepted == this.stateHolder.state.currentCard.props.face) {
+        if (this.state().currentCard !== null) {
+            if (this.state().targetStacks[index].icon == this.state().currentCard.props.type.icon) {
+                var currentAccepted = this.state().targetStacks[index].acceptedCards[this.state().targetStacks[index].acceptedCards.length - 1];
+                if (currentAccepted == this.state().currentCard.props.face) {
                     this.stateHolder.setState((state, props) => {
-                        if (state.targetStacks[index].stack.indexOf(this.stateHolder.state.currentCard) == -1) {
+                        if (state.targetStacks[index].stack.indexOf(this.state().currentCard) == -1) {
                             this.removeFromAll()
-                            state.targetStacks[index].stack.push(this.stateHolder.state.currentCard);
+                            state.targetStacks[index].stack.push(this.state().currentCard);
                             state.targetStacks[index].acceptedCards.pop();
                         }
                         return { ...state, currentCard: null, hand: [] };
@@ -72,7 +76,7 @@ export default class Engine {
     }
 
     removeFromAll(cb, card) {
-        var c = card || this.stateHolder.state.currentCard;
+        var c = card || this.state().currentCard;
         this.removeFromMainStack(() => {
             this.removeFromPlayStack(() => {
                 this.removeFromBoardStacks(cb, c)
@@ -142,14 +146,14 @@ export default class Engine {
     setCurrentCard = (card) => {
         if (card && this.tryUncover(card)) {
             console.debug('success uncover')
-        } else if (this.stateHolder.state.currentCard == null) {
+        } else if (this.state().currentCard == null) {
             this.removeFromAll(() =>
                 this.stateHolder.setState((state, props) => {
                     state.hand.stack = [card]
                     state.hand.source = card.props.source;
                     return { ...state, currentCard: card };
                 }), card);
-        } else if (this.stateHolder.state.currentCard == card) {
+        } else if (this.state().currentCard == card) {
             this.stateHolder.setState((state, props) => {
                 state.hand.stack = []
                 state.hand.source = null;
@@ -163,21 +167,21 @@ export default class Engine {
     }
 
     addToPlayStack = (card) => {
-        if (this.stateHolder.state.currentCard != null && this.stateHolder.state.currentCard != card) {
-            if (this.stateHolder.state.currentCard != null && this.stateHolder.state.hand.source == 'main' || this.stateHolder.state.hand.source == 'play') {
+        if (this.state().currentCard != null && this.state().currentCard != card) {
+            if (this.state().currentCard != null && this.state().hand.source == 'main' || this.state().hand.source == 'play') {
                 this.stateHolder.setState((state, props) => {
                     var current = state.currentCard;
-                    var top = this.stateHolder.state.playStack[this.stateHolder.state.playStack.length - 1];
+                    var top = this.state().playStack[this.state().playStack.length - 1];
                     if (current && !top || top.face !== current.props.face || top.type.icon !== current.props.type.icon) {
-                        state.playStack.push(this.stateHolder.state.currentCard.props);
+                        state.playStack.push(this.state().currentCard.props);
                     }
                     state.hand.stack = []
                     return { ...state, currentCard: null };
                 });
             }
-        } else if (card && this.stateHolder.state.currentCard == card) {
+        } else if (card && this.state().currentCard == card) {
             this.unselect();
-        } else if (card && this.stateHolder.state.currentCard == null) {
+        } else if (card && this.state().currentCard == null) {
             this.setCurrentCard(card);
         }
     }
@@ -192,20 +196,20 @@ export default class Engine {
     onBoardStackClick = (card, index) => {
         if (card && this.tryUncover(card)) {
             // can't put card onto hidden card
-        } else if (card && !this.tryUncover(card) && this.stateHolder.state.hand.source && card.props.source == this.stateHolder.state.hand.source) {
+        } else if (card && !this.tryUncover(card) && this.state().hand.source && card.props.source == this.state().hand.source) {
             // put back onto orignal stack
             this.stateHolder.setState((state, props) => {
-                if (this.stateHolder.state.currentCard != null && this.stateHolder.state.stacks[index].stack.indexOf(this.stateHolder.state.currentCard.props) == -1) {
-                    state.stacks = this.filterOut(state.stacks, this.stateHolder.state.currentCard)
+                if (this.state().currentCard != null && this.state().stacks[index].stack.indexOf(this.state().currentCard.props) == -1) {
+                    state.stacks = this.filterOut(state.stacks, this.state().currentCard)
                     state.stacks[index].stack.push(state.currentCard.props);
                     return { ...state };
                 }
             }, this.unselect);
-        } else if (card && this.stateHolder.state.currentCard != null && this.stateHolder.state.currentCard != card) {
-            if (this.validateBoardStackMove(this.stateHolder.state.currentCard, card)) {
+        } else if (card && this.state().currentCard != null && this.state().currentCard != card) {
+            if (this.validateBoardStackMove(this.state().currentCard, card)) {
                 this.stateHolder.setState((state, props) => {
-                    if (this.stateHolder.state.currentCard != null && this.stateHolder.state.stacks[index].stack.indexOf(this.stateHolder.state.currentCard.props) == -1) {
-                        state.stacks = this.filterOut(state.stacks, this.stateHolder.state.currentCard)
+                    if (this.state().currentCard != null && this.state().stacks[index].stack.indexOf(this.state().currentCard.props) == -1) {
+                        state.stacks = this.filterOut(state.stacks, this.state().currentCard)
                         state.stacks[index].stack.push(state.currentCard.props);
                         return { ...state };
                     }
@@ -213,13 +217,13 @@ export default class Engine {
             } else {
                 this.blinkBoardStack(index);
             }
-        } else if (!card && this.stateHolder.state.currentCard && this.stateHolder.state.currentCard.props && this.stateHolder.state.currentCard.props.face == 'K') {
+        } else if (!card && this.state().currentCard && this.state().currentCard.props && this.state().currentCard.props.face == 'K') {
             this.stateHolder.setState((state, props) => {
-                if (this.stateHolder.state.currentCard != null && this.stateHolder.state.stacks[index].indexOf(this.stateHolder.state.currentCard.props) == -1) {
+                if (this.state().currentCard != null && this.state().stacks[index].indexOf(this.state().currentCard.props) == -1) {
                     this.removeFromPlayStack();
                     this.removeFromMainStack();
-                    state.stacks = this.filterOut(state.stacks, this.stateHolder.state.currentCard)
-                    state.stacks[index].push(this.stateHolder.state.currentCard.props);
+                    state.stacks = this.filterOut(state.stacks, this.state().currentCard)
+                    state.stacks[index].push(this.state().currentCard.props);
                     state.hand.stack = []
                     return { ...state, currentCard: null };
                 }
