@@ -3,7 +3,7 @@ import BoardStack from './BoardStack';
 import { MyContext } from './MyContext';
 
 class Board extends Component {
-    
+
     render() {
         return (
             <MyContext.Consumer>
@@ -13,6 +13,7 @@ class Board extends Component {
                             <td>
                                 <BoardStack
                                     stack={stack}
+                                    disown={(card) => this.props.disownBoardStack(index, card)}
                                     currentCard={ctx.currentCard}
                                     unselectCard={this.props.unselectCard}
                                     onStackClick={(props) => this.props.handler(props)}

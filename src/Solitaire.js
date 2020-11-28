@@ -25,17 +25,23 @@ class Solitaire extends Component {
     };
   }
 
-  onPlayStackCLick = (card) => {
-    if (this.state.currentCard) {
-      if (this.state.currentCard == card) {
-        // deselect
-        this.setState((state, props) => {
-          return { ...state, currentCard: null };
-        });
+  addToPlayStack = (card) => {
+    console.log('hello here ', card, this.state.currentCard);
+    if (this.state.currentCard != null && this.state.currentCard != card) {
+      if (this.state.currentCard != null && this.state.stack.indexOf(card) == -1
+        && this.state.stack[this.state.stack.length - 1].face == this.state.currentCard.props.face
+        && this.state.stack[this.state.stack.length - 1].type.icon == this.state.currentCard.props.type.icon
+      ) {
+        this.state.playStack.push(this.state.stack.pop());
+        this.unselect();
       }
-    } else {
-      // select card if there is one
-      this.setCurrentCard(card);
+    } else if (card && this.state.currentCard == card) {
+      this.unselect();
+    } else if (card && this.state.currentCard == null) {
+      this.setState((state, props) => {
+        state.currentCard = card;
+        return { ...state };
+      });
     }
   }
 
@@ -57,6 +63,17 @@ class Solitaire extends Component {
     this.unselect();
   }
 
+  disownBoardStack = (index, card) => {
+    this.setState((state, props) => {
+      var stack = state.stacks[index].filter((value, index, arr) => {
+        return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+      });
+      state.stacks[index] = stack;
+      return { ...state };
+    });
+    this.unselect();
+  }
+
   unselect = () => {
     this.setState((state, props) => {
       return { ...state, currentCard: null };
@@ -64,10 +81,13 @@ class Solitaire extends Component {
   }
 
   requestReset = () => {
-    console.log('RESET NOW')
+    console.log('before transfer')
+    console.log(this.state.stack.length, this.state.playStack.length);
     this.setState((state, props) => {
-      state.stack = [...state.playStack];
+      state.stack = [...state.playStack].reverse();
       state.playStack = [];
+      console.log('after transfer')
+      console.log(state.stack.length, state.playStack.length);
       return { ...state };
     });
   }
@@ -105,7 +125,7 @@ class Solitaire extends Component {
                   <MainStack disown={this.disownMainStack} stack={this.state.stack} setCurrentCard={(c) => this.setCurrentCard(c)} unselectCard={this.unselect} requestReset={this.requestReset} />
                 </td>
                 <td>
-                  <PlayStack disown={this.disownPlayStack} stack={this.state.playStack} onStackClick={(c) => this.onPlayStackCLick(c)} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
+                  <PlayStack addToPlayStack={this.addToPlayStack} disown={this.disownPlayStack} stack={this.state.playStack} currentCard={ctxState.currentCard} unselectCard={this.unselect} />
                 </td>
                 <td>
                   <TargetStack currentCard={ctxState.currentCard} icon="♥" />
@@ -123,6 +143,7 @@ class Solitaire extends Component {
               <tr>
                 <td colSpan="6">
                   <Board
+                    disownBoardStack={this.disownBoardStack}
                     stacks={this.state.stacks}
                     deck={this.state.deck}
                     handler={this.setCurrentCard}

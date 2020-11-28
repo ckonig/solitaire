@@ -9,17 +9,6 @@ class PlayStack extends Component {
         this.props.disown(card);
     }
 
-    onStackClick = (card) => {
-        if (this.props.currentCard != null && this.props.currentCard != card) {
-            this.props.currentCard.setOwner(this);
-            if (this.props.currentCard != null && this.props.stack.indexOf(card) == -1) {
-                this.props.stack.push(this.props.currentCard.props);
-            }
-
-        }
-        this.props.onStackClick(card);
-    }
-
     render() {
         var styles = {
             ...targetStackStyle
@@ -43,7 +32,7 @@ class PlayStack extends Component {
                                     face={card.face}
                                     offset={index}
                                     owner={this}
-                                    clickCard={(c) => this.onStackClick(c)}
+                                    clickCard={(c) => this.props.addToPlayStack(c)}
                                     isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
                                 />
                             </div>

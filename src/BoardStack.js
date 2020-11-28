@@ -9,7 +9,6 @@ class BoardStack extends Component {
         super(props);
         this.state = {
             blinkFor: 0,
-            stack: [...props.stack],
         };
     }
 
@@ -24,48 +23,32 @@ class BoardStack extends Component {
     onStackClick = (card) => {
         if (card && this.props.currentCard != null && this.props.currentCard != card) {
             if (this.validate(this.props.currentCard, card)) {
-                this.setState((state, props) => {
-                    if (this.props.currentCard != null && state.stack.indexOf(this.props.currentCard.props) == -1) {
-                        this.props.currentCard.setOwner(this);
-                        state.stack.push(this.props.currentCard.props);
-                    }
-                    return { ...state };
-                });
+                if (this.props.currentCard != null && this.props.stack.indexOf(this.props.currentCard.props) == -1) {
+                    this.props.currentCard.setOwner(this);
+                    this.props.stack.push(this.props.currentCard.props);
+                }
             } else {
                 this.blinkRed();
             }
         }
 
         if (!card && this.props.currentCard && this.props.currentCard.props && this.props.currentCard.props.face == 'K') {
-            this.setState((state, props) => {
-                if (this.props.currentCard != null && state.stack.indexOf(this.props.currentCard.props) == -1) {
-                    this.props.currentCard.setOwner(this);
-                    state.stack.push(this.props.currentCard.props);
-                }
-                return { ...state };
-            });
+            if (this.props.currentCard != null && this.props.stack.indexOf(this.props.currentCard.props) == -1) {
+                this.props.currentCard.setOwner(this);
+                this.props.stack.push(this.props.currentCard.props);
+            }
         }
 
         this.props.onStackClick(card);
     }
 
     addCardToStack(card) {
-        this.setState((state, props) => {
-            if (this.props.currentCard != null && state.stack.indexOf(this.props.currentCard.props) == -1) {
-                this.props.currentCard.setOwner(this);
-                state.stack.push(this.props.currentCard.props);
-            }
-            return { ...state };
-        });
+        this.props.currentCard.setOwner(this);
+        this.props.stack.push(this.props.currentCard.props);
     }
 
     disown = (card) => {
-        this.setState((state, props) => {
-            var stack = state.stack.filter((value, index, arr) => {
-                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
-            });
-            return { ...state, stack };
-        });
+        this.props.disown(card);
         this.props.unselectCard();
     }
 
@@ -105,8 +88,8 @@ class BoardStack extends Component {
             <MyContext.Consumer>
                 {ctx =>
                     <div style={localOuterStyle}>
-                        <div style={localCardStyle} onClick={() => this.onStackClick()}>{this.state.stack.length}</div>
-                        {this.state.stack.map((card, index) => (
+                        <div style={localCardStyle} onClick={() => this.onStackClick()}>{this.props.stack.length}</div>
+                        {this.props.stack.map((card, index) => (
                             <div className="localstyl0r" style={localStyle}>
                                 <Card
                                     type={card.type}
@@ -115,7 +98,7 @@ class BoardStack extends Component {
                                     isHidden={card.hidden}
                                     blink={this.state.blinkFor}
                                     owner={this}
-                                    canUncover={index == this.state.stack.length - 1}
+                                    canUncover={index == this.props.stack.length - 1}
                                     clickCard={(c) => this.onStackClick(c)}
                                     isSelected={ctx.currentCard != null && ctx.currentCard.props.face == card.face && ctx.currentCard.props.type.icon == card.type.icon}
                                 />
