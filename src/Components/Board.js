@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BoardStack from './BoardStack';
-import { MyContext } from './MyContext';
+import { MyContext } from '../MyContext';
 
 class Board extends Component {
 
@@ -12,7 +12,8 @@ class Board extends Component {
                         {this.props.stacks.map((stack, index) => (
                             <td>
                                 <BoardStack
-                                    stack={stack}
+                                    stackIndex={index}
+                                    stack={stack.stack}
                                     currentCard={ctx.currentCard}
                                     unselectCard={ctx.unselect}
                                     onBoardStackClick={(card) => ctx.onBoardStackClick(card, index)}

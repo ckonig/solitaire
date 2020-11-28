@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { getTargetOrder } from './CardTypes';
 import Card from './Card';
-import { targetStackStyle } from './styles';
+import { targetStackStyle } from '../styles';
 
 class TargetStack extends Component {
 

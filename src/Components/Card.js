@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "./styles";
+import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "../styles";
 
 class Card extends Component {
 
@@ -14,6 +14,7 @@ class Card extends Component {
       cardStyle['borderColor'] = 'yellow';
       cardStyle.opacity = '0.95';
     }
+    
     var className = '';
     if (this.props.isHidden) {
       className = 'karo';

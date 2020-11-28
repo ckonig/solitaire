@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { targetStackStyle } from './styles';
+import { targetStackStyle } from '../styles';
 import Card from './Card';
-import { MyContext } from './MyContext';
+import { MyContext } from '../MyContext';
 
 class MainStack extends Component {
 

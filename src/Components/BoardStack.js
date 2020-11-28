@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { MyContext } from './MyContext';
-import { targetStackStyle } from './styles';
+import { MyContext } from '../MyContext';
+import { targetStackStyle } from '../styles';
 import Card from './Card';
 
 class BoardStack extends Component {
@@ -10,6 +10,8 @@ class BoardStack extends Component {
             blinkFor: 0,
         };
     }
+
+    //@todo move to engine
 
     blinkRed() {
         this.setState((state, props) => {
@@ -54,7 +56,7 @@ class BoardStack extends Component {
                                     type={card.type}
                                     face={card.face}
                                     offsetTop={index * 20}
-                                    source={"board-"+index}
+                                    source={"board-"+this.props.stackIndex}
                                     isHidden={card.hidden}
                                     blink={this.state.blinkFor}
                                     canUncover={index == this.props.stack.length - 1}
