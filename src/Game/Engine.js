@@ -3,6 +3,7 @@ import { getDeck, getStacks, } from '../Deck/Deck';
 import Base from './Base';
 import BoardStack from './BoardStack';
 import MainStack from './MainStack';
+import PlayStack from './PlayStack';
 import TargetStack from './TargetStack';
 import { getTargetOrder } from '../Deck/CardRange'
 
@@ -12,6 +13,7 @@ export default class Engine extends Base {
         this.boardStack = new BoardStack(stateholder);
         this.targetStack = new TargetStack(stateholder);
         this.mainStack = new MainStack(stateholder);
+        this.playStack = new PlayStack(stateholder);
     }
 
     getInitialState = () => {
@@ -38,11 +40,11 @@ export default class Engine extends Base {
                 stack: [],
                 source: null
             },
-            onBoardStackClick: this.boardStack.onBoardStackClick,
-            onTargetStackClick: this.targetStack.onTargetStackClick,
-            clickMainStack: this.mainStack.clickMainStack,
+            onBoardStackClick: this.boardStack.click,
+            onTargetStackClick: this.targetStack.click,
+            clickMainStack: this.mainStack.click,
             pickup: this.pickup,
-            clickOnPlayStack: this.mainStack.clickOnPlayStack,
+            clickOnPlayStack: this.playStack.click,
             requestReset: this.mainStack.requestReset,
         };
 

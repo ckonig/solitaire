@@ -40,7 +40,7 @@ export default class Hand extends Component {
                             type={card.props.type}
                             offsetTop="100"
                             face={card.props.face}
-                            isSelected={this.props.currentCard != null && this.props.currentCard.props.face == card.props.face && this.props.currentCard.props.type.icon == card.props.type.icon}
+                            isSelected={true}
                         />
                     ))}
                 </div>

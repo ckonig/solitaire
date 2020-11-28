@@ -16,7 +16,7 @@ export default class Hand {
     }
 
     isCurrentCard(card) {
-        return this.currentCard() == card;
+        return card && this.currentCard() == card;
     }
 
     currentCard() {
@@ -25,6 +25,10 @@ export default class Hand {
 
     containsCurrentCard(stack) {
         return stack && stack.indexOf(this.currentCard().props) !== -1
+    }
+
+    isFromCurrentSource(card) {
+        return this.state().hand.source && card.props.source == this.state().hand.source;
     }
     
 }

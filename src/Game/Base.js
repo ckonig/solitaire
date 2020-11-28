@@ -1,5 +1,4 @@
 import Hand from './Hand';
-import { filterOut } from './Common';
 
 export default class Base {
     constructor(stateholder) {
@@ -11,48 +10,52 @@ export default class Base {
         return this.stateHolder.state;
     }
 
+    filterOut = (stacks, card) => {
+        for (var i = 0; i < stacks.length; i++) {
+            var filtered = stacks[i].stack.filter((value, index, arr) => {
+                return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+            });
+            stacks[i].stack = filtered;
+        }
+
+        return stacks;
+    }
+
     tryUncoverInStack = (card, modifier, cb) => {
         if (card.props.isHidden && card.props.canUncover) {
             this.stateHolder.setState((state, props) => {
                 state = modifier(state);
                 return { ...state };
-            });
-            return true;
-        }
-        return false;
-    }
-
-    tryUncover = (card, cb) => {
-        if (this.state().hand.source && card.props.source == this.state().hand.source) {
-            cb && cb();
-            return false;
-        }
-        if (card.props.isHidden && card.props.canUncover) {
-            this.stateHolder.setState((state, props) => {
-                state.playStack = this.unhideInStack(state.playStack, card);
-                state.stack = this.unhideInStack(state.stack, card);
-                return { ...state };
             }, cb);
+
             return true;
         }
+
         cb && cb();
         return false;
     }
 
-    pickup = (card) => {
-        if (card && this.tryUncover(card)) {
-            //
-        } else if (!this.hand.isHoldingCard()) {
+    unhideInStack(stack, card) {
+        for (var i = 0; i < stack.length; i++) {
+            if (stack[i].face == card.props.face && stack[i].type.icon == card.props.type.icon) {
+                stack[i].hidden = false;
+            }
+        }
+
+        return stack;
+    }
+
+    pickup = (card, cb) => {
+        if (!this.hand.isHoldingCard()) {
             this.removeFromAll(() =>
                 this.stateHolder.setState((state, props) => {
                     state.hand.stack = [card]
                     state.hand.source = card.props.source;
                     return { ...state, currentCard: card };
-                }), card);
+                }, cb), card);
         }
     }
 
-    //@todo move to hand
     unselectCard(state) {
         state.hand.stack = [];
         state.hand.source = null;
@@ -66,18 +69,8 @@ export default class Base {
         });
     }
 
-    unhideInStack(stack, card) {
-        for (var i = 0; i < stack.length; i++) {
-            if (stack[i].face == card.props.face && stack[i].type.icon == card.props.type.icon) {
-                stack[i].hidden = false;
-            }
-        }
-
-        return stack;
-    }
-
     removeFromAll(cb, card) {
-        var c = card || this.state().currentCard;
+        var c = card || this.hand.currentCard();
         this.removeFromMainStack(() => {
             this.removeFromPlayStack(() => {
                 this.removeFromBoardStacks(cb, c)
@@ -119,7 +112,7 @@ export default class Base {
     removeFromBoardStacks = (callback, card) => {
         if (card)
             this.stateHolder.setState((state, props) => {
-                state.stacks = filterOut(state.stacks, card);
+                state.stacks = this.filterOut(state.stacks, card);
                 return { ...state };
             }, () => {
                 callback && callback()

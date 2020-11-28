@@ -15,28 +15,20 @@ export default class MainStack extends Base {
         });
     }
 
-    clickMainStack = (card) => {
-        this.tryUncover(card, () => this.pickup(card));
+    tryUncover = (card, cb) => {
+        if (this.hand.isFromCurrentSource(card)) {
+            cb && cb();
+            return false;
+        }
+        this.tryUncoverInStack(card, state => {
+            state.stack = this.unhideInStack(state.stack, card);
+            return { ...state };
+        }, cb);
     }
 
-    clickOnPlayStack = (card) => {
-        if (this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
-            if (this.state().hand.source == 'main' || this.state().hand.source == 'play') {
-                this.stateHolder.setState((state, props) => {
-                    var current = state.currentCard;
-                    var top = this.state().playStack[this.state().playStack.length - 1];
-                    if (current && !top || top.face !== current.props.face || top.type.icon !== current.props.type.icon) {
-                        state.playStack.push(this.hand.currentCard().props);
-                    }
-                    state.hand.stack = []
-                    state.hand.source = null;
-                    return { ...state, currentCard: null };
-                });
-            }
-        } else if (card && this.hand.isCurrentCard(card)) {
-            this.unselect();
-        } else if (card && !this.hand.isHoldingCard()) {
-            this.pickup(card);
-        }
+    click = (card) => {
+        this.tryUncover(card, () => this.pickup(card));
+        //@todo auto-drop card on playstack instead of picking it up
     }
+
 }

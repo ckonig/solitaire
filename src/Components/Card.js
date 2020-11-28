@@ -2,10 +2,8 @@ import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "../styles";
 
 import { Component } from "react";
 
-class Card extends Component {
-
+export default class Card extends Component {
   render() {
-
     var cardStyle = {
       ...cardBaseStyle
     };
@@ -15,7 +13,7 @@ class Card extends Component {
       cardStyle['borderColor'] = 'yellow';
       cardStyle.opacity = '0.95';
     }
-    
+
     var className = '';
     if (this.props.isHidden) {
       className = 'karo';
@@ -67,5 +65,3 @@ class Card extends Component {
     );
   }
 };
-
-export default Card;

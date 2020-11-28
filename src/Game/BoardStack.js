@@ -1,17 +1,16 @@
 import Base from './Base';
 import { CardRange } from '../Deck/CardRange';
-import { filterOut } from './Common';
 
 export default class BoardStack extends Base {
     constructor(stateholder) {
         super(stateholder)
     }
 
-    tryUncover2 = (card, index) => {
-        if (this.state().hand.source && card.props.source == this.state().hand.source) {
+    tryUncover = (card, index) => {
+        if (this.hand.isFromCurrentSource(card)) {
             return false;
         }
-        this.tryUncoverInStack(card, state => {
+        return this.tryUncoverInStack(card, state => {
             state.stacks[index].stack = this.unhideInStack([...state.stacks[index].stack], card);
             return { ...state };
         });
@@ -24,16 +23,16 @@ export default class BoardStack extends Base {
         return (currentIndex + 1) == topIndex && (current.props.type.color != top.props.type.color);
     }
 
-    onBoardStackClick = (card, index) => {
+    click = (card, index) => {
         var stackIsEmpty = !!!card;
-        if (card && this.tryUncover2(card, index)) {
+        if (card && this.tryUncover(card, index)) {
             // can't put card directly onto previously hidden card
-        } else if (card && !this.tryUncover2(card, index) && this.state().hand.source && card.props.source == this.state().hand.source) {
+        } else if (card && !this.tryUncover(card, index) && this.state().hand.source && card.props.source == this.state().hand.source) {
             // put back onto orignal stack
             this.stateHolder.setState((state, props) => {
                 if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
-                    state.stacks = filterOut(state.stacks, this.state().currentCard)
-                    state.stacks[index].stack.push(state.currentCard.props);
+                    state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
+                    state.stacks[index].stack.push(state.currentCard.props); //@todo push from hand stack
                     return { ...state };
                 }
             }, this.unselect);
@@ -41,41 +40,41 @@ export default class BoardStack extends Base {
             if (this.validateBoardStackMove(this.state().currentCard, card)) {
                 this.stateHolder.setState((state, props) => {
                     if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
-                        state.stacks = filterOut(state.stacks, this.state().currentCard)
-                        state.stacks[index].stack.push(state.currentCard.props);
+                        state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
+                        state.stacks[index].stack.push(state.currentCard.props); //@todo push from hand stack
                         return { ...state };
                     }
                 }, this.unselect);
             } else {
-                this.blinkBoardStack(index);
+                this.blink(index);
             }
         } else if (stackIsEmpty && this.hand.isHoldingKing()) {
             this.stateHolder.setState((state, props) => {
                 if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                     this.removeFromPlayStack();
                     this.removeFromMainStack();
-                    state.stacks = filterOut(state.stacks, this.state().currentCard)
+                    state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
                     state.stacks[index].stack.push(this.hand.currentCard().props);
                     state.hand.stack = []
                     return { ...state, currentCard: null };
                 }
             }, this.unselect);
+        } else {
+            this.pickup(card);
         }
-
-        this.pickup(card);
     }
 
-    toggleBlinkBoardStack(index, blinkFor, cb) {
+    toggleBlink(index, blinkFor, cb) {
         this.stateHolder.setState((state, props) => {
             state.stacks[index].blinkFor = blinkFor;
             return { ...state };
         }, cb);
     }
 
-    blinkBoardStack = (index) => {
-        this.toggleBlinkBoardStack(index, 10, () => {
+    blink = (index) => {
+        this.toggleBlink(index, 10, () => {
             setTimeout(() => {
-                this.toggleBlinkBoardStack(index, 0, () => { });
+                this.toggleBlink(index, 0, () => { });
             }, 100);
         });
     }
