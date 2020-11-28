@@ -193,7 +193,18 @@ export default class Engine {
 
     onBoardStackClick = (card, index) => {
         if (card && this.tryUncover(card)) {
-            //
+            // can't put card onto hidden card
+        } else if (card && !this.tryUncover(card) && this.stateHolder.state.hand.source && card.props.source == this.stateHolder.state.hand.source) {
+            // put back onto orignal stack
+            this.stateHolder.setState((state, props) => {
+                if (this.stateHolder.state.currentCard != null && this.stateHolder.state.stacks[index].stack.indexOf(this.stateHolder.state.currentCard.props) == -1) {
+                    state.stacks = this.filterOut(state.stacks, this.stateHolder.state.currentCard)
+                    state.stacks[index].stack.push(state.currentCard.props);
+                    return { ...state };
+                }
+            }, () => {
+                this.unselect();
+            });
         } else if (card && this.stateHolder.state.currentCard != null && this.stateHolder.state.currentCard != card) {
             if (this.validateBoardStackMove(this.stateHolder.state.currentCard, card)) {
                 this.stateHolder.setState((state, props) => {
@@ -221,8 +232,8 @@ export default class Engine {
                     return { ...state, currentCard: null };
                 }
             }, () => {
-                this.removeFromPlayStack();
-                this.removeFromMainStack();
+                // this.removeFromPlayStack();
+                // this.removeFromMainStack();
                 this.unselect();
             });
         }
