@@ -4,13 +4,13 @@ import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "../styles";
 export default class Card extends Component {
   render() {
     var cardStyle = {
-      ...cardBaseStyle
+      ...cardBaseStyle,
+      boxShadow:'2px 2px 2px 2px black',
     };
 
     if (this.props.isSelected) {
       cardStyle['backgroundColor'] = 'lightgray';
       cardStyle['borderColor'] = 'yellow';
-      cardStyle.opacity = '0.95';
     }
 
     var className = '';

@@ -17,10 +17,14 @@ export default class Foundation extends Base {
                 (cb) => this._removeFromFoundations(cb, pseudoCard),
                 () => {
                     this.stateHolder.setState((state, props) => {
-                        var previous = state.foundations[index].usedCards.pop()
-                        if (previous)
-                            state.foundations[index].acceptedCards.push(previous);
+                        var used = [...state.foundations[index].usedCards];
+                        var previous = used.pop();
+                        if (previous && previous == state.currentCard.props.face) {
+                            state.foundations[index].acceptedCards.push(state.foundations[index].usedCards.pop());
+                        }
                         return { ...state };
+                    }, () => {
+                        this.actions.startMove('foundation', pseudoCard.props);
                     });
                 });
         }
@@ -47,6 +51,8 @@ export default class Foundation extends Base {
                 } else {
                     return { ...state };
                 }
+            }, () => {
+                this.actions.endMove('foundation');
             });
         } else {
             this._blink(index);

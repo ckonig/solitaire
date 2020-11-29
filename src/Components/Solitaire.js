@@ -1,5 +1,6 @@
 import '../App.css';
 
+import Clock from './Clock';
 import { Component } from 'react';
 import Engine from '../Game/Engine';
 import Foundation from './Foundation';
@@ -41,12 +42,20 @@ class Solitaire extends Component {
                   <td>
                     <Foundation
                       stack={foundation.stack}
+                      index={index}
                       blinkFor={foundation.blinkFor}
                       icon={foundation.icon}
                       onFoundationClick={(c) => this.state.onFoundationClick(index, c)}
                     />
                   </td>
                 ))}
+                <td>
+                  Points: {this.state.points}
+                  <br />
+                  <Clock started={this.state.started} end={this.state.end} />
+                  <br/>
+                  Is Ended: {this.state.isEnded ? "Y" : "N"}
+                </td>
               </tr>
               <tr>
                 <td colSpan="7">
@@ -56,6 +65,7 @@ class Solitaire extends Component {
                     cards={this.state.cards}
                   />
                 </td>
+                <td>&nbsp;</td>
               </tr>
             </tbody>
           </table>

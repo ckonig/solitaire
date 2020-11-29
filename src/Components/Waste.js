@@ -15,13 +15,13 @@ export default function Waste(props) {
         <MyContext.Consumer>
             {ctx =>
                 <div style={localOuterStyle}>
-                    <div style={targetStackStyle.cardStyle} onClick={() => ctx.clickOnWaste()}>{props.stack.length}</div>
+                    <div style={targetStackStyle.cardStyle} onClick={() => ctx.clickOnWaste()}>&nbsp;</div>
                     {props.stack.map((card, index) => (
                         <div style={localStyle}>
                             <Card type={card.type}
                                 face={card.face}
-                                offset={index}
-                                source="play"
+                                offsetTop={index}
+                                source="waste"
                                 clickCard={(c) => ctx.clickOnWaste(c)}
                             />
                         </div>

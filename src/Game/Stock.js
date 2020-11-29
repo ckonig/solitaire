@@ -18,7 +18,11 @@ export default class Stock extends Base {
         if (this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
             this._tryPutBackToWaste(card);
         } else if (card && !this.hand.isHoldingCard()) {
-            this.pickup(card, (cb) => this._removeFromWaste(cb, card));
+            this.pickup(card, (cb) => {
+                this.actions.startMove('waste', card.props, () => {
+                    this._removeFromWaste(cb, card)
+                });
+            });
         }
     }
 
@@ -28,6 +32,10 @@ export default class Stock extends Base {
                 state.waste.push(state.stockPile.pop());
             }
             return { ...state };
+        }, () => {
+            this.actions.startMove('main', card.props, () => {
+                this.actions.endMove('waste');
+            });
         });
     }
 
@@ -45,11 +53,13 @@ export default class Stock extends Base {
             })
             state.waste = [];
             return { ...state };
+        }, () => {
+            this.actions.registerRecycle();
         });
     }
 
     _tryPutBackToWaste() {
-        if (this.state().hand.source == 'play') {
+        if (this.state().hand.source == 'waste') {
             this.stateHolder.setState((state, props) => {
                 var current = this.hand.currentCard();
                 var top = this.state().waste[this.state().waste.length - 1];
@@ -57,6 +67,8 @@ export default class Stock extends Base {
                     state.waste.push(this.hand.currentCard().props);
                 }
                 return { ...this.unselectCard(state) };
+            }, () => {
+                this.actions.endMove('waste');
             });
         } else {
             // @todo implement blink validation for waste

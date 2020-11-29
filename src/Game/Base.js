@@ -1,9 +1,11 @@
+import ActionFacade from './Actions/ActionFacade';
 import Hand from './Hand';
 
 export default class Base {
     constructor(stateholder) {
         this.stateHolder = stateholder;
         this.hand = new Hand(stateholder);
+        this.actions = new ActionFacade(stateholder);
     }
 
     state() {
@@ -48,8 +50,9 @@ export default class Base {
 
     unhideInStack(stack, card) {
         for (var i = 0; i < stack.length; i++) {
-            if (this.cardEquals(stack[i], card.props)) {
+            if (this.cardEquals(stack[i], card.props) && stack[i].hidden) {
                 stack[i].hidden = false;
+                this.actions.registerUncover(card);
             }
         }
 

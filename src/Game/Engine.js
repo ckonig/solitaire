@@ -16,14 +16,18 @@ export default class Engine extends Base {
 
     getInitialState = () => {
         var deck = getDeck();
-        var stockPile = deck.slice(0, 18);
-        var tableau = deck.slice(22);
+        var stockPile = deck.slice(28);
+        var tableau = deck.slice(0, 28);
         var stacks = new TableauGenerator().getStacks([...tableau]);
 
         return {
             currentCard: null, // @todo remove currentCard
             stockPile: stockPile,
             waste: [],
+            currentMove: null,
+            moves: [],
+            points: 0,
+            started: Date.now(),
             foundations: generateFoundations(),
             stacks: stacks,
             hand: {

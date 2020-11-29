@@ -29,7 +29,7 @@ export default function TableauStack(props) {
         <MyContext.Consumer>
             {ctx =>
                 <div style={localOuterStyle}>
-                    <div style={localCardStyle} onClick={() => props.onClick(null, "tableau-" + props.stackIndex)}>{props.stack.length}</div>
+                    <div style={localCardStyle} onClick={() => props.onClick(null, "tableau-" + props.stackIndex)}>&nbsp;</div>
                     {props.stack.map((card, index) => (
                         <div className="localstyl0r" style={localStyle}>
                             <Card

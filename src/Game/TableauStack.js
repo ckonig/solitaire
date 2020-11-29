@@ -42,7 +42,10 @@ export default class TableauStack extends Base {
                 this.tryPutOntoStack(index)
             });
         } else {
-            this.pickup(card, (cb) => this._removeFromTableauStacks(cb, card));
+            this.pickup(card, (cb) => {
+                this._removeFromTableauStacks(cb, card)
+                this.actions.startMove(card.props.source, card.props);
+            });
         }
     }
 
@@ -60,6 +63,8 @@ export default class TableauStack extends Base {
                 state.stacks[index].stack.push(...state.hand.stack.map(e => e.props));
                 return { ...this.unselectCard(state) };
             }
+        }, () => {
+            this.actions.endMove("tableau-" + index);
         });
     }
 
