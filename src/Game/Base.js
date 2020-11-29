@@ -48,11 +48,27 @@ export default class Base {
         return stack;
     }
 
+    findFollowing(card) {
+        for (var i = 0; i < this.stateHolder.state.stacks.length; i++) {
+            for (var j = 0; j < this.stateHolder.state.stacks[i].stack.length; j++) {
+                if (card.props && this.stateHolder.state.stacks[i].stack[j].face == card.props.face && this.stateHolder.state.stacks[i].stack[j].type.icon == card.props.type.icon) {
+                    console.log('FOUND STACK')
+                    var following = this.stateHolder.state.stacks[i].stack.splice(j+1, this.stateHolder.state.stacks[i].stack.length-1).map(f => { return {props: f}})
+                    console.log(following)
+                    return following;
+                }
+            }
+        }
+
+        return [];
+    }
+
     pickup = (card, cb) => {
         if (!this.hand.isHoldingCard()) {
+            var following = this.findFollowing(card)
             this.removeFromAll(() =>
                 this.stateHolder.setState((state, props) => {
-                    state.hand.stack = [card]
+                    state.hand.stack = [card, ...following]
                     state.hand.source = card.props.source;
                     return { ...state, currentCard: card };
                 }, cb), card);

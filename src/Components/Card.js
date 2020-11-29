@@ -40,6 +40,9 @@ export default class Card extends Component {
       var st = { ...cardStyle };
       st['color'] = color;
       st.zIndex = this.props.offsetTop + 2;
+      if (this.props.zIndex) {
+        st.zIndex = this.props.zIndex;
+      }
       if (this.props.blink) {
         st['borderColor'] = 'red';
       }

@@ -15,7 +15,7 @@ export default function Board(props) {
                                 stack={stack.stack}
                                 blinkFor={stack.blinkFor}
                                 currentCard={ctx.currentCard}
-                                onBoardStackClick={(card) => ctx.onBoardStackClick(card, index)}
+                                onBoardStackClick={(card, source) => ctx.onBoardStackClick(card, index, source)}
                             /></td>))
                     }
                 </tr></tbody></table>

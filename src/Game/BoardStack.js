@@ -23,7 +23,7 @@ export default class BoardStack extends Base {
         return (currentIndex + 1) == topIndex && (current.props.type.color != top.props.type.color);
     }
 
-    click = (card, index) => {
+    click = (card, index, source) => {
         var stackIsEmpty = !!!card;
         if (card && this.tryUncover(card, index)) {
             // can't put card directly onto previously hidden card
@@ -32,7 +32,7 @@ export default class BoardStack extends Base {
             this.stateHolder.setState((state, props) => {
                 if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                     state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
-                    state.stacks[index].stack.push(state.currentCard.props); //@todo push from hand stack
+                    state.stacks[index].stack.push(...state.hand.stack.map(e => e.props)); 
                     return { ...this.unselectCard(state) };
                 }
             });
@@ -42,21 +42,22 @@ export default class BoardStack extends Base {
                 this.stateHolder.setState((state, props) => {
                     if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                         state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
-                        state.stacks[index].stack.push(state.currentCard.props); //@todo push from hand stack
+                        state.stacks[index].stack.push(...state.hand.stack.map(e => e.props)); 
                         return { ...this.unselectCard(state) };
                     }
                 });
             } else {
                 this.blink(index);
             }
-        } else if (stackIsEmpty && this.hand.isHoldingKing()) {
-            // try create new stack
+        } else if (stackIsEmpty && (this.hand.isHoldingKing() || this.hand.isFromCurrentSource({ props: { source: source } }))) {
+            // try create new stack @todo this is broken if card comes from same stack 
+            // this wont work because there is no card on the stack to compare the source field
             this.stateHolder.setState((state, props) => {
                 if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                     this.removeFromPlayStack();
                     this.removeFromMainStack();
                     state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
-                    state.stacks[index].stack.push(this.hand.currentCard().props);
+                    state.stacks[index].stack.push(...state.hand.stack.map(e => e.props));
                     return { ...this.unselectCard(state) };
                 }
             });

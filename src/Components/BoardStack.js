@@ -13,11 +13,12 @@ export default function BoardStack(props) {
     var localStyle = {
         position: 'absolute',
         left: '0px',
-        top: '0px',
+        top: '-0px',
     };
 
     var localOuterStyle = {
         position: 'relative',
+        
     };
 
     var localCardStyle = { ...styles.cardStyle };
@@ -30,7 +31,7 @@ export default function BoardStack(props) {
         <MyContext.Consumer>
             {ctx =>
                 <div style={localOuterStyle}>
-                    <div style={localCardStyle} onClick={() => props.onBoardStackClick()}>{props.stack.length}</div>
+                    <div style={localCardStyle} onClick={() => props.onBoardStackClick(null, "board-" + props.stackIndex)}>{props.stack.length}</div>
                     {props.stack.map((card, index) => (
                         <div className="localstyl0r" style={localStyle}>
                             <Card
@@ -41,7 +42,7 @@ export default function BoardStack(props) {
                                 isHidden={card.hidden}
                                 blink={props.blinkFor}
                                 canUncover={index == props.stack.length - 1}
-                                clickCard={(c) => props.onBoardStackClick(c)}
+                                clickCard={(c) => props.onBoardStackClick(c, "board-" + props.stackIndex)}
                             />
                         </div>
 

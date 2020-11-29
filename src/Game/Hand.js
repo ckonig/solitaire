@@ -28,7 +28,12 @@ export default class Hand {
     }
 
     isFromCurrentSource(card) {
-        return this.state().hand.source && card.props.source == this.state().hand.source;
+        var result = this.state().hand.source && card.props.source == this.state().hand.source;
+        if(result)
+            console.log('same source')
+        else
+            console.log('not same source', card, this.state().hand.source)
+        return result;
     }
     
 }
