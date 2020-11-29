@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-
 import Card from './Card';
 import { targetStackStyle } from '../styles';
 
@@ -28,7 +26,6 @@ export default function Foundation(props) {
 
     if (props.blinkFor > 0) {
         localCardStyle.borderColor = 'red';
-        console.log('setting RED border color');
     }
 
     return (

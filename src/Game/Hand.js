@@ -1,4 +1,5 @@
 export default class Hand {
+    
     constructor(stateholder) {
         this.stateHolder = stateholder;
     }
@@ -6,7 +7,7 @@ export default class Hand {
     state() {
         return this.stateHolder.state;
     }
-    
+
     isHoldingCard() {
         return !!this.state().hand.stack.length;
     }
@@ -28,11 +29,6 @@ export default class Hand {
     }
 
     isFromCurrentSource(card) {
-        var result = this.state().hand.source && card.props.source == this.state().hand.source;
-        if(result)
-            console.log('same source')
-        else
-            console.log('not same source', card, this.state().hand.source)
-        return result;
+        return this.state().hand.source && card.props.source == this.state().hand.source;
     }
 }

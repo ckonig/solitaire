@@ -12,8 +12,6 @@ export default class Hand extends Component {
 
     componentDidMount() {
         const node = this.myRef.current;
-        console.log('component mounted')
-        console.log(node);
         document.addEventListener('mousemove', (e) => {
             var x = e.clientX,
                 y = e.clientY;
@@ -55,7 +53,6 @@ export default class Hand extends Component {
                     {this.props.stack && this.props.stack.map((card, index) => (
                         <div className="localstyl0r" style={localStyle}>
                             <Card
-                                clickCard={this.props.pickup}
                                 offsetTop={index * 20}
                                 zIndex={1000 + (index * 20)}
                                 type={card.props.type}

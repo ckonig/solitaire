@@ -48,7 +48,7 @@ export default class Base {
 
     unhideInStack(stack, card) {
         for (var i = 0; i < stack.length; i++) {
-            if (stack[i].face == card.props.face && stack[i].type.icon == card.props.type.icon) {
+            if (this.cardEquals(stack[i], card.props)) {
                 stack[i].hidden = false;
             }
         }
@@ -56,10 +56,10 @@ export default class Base {
         return stack;
     }
 
-    pickup = (card, cb) => {
+    pickup = (card, remove, cb) => {
         if (!this.hand.isHoldingCard()) {
             var following = this.findFollowing(card)
-            this.removeFromAll(() =>
+            remove(() =>
                 this.stateHolder.setState((state, props) => {
                     state.hand.stack = [card, ...following]
                     state.hand.source = card.props.source;
@@ -72,10 +72,7 @@ export default class Base {
         for (var i = 0; i < this.stateHolder.state.stacks.length; i++) {
             for (var j = 0; j < this.stateHolder.state.stacks[i].stack.length; j++) {
                 if (card.props && this.stateHolder.state.stacks[i].stack[j].face == card.props.face && this.stateHolder.state.stacks[i].stack[j].type.icon == card.props.type.icon) {
-                    console.log('FOUND STACK')
-                    var following = this.stateHolder.state.stacks[i].stack.splice(j + 1, this.stateHolder.state.stacks[i].stack.length - 1).map(f => { return { props: f } })
-                    console.log(following)
-                    return following;
+                    return this.stateHolder.state.stacks[i].stack.splice(j + 1, this.stateHolder.state.stacks[i].stack.length - 1).map(f => { return { props: f } })
                 }
             }
         }
@@ -83,22 +80,12 @@ export default class Base {
         return [];
     }
 
+    //@todo move to hand?
     unselectCard(state) {
         state.hand.stack = [];
         state.hand.source = null;
-        state.currentCard = null;
+        state.currentCard = null; // @todo remove currentCard
         return state;
-    }
-
-    removeFromAll(cb, card) {
-        var c = card || this.hand.currentCard();
-        this.removeFromStock(() => {
-            this.removeFromWaste(() => {
-                this.removeFromTableauStacks(() => {
-                    this.removeFromFoundations(cb, c);
-                }, c)
-            }, c)
-        }, c);
     }
 
     removeFromXStack = (callback, modifier, card) => {
@@ -111,35 +98,5 @@ export default class Base {
             });
         else
             callback && callback()
-    }
-
-    removeFromWaste = (callback, card) => {
-        this.removeFromXStack(callback, (state) => {
-            state.waste = this.filterNotEqual(state.waste, card);
-            return state;
-        }, card);
-    }
-
-    removeFromStock = (callback, card) => {
-        this.removeFromXStack(callback, (state) => {
-            state.stockPile = this.filterNotEqual(state.stockPile, card);
-            return state;
-        }, card);
-    }
-
-    removeFromTableauStacks = (callback, card) => {
-        this.removeFromXStack(callback, (state) => {
-            state.stacks = this.filterOut(state.stacks, card);
-            return state;
-        }, card);
-    }
-
-    removeFromFoundations = (callback, card) => {
-        this.removeFromXStack(callback, (state) => {
-            var filtered = this.filterOut(state.foundations, card)
-            console.log('filtered', state.foundations, filtered)
-            state.foundations = filtered;
-            return state;
-        }, card);
     }
 }

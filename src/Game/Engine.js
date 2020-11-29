@@ -1,10 +1,10 @@
 import Base from './Base';
 import Foundation from './Foundation';
 import Stock from './Stock';
-import TableauGenerator from '../Deck/TableauGenerator';
+import TableauGenerator from './Deck/TableauGenerator';
 import TableauStack from './TableauStack';
-import { getDeck } from '../Deck/Deck';
-import { getTargetOrder } from '../Deck/CardRange'
+import generateFoundations from './Deck/FoundationGenerator';
+import { getDeck } from './Deck/Deck';
 
 export default class Engine extends Base {
     constructor(stateholder) {
@@ -12,29 +12,19 @@ export default class Engine extends Base {
         this.tableauStack = new TableauStack(stateholder);
         this.foundation = new Foundation(stateholder);
         this.stock = new Stock(stateholder);
-        this.tableauGenerator = new TableauGenerator();
     }
 
     getInitialState = () => {
         var deck = getDeck();
+        var stockPile = deck.slice(0, 18);
+        var tableau = deck.slice(22);
+        var stacks = new TableauGenerator().getStacks([...tableau]);
 
-        var stockPile = deck.slice(0, 20);
-        var tableau = deck.slice(20);
-        var stacks = this.tableauGenerator.getStacks([...tableau]);
-
-        var getFoundation = (icon) => {
-            return {
-                stack: [],
-                acceptedCards: [...getTargetOrder()],
-                usedCards: [],
-                icon,
-            };
-        };
         return {
-            currentCard: null,
+            currentCard: null, // @todo remove currentCard
             stockPile: stockPile,
             waste: [],
-            foundations: [getFoundation("♥"), getFoundation("♦"), getFoundation("♣"), getFoundation("♠")],
+            foundations: generateFoundations(),
             stacks: stacks,
             hand: {
                 stack: [],
@@ -43,7 +33,6 @@ export default class Engine extends Base {
             onTableauStackClick: this.tableauStack.click,
             onFoundationClick: this.foundation.click,
             clickStockPile: this.stock.clickStockPile,
-            pickup: this.pickup,
             clickOnWaste: this.stock.clickWaste,
         };
 

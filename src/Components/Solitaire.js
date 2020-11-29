@@ -1,7 +1,6 @@
 import '../App.css';
 
-import React, { Component } from 'react';
-
+import { Component } from 'react';
 import Engine from '../Game/Engine';
 import Foundation from './Foundation';
 import Hand from './Hand';
@@ -24,8 +23,7 @@ class Solitaire extends Component {
       <MyContext.Provider value={this.state}>
         <Hand
           currentCard={this.state.currentCard}
-          stack={this.state.hand.stack}
-          pickup={this.state.pickup} />
+          stack={this.state.hand.stack} />
         <div style={targetStackStyle.tableStyle}>
           <table>
             <tbody>

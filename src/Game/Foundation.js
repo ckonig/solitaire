@@ -12,15 +12,25 @@ export default class Foundation extends Base {
     _tryPickup(index) {
         var _stack = this.stateHolder.state.foundations[index].stack;
         if (_stack[_stack.length - 1]) {
-            this.pickup({ props: _stack[_stack.length - 1] }, () => {
-                this.stateHolder.setState((state, props) => {
-                    var previous = state.foundations[index].usedCards.pop()
-                    if (previous)
-                        state.foundations[index].acceptedCards.push(previous);
-                    return { ...state };
+            var pseudoCard = { props: _stack[_stack.length - 1] }
+            this.pickup(pseudoCard,
+                (cb) => this._removeFromFoundations(cb, pseudoCard),
+                () => {
+                    this.stateHolder.setState((state, props) => {
+                        var previous = state.foundations[index].usedCards.pop()
+                        if (previous)
+                            state.foundations[index].acceptedCards.push(previous);
+                        return { ...state };
+                    });
                 });
-            });
         }
+    }
+
+    _removeFromFoundations = (callback, card) => {
+        this.removeFromXStack(callback, (state) => {
+            state.foundations = this.filterOut(state.foundations, card)
+            return state;
+        }, card);
     }
 
     _tryPutOntoStack(index) {

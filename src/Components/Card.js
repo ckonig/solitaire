@@ -1,6 +1,5 @@
+import React, { Component } from "react";
 import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "../styles";
-
-import { Component } from "react";
 
 export default class Card extends Component {
   render() {

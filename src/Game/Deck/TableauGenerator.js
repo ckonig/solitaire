@@ -1,9 +1,10 @@
 export default class TableauGenerator {
+
     getStacks = (deck) => {
         this.deck = deck;
         this.pointer = 0;
         this.oldpointer = this.pointer;
-        this.pointer += this._getRndInteger(4, 7);
+        this.pointer += 7;
         var ids = [0, 1, 2, 3, 4, 5, 6];
         this.stacks = ids.map(id => this._getStack(id));
         ids.reverse().forEach(id => {
@@ -18,7 +19,7 @@ export default class TableauGenerator {
         this.stacks[id].stack = this.deck.slice(this.oldpointer, this.pointer);
         this.stacks[id].stack[this.stacks[id].stack.length - 1].hidden = false;
         this.oldpointer = this.pointer;
-        this.pointer += this._getRndInteger(2, 7);
+        this.pointer += id;
     }
 
     _getRndInteger = (min, max) => {

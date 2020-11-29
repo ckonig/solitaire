@@ -18,7 +18,7 @@ export default class Stock extends Base {
         if (this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
             this._tryPutBackToWaste(card);
         } else if (card && !this.hand.isHoldingCard()) {
-            this.pickup(card);
+            this.pickup(card, (cb) => this._removeFromWaste(cb, card));
         }
     }
 
@@ -29,6 +29,13 @@ export default class Stock extends Base {
             }
             return { ...state };
         });
+    }
+
+    _removeFromWaste = (callback, card) => {
+        this.removeFromXStack(callback, (state) => {
+            state.waste = this.filterNotEqual(state.waste, card);
+            return state;
+        }, card);
     }
 
     _recycleWaste() {

@@ -1,5 +1,5 @@
 import Base from './Base';
-import { CardRange } from '../Deck/CardRange';
+import { CardRange } from './Deck/CardRange';
 
 export default class TableauStack extends Base {
     constructor(stateholder) {
@@ -42,8 +42,15 @@ export default class TableauStack extends Base {
                 this.tryPutOntoStack(index)
             });
         } else {
-            this.pickup(card);
+            this.pickup(card, (cb) => this._removeFromTableauStacks(cb, card));
         }
+    }
+
+    _removeFromTableauStacks = (callback, card) => {
+        this.removeFromXStack(callback, (state) => {
+            state.stacks = this.filterOut(state.stacks, card);
+            return state;
+        }, card);
     }
 
     tryPutOntoStack = (index) => {

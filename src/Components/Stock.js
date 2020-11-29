@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-
 import StockPile from './StockPile';
 import Waste from './Waste';
 
