@@ -84,9 +84,9 @@ export default class Base {
 
     removeFromAll(cb, card) {
         var c = card || this.hand.currentCard();
-        this.removeFromMainStack(() => {
-            this.removeFromPlayStack(() => {
-                this.removeFromBoardStacks(cb, c)
+        this.removeFromStock(() => {
+            this.removeFromWaste(() => {
+                this.removeFromTableauStacks(cb, c)
             }, c)
         }, c);
     }
@@ -103,21 +103,21 @@ export default class Base {
             callback && callback()
     }
 
-    removeFromPlayStack = (callback, card) => {
+    removeFromWaste = (callback, card) => {
         this.removeFromXStack(callback, (state) => {
-            state.playStack = this.filterNotEqual(state.playStack, card);
+            state.waste = this.filterNotEqual(state.waste, card);
             return state;
         }, card);
     }
 
-    removeFromMainStack = (callback, card) => {
+    removeFromStock = (callback, card) => {
         this.removeFromXStack(callback, (state) => {
-            state.stack = this.filterNotEqual(state.stack, card);
+            state.stock = this.filterNotEqual(state.stock, card);
             return state;
         }, card);
     }
 
-    removeFromBoardStacks = (callback, card) => {
+    removeFromTableauStacks = (callback, card) => {
         this.removeFromXStack(callback, (state) => {
             state.stacks = this.filterOut(state.stacks, card);
             return state;

@@ -1,6 +1,6 @@
 import Base from "./Base";
 
-export default class TargetStack extends Base {
+export default class Foundation extends Base {
 
     constructor(stateholder) {
         super(stateholder)
@@ -8,15 +8,15 @@ export default class TargetStack extends Base {
 
     click = (index) => {
         if (!this.hand.isHoldingCard()) {
-            //@todo allow pickup from target stack (?)
+            //@todo allow pickup from foundation (?)
         } else {
-            var currentAccepted = this.state().targetStacks[index].acceptedCards[this.state().targetStacks[index].acceptedCards.length - 1];
-            if (this.state().targetStacks[index].icon == this.hand.currentCard().props.type.icon && currentAccepted == this.hand.currentCard().props.face) {
+            var currentAccepted = this.state().foundations[index].acceptedCards[this.state().foundations[index].acceptedCards.length - 1];
+            if (this.state().foundations[index].icon == this.hand.currentCard().props.type.icon && currentAccepted == this.hand.currentCard().props.face) {
                 this.stateHolder.setState((state, props) => {
-                    if (this.hand.isHoldingCard() && state.targetStacks[index].stack.indexOf(this.hand.currentCard()) == -1) {
+                    if (this.hand.isHoldingCard() && state.foundations[index].stack.indexOf(this.hand.currentCard()) == -1) {
                         this.removeFromAll() //@todo remove hack
-                        state.targetStacks[index].stack.push(this.hand.currentCard());
-                        state.targetStacks[index].acceptedCards.pop();
+                        state.foundations[index].stack.push(this.hand.currentCard());
+                        state.foundations[index].acceptedCards.pop();
                         return { ...this.unselectCard(state) };
                     } else {
                         return { ...state };
@@ -38,7 +38,7 @@ export default class TargetStack extends Base {
 
     toggleBlink = (index, blinkFor, cb) => {
         this.stateHolder.setState((state, props) => {
-            state.targetStacks[index].blinkFor = blinkFor;
+            state.foundations[index].blinkFor = blinkFor;
             return { ...state };
         }, cb);
     }

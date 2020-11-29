@@ -1,7 +1,7 @@
 import Base from './Base';
 import { CardRange } from '../Deck/CardRange';
 
-export default class BoardStack extends Base {
+export default class TableauStack extends Base {
     constructor(stateholder) {
         super(stateholder)
     }
@@ -16,7 +16,7 @@ export default class BoardStack extends Base {
         });
     }
 
-    validateBoardStackMove = (current, top) => {
+    validateTableauStackMove = (current, top) => {
         var range = [...CardRange];
         var currentIndex = range.indexOf(current.props.face);
         var topIndex = range.indexOf(top.props.face);
@@ -32,7 +32,7 @@ export default class BoardStack extends Base {
             this.tryPutOntoStack(index)
         } else if (card && this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
             // try put on other stack
-            if (this.validateBoardStackMove(this.state().currentCard, card)) {
+            if (this.validateTableauStackMove(this.state().currentCard, card)) {
                 this.tryPutOntoStack(index)
             } else {
                 this.blink(index);

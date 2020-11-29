@@ -1,28 +1,28 @@
 import { getDeck, getStacks, } from '../Deck/Deck';
 
 import Base from './Base';
-import BoardStack from './BoardStack';
-import MainStack from './MainStack';
-import PlayStack from './PlayStack';
-import TargetStack from './TargetStack';
+import Foundation from './Foundation';
+import Stock from './Stock';
+import TableauStack from './TableauStack';
+import Waste from './Waste';
 import { getTargetOrder } from '../Deck/CardRange'
 
 export default class Engine extends Base {
     constructor(stateholder) {
         super(stateholder)
-        this.boardStack = new BoardStack(stateholder);
-        this.targetStack = new TargetStack(stateholder);
-        this.mainStack = new MainStack(stateholder);
-        this.playStack = new PlayStack(stateholder);
+        this.tableauStack = new TableauStack(stateholder);
+        this.foundation = new Foundation(stateholder);
+        this.stock = new Stock(stateholder);
+        this.waste = new Waste(stateholder);
     }
 
     getInitialState = () => {
         var deck = getDeck();
-        var stack = deck.slice(0, 20);
-        var board = deck.slice(20);
-        var stacks = getStacks([...board]);
+        var stock = deck.slice(0, 20);
+        var tableau = deck.slice(20);
+        var stacks = getStacks([...tableau]);
 
-        var getStack = (icon) => {
+        var getFoundation = (icon) => {
             return {
                 stack: [],
                 acceptedCards: [...getTargetOrder()],
@@ -31,21 +31,21 @@ export default class Engine extends Base {
         };
         return {
             currentCard: null,
-            stack: stack,
-            playStack: [],
-            targetStacks: [getStack("♥"), getStack("♦"), getStack("♣"), getStack("♠")],
-            deck: board,
+            stock: stock,
+            waste: [],
+            foundations: [getFoundation("♥"), getFoundation("♦"), getFoundation("♣"), getFoundation("♠")],
+            deck: tableau,
             stacks: stacks,
             hand: {
                 stack: [],
                 source: null
             },
-            onBoardStackClick: this.boardStack.click,
-            onTargetStackClick: this.targetStack.click,
-            clickMainStack: this.mainStack.click,
+            onTableauStackClick: this.tableauStack.click,
+            onFoundationClick: this.foundation.click,
+            clickStock: this.stock.click,
             pickup: this.pickup,
-            clickOnPlayStack: this.playStack.click,
-            requestReset: this.mainStack.requestReset,
+            clickOnWaste: this.waste.click,
+            recycle: this.stock.recycle,
         };
 
     }

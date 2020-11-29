@@ -4,7 +4,7 @@ import Card from './Card';
 import { MyContext } from '../MyContext';
 import { targetStackStyle } from '../styles';
 
-export default function BoardStack(props) {
+export default function TableauStack(props) {
 
     var styles = {
         ...targetStackStyle
@@ -31,18 +31,18 @@ export default function BoardStack(props) {
         <MyContext.Consumer>
             {ctx =>
                 <div style={localOuterStyle}>
-                    <div style={localCardStyle} onClick={() => props.onBoardStackClick(null, "board-" + props.stackIndex)}>{props.stack.length}</div>
+                    <div style={localCardStyle} onClick={() => props.onClick(null, "tableau-" + props.stackIndex)}>{props.stack.length}</div>
                     {props.stack.map((card, index) => (
                         <div className="localstyl0r" style={localStyle}>
                             <Card
                                 type={card.type}
                                 face={card.face}
                                 offsetTop={index * 20}
-                                source={"board-" + props.stackIndex}
+                                source={"tableau-" + props.stackIndex}
                                 isHidden={card.hidden}
                                 blink={props.blinkFor}
                                 canUncover={index == props.stack.length - 1}
-                                clickCard={(c) => props.onBoardStackClick(c, "board-" + props.stackIndex)}
+                                clickCard={(c) => props.onClick(c, "tableau-" + props.stackIndex)}
                             />
                         </div>
 

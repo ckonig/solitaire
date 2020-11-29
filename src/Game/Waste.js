@@ -1,6 +1,6 @@
 import Base from "./Base";
 
-export default class PlayStack extends Base {
+export default class Waste extends Base {
     constructor(stateholder) {
         super(stateholder)
     }
@@ -10,9 +10,9 @@ export default class PlayStack extends Base {
             if (this.state().hand.source == 'main' || this.state().hand.source == 'play') {
                 this.stateHolder.setState((state, props) => {
                     var current = this.hand.currentCard();
-                    var top = this.state().playStack[this.state().playStack.length - 1];
+                    var top = this.state().waste[this.state().waste.length - 1];
                     if (current && current.props && (!top || top.face !== current.props.face || top.type.icon !== current.props.type.icon)) {
-                        state.playStack.push(this.hand.currentCard().props);
+                        state.waste.push(this.hand.currentCard().props);
                     }
                     return { ...this.unselectCard(state) };
                 });
@@ -22,5 +22,5 @@ export default class PlayStack extends Base {
         }
     }
 
-    // @todo implement blink validation for playstack
+    // @todo implement blink validation for waste
 }

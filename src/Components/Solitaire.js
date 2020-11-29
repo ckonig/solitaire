@@ -2,13 +2,13 @@ import '../App.css';
 
 import React, { Component } from 'react';
 
-import Board from './Board';
 import Engine from '../Game/Engine';
+import Foundation from './Foundation';
 import Hand from './Hand';
-import MainStack from './MainStack';
 import { MyContext } from '../MyContext';
-import PlayStack from './PlayStack';
-import TargetStack from './TargetStack';
+import Stock from './Stock';
+import Tableau from './Tableau';
+import Waste from './Waste';
 import { targetStackStyle } from '../styles';
 
 class Solitaire extends Component {
@@ -31,28 +31,28 @@ class Solitaire extends Component {
             <tbody>
               <tr>
                 <td>
-                  <MainStack stack={this.state.stack} />
+                  <Stock stack={this.state.stock} />
                 </td>
                 <td>
-                  <PlayStack stack={this.state.playStack} />
+                  <Waste stack={this.state.waste} />
                 </td>
                 <td style={{width:'100px'}}>
                   &nbsp;
                 </td>
-                {this.state.targetStacks.map((targetStack, index) => (
+                {this.state.foundations.map((foundation, index) => (
                   <td>
-                    <TargetStack
-                      stack={targetStack.stack}
-                      blinkFor={targetStack.blinkFor}
-                      icon={targetStack.icon}
-                      onTargetStackClick={(c) => this.state.onTargetStackClick(index, c)}
+                    <Foundation
+                      stack={foundation.stack}
+                      blinkFor={foundation.blinkFor}
+                      icon={foundation.icon}
+                      onFoundationClick={(c) => this.state.onFoundationClick(index, c)}
                     />
                   </td>
                 ))}
               </tr>
               <tr>
                 <td colSpan="7">
-                  <Board
+                  <Tableau
                     stacks={this.state.stacks}
                     deck={this.state.deck}
                     cards={this.state.cards}

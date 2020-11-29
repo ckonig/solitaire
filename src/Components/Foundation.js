@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Card from './Card';
 import { targetStackStyle } from '../styles';
 
-export default function TargetStack(props) {
+export default function Foundation(props) {
     var styles = {
         ...targetStackStyle
     };
@@ -33,7 +33,7 @@ export default function TargetStack(props) {
 
     return (
         <div style={localOuterStyle}>
-            <div style={localCardStyle} onClick={() => props.onTargetStackClick()}>
+            <div style={localCardStyle} onClick={() => props.onFoundationClick()}>
                 <div style={localFaceStyle} >
                     <h1>
                         {props.icon}
@@ -46,7 +46,7 @@ export default function TargetStack(props) {
                         blink={props.blinkFor}
                         type={card.props.type}
                         face={card.props.face}
-                        clickCard={(c) => props.onTargetStackClick(c)} />
+                        clickCard={(c) => props.onFoundationClick(c)} />
                 </div>))}
         </div>
 

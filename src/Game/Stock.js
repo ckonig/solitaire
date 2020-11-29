@@ -1,16 +1,16 @@
 import Base from "./Base";
 
-export default class MainStack extends Base {
+export default class Stock extends Base {
     constructor(stateholder) {
         super(stateholder)
     }
 
-    requestReset = () => {
+    recycle = () => {
         this.stateHolder.setState((state, props) => {
-            state.stack = [...state.playStack].reverse().map(element => {
+            state.stock = [...state.waste].reverse().map(element => {
                 return { ...element, hidden: true }
             })
-            state.playStack = [];
+            state.waste = [];
             return { ...state };
         });
     }
@@ -21,14 +21,14 @@ export default class MainStack extends Base {
             return false;
         }
         this.tryUncoverInStack(card, state => {
-            state.stack = this.unhideInStack(state.stack, card);
+            state.stock = this.unhideInStack(state.stock, card);
             return { ...state };
         }, cb);
     }
 
     click = (card) => {
         this.tryUncover(card, () => this.pickup(card));
-        //@todo auto-drop card on playstack instead of picking it up
+        //@todo auto-drop card on waste instead of picking it up
     }
 
 }
