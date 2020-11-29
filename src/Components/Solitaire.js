@@ -5,9 +5,8 @@ import { Component } from 'react';
 import Engine from '../Game/Engine';
 import Foundation from './Foundation';
 import Hand from './Hand';
-import { MyContext } from '../MyContext';
 import StockPile from './StockPile';
-import Tableau from './Tableau';
+import TableauStack from './TableauStack';
 import Waste from './Waste';
 import { targetStackStyle } from '../styles';
 
@@ -22,21 +21,23 @@ class Solitaire extends Component {
   //@todo use CSS instead of HTML table for layout
   render() {
     return (
-      <MyContext.Provider value={this.state}>
+      <div>
         <Hand stack={this.state.hand.stack} />
         <div style={targetStackStyle.tableStyle}>
           <table>
             <tbody>
               <tr>
                 <td>
-                  <StockPile />
+                  <StockPile
+                    clickStockPile={this.state.clickStockPile}
+                    stockPile={this.state.stockPile} />
                 </td>
                 <td>
-                  <Waste stack={this.state.waste} />
+                  <Waste
+                    clickOnWaste={this.state.clickOnWaste}
+                    stack={this.state.waste} />
                 </td>
-                <td style={{ width: '100px' }}>
-                  &nbsp;
-                </td>
+                <td style={{ width: '100px' }}>&nbsp;</td>
                 {this.state.foundations.map((foundation, index) => (
                   <td>
                     <Foundation
@@ -48,6 +49,7 @@ class Solitaire extends Component {
                     />
                   </td>
                 ))}
+                {/*@todo move to display component*/}
                 <td>
                   Points: {this.state.points}
                   <br />
@@ -58,18 +60,27 @@ class Solitaire extends Component {
               </tr>
               <tr>
                 <td colSpan="7">
-                  <Tableau
-                    stacks={this.state.stacks}
-                    deck={this.state.deck}
-                    cards={this.state.cards}
-                  />
+                  <table>
+                    <tbody>
+                      <tr>
+                        {this.state.stacks.map((stack, index) => (
+                          <td>
+                            <TableauStack
+                              stackIndex={index}
+                              stack={stack.stack}
+                              blinkFor={stack.blinkFor}
+                              onClick={(card, source) => this.state.onTableauStackClick(card, index, source)}
+                            /></td>))}
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
                 <td>&nbsp;</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </MyContext.Provider>
+      </div>
     );
   }
 }

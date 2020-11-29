@@ -1,5 +1,4 @@
 import Card from './Card';
-import { MyContext } from '../MyContext';
 import { targetStackStyle } from '../styles';
 
 export default function Waste(props) {
@@ -12,23 +11,19 @@ export default function Waste(props) {
         position: 'relative',
     };
     return (
-        <MyContext.Consumer>
-            {ctx =>
-                <div style={localOuterStyle}>
-                    <div style={targetStackStyle.cardStyle} onClick={() => ctx.clickOnWaste()}>&nbsp;</div>
-                    {props.stack.map((card, index) => (
-                        <div style={localStyle}>
-                            <Card type={card.type}
-                                face={card.face}
-                                offsetTop={index}
-                                source="waste"
-                                clickCard={(c) => ctx.clickOnWaste(c)}
-                            />
-                        </div>
-
-                    ))}
+        <div style={localOuterStyle}>
+            <div style={targetStackStyle.cardStyle} onClick={() => props.clickOnWaste()}>&nbsp;</div>
+            {props.stack.map((card, index) => (
+                <div style={localStyle}>
+                    <Card type={card.type}
+                        face={card.face}
+                        offsetTop={index}
+                        source="waste"
+                        clickCard={(c) => props.clickOnWaste(c)}
+                    />
                 </div>
-            }
-        </MyContext.Consumer>
+
+            ))}
+        </div>
     );
 }

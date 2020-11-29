@@ -23,9 +23,7 @@ export default class Foundation extends Base {
                             state.foundations[index].acceptedCards.push(state.foundations[index].usedCards.pop());
                         }
                         return { ...state };
-                    }, () => {
-                        this.actions.startMove('foundation', pseudoCard.props);
-                    });
+                    }, () => this.actions.startMove('foundation', pseudoCard.props));
                 });
         }
     }
@@ -51,9 +49,7 @@ export default class Foundation extends Base {
                 } else {
                     return { ...state };
                 }
-            }, () => {
-                this.actions.endMove('foundation');
-            });
+            }, () => this.actions.endMove('foundation'));
         } else {
             this._blink(index);
         }
@@ -61,9 +57,7 @@ export default class Foundation extends Base {
 
     _blink = (index) => {
         this._toggleBlink(index, 10, () => {
-            setTimeout(() => {
-                this._toggleBlink(index, 0, () => { });
-            }, 100);
+            setTimeout(() => this._toggleBlink(index, 0), 100);
         })
     }
 

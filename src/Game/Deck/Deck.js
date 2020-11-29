@@ -25,6 +25,6 @@ export const getDeck = () => {
             });
         }
     }
-    //shuffleArray(deck);
+    shuffleArray(deck);
     return deck;
 }

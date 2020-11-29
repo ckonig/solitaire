@@ -1,5 +1,4 @@
 import Card from './Card';
-import { MyContext } from '../MyContext';
 import { targetStackStyle } from '../styles';
 
 export default function TableauStack(props) {
