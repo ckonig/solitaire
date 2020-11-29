@@ -44,8 +44,9 @@ export default function Foundation(props) {
                 <div style={localStyle}>
                     <Card
                         blink={props.blinkFor}
-                        type={card.props.type}
-                        face={card.props.face}
+                        type={card.type}
+                        source="foundation"
+                        face={card.face}
                         clickCard={(c) => props.onFoundationClick(c)} />
                 </div>))}
         </div>

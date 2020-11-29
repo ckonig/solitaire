@@ -35,5 +35,4 @@ export default class Hand {
             console.log('not same source', card, this.state().hand.source)
         return result;
     }
-    
 }

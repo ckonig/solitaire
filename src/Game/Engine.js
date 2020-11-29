@@ -26,6 +26,7 @@ export default class Engine extends Base {
             return {
                 stack: [],
                 acceptedCards: [...getTargetOrder()],
+                usedCards: [],
                 icon,
             };
         };

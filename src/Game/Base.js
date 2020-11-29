@@ -11,7 +11,7 @@ export default class Base {
     }
 
     cardEquals(card, otherCard) {
-        return (!card && !otherCard ) || card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon;
+        return (!card && !otherCard) || card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon;
     }
 
     cardNotEquals(card, otherCard) {
@@ -56,6 +56,18 @@ export default class Base {
         return stack;
     }
 
+    pickup = (card, cb) => {
+        if (!this.hand.isHoldingCard()) {
+            var following = this.findFollowing(card)
+            this.removeFromAll(() =>
+                this.stateHolder.setState((state, props) => {
+                    state.hand.stack = [card, ...following]
+                    state.hand.source = card.props.source;
+                    return { ...state, currentCard: card };
+                }, cb), card);
+        }
+    }
+
     findFollowing(card) {
         for (var i = 0; i < this.stateHolder.state.stacks.length; i++) {
             for (var j = 0; j < this.stateHolder.state.stacks[i].stack.length; j++) {
@@ -71,18 +83,6 @@ export default class Base {
         return [];
     }
 
-    pickup = (card, cb) => {
-        if (!this.hand.isHoldingCard()) {
-            var following = this.findFollowing(card)
-            this.removeFromAll(() =>
-                this.stateHolder.setState((state, props) => {
-                    state.hand.stack = [card, ...following]
-                    state.hand.source = card.props.source;
-                    return { ...state, currentCard: card };
-                }, cb), card);
-        }
-    }
-
     unselectCard(state) {
         state.hand.stack = [];
         state.hand.source = null;
@@ -94,7 +94,9 @@ export default class Base {
         var c = card || this.hand.currentCard();
         this.removeFromStock(() => {
             this.removeFromWaste(() => {
-                this.removeFromTableauStacks(cb, c)
+                this.removeFromTableauStacks(() => {
+                    this.removeFromFoundations(cb, c);
+                }, c)
             }, c)
         }, c);
     }
@@ -128,6 +130,15 @@ export default class Base {
     removeFromTableauStacks = (callback, card) => {
         this.removeFromXStack(callback, (state) => {
             state.stacks = this.filterOut(state.stacks, card);
+            return state;
+        }, card);
+    }
+
+    removeFromFoundations = (callback, card) => {
+        this.removeFromXStack(callback, (state) => {
+            var filtered = this.filterOut(state.foundations, card)
+            console.log('filtered', state.foundations, filtered)
+            state.foundations = filtered;
             return state;
         }, card);
     }
