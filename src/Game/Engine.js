@@ -1,10 +1,10 @@
-import { getDeck, getStacks, } from '../Deck/Deck';
-
 import Base from './Base';
 import Foundation from './Foundation';
 import Stock from './Stock';
+import TableauGenerator from '../Deck/TableauGenerator';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
+import { getDeck } from '../Deck/Deck';
 import { getTargetOrder } from '../Deck/CardRange'
 
 export default class Engine extends Base {
@@ -14,13 +14,15 @@ export default class Engine extends Base {
         this.foundation = new Foundation(stateholder);
         this.stock = new Stock(stateholder);
         this.waste = new Waste(stateholder);
+        this.tableauGenerator = new TableauGenerator();
     }
 
     getInitialState = () => {
         var deck = getDeck();
+
         var stock = deck.slice(0, 20);
         var tableau = deck.slice(20);
-        var stacks = getStacks([...tableau]);
+        var stacks = this.tableauGenerator.getStacks([...tableau]);
 
         var getFoundation = (icon) => {
             return {
@@ -34,7 +36,7 @@ export default class Engine extends Base {
             stock: stock,
             waste: [],
             foundations: [getFoundation("♥"), getFoundation("♦"), getFoundation("♣"), getFoundation("♠")],
-            deck: tableau,
+            //deck: tableau,
             stacks: stacks,
             hand: {
                 stack: [],
