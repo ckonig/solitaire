@@ -2,7 +2,7 @@ import Card from './Card';
 import { MyContext } from '../MyContext';
 import { targetStackStyle } from '../styles';
 
-export default function StockPile(props) {
+export default function StockPile() {
     var localStyle = {
         position: 'absolute',
         left: '0px',

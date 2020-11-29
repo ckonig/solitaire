@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "../styles";
 
 export default class Card extends Component {
+  //@todo sanitize styles
   render() {
     var cardStyle = {
       ...cardBaseStyle,
-      boxShadow:'2px 2px 2px 2px black',
+      boxShadow: '2px 2px 2px 2px black',
     };
 
     if (this.props.isSelected) {
@@ -44,6 +45,7 @@ export default class Card extends Component {
       }
       if (this.props.blink) {
         st['borderColor'] = 'red';
+        st.boxShadow = '2px 2px 2px 2px red';
       }
       return st;
     }

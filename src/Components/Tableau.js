@@ -2,6 +2,7 @@ import { MyContext } from '../MyContext';
 import TableauStack from './TableauStack';
 
 export default function Tableau(props) {
+    //@todo  use CSS for layout instead of html table
     return (
         <MyContext.Consumer>
             {ctx => <div>
@@ -14,7 +15,6 @@ export default function Tableau(props) {
                                         stackIndex={index}
                                         stack={stack.stack}
                                         blinkFor={stack.blinkFor}
-                                        currentCard={ctx.currentCard}
                                         onClick={(card, source) => ctx.onTableauStackClick(card, index, source)}
                                     /></td>))
                             }

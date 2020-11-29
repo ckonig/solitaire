@@ -19,7 +19,7 @@ export default class Foundation extends Base {
                     this.stateHolder.setState((state, props) => {
                         var used = [...state.foundations[index].usedCards];
                         var previous = used.pop();
-                        if (previous && previous == state.currentCard.props.face) {
+                        if (previous && previous == this.hand.currentCard().props.face) {
                             state.foundations[index].acceptedCards.push(state.foundations[index].usedCards.pop());
                         }
                         return { ...state };

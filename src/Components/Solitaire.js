@@ -19,12 +19,11 @@ class Solitaire extends Component {
     this.state = this.engine.getInitialState();
   }
 
+  //@todo use CSS instead of HTML table for layout
   render() {
     return (
       <MyContext.Provider value={this.state}>
-        <Hand
-          currentCard={this.state.currentCard}
-          stack={this.state.hand.stack} />
+        <Hand stack={this.state.hand.stack} />
         <div style={targetStackStyle.tableStyle}>
           <table>
             <tbody>
@@ -53,7 +52,7 @@ class Solitaire extends Component {
                   Points: {this.state.points}
                   <br />
                   <Clock started={this.state.started} end={this.state.end} />
-                  <br/>
+                  <br />
                   Is Ended: {this.state.isEnded ? "Y" : "N"}
                 </td>
               </tr>
