@@ -6,7 +6,7 @@ import Engine from '../Game/Engine';
 import Foundation from './Foundation';
 import Hand from './Hand';
 import { MyContext } from '../MyContext';
-import Stock from './Stock';
+import StockPile from './StockPile';
 import Tableau from './Tableau';
 import Waste from './Waste';
 import { targetStackStyle } from '../styles';
@@ -31,12 +31,12 @@ class Solitaire extends Component {
             <tbody>
               <tr>
                 <td>
-                  <Stock stack={this.state.stock} />
+                  <StockPile />
                 </td>
                 <td>
                   <Waste stack={this.state.waste} />
                 </td>
-                <td style={{width:'100px'}}>
+                <td style={{ width: '100px' }}>
                   &nbsp;
                 </td>
                 {this.state.foundations.map((foundation, index) => (

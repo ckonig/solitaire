@@ -10,9 +10,17 @@ export default class Base {
         return this.stateHolder.state;
     }
 
+    cardEquals(card, otherCard) {
+        return (!card && !otherCard ) || card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon;
+    }
+
+    cardNotEquals(card, otherCard) {
+        return otherCard.face !== card.face || otherCard.type.icon !== card.type.icon;
+    }
+
     filterNotEqual(stack, card) {
         return stack.filter((value, index, arr) => {
-            return value.face !== card.props.face || value.type.icon !== card.props.type.icon;
+            return this.cardNotEquals(value, card.props);
         });
     }
 
@@ -53,7 +61,7 @@ export default class Base {
             for (var j = 0; j < this.stateHolder.state.stacks[i].stack.length; j++) {
                 if (card.props && this.stateHolder.state.stacks[i].stack[j].face == card.props.face && this.stateHolder.state.stacks[i].stack[j].type.icon == card.props.type.icon) {
                     console.log('FOUND STACK')
-                    var following = this.stateHolder.state.stacks[i].stack.splice(j+1, this.stateHolder.state.stacks[i].stack.length-1).map(f => { return {props: f}})
+                    var following = this.stateHolder.state.stacks[i].stack.splice(j + 1, this.stateHolder.state.stacks[i].stack.length - 1).map(f => { return { props: f } })
                     console.log(following)
                     return following;
                 }
@@ -112,7 +120,7 @@ export default class Base {
 
     removeFromStock = (callback, card) => {
         this.removeFromXStack(callback, (state) => {
-            state.stock = this.filterNotEqual(state.stock, card);
+            state.stockPile = this.filterNotEqual(state.stockPile, card);
             return state;
         }, card);
     }
