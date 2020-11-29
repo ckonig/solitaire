@@ -36,6 +36,9 @@ class Solitaire extends Component {
                 <td>
                   <PlayStack stack={this.state.playStack} />
                 </td>
+                <td style={{width:'100px'}}>
+                  &nbsp;
+                </td>
                 {this.state.targetStacks.map((targetStack, index) => (
                   <td>
                     <TargetStack
@@ -48,7 +51,7 @@ class Solitaire extends Component {
                 ))}
               </tr>
               <tr>
-                <td colSpan="6">
+                <td colSpan="7">
                   <Board
                     stacks={this.state.stacks}
                     deck={this.state.deck}

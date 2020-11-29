@@ -25,7 +25,7 @@ export default function MainStack(props) {
                             <Card type={card.type}
                                 face={card.face}
                                 source="main"
-                                offset={index}
+                                offsetTop={index}
                                 isHidden={card.hidden}
                                 canUncover={index == props.stack.length - 1}
                                 clickCard={ctx.clickMainStack}

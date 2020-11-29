@@ -29,41 +29,31 @@ export default class BoardStack extends Base {
             // can't put card directly onto previously hidden card
         } else if (card && !this.tryUncover(card, index) && this.hand.isFromCurrentSource(card)) {
             // put back onto orignal stack
-            this.stateHolder.setState((state, props) => {
-                if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
-                    state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
-                    state.stacks[index].stack.push(...state.hand.stack.map(e => e.props)); 
-                    return { ...this.unselectCard(state) };
-                }
-            });
+            this.tryPutOntoStack(index)
         } else if (card && this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
             // try put on other stack
             if (this.validateBoardStackMove(this.state().currentCard, card)) {
-                this.stateHolder.setState((state, props) => {
-                    if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
-                        state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
-                        state.stacks[index].stack.push(...state.hand.stack.map(e => e.props)); 
-                        return { ...this.unselectCard(state) };
-                    }
-                });
+                this.tryPutOntoStack(index)
             } else {
                 this.blink(index);
             }
         } else if (stackIsEmpty && (this.hand.isHoldingKing() || this.hand.isFromCurrentSource({ props: { source: source } }))) {
-            // try create new stack @todo this is broken if card comes from same stack 
-            // this wont work because there is no card on the stack to compare the source field
             this.stateHolder.setState((state, props) => {
-                if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
-                    this.removeFromPlayStack();
-                    this.removeFromMainStack();
-                    state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
-                    state.stacks[index].stack.push(...state.hand.stack.map(e => e.props));
-                    return { ...this.unselectCard(state) };
-                }
+                this.tryPutOntoStack(index)
             });
         } else {
             this.pickup(card);
         }
+    }
+
+    tryPutOntoStack = (index) => {
+        this.stateHolder.setState((state, props) => {
+            if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
+                state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
+                state.stacks[index].stack.push(...state.hand.stack.map(e => e.props));
+                return { ...this.unselectCard(state) };
+            }
+        });
     }
 
     toggleBlink(index, blinkFor, cb) {
