@@ -66,7 +66,7 @@ export default class Base {
                 this.stateHolder.setState((state, props) => {
                     state.hand.stack = [card, ...following]
                     state.hand.source = card.props.source;
-                    return { ...state, currentCard: card }; //@todo get rid of currentCard
+                    return { ...state }; 
                 }, cb), card);
         }
     }
@@ -87,7 +87,6 @@ export default class Base {
     unselectCard(state) {
         state.hand.stack = [];
         state.hand.source = null;
-        state.currentCard = null; // @todo remove currentCard
         return state;
     }
 

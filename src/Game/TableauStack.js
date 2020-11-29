@@ -32,7 +32,7 @@ export default class TableauStack extends Base {
             this.tryPutOntoStack(index)
         } else if (card && this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
             // try put on other stack
-            if (this.validateTableauStackMove(this.state().currentCard, card)) {
+            if (this.validateTableauStackMove(this.hand.currentCard(), card)) {
                 this.tryPutOntoStack(index)
             } else {
                 this.blink(index);

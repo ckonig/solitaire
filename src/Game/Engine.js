@@ -21,7 +21,6 @@ export default class Engine extends Base {
         var stacks = new TableauGenerator().getStacks([...tableau]);
 
         return {
-            currentCard: null, // @todo remove currentCard
             stockPile: stockPile,
             waste: [],
             currentMove: null,
