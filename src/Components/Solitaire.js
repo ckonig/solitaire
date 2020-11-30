@@ -1,11 +1,11 @@
 import '../App.css';
 
-import Clock from './Clock';
 import { Component } from 'react';
-import Engine from '../Game/Engine/Engine';
+import Engine from '../Engine/Engine';
+import Footer from './Footer';
 import Foundation from './Foundation';
 import Hand from './Hand';
-import Interaction from '../Game/Interaction/Interaction';
+import Interaction from '../Interaction/Interaction';
 import StockPile from './StockPile';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
@@ -63,13 +63,10 @@ class Solitaire extends Component {
               </Box>))}
           </div>
           <div style={style.lowerContainer}>
-
-            Points: {this.state.points}
-            <br />
-            <Clock started={this.state.started} end={this.state.end} />
-            <br />
-          Is Ended: {this.state.isEnded ? "Y" : "N"}
-
+            <Footer end={this.state.end}
+              started={this.state.started}
+              points={this.state.points}
+              isEnded={this.state.isEnded} />
           </div>
         </div>
       </div>

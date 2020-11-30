@@ -1,12 +1,13 @@
 import Base from "./Base";
 import CardTools from "../Deck/CardTools";
 
+//@todo introduce foundation model to clean up class
+
 export default class Foundation extends Base {
-    _tryPickup(index) {
+    pickup(index) {
         var stack = this.stateHolder.state.foundations[index].stack;
         if (stack[stack.length - 1]) {
-            var card = stack[stack.length - 1];
-            var pseudoCard = { props: card };
+            var pseudoCard = { props: stack[stack.length - 1] };
             this.stateHolder.setState((state) => {
                 var previous = [...state.foundations[index].usedCards].pop();
                 if (previous && previous == pseudoCard.props.face) {
@@ -15,12 +16,11 @@ export default class Foundation extends Base {
                     state.hand.pickUp([pseudoCard], pseudoCard.props.source);
                 }
                 return { ...state };
-            },
-                () => this.actions.startMove('foundation', card));
+            });
         }
     }
 
-    _tryPutOntoStack(index) {
+    tryPutDown(index) {
         var currentFoundation = this.state().foundations[index].acceptedCards;
         var currentAccepted = currentFoundation[currentFoundation.length - 1];
         if (this.state().foundations[index].icon == this.hand().currentCard().props.type.icon && currentAccepted == this.hand().currentCard().props.face) {
@@ -34,9 +34,8 @@ export default class Foundation extends Base {
                         return { ...state };
                     }
                 }
-
                 return { ...state };
-            }, () => this.actions.endMove('foundation'));
+            });
         } else {
             this._blink(index);
         }

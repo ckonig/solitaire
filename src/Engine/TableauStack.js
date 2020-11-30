@@ -2,6 +2,8 @@ import Base from './Base';
 import { CardRange } from '../Deck/CardRange';
 import CardTools from '../Deck/CardTools';
 
+//@todo this class is too messy 
+
 export default class TableauStack extends Base {
     constructor(stateholder) {
         super(stateholder)
@@ -15,25 +17,25 @@ export default class TableauStack extends Base {
         return (currentIndex + 1) == topIndex && (current.props.type.color != top.props.type.color);
     }
 
-    _pickup = (card) => {
+    pickup = (card) => {
         this.stateHolder.setState((state) => {
             if (!state.hand.isHoldingCard()) {
                 var following = state.tableau.findFollowing(card)
                 state.hand.pickUp([card, ...following], card.props.source);
-                state.tableau.filterOut(card);
+                state.tableau.filterOut(card); //@todo how come we dont need to filter the following?
             }
             return { ...state };
-        }, () => this.actions.startMove(card.props.source, card.props))
+        })
     }
 
-    tryPutOntoStack = (index) => {
+    tryPutDown = (index) => {
         this.stateHolder.setState((state) => {
             if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
                 state.tableau.filterOut(state.hand.currentCard())
                 state.tableau.stacks[index].stack.push(...state.hand.putDown().map(e => e.props));
                 return { ...state };
             }
-        }, () => this.actions.endMove("tableau-" + index));
+        });
     }
 
     //@todo move to model and/or component
@@ -46,9 +48,7 @@ export default class TableauStack extends Base {
         }, cb);
     }
 
-    tryUncover = (card, index) => {
-        return !this.hand().isFromCurrentSource(card) && this.tryUncoverInStack(card, index, () => this.actions.registerUncover(card));
-    }
+    tryUncover = (card, index) => !this.hand().isFromCurrentSource(card) && this.tryUncoverInStack(card, index);
 
     tryUncoverInStack = (card, index, cb) => {
         if (card.props.isHidden && card.props.canUncover) {

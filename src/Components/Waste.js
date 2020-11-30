@@ -2,6 +2,7 @@ import Card from './Card';
 import { targetStackStyle } from '../styles';
 
 export default function Waste(props) {
+    //@todo cleanup css
     var localStyle = {
         position: 'absolute',
         left: '0px',

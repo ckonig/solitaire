@@ -16,12 +16,9 @@ export default class Engine {
         this.waste = new Waste(stateholder);
     }
 
-    //@todo move to separate builder 
     getInitialState = () => {
         var deck = getDeck(); //@todo generate deck & stacks in constructor, allow reset
         var stockPile = deck.slice(28); //@todo make obj, add functionality
-        var tableau = deck.slice(0, 28); //@todo make obj, add functionality
-        var stacks = new TableauGenerator().getStacks([...tableau]);
 
         return {
             stockPile: stockPile,
@@ -31,7 +28,7 @@ export default class Engine {
             points: 0,
             started: Date.now(),
             foundations: generateFoundations(),
-            tableau: new Tableau(stacks),
+            tableau: new Tableau(new TableauGenerator().getStacks([...deck.slice(0, 28)])),
             hand: new Hand(),
         };
 

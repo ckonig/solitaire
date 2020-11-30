@@ -4,7 +4,6 @@ class CardTool {
         return (!card && !otherCard) || card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon;
     }
 
-    //@todo move to card Model
     cardNotEquals(card, otherCard) {
         return otherCard.face !== card.face || otherCard.type.icon !== card.type.icon;
     }
