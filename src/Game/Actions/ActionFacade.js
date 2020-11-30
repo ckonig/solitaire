@@ -7,9 +7,7 @@ export default class ActionFacade {
     }
 
     startMove(source, card, cb) {
-        if (this.stateHolder.state.currentMove != null) {
-            console.log('Can not start second move', this.currentMove, source, card);
-        } else {
+        if (this.stateHolder.state.currentMove == null) {
             console.log('started move from ', source, card)
             this.stateHolder.setState((state) => {
                 state.currentMove = {
@@ -23,9 +21,7 @@ export default class ActionFacade {
     }
 
     endMove(target, cb) {
-        if (this.stateHolder.state.currentMove == null) {
-            console.log('Can not end non-existent move to ', target);
-        } else {
+        if (this.stateHolder.state.currentMove !== null) {
             this.stateHolder.setState((state) => {
                 if (state.currentMove) {
                     state.currentMove.target = target;
@@ -43,7 +39,7 @@ export default class ActionFacade {
     }
 
     _tryDetectEnd(cb) {
-        var reduced = this.stateHolder.state.foundations.map(f => parseInt(f.stack.length)).reduce((a, b) => a+b, 0);
+        var reduced = this.stateHolder.state.foundations.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
         console.log('reduced', reduced, this.stateHolder.state.foundations.map(f => parseInt(f.stack.length)));
         var isEnd = reduced == 52;
         if (isEnd) {
