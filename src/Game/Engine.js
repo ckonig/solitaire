@@ -2,6 +2,7 @@ import Base from './Base';
 import Foundation from './Foundation';
 import Hand from './Model/Hand';
 import Stock from './Stock';
+import Tableau from './Model/Tableau';
 import TableauGenerator from './Deck/TableauGenerator';
 import TableauStack from './TableauStack';
 import generateFoundations from './Deck/FoundationGenerator';
@@ -30,7 +31,7 @@ export default class Engine extends Base {
             points: 0,
             started: Date.now(),
             foundations: generateFoundations(),
-            stacks: stacks,
+            tableau: new Tableau(stacks),
             hand: new Hand(),
         };
 

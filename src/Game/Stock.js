@@ -1,4 +1,5 @@
 import Base from "./Base";
+import CardTools from "./Deck/CardTools";
 
 export default class Stock extends Base {
 
@@ -18,17 +19,16 @@ export default class Stock extends Base {
         if (this.hand().isHoldingCard() && !this.hand().isCurrentCard(card)) {
             this._tryPutBackToWaste(card);
         } else if (card && !this.hand().isHoldingCard()) {
-            this.pickup(card, (cb) => {
-                this.actions.startMove('waste', card.props, () => {
-                    this._removeFromWaste(cb, card)
-                });
-            });
+            this.stateHolder.setState((state) => {
+                !state.hand.isHoldingCard() && state.hand.pickUp([card], card.props.source);
+                return { ...state };
+            }, () => this._removeFromWaste(card, () => this.actions.startMove('waste', card.props)))
         }
     }
 
     _moveToWaste(card) {
         this.stateHolder.setState((state, props) => {
-            if (this.cardEquals(card.props, state.stockPile[state.stockPile.length - 1])) {
+            if (CardTools.cardEquals(card.props, state.stockPile[state.stockPile.length - 1])) {
                 state.waste.push(state.stockPile.pop());
             }
             return { ...state };
@@ -39,9 +39,9 @@ export default class Stock extends Base {
         });
     }
 
-    _removeFromWaste = (callback, card) => {
+    _removeFromWaste = (card, callback) => {
         this.removeFromXStack(callback, (state) => {
-            state.waste = this.filterNotEqual(state.waste, card);
+            state.waste = CardTools.filterNotEqual(state.waste, card);
             return state;
         }, card);
     }

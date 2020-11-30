@@ -50,7 +50,7 @@ class Solitaire extends Component {
             ))}
           </div>
           <div style={style.middleContainer}>
-            {this.state.stacks.map((stack, index) => (
+            {this.state.tableau.stacks.map((stack, index) => (
               <Box>
                 <TableauStack
                   stackIndex={index}

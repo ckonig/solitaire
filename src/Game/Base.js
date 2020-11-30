@@ -1,5 +1,5 @@
 import ActionFacade from './Actions/ActionFacade';
-import Hand from './Model/Hand';
+import CardTools from './Deck/CardTools';
 
 export default class Base {
     constructor(stateholder) {
@@ -10,28 +10,6 @@ export default class Base {
 
     state() {
         return this.stateHolder.state;
-    }
-
-    cardEquals(card, otherCard) {
-        return (!card && !otherCard) || card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon;
-    }
-
-    cardNotEquals(card, otherCard) {
-        return otherCard.face !== card.face || otherCard.type.icon !== card.type.icon;
-    }
-
-    filterNotEqual(stack, card) {
-        return stack.filter((value, index, arr) => {
-            return this.cardNotEquals(value, card.props);
-        });
-    }
-
-    filterOut = (stacks, card) => {
-        for (var i = 0; i < stacks.length; i++) {
-            stacks[i].stack = this.filterNotEqual(stacks[i].stack, card);
-        }
-
-        return stacks;
     }
 
     tryUncoverInStack = (card, modifier, cb) => {
@@ -50,36 +28,13 @@ export default class Base {
 
     unhideInStack(stack, card) {
         for (var i = 0; i < stack.length; i++) {
-            if (this.cardEquals(stack[i], card.props) && stack[i].hidden) {
+            if (CardTools.cardEquals(stack[i], card.props) && stack[i].hidden) {
                 stack[i].hidden = false;
                 this.actions.registerUncover(card);
             }
         }
 
         return stack;
-    }
-
-    pickup = (card, remove, cb) => {
-        if (!this.hand().isHoldingCard()) {
-            var following = this.findFollowing(card)
-            remove(() =>
-                this.stateHolder.setState((state, props) => {
-                    state.hand.pickUp([card, ...following], card.props.source);
-                    return { ...state };
-                }, cb), card);
-        }
-    }
-
-    findFollowing(card) {
-        for (var i = 0; i < this.stateHolder.state.stacks.length; i++) {
-            for (var j = 0; j < this.stateHolder.state.stacks[i].stack.length; j++) {
-                if (card.props && this.stateHolder.state.stacks[i].stack[j].face == card.props.face && this.stateHolder.state.stacks[i].stack[j].type.icon == card.props.type.icon) {
-                    return this.stateHolder.state.stacks[i].stack.splice(j + 1, this.stateHolder.state.stacks[i].stack.length - 1).map(f => { return { props: f } })
-                }
-            }
-        }
-
-        return [];
     }
 
     removeFromXStack = (callback, modifier, card) => {
