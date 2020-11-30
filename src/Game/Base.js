@@ -1,10 +1,10 @@
 import ActionFacade from './Actions/ActionFacade';
-import Hand from './Hand';
+import Hand from './Model/Hand';
 
 export default class Base {
     constructor(stateholder) {
         this.stateHolder = stateholder;
-        this.hand = new Hand(stateholder);
+        this.hand = () => stateholder.state.hand;
         this.actions = new ActionFacade(stateholder);
     }
 
@@ -60,13 +60,12 @@ export default class Base {
     }
 
     pickup = (card, remove, cb) => {
-        if (!this.hand.isHoldingCard()) {
+        if (!this.hand().isHoldingCard()) {
             var following = this.findFollowing(card)
             remove(() =>
                 this.stateHolder.setState((state, props) => {
-                    state.hand.stack = [card, ...following]
-                    state.hand.source = card.props.source;
-                    return { ...state }; 
+                    state.hand.pickUp([card, ...following], card.props.source);
+                    return { ...state };
                 }, cb), card);
         }
     }
@@ -81,13 +80,6 @@ export default class Base {
         }
 
         return [];
-    }
-
-    //@todo move to hand?
-    unselectCard(state) {
-        state.hand.stack = [];
-        state.hand.source = null;
-        return state;
     }
 
     removeFromXStack = (callback, modifier, card) => {

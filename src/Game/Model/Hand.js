@@ -1,15 +1,24 @@
 export default class Hand {
-    
-    constructor(stateholder) {
-        this.stateHolder = stateholder;
+
+    constructor() {
+        this.stack = [];
+        this.source = null;
     }
 
-    state() {
-        return this.stateHolder.state;
+    pickUp(stack, source) {
+        this.stack = stack;
+        this.source = source;
+    }
+
+    putDown() {
+        var cards = [...this.stack]
+        this.stack = [];
+        this.source = null;
+        return cards;
     }
 
     isHoldingCard() {
-        return !!this.state().hand.stack.length;
+        return !!this.stack.length;
     }
 
     isHoldingKing() {
@@ -21,7 +30,7 @@ export default class Hand {
     }
 
     currentCard() {
-        return this.isHoldingCard() && this.state().hand.stack[0];
+        return this.isHoldingCard() && this.stack[0];
     }
 
     containsCurrentCard(stack) {
@@ -29,6 +38,6 @@ export default class Hand {
     }
 
     isFromCurrentSource(card) {
-        return this.state().hand.source && card.props.source == this.state().hand.source;
+        return this.source && card.props.source == this.source;
     }
 }

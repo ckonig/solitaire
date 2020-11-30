@@ -3,7 +3,7 @@ import Base from "./Base";
 export default class Foundation extends Base {
     //@todo separate click handler from business logic
     click = (index) => {
-        if (this.hand.isHoldingCard()) {
+        if (this.hand().isHoldingCard()) {
             this._tryPutOntoStack(index);
         } else {
             this._tryPickup(index);
@@ -19,7 +19,7 @@ export default class Foundation extends Base {
                 () => {
                     this.stateHolder.setState((state) => {
                         var previous = [...state.foundations[index].usedCards].pop();
-                        if (previous && previous == this.hand.currentCard().props.face) {
+                        if (previous && previous == this.hand().currentCard().props.face) {
                             state.foundations[index].acceptedCards.push(state.foundations[index].usedCards.pop());
                         }
                         return { ...state };
@@ -38,14 +38,15 @@ export default class Foundation extends Base {
     _tryPutOntoStack(index) {
         var currentFoundation = this.state().foundations[index].acceptedCards;
         var currentAccepted = currentFoundation[currentFoundation.length - 1];
-        if (this.state().foundations[index].icon == this.hand.currentCard().props.type.icon && currentAccepted == this.hand.currentCard().props.face) {
+        if (this.state().foundations[index].icon == this.hand().currentCard().props.type.icon && currentAccepted == this.hand().currentCard().props.face) {
             this.stateHolder.setState((state, props) => {
-                if (this.hand.isHoldingCard() && state.foundations[index].stack.indexOf(this.hand.currentCard()) == -1) {
-                    state.foundations[index].stack.push(this.hand.currentCard().props);
+                if (this.hand().isHoldingCard() && state.foundations[index].stack.indexOf(this.hand().currentCard()) == -1) {
+                    state.foundations[index].stack.push(this.hand().currentCard().props);
                     var popped = state.foundations[index].acceptedCards.pop();
                     if (popped) {
                         state.foundations[index].usedCards.push(popped);
-                        return { ...this.unselectCard(state) };
+                        state.hand.putDown();
+                        return { ...state };
                     }
                 }
 

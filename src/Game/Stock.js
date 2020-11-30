@@ -3,7 +3,7 @@ import Base from "./Base";
 export default class Stock extends Base {
 
     clickStockPile = (card) => {
-        if (!this.hand.isHoldingCard()) {
+        if (!this.hand().isHoldingCard()) {
             if (card) {
                 this._moveToWaste(card);
             } else {
@@ -15,9 +15,9 @@ export default class Stock extends Base {
     }
 
     clickWaste = (card) => {
-        if (this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
+        if (this.hand().isHoldingCard() && !this.hand().isCurrentCard(card)) {
             this._tryPutBackToWaste(card);
-        } else if (card && !this.hand.isHoldingCard()) {
+        } else if (card && !this.hand().isHoldingCard()) {
             this.pickup(card, (cb) => {
                 this.actions.startMove('waste', card.props, () => {
                     this._removeFromWaste(cb, card)
@@ -61,12 +61,13 @@ export default class Stock extends Base {
     _tryPutBackToWaste() {
         if (this.state().hand.source == 'waste') {
             this.stateHolder.setState((state, props) => {
-                var current = this.hand.currentCard();
+                var current = this.hand().currentCard();
                 var top = this.state().waste[this.state().waste.length - 1];
                 if (current && current.props && (!top || top.face !== current.props.face || top.type.icon !== current.props.type.icon)) {
-                    state.waste.push(this.hand.currentCard().props);
+                    state.waste.push(this.hand().currentCard().props);
                 }
-                return { ...this.unselectCard(state) };
+                state.hand.putDown();
+                return { ...state };
             }, () => {
                 this.actions.endMove('waste');
             });

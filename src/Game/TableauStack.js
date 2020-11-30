@@ -7,7 +7,7 @@ export default class TableauStack extends Base {
     }
 
     tryUncover = (card, index) => {
-        if (this.hand.isFromCurrentSource(card)) {
+        if (this.hand().isFromCurrentSource(card)) {
             return false;
         }
         return this.tryUncoverInStack(card, state => {
@@ -28,17 +28,17 @@ export default class TableauStack extends Base {
         //@todo how to introduce state machine with sub machines (hand + stack)
         if (card && this.tryUncover(card, index)) {
             // can't put card directly onto previously hidden card
-        } else if (card && !this.tryUncover(card, index) && this.hand.isFromCurrentSource(card)) {
+        } else if (card && !this.tryUncover(card, index) && this.hand().isFromCurrentSource(card)) {
             // put back onto orignal stack
             this.tryPutOntoStack(index)
-        } else if (card && this.hand.isHoldingCard() && !this.hand.isCurrentCard(card)) {
+        } else if (card && this.hand().isHoldingCard() && !this.hand().isCurrentCard(card)) {
             // try put on other stack
-            if (this.validateTableauStackMove(this.hand.currentCard(), card)) {
+            if (this.validateTableauStackMove(this.hand().currentCard(), card)) {
                 this.tryPutOntoStack(index)
             } else {
                 this.blink(index);
             }
-        } else if (stackIsEmpty && (this.hand.isHoldingKing() || this.hand.isFromCurrentSource({ props: { source: source } }))) {
+        } else if (stackIsEmpty && (this.hand().isHoldingKing() || this.hand().isFromCurrentSource({ props: { source: source } }))) {
             this.stateHolder.setState((state, props) => {
                 this.tryPutOntoStack(index)
             });
@@ -59,10 +59,10 @@ export default class TableauStack extends Base {
 
     tryPutOntoStack = (index) => {
         this.stateHolder.setState((state) => {
-            if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
-                state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
-                state.stacks[index].stack.push(...state.hand.stack.map(e => e.props));
-                return { ...this.unselectCard(state) };
+            if (this.hand().isHoldingCard() && !this.hand().containsCurrentCard(this.state().stacks[index].stack)) {
+                state.stacks = this.filterOut(state.stacks, this.hand().currentCard())
+                state.stacks[index].stack.push(...state.hand.putDown().map(e => e.props));
+                return { ...state };
             }
         }, () => this.actions.endMove("tableau-" + index));
     }
