@@ -16,25 +16,17 @@ export default class Foundation extends Base {
         if (stack[stack.length - 1]) {
             var card = stack[stack.length - 1];
             var pseudoCard = { props: card };
-            this._removeFromFoundations(pseudoCard, () => {
-                this.stateHolder.setState((state) => {
-                    var previous = [...state.foundations[index].usedCards].pop();
-                    if (previous && previous == pseudoCard.props.face) {
-                        state.foundations[index].acceptedCards.push(state.foundations[index].usedCards.pop());
-                        state.hand.pickUp([pseudoCard], pseudoCard.props.source);
-                    }
-                    return { ...state };
-                },
-                    () => this.actions.startMove('foundation', card));
-            });
+            this.stateHolder.setState((state) => {
+                var previous = [...state.foundations[index].usedCards].pop();
+                if (previous && previous == pseudoCard.props.face) {
+                    state.foundations = CardTools.filterOut(state.foundations, pseudoCard)
+                    state.foundations[index].acceptedCards.push(state.foundations[index].usedCards.pop());
+                    state.hand.pickUp([pseudoCard], pseudoCard.props.source);
+                }
+                return { ...state };
+            },
+                () => this.actions.startMove('foundation', card));
         }
-    }
-
-    _removeFromFoundations = (card, callback) => {
-        this.removeFromXStack(callback, (state) => {
-            state.foundations = CardTools.filterOut(state.foundations, card)
-            return state;
-        }, card);
     }
 
     _tryPutOntoStack(index) {

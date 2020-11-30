@@ -1,19 +1,10 @@
 import Base from './Base';
 import { CardRange } from './Deck/CardRange';
+import CardTools from './Deck/CardTools';
 
 export default class TableauStack extends Base {
     constructor(stateholder) {
         super(stateholder)
-    }
-
-    tryUncover = (card, index) => {
-        if (this.hand().isFromCurrentSource(card)) {
-            return false;
-        }
-        return this.tryUncoverInStack(card, state => {
-            state.tableau.stacks[index].stack = this.unhideInStack([...state.tableau.stacks[index].stack], card);
-            return { ...state };
-        });
     }
 
     validateTableauStackMove = (current, top) => {
@@ -51,16 +42,10 @@ export default class TableauStack extends Base {
             if (!state.hand.isHoldingCard()) {
                 var following = state.tableau.findFollowing(card)
                 state.hand.pickUp([card, ...following], card.props.source);
+                state.tableau.filterOut(card);
             }
             return { ...state };
-        }, () => this._removeFromTableauStacks(card, () => this.actions.startMove(card.props.source, card.props)))
-    }
-
-    _removeFromTableauStacks = (card, callback) => {
-        this.removeFromXStack(callback, (state) => {
-            state.tableau.filterOut(card);
-            return state;
-        }, card);
+        }, () => this.actions.startMove(card.props.source, card.props))
     }
 
     tryPutOntoStack = (index) => {
@@ -81,5 +66,40 @@ export default class TableauStack extends Base {
             state.tableau.stacks[index].blinkFor = blinkFor;
             return { ...state };
         }, cb);
+    }
+
+    tryUncover = (card, index) => {
+        if (this.hand().isFromCurrentSource(card)) {
+            return false;
+        }
+        return this.tryUncoverInStack(card, state => {
+            state.tableau.stacks[index].stack = this.unhideInStack([...state.tableau.stacks[index].stack], card);
+            return { ...state };
+        });
+    }
+
+    tryUncoverInStack = (card, modifier, cb) => {
+        if (card.props.isHidden && card.props.canUncover) {
+            this.stateHolder.setState((state, props) => {
+                state = modifier(state);
+                return { ...state };
+            }, cb);
+
+            return true;
+        }
+
+        cb && cb();
+        return false;
+    }
+
+    unhideInStack(stack, card) {
+        for (var i = 0; i < stack.length; i++) {
+            if (CardTools.cardEquals(stack[i], card.props) && stack[i].hidden) {
+                stack[i].hidden = false;
+                this.actions.registerUncover(card);
+            }
+        }
+
+        return stack;
     }
 }
