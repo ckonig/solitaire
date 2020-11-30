@@ -40,18 +40,12 @@ export default class Hand extends Component {
             top: '0px',
         };
 
-        var localOuterStyle = {
-            position: 'relative',
-        };
-
-        var localCardStyle = { ...styles.cardStyle };
-
         return (
             <div style={outer}>
                 <div ref={this.myRef}>
 
                     {this.props.stack && this.props.stack.map((card, index) => (
-                        <div className="localstyl0r" style={localStyle}>
+                        <div style={localStyle}>
                             <Card
                                 offsetTop={index * 20}
                                 zIndex={1000 + (index * 20)}

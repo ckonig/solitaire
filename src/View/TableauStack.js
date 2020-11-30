@@ -28,7 +28,7 @@ export default function TableauStack(props) {
         <div style={localOuterStyle}>
             <div style={localCardStyle} onClick={() => props.onClick(null, "tableau-" + props.stackIndex)}>&nbsp;</div>
             {props.stack.map((card, index) => (
-                <div className="localstyl0r" style={localStyle}>
+                <div style={localStyle}>
                     <Card
                         type={card.type}
                         face={card.face}

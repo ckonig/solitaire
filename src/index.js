@@ -2,7 +2,7 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Solitaire from './Components/Solitaire';
+import Solitaire from './View/Solitaire';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

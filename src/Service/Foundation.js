@@ -1,5 +1,5 @@
 import Base from "./Base";
-import CardTools from "../Deck/CardTools";
+import CardTools from "../Model/Deck/CardTools";
 
 //@todo introduce foundation model to clean up class
 
@@ -31,7 +31,6 @@ export default class Foundation extends Base {
                     if (popped) {
                         state.foundations[index].usedCards.push(popped);
                         state.hand.putDown();
-                        return { ...state };
                     }
                 }
                 return { ...state };

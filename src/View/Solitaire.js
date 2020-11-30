@@ -1,11 +1,11 @@
 import '../App.css';
 
 import { Component } from 'react';
-import Engine from '../Engine/Engine';
+import Engine from '../Service/Engine';
 import Footer from './Footer';
 import Foundation from './Foundation';
 import Hand from './Hand';
-import Interaction from '../Interaction/Interaction';
+import Interaction from '../Controller/Interaction';
 import StockPile from './StockPile';
 import TableauStack from './TableauStack';
 import Waste from './Waste';

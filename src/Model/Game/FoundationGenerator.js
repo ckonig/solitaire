@@ -1,5 +1,5 @@
-import Suits from './Suits';
-import { getTargetOrder } from './CardRange'
+import Suits from '../Deck/Suits';
+import { getTargetOrder } from '../Deck/CardRange'
 
 const getFoundation = (icon) => {
     return {

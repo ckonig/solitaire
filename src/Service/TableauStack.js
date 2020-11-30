@@ -1,6 +1,6 @@
 import Base from './Base';
-import { CardRange } from '../Deck/CardRange';
-import CardTools from '../Deck/CardTools';
+import { CardRange } from '../Model/Deck/CardRange';
+import CardTools from '../Model/Deck/CardTools';
 
 //@todo this class is too messy 
 

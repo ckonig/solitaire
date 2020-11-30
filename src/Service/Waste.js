@@ -1,5 +1,5 @@
 import Base from "./Base";
-import CardTools from "../Deck/CardTools";
+import CardTools from "../Model/Deck/CardTools";
 
 //@todo model to clean up code
 export default class Waste extends Base {

@@ -1,12 +1,12 @@
 import Foundation from './Foundation';
-import Hand from '../Model/Hand';
+import Hand from '../Model/Game/Hand';
 import Stock from './Stock';
-import Tableau from '../Model/Tableau';
-import TableauGenerator from '../Deck/TableauGenerator';
+import Tableau from '../Model/Game/Tableau';
+import TableauGenerator from '../Model/Game/TableauGenerator';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
-import generateFoundations from '../Deck/FoundationGenerator';
-import { getDeck } from '../Deck/Deck';
+import generateFoundations from '../Model/Game/FoundationGenerator';
+import { getDeck } from '../Model/Deck/Deck';
 
 export default class Engine {
     constructor(stateholder) {

@@ -1,5 +1,5 @@
 import Base from "./Base";
-import CardTools from "../Deck/CardTools";
+import CardTools from "../Model/Deck/CardTools";
 
 export default class Stock extends Base {
 
