@@ -7,6 +7,7 @@ const getFoundation = (icon) => {
         acceptedCards: [...getTargetOrder()],
         usedCards: [],
         icon,
+        //@todo add functionality
     };
 };
 

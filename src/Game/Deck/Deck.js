@@ -22,6 +22,7 @@ export const getDeck = () => {
                 key: key,
                 hidden: true,
                 toString: () => key,
+                //@todo why not use prototype to add functionality?
             });
         }
     }

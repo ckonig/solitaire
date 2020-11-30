@@ -27,6 +27,7 @@ export default class TableauGenerator {
 
     _getStack = (id) => {
         var template = { stack: [], id };
+        //@todo add functionality
         return { ...template };
     }
 }

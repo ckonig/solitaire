@@ -29,12 +29,12 @@ class Solitaire extends Component {
               <tr>
                 <td>
                   <StockPile
-                    clickStockPile={this.state.clickStockPile}
+                    clickStockPile={this.engine.stock.clickStockPile}
                     stockPile={this.state.stockPile} />
                 </td>
                 <td>
                   <Waste
-                    clickOnWaste={this.state.clickOnWaste}
+                    clickOnWaste={this.engine.stock.clickWaste}
                     stack={this.state.waste} />
                 </td>
                 <td style={{ width: '100px' }}>&nbsp;</td>
@@ -45,7 +45,7 @@ class Solitaire extends Component {
                       index={index}
                       blinkFor={foundation.blinkFor}
                       icon={foundation.icon}
-                      onFoundationClick={(c) => this.state.onFoundationClick(index, c)}
+                      onFoundationClick={(c) => this.engine.foundation.click(index, c)}
                     />
                   </td>
                 ))}
@@ -69,7 +69,7 @@ class Solitaire extends Component {
                               stackIndex={index}
                               stack={stack.stack}
                               blinkFor={stack.blinkFor}
-                              onClick={(card, source) => this.state.onTableauStackClick(card, index, source)}
+                              onClick={(card, source) => this.engine.tableauStack.click(card, index, source)}
                             /></td>))}
                       </tr>
                     </tbody>

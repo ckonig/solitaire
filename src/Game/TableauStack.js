@@ -25,6 +25,7 @@ export default class TableauStack extends Base {
 
     click = (card, index, source) => {
         var stackIsEmpty = !!!card;
+        //@todo how to introduce state machine with sub machines (hand + stack)
         if (card && this.tryUncover(card, index)) {
             // can't put card directly onto previously hidden card
         } else if (card && !this.tryUncover(card, index) && this.hand.isFromCurrentSource(card)) {
@@ -57,29 +58,22 @@ export default class TableauStack extends Base {
     }
 
     tryPutOntoStack = (index) => {
-        this.stateHolder.setState((state, props) => {
+        this.stateHolder.setState((state) => {
             if (this.hand.isHoldingCard() && !this.hand.containsCurrentCard(this.state().stacks[index].stack)) {
                 state.stacks = this.filterOut(state.stacks, this.hand.currentCard())
                 state.stacks[index].stack.push(...state.hand.stack.map(e => e.props));
                 return { ...this.unselectCard(state) };
             }
-        }, () => {
-            this.actions.endMove("tableau-" + index);
-        });
+        }, () => this.actions.endMove("tableau-" + index));
     }
 
+    //@todo move to model and/or component
+    blink = (index) => this.toggleBlink(index, 10, () => setTimeout(() => this.toggleBlink(index, 0), 100))
+
     toggleBlink(index, blinkFor, cb) {
-        this.stateHolder.setState((state, props) => {
+        this.stateHolder.setState((state) => {
             state.stacks[index].blinkFor = blinkFor;
             return { ...state };
         }, cb);
-    }
-
-    blink = (index) => {
-        this.toggleBlink(index, 10, () => {
-            setTimeout(() => {
-                this.toggleBlink(index, 0, () => { });
-            }, 100);
-        });
     }
 }

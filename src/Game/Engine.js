@@ -14,10 +14,11 @@ export default class Engine extends Base {
         this.stock = new Stock(stateholder);
     }
 
+    //@todo move to separate builder 
     getInitialState = () => {
-        var deck = getDeck();
-        var stockPile = deck.slice(28);
-        var tableau = deck.slice(0, 28);
+        var deck = getDeck(); //@todo generate deck & stacks in constructor, allow reset
+        var stockPile = deck.slice(28); //@todo make obj, add functionality
+        var tableau = deck.slice(0, 28); //@todo make obj, add functionality
         var stacks = new TableauGenerator().getStacks([...tableau]);
 
         return {
@@ -33,10 +34,6 @@ export default class Engine extends Base {
                 stack: [],
                 source: null
             },
-            onTableauStackClick: this.tableauStack.click,
-            onFoundationClick: this.foundation.click,
-            clickStockPile: this.stock.clickStockPile,
-            clickOnWaste: this.stock.clickWaste,
         };
 
     }
