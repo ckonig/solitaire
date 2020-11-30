@@ -1,3 +1,6 @@
+/**
+ * Preparation for UNDO functionality
+ */
 export default class ActionFacade {
 
     constructor(stateHolder) {

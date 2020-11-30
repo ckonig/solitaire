@@ -1,16 +1,7 @@
 import Base from "./Base";
-import CardTools from "./Deck/CardTools";
+import CardTools from "../Deck/CardTools";
 
 export default class Foundation extends Base {
-    //@todo separate click handler from business logic
-    click = (index) => {
-        if (this.hand().isHoldingCard()) {
-            this._tryPutOntoStack(index);
-        } else {
-            this._tryPickup(index);
-        }
-    }
-
     _tryPickup(index) {
         var stack = this.stateHolder.state.foundations[index].stack;
         if (stack[stack.length - 1]) {

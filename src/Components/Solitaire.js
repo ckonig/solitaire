@@ -2,9 +2,10 @@ import '../App.css';
 
 import Clock from './Clock';
 import { Component } from 'react';
-import Engine from '../Game/Engine';
+import Engine from '../Game/Engine/Engine';
 import Foundation from './Foundation';
 import Hand from './Hand';
+import Interaction from '../Game/Interaction/Interaction';
 import StockPile from './StockPile';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
@@ -15,6 +16,7 @@ class Solitaire extends Component {
   constructor(props) {
     super(props);
     this.engine = new Engine(this);
+    this.interaction = new Interaction(this);
     this.state = this.engine.getInitialState();
   }
 
@@ -27,12 +29,12 @@ class Solitaire extends Component {
         <div style={style.upperContainer}>
           <Box>
             <StockPile
-              clickStockPile={this.engine.stock.clickStockPile}
+              clickStockPile={this.interaction.stock.click}
               stockPile={this.state.stockPile} />
           </Box>
           <Box>
             <Waste
-              clickOnWaste={this.engine.stock.clickWaste}
+              clickOnWaste={this.interaction.waste.click}
               stack={this.state.waste} />
           </Box>
           <Box>&nbsp;</Box>
@@ -44,7 +46,7 @@ class Solitaire extends Component {
                   index={index}
                   blinkFor={foundation.blinkFor}
                   icon={foundation.icon}
-                  onFoundationClick={(c) => this.engine.foundation.click(index, c)}
+                  onFoundationClick={(c) => this.interaction.foundation.click(index, c)}
                 />
               </Box>
             ))}
@@ -56,7 +58,7 @@ class Solitaire extends Component {
                   stackIndex={index}
                   stack={stack.stack}
                   blinkFor={stack.blinkFor}
-                  onClick={(card, source) => this.engine.tableauStack.click(card, index, source)}
+                  onClick={(card, source) => this.interaction.tableauStack.click(card, index, source)}
                 />
               </Box>))}
           </div>

@@ -1,19 +1,19 @@
-import Base from './Base';
 import Foundation from './Foundation';
-import Hand from './Model/Hand';
+import Hand from '../Model/Hand';
 import Stock from './Stock';
-import Tableau from './Model/Tableau';
-import TableauGenerator from './Deck/TableauGenerator';
+import Tableau from '../Model/Tableau';
+import TableauGenerator from '../Deck/TableauGenerator';
 import TableauStack from './TableauStack';
-import generateFoundations from './Deck/FoundationGenerator';
-import { getDeck } from './Deck/Deck';
+import Waste from './Waste';
+import generateFoundations from '../Deck/FoundationGenerator';
+import { getDeck } from '../Deck/Deck';
 
-export default class Engine extends Base {
+export default class Engine {
     constructor(stateholder) {
-        super(stateholder)
         this.tableauStack = new TableauStack(stateholder);
         this.foundation = new Foundation(stateholder);
         this.stock = new Stock(stateholder);
+        this.waste = new Waste(stateholder);
     }
 
     //@todo move to separate builder 
