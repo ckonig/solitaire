@@ -1,10 +1,10 @@
 import '../App.css';
 
 import { Component } from 'react';
-import Controller from '../Controller/Facade';
 import Footer from './Footer';
 import Foundation from './Foundation';
 import Hand from './Hand';
+import Service from '../Service/Facade';
 import Stock from './Stock';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
@@ -15,8 +15,8 @@ class Solitaire extends Component {
 
   constructor(props) {
     super(props);
-    this.controller = new Controller(this);
     this.state = getInitialState();
+    this.service = new Service(this);
   }
 
   render() {
@@ -28,13 +28,13 @@ class Solitaire extends Component {
         <div style={style.upperContainer}>
           <Box>
             <Stock
-              onClick={this.controller.stock.click}
+              onClick={this.service.stock.click}
               blinkFor={this.state.stock.blinkFor}
               stack={this.state.stock.stack} />
           </Box>
           <Box>
             <Waste
-              onClick={this.controller.waste.click}
+              onClick={this.service.waste.click}
               blinkFor={this.state.waste.blinkFor}
               stack={this.state.waste.stack} />
           </Box>
@@ -47,7 +47,7 @@ class Solitaire extends Component {
                   index={index}
                   blinkFor={foundation.blinkFor}
                   icon={foundation.icon}
-                  onClick={(c) => this.controller.foundation.click(index, c)}
+                  onClick={(c) => this.service.foundation.click(index, c)}
                 />
               </Box>
             ))}
@@ -59,7 +59,7 @@ class Solitaire extends Component {
                   stackIndex={index}
                   stack={stack.stack}
                   blinkFor={stack.blinkFor}
-                  onClick={(card, source) => this.controller.tableauStack.click(card, index, source)}
+                  onClick={(card, source) => this.service.tableauStack.click(card, index, source)}
                 />
               </Box>))}
           </div>

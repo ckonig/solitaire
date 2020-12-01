@@ -4,10 +4,9 @@
  */
 export default class Actions {
 
-    constructor(stateHolder) {
+    constructor() {
         this.moves = [];
         this.currentMove = null;
-        this.stateHolder = stateHolder;
     }
 
     startMove(source, card, state) {
@@ -27,17 +26,8 @@ export default class Actions {
             state.points += this._rateMove(state.currentMove);
             this._printMove(state.currentMove)
             state.currentMove = null;
-            this._tryDetectEnd(state)
         }
-    }
-
-    _tryDetectEnd(state) {
-        var reduced = this.stateHolder.state.foundation.stacks.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
-        if (reduced == 52) {
-            state.isEnded = true;
-            state.end = Date.now();
-        }
-    }
+    }   
 
     registerRecycle(state) {
         state.moves.push({ source: 'waste', target: 'stock', card: null });

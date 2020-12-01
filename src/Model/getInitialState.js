@@ -6,14 +6,15 @@ import generateFoundations from './Game/FoundationGenerator';
 import generateTableau from './Game/TableauGenerator';
 
 const getInitialState = () => {
-    var deck = generateDeck().shuffle();
+    var deck = generateDeck();
+    //deck.shuffle();
     return {
-        
+
         waste: new Waste(),
         foundation: generateFoundations(),
+        tableau: generateTableau([...deck.take(28)]),
         stock: new Stock(deck.take(24)),
-        tableau: generateTableau([...deck.take(28)]),   
-            
+
         hand: new Hand(),
 
         currentMove: null,

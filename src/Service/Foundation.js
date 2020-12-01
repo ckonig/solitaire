@@ -1,14 +1,19 @@
 import Base from "./Base";
-import CardTools from "../Model/Deck/CardTools";
-
-//@todo introduce foundation model to clean up class
 
 export default class Foundation extends Base {
+    click = (index) => {
+        if (this.hand().isHoldingCard()) {
+            this.tryPutDown(index);
+        } else {
+            this.pickup(index);
+        }
+    }
+
     pickup(index) {
-        var stack = this.stateHolder.state.foundation.stacks[index].stack;
+        var stack = this.state().foundation.stacks[index].stack;
         if (stack[stack.length - 1]) {
             var pseudoCard = { props: stack[stack.length - 1] };
-            this.stateHolder.setState((state) => {
+            this._setState((state) => {
                 var previous = [...state.foundation.stacks[index].usedCards].pop();
                 if (previous && previous == pseudoCard.props.face) {
                     state.foundation.filterOut(pseudoCard)
@@ -24,18 +29,27 @@ export default class Foundation extends Base {
     }
 
     tryPutDown(index) {
-        if (this.stateHolder.state.foundation.accepts(index, this.hand().currentCard())) {
-            this.stateHolder.setState((state) => {
-                if (this.hand().isHoldingCard() && !state.foundation.contains(index, this.hand().currentCard())) {
-                    state.foundation.stacks[index].stack.push(this.hand().currentCard().props);
+        if (!this.hand().hasMoreThanOneCard() && this.state().foundation.accepts(index, this.hand().currentCard())) {
+            this._setState((state) => {
+                if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
+                    state.foundation.stacks[index].stack.push(state.hand.currentCard().props);
                     state.foundation.stacks[index].usedCards.push(state.foundation.stacks[index].acceptedCards.pop());
                     state.hand.putDown();
                     this.actions.endMove('foundation', state)
+                    this._tryDetectEnd(state)
                 }
                 return { ...state };
             });
         } else {
             this.blink(index);
+        }
+    }
+
+    _tryDetectEnd(state) {
+        var reduced = state.foundation.stacks.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
+        if (reduced == 52) {
+            state.isEnded = true;
+            state.end = Date.now();
         }
     }
 

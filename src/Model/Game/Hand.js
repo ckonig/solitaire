@@ -33,6 +33,10 @@ export default class Hand {
         return this.isHoldingCard() && this.stack[0];
     }
 
+    hasMoreThanOneCard() {
+        return this.stack.length > 1;
+    }
+
     containsCurrentCard(stack) {
         return stack && stack.indexOf(this.currentCard().props) !== -1
     }
