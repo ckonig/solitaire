@@ -24,7 +24,7 @@ export default function Foundation(props) {
 
     var localCardStyle = { ...styles.cardStyle };
 
-    if (props.blinkFor > 0) {
+    if (props.model.blinkFor > 0) {
         localCardStyle.borderColor = 'red';
     }
 
@@ -33,14 +33,14 @@ export default function Foundation(props) {
             <div style={localCardStyle} onClick={() => props.onClick()}>
                 <div style={localFaceStyle} >
                     <h1>
-                        {props.icon}
+                        {props.model.icon}
                     </h1>
                 </div>
             </div>
-            {props.stack.map(card => (
+            {props.model.stack.map(card => (
                 <div style={localStyle}>
                     <Card
-                        blink={props.blinkFor}
+                        blink={props.model.blinkFor}
                         type={card.type}
                         source={"foundation-"+props.index}
                         face={card.face}

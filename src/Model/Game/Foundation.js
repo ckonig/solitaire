@@ -22,4 +22,22 @@ export default class Foundation {
     contains(index, card) {
         return this.stacks[index].stack.indexOf(card) !== -1
     }
+
+    remove(index, card) {
+        this.stacks[index].stack.push(card);
+        this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
+    }
+
+    add(index, card) {
+        this.filterOut(card)
+        this.stacks[index].acceptedCards.push(this.stacks[index].usedCards.pop());
+    }
+
+    getTop(index) {
+        return this.stacks[index].stack[this.stacks[index].stack.length - 1]
+    }
+
+    getPreviousUsed(index) {
+        return [...this.stacks[index].usedCards].pop();
+    }
 }

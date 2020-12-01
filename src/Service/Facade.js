@@ -5,9 +5,9 @@ import Waste from './Waste';
 
 export default class Facade {
     constructor(stateholder) {
-        this.tableauStack = new TableauStack(stateholder);
-        this.foundation = new Foundation(stateholder);
-        this.stock = new Stock(stateholder);
-        this.waste = new Waste(stateholder);
+        this.clickTableauStack = new TableauStack(stateholder).click
+        this.clickFoundation = new Foundation(stateholder).click
+        this.clickStock = new Stock(stateholder).click
+        this.clickWaste = new Waste(stateholder).click
     }
 }

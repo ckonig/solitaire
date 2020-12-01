@@ -1,25 +1,20 @@
-import Base from "./Base";
+import Service from "./BaseService";
 
-export default class Foundation extends Base {
-    click = (index) => {
-        if (this.hand().isHoldingCard()) {
-            this.tryPutDown(index);
-        } else {
-            this.pickup(index);
-        }
-    }
+export default class Foundation extends Service {
+
+    click = (index) => this.hand().isHoldingCard()
+        ? this.tryPutDown(index)
+        : this.pickup(index)
 
     pickup(index) {
-        var stack = this.state().foundation.stacks[index].stack;
-        if (stack[stack.length - 1]) {
-            var pseudoCard = { props: stack[stack.length - 1] };
+        var top = this.state().foundation.getTop(index)
+        if (top) {
+            var card = { props: top };
             this._setState((state) => {
-                var previous = [...state.foundation.stacks[index].usedCards].pop();
-                if (previous && previous == pseudoCard.props.face) {
-                    state.foundation.filterOut(pseudoCard)
-                    state.foundation.stacks[index].acceptedCards.push(state.foundation.stacks[index].usedCards.pop());
-                    state.hand.pickUp([pseudoCard], pseudoCard.props.source);
-                    this.actions.startMove('foundation', pseudoCard, state)
+                if (state.foundation.getPreviousUsed(index) == card.props.face) {
+                    state.foundation.add(index, card)
+                    state.hand.pickUp([card], card.props.source);
+                    this.actions.startMove('foundation', card, state)
                 }
                 return { ...state };
             });
@@ -32,8 +27,7 @@ export default class Foundation extends Base {
         if (!this.hand().hasMoreThanOneCard() && this.state().foundation.accepts(index, this.hand().currentCard())) {
             this._setState((state) => {
                 if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
-                    state.foundation.stacks[index].stack.push(state.hand.currentCard().props);
-                    state.foundation.stacks[index].usedCards.push(state.foundation.stacks[index].acceptedCards.pop());
+                    state.foundation.remove(index, state.hand.currentCard().props)
                     state.hand.putDown();
                     this.actions.endMove('foundation', state)
                     this._tryDetectEnd(state)

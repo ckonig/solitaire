@@ -20,23 +20,23 @@ export default function TableauStack(props) {
 
     var localCardStyle = { ...styles.cardStyle };
 
-    if (props.blinkFor > 0) {
+    if (props.model.blinkFor > 0) {
         localCardStyle.borderColor = 'red';
     }
 
     return (
         <div style={localOuterStyle}>
             <div style={localCardStyle} onClick={() => props.onClick(null, "tableau-" + props.stackIndex)}>&nbsp;</div>
-            {props.stack.map((card, index) => (
+            {props.model.stack.map((card, index) => (
                 <div style={localStyle}>
                     <Card
                         type={card.type}
                         face={card.face}
+                        blink={props.model.blinkFor}
                         offsetTop={index * 20}
                         source={"tableau-" + props.stackIndex}
                         isHidden={card.hidden}
-                        blink={props.blinkFor}
-                        canUncover={index == props.stack.length - 1}
+                        canUncover={index == props.model.stack.length - 1}
                         onClick={(c) => props.onClick(c, "tableau-" + props.stackIndex)}
                     />
                 </div>

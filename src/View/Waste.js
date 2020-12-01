@@ -12,18 +12,18 @@ export default function Waste(props) {
         position: 'relative',
     };
     var localBase = {...targetStackStyle.cardStyle}
-    if (props.blinkFor > 0) {
+    if (props.model.blinkFor > 0) {
         localBase.borderColor = 'red';
     }
 
     return (
         <div style={localOuterStyle}>
             <div style={localBase} onClick={() => props.onClick()}>&nbsp;</div>
-            {props.stack.map((card, index) => (
+            {props.model.stack.map((card, index) => (
                 <div style={localStyle}>
                     <Card type={card.type}
                         face={card.face}
-                        blink={props.blinkFor}
+                        blink={props.model.blinkFor}
                         offsetTop={index}
                         source="waste"
                         onClick={(c) => props.onClick(c)}

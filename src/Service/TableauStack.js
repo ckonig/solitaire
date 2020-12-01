@@ -1,26 +1,31 @@
-import Base from './Base';
 import { CardRange } from '../Model/Deck/CardRange';
+import Service from './BaseService';
 
-export default class TableauStack extends Base {
-    click = (card, index, source) => {
-        if (card) {
-            if (this.hand().isHoldingCard()) {
-                if (!this.tryUncover(card, index) && this.hand().isFromCurrentSource(card)) {
-                    this.tryPutDown(index)
-                } else if (this.validateTableauStackMove(this.hand().currentCard(), card)) {
-                    this.tryPutDown(index)
-                } else {
-                    this.blink(index);
-                }
-            } else if (!this.tryUncover(card, index)) {
-                this.pickup(card)
-            }
-        } else {
-            if (this.hand().isHoldingKing() || this.hand().source == source) {
+export default class TableauStack extends Service {
+
+    click = (card, index, source) => card
+        ? this.clickCard(card, index)
+        : this.clickEmpty(source, index)
+
+    clickCard(card, index) {
+        if (this.hand().isHoldingCard()) {
+            if (!this.tryUncover(card, index) && this.hand().isFromCurrentSource(card)) {
+                this.tryPutDown(index)
+            } else if (this.validateTableauStackMove(this.hand().currentCard(), card)) {
                 this.tryPutDown(index)
             } else {
                 this.blink(index);
             }
+        } else if (!this.tryUncover(card, index)) {
+            this.pickup(card)
+        }
+    }
+
+    clickEmpty(source, index) {
+        if (this.hand().isHoldingKing() || this.hand().source == source) {
+            this.tryPutDown(index)
+        } else {
+            this.blink(index);
         }
     }
 

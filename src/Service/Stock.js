@@ -1,33 +1,32 @@
-import Base from "./Base";
 import CardTools from "../Model/Deck/CardTools";
+import Service from "./BaseService";
 
-export default class Stock extends Base {
+export default class Stock extends Service {
     click = (card) => {
-        if (!this.hand().isHoldingCard()) {
-            if (card) {
-                this.moveToWaste(card);
-            } else {
-                this.recycleWaste();
-            }
-        } else {
+        if (this.hand().isHoldingCard()) {
             this.blink();
+        } else if (card) {
+            this.moveToWaste(card);
+        } else {
+            this.recycleWaste();
         }
     }
-    
+
     moveToWaste(card) {
-        this._setState((state, props) => {
-            if (CardTools.cardEquals(card.props, state.stock.stack[state.stock.stack.length - 1])) {
+        this._setState((state) => {
+            if (CardTools.cardEquals(card.props, state.stock.getTop())) {
                 state.waste.stack.push(state.stock.stack.pop());
                 this.actions.startMove('stock', card, state);
                 this.actions.endMove('stock', state);
             }
             return { ...state };
-        });
+        })
     }
 
     recycleWaste() {
-        this._setState((state, props) => {
-            state.stock.recycle(state.waste.recycle()) && this.actions.registerRecycle(state)
+        this._setState((state) => {
+            state.stock.recycle(state.waste.recycle())
+                && this.actions.registerRecycle(state)
             return { ...state };
         });
     }

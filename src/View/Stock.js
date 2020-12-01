@@ -20,15 +20,15 @@ export default function Stock(props) {
     return (
         <div style={localOuterStyle}>
             <div style={localBase} onClick={() => props.onClick()}>&nbsp;</div>
-            {props.stack.map((card, index) => (
+            {props.model.stack.map((card, index) => (
                 <div style={localStyle}>
                     <Card type={card.type}
                         face={card.face}
-                        blink={props.blinkFor}
+                        blink={props.model.blinkFor}
                         source="main"
                         offsetTop={index}
                         isHidden={card.hidden}
-                        canUncover={index == props.stack.length - 1}
+                        canUncover={index == props.model.stack.length - 1}
                         onClick={props.onClick}
                     />
                 </div>

@@ -13,4 +13,8 @@ export default class Stock {
 
         return false;
     }
+
+    getTop() {
+        return this.stack[this.stack.length-1];
+    }
 }

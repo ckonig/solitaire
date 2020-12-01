@@ -24,15 +24,13 @@ export default class Actions {
             state.currentMove.target = target;
             state.moves.push({ ...state.currentMove });
             state.points += this._rateMove(state.currentMove);
-            this._printMove(state.currentMove)
             state.currentMove = null;
         }
-    }   
+    }
 
     registerRecycle(state) {
         state.moves.push({ source: 'waste', target: 'stock', card: null });
         state.points -= 100;
-
         console.debug('RATING: subtract 100 points for RECYCLE')
     }
 
@@ -41,10 +39,6 @@ export default class Actions {
         state.points += 5;
         console.debug('RATING: add 5 points for UNCOVER')
         return { ...state }
-    }
-
-    _printMove(move) {
-        console.log('Successfully moved ' + move.card.type.icon + '' + move.card.face + ' from ' + move.source + ' to ' + move.target);
     }
 
     _rateMove(move) {
