@@ -17,6 +17,8 @@ export default class Foundation extends Base {
                 }
                 return { ...state };
             }, () => this.actions.startMove('foundation', pseudoCard));
+        } else {
+            this._blink(index);
         }
     }
 
@@ -40,13 +42,5 @@ export default class Foundation extends Base {
         }
     }
 
-    //@todo move to model and/or component
-    _blink = (index) => this._toggleBlink(index, 10, () => setTimeout(() => this._toggleBlink(index, 0), 100))
-
-    _toggleBlink = (index, blinkFor, cb) => {
-        this.stateHolder.setState((state) => {
-            state.foundations[index].blinkFor = blinkFor;
-            return { ...state };
-        }, cb);
-    }
+    blink = (index) => this._blink(s => s.tableau.stacks[index])
 }

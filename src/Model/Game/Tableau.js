@@ -24,4 +24,15 @@ export default class Tableau {
     filterOut = (card) => {
         return CardTools.filterOut(this.stacks, card);
     }
+
+    uncover(index, card) {
+        for (var i = 0; i < this.stacks[index].stack.length; i++) {
+            if (CardTools.cardEquals(this.stacks[index].stack[i], card.props) && this.stacks[index].stack[i].hidden) {
+                this.stacks[index].stack[i].hidden = false;
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

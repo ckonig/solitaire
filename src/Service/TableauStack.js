@@ -1,8 +1,5 @@
 import Base from './Base';
 import { CardRange } from '../Model/Deck/CardRange';
-import CardTools from '../Model/Deck/CardTools';
-
-//@todo this class is too messy 
 
 export default class TableauStack extends Base {
     constructor(stateholder) {
@@ -22,7 +19,8 @@ export default class TableauStack extends Base {
             if (!state.hand.isHoldingCard()) {
                 var following = state.tableau.findFollowing(card)
                 state.hand.pickUp([card, ...following], card.props.source);
-                state.tableau.filterOut(card); //@todo how come we dont need to filter the following?
+                state.tableau.filterOut(card); 
+                //@todo how come we dont need to filter the following?
             }
             return { ...state };
         }, () => this.actions.startMove(card.props.source, card))
@@ -38,38 +36,17 @@ export default class TableauStack extends Base {
         }, () => this.actions.endMove('tableau-' + index));
     }
 
-    //@todo move to model and/or component
-    blink = (index) => this.toggleBlink(index, 10, () => setTimeout(() => this.toggleBlink(index, 0), 100))
-
-    toggleBlink(index, blinkFor, cb) {
-        this.stateHolder.setState((state) => {
-            state.tableau.stacks[index].blinkFor = blinkFor;
-            return { ...state };
-        }, cb);
-    }
-
-    tryUncover = (card, index) => !this.hand().isFromCurrentSource(card) && this.tryUncoverInStack(card, index, () => this.actions.registerUncover(card));
-
-    tryUncoverInStack = (card, index, cb) => {
-        if (card.props.isHidden && card.props.canUncover) {
-            this.stateHolder.setState((state, props) => {
-                state.tableau.stacks[index].stack = this.uncoverInStack([...state.tableau.stacks[index].stack], card);
+    tryUncover = (card, index) => {
+        if (!this.hand().isFromCurrentSource(card) && card.props.isHidden && card.props.canUncover) {
+            this.stateHolder.setState((state) => {
+                state.tableau.uncover(index, card) && this.actions.registerUncover(card, state);
                 return { ...state };
-            }, cb);
-
+            });
             return true;
         }
-
         return false;
     }
 
-    uncoverInStack(stack, card) {
-        for (var i = 0; i < stack.length; i++) {
-            if (CardTools.cardEquals(stack[i], card.props) && stack[i].hidden) {
-                stack[i].hidden = false;
-            }
-        }
+    blink = (index) => this._blink(s => s.tableau.stacks[index])
 
-        return stack;
-    }
 }

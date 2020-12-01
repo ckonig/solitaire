@@ -1,4 +1,5 @@
 import Hand from './Game/Hand';
+import Stock from './Game/Stock';
 import Tableau from './Game/Tableau';
 import TableauGenerator from './Game/TableauGenerator';
 import Waste from './Game/Waste';
@@ -7,10 +8,9 @@ import { getDeck } from './Deck/Deck';
 
 const getInitialState = () => {
     var deck = getDeck(); //@todo generate deck & stacks in constructor, allow reset
-    var stockPile = deck.slice(28); //@todo make obj, add functionality
-
+    
     return {
-        stockPile: stockPile,
+        stock: new Stock(deck.slice(28)),
         waste: new Waste(),
         currentMove: null,
         moves: [],

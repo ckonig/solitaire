@@ -25,4 +25,10 @@ export default class Waste {
     filterOut(card) {
         this.stack = CardTools.filterNotEqual(this.stack, card);
     }
+
+    recycle() {
+        var ret = [...this.stack];
+        this.stack = [];
+        return ret;
+    }
 }

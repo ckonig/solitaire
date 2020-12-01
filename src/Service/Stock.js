@@ -5,8 +5,8 @@ export default class Stock extends Base {
 
     moveToWaste(card) {
         this.stateHolder.setState((state, props) => {
-            if (CardTools.cardEquals(card.props, state.stockPile[state.stockPile.length - 1])) {
-                state.waste.stack.push(state.stockPile.pop());
+            if (CardTools.cardEquals(card.props, state.stock.stack[state.stock.stack.length - 1])) {
+                state.waste.stack.push(state.stock.stack.pop());
             }
             return { ...state };
         }, () => this.actions.startMove('stock', card, () => this.actions.endMove('waste')));
@@ -14,17 +14,10 @@ export default class Stock extends Base {
 
     recycleWaste() {
         this.stateHolder.setState((state, props) => {
-            state.stockPile = [...state.waste.stack].reverse().map(element => {
-                return { ...element, hidden: true }
-            })
-            state.waste.stack = [];
+            state.stock.recycle(state.waste.recycle()) && this.actions.registerRecycle(state)
             return { ...state };
-        }, () => this.actions.registerRecycle());
+        });
     }
-
-    blink() {
-        //@todo implement
-    }
-
-
+    
+    blink = () => this._blink(s => s.stock)
 }

@@ -1,0 +1,16 @@
+export default class Stock {
+    constructor(stack) {
+        this.stack = [...stack];
+    }
+
+    recycle(waste) {
+        if (waste.length) {
+            this.stack = [...waste].reverse().map(element => {
+                return { ...element, hidden: true }
+            });
+            return true;
+        }
+
+        return false;
+    }
+}

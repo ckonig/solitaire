@@ -1,7 +1,7 @@
 import Card from './Card';
 import { targetStackStyle } from '../styles';
 
-export default function StockPile(props) {
+export default function Stock(props) {
     var localStyle = {
         position: 'absolute',
         left: '0px',
@@ -12,17 +12,23 @@ export default function StockPile(props) {
         position: 'relative',
     };
 
+    var localBase = {...targetStackStyle.cardStyle}
+    if (props.blinkFor > 0) {
+        localBase.borderColor = 'red';
+    }
+
     return (
         <div style={localOuterStyle}>
-            <div style={targetStackStyle.cardStyle} onClick={() => props.onClick()}>&nbsp;</div>
-            {props.stockPile.map((card, index) => (
+            <div style={localBase} onClick={() => props.onClick()}>&nbsp;</div>
+            {props.stack.map((card, index) => (
                 <div style={localStyle}>
                     <Card type={card.type}
                         face={card.face}
+                        blink={props.blinkFor}
                         source="main"
                         offsetTop={index}
                         isHidden={card.hidden}
-                        canUncover={index == props.stockPile.length - 1}
+                        canUncover={index == props.stack.length - 1}
                         onClick={props.onClick}
                     />
                 </div>

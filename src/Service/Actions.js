@@ -55,22 +55,18 @@ export default class Actions {
         }
     }
 
-    registerRecycle(cb) {
-        this.stateHolder.setState((state) => {
-            state.moves.push({ source: 'waste', target: 'stock', card: null });
-            state.points -= 100;
-            return { ...state }
-        }, cb);
+    registerRecycle(state) {
+        state.moves.push({ source: 'waste', target: 'stock', card: null });
+        state.points -= 100;
+
         console.debug('RATING: subtract 100 points for RECYCLE')
     }
 
-    registerUncover(card, cb) {
-        this.stateHolder.setState((state) => {
-            state.moves.push({ source: null, target: null, card: card });
-            state.points += 5;
-            return { ...state }
-        }, cb);
+    registerUncover(card, state) {
+        state.moves.push({ source: null, target: null, card: card });
+        state.points += 5;
         console.debug('RATING: add 5 points for UNCOVER')
+        return { ...state }
     }
 
     _printMove(move) {

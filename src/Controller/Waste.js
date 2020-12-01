@@ -6,6 +6,8 @@ export default class Waste extends BaseInteraction {
             this.service.waste.tryPutDown(card);
         } else if (card && !this.hand().isHoldingCard()) {
             this.service.waste.pickup(card)
+        } else {
+            this.service.waste.blink();
         }
     }
 }

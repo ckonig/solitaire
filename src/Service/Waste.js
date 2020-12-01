@@ -1,7 +1,5 @@
 import Base from "./Base";
-import CardTools from "../Model/Deck/CardTools";
 
-//@todo model to clean up code
 export default class Waste extends Base {
     pickup(card) {
         this.stateHolder.setState(
@@ -22,9 +20,12 @@ export default class Waste extends Base {
                     state.waste.tryPutDown(state.hand.currentCard()) && state.hand.putDown();
                     return { ...state };
                 },
+                //@todo this will register incorrect move endings
                 () => this.actions.endMove('waste'));
         } else {
-            // @todo implement blink validation for waste
+            this.blink();
         }
     }
+
+    blink = () => this._blink(s => s.waste)
 }   

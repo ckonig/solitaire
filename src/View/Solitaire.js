@@ -5,7 +5,7 @@ import Controller from '../Controller/Facade';
 import Footer from './Footer';
 import Foundation from './Foundation';
 import Hand from './Hand';
-import StockPile from './StockPile';
+import Stock from './Stock';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
 import getInitialState from '../Model/getInitialState';
@@ -27,13 +27,15 @@ class Solitaire extends Component {
         <Hand stack={this.state.hand.stack} />
         <div style={style.upperContainer}>
           <Box>
-            <StockPile
+            <Stock
               onClick={this.controller.stock.click}
-              stockPile={this.state.stockPile} />
+              blinkFor={this.state.stock.blinkFor}
+              stack={this.state.stock.stack} />
           </Box>
           <Box>
             <Waste
               onClick={this.controller.waste.click}
+              blinkFor={this.state.waste.blinkFor}
               stack={this.state.waste.stack} />
           </Box>
           <Box>&nbsp;</Box>
