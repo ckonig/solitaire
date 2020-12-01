@@ -17,7 +17,6 @@ export default class Waste extends Service {
             if (!state.hand.isHoldingCard()) {
                 state.hand.pickUp([card], card.props.source);
                 state.waste.filterOut(card);
-                this.actions.startMove('waste', card, state)
             }
         })
     }
@@ -26,8 +25,8 @@ export default class Waste extends Service {
         if (this.state().hand.source == 'waste') {
             this._setState((state) => {
                 state.waste.tryPutDown(state.hand.currentCard())
+                    && this.actions.registerMove('waste', state, state.hand.currentCard())
                     && state.hand.putDown()
-                    && this.actions.endMove('waste', state)
             });
         } else {
             this.blink();

@@ -9,23 +9,16 @@ export default class Actions {
         this.currentMove = null;
     }
 
-    startMove(source, card, state) {
-        if (state.currentMove == null) {
-            state.currentMove = {
-                source,
-                card: card.props,
-                target: null
-            }
+    registerMove(target, state, card) {
+        var currentMove = {
+            source: card.props.source,
+            card: card.props,
+            target: target
         }
-    }
 
-    endMove(target, state) {
-        if (state.currentMove) {
-            state.currentMove.target = target;
-            state.moves.push({ ...state.currentMove });
-            state.points += this._rateMove(state.currentMove);
-            state.currentMove = null;
-        }
+        state.moves.push({ ...currentMove });
+        state.points += this._rateMove(currentMove);
+        return true;
     }
 
     registerRecycle(state) {

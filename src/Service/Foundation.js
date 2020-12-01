@@ -14,7 +14,6 @@ export default class Foundation extends Service {
                 if (state.foundation.getPreviousUsed(index) == card.props.face) {
                     state.foundation.add(index, card)
                     state.hand.pickUp([card], card.props.source);
-                    this.actions.startMove('foundation', card, state)
                 }
             });
         } else {
@@ -27,8 +26,8 @@ export default class Foundation extends Service {
             this._setState((state) => {
                 if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
                     state.foundation.remove(index, state.hand.currentCard().props)
+                    this.actions.registerMove('foundation', state, state.hand.currentCard())
                     state.hand.putDown();
-                    this.actions.endMove('foundation', state)
                     this._tryDetectEnd(state)
                 }
             });

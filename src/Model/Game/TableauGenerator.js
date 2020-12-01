@@ -15,8 +15,8 @@ class TableauGenerator {
     }
 
     _generateStack = (id) => {
-        this.pointer += 6-id + 1;
-        this.stacks[id].stack = this.deck.slice(this.oldpointer, this.pointer).reverse();
+        this.pointer += 6 - id + 1;
+        this.stacks[id].stack = this.deck.slice(this.oldpointer, this.pointer).map(c => { c.hidden = true; return c; }).reverse();
         if (this.stacks[id].stack[this.stacks[id].stack.length - 1]) {
             this.stacks[id].stack[this.stacks[id].stack.length - 1].hidden = false;
         }

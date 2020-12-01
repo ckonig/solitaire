@@ -16,8 +16,7 @@ export default class Stock extends Service {
         this._setState((state) => {
             if (CardTools.cardEquals(card.props, state.stock.getTop())) {
                 state.waste.stack.push(state.stock.stack.pop());
-                this.actions.startMove('stock', card, state);
-                this.actions.endMove('stock', state);
+                this.actions.registerMove('stock', state, {...card, source: 'waste'});
             }
         })
     }

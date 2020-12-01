@@ -44,7 +44,6 @@ export default class TableauStack extends Service {
                 state.hand.pickUp([card, ...following], card.props.source);
                 //@todo how come we dont need to filter the following?
                 state.tableau.filterOut(card);
-                this.actions.startMove(card.props.source, card, state)
             }
         });
     }
@@ -53,8 +52,8 @@ export default class TableauStack extends Service {
         this._setState((state) => {
             if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
                 state.tableau.filterOut(state.hand.currentCard())
+                this.actions.registerMove('tableau-' + index, state, state.hand.currentCard())
                 state.tableau.stacks[index].stack.push(...state.hand.putDown().map(e => e.props));
-                this.actions.endMove('tableau-' + index, state)
             }
         });
     }
