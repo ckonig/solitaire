@@ -25,7 +25,7 @@ export default class TableauStack extends Base {
                 state.tableau.filterOut(card); //@todo how come we dont need to filter the following?
             }
             return { ...state };
-        })
+        }, () => this.actions.startMove(card.props.source, card))
     }
 
     tryPutDown = (index) => {
@@ -35,7 +35,7 @@ export default class TableauStack extends Base {
                 state.tableau.stacks[index].stack.push(...state.hand.putDown().map(e => e.props));
                 return { ...state };
             }
-        });
+        }, () => this.actions.endMove('tableau-' + index));
     }
 
     //@todo move to model and/or component
@@ -48,7 +48,7 @@ export default class TableauStack extends Base {
         }, cb);
     }
 
-    tryUncover = (card, index) => !this.hand().isFromCurrentSource(card) && this.tryUncoverInStack(card, index);
+    tryUncover = (card, index) => !this.hand().isFromCurrentSource(card) && this.tryUncoverInStack(card, index, () => this.actions.registerUncover(card));
 
     tryUncoverInStack = (card, index, cb) => {
         if (card.props.isHidden && card.props.canUncover) {
@@ -60,7 +60,7 @@ export default class TableauStack extends Base {
             return true;
         }
 
-        cb && cb();
+        //cb && cb();
         return false;
     }
 

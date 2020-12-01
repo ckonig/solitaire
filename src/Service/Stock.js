@@ -9,7 +9,7 @@ export default class Stock extends Base {
                 state.waste.push(state.stockPile.pop());
             }
             return { ...state };
-        });
+        }, () => this.actions.startMove('stock', card, () => this.actions.endMove('waste')));
     }
 
     _recycleWaste() {
@@ -19,8 +19,8 @@ export default class Stock extends Base {
             })
             state.waste = [];
             return { ...state };
-        });
+        }, () => this.actions.registerRecycle());
     }
 
-    
+
 }

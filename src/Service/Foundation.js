@@ -16,7 +16,7 @@ export default class Foundation extends Base {
                     state.hand.pickUp([pseudoCard], pseudoCard.props.source);
                 }
                 return { ...state };
-            });
+            }, () => this.actions.startMove('foundation', pseudoCard));
         }
     }
 
@@ -34,7 +34,7 @@ export default class Foundation extends Base {
                     }
                 }
                 return { ...state };
-            });
+            }, () => this.actions.endMove('foundation'));
         } else {
             this._blink(index);
         }

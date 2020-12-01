@@ -10,7 +10,7 @@ export default class Waste extends Base {
                 state.waste = CardTools.filterNotEqual(state.waste, card);
             }
             return { ...state };
-        })
+        }, () => this.actions.startMove('waste', card))
     }
 
     tryPutDown() {
@@ -24,9 +24,9 @@ export default class Waste extends Base {
                 }
                 state.hand.putDown();
                 return { ...state };
-            });
+            }, () => this.actions.endMove('waste'));
         } else {
             // @todo implement blink validation for waste
         }
     }
-}
+}   
