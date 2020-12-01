@@ -65,7 +65,7 @@ export default class Card extends Component {
     //@todo accept `Card` model and pass it to click handler // source as 2nd parameter? how to store in model?
     //source is not property of card, but of CardPlacement ? -> stack of placements, placement contains source and card
     return (
-      <div style={getCardStyle(this.props.type.color)} className={className} onClick={(e) => this.props.clickCard(this)}>
+      <div style={getCardStyle(this.props.type.color)} className={className} onClick={(e) => this.props.onClick(this)}>
         { content}
       </div>
     );

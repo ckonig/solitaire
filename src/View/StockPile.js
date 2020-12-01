@@ -14,7 +14,7 @@ export default function StockPile(props) {
 
     return (
         <div style={localOuterStyle}>
-            <div style={targetStackStyle.cardStyle} onClick={() => props.clickStockPile()}>&nbsp;</div>
+            <div style={targetStackStyle.cardStyle} onClick={() => props.onClick()}>&nbsp;</div>
             {props.stockPile.map((card, index) => (
                 <div style={localStyle}>
                     <Card type={card.type}
@@ -23,7 +23,7 @@ export default function StockPile(props) {
                         offsetTop={index}
                         isHidden={card.hidden}
                         canUncover={index == props.stockPile.length - 1}
-                        clickCard={props.clickStockPile}
+                        onClick={props.onClick}
                     />
                 </div>
             ))}

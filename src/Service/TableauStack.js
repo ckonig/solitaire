@@ -60,7 +60,6 @@ export default class TableauStack extends Base {
             return true;
         }
 
-        //cb && cb();
         return false;
     }
 

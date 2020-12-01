@@ -1,23 +1,22 @@
 import '../App.css';
 
 import { Component } from 'react';
-import Engine from '../Service/Engine';
+import Controller from '../Controller/Facade';
 import Footer from './Footer';
 import Foundation from './Foundation';
 import Hand from './Hand';
-import Interaction from '../Controller/Interaction';
 import StockPile from './StockPile';
 import TableauStack from './TableauStack';
 import Waste from './Waste';
+import getInitialState from '../Model/getInitialState';
 import { styles } from '../styles';
 
 class Solitaire extends Component {
 
   constructor(props) {
     super(props);
-    this.engine = new Engine(this);
-    this.interaction = new Interaction(this);
-    this.state = this.engine.getInitialState();
+    this.controller = new Controller(this);
+    this.state = getInitialState();
   }
 
   render() {
@@ -29,12 +28,12 @@ class Solitaire extends Component {
         <div style={style.upperContainer}>
           <Box>
             <StockPile
-              clickStockPile={this.interaction.stock.click}
+              onClick={this.controller.stock.click}
               stockPile={this.state.stockPile} />
           </Box>
           <Box>
             <Waste
-              clickOnWaste={this.interaction.waste.click}
+              onClick={this.controller.waste.click}
               stack={this.state.waste} />
           </Box>
           <Box>&nbsp;</Box>
@@ -46,8 +45,7 @@ class Solitaire extends Component {
                   index={index}
                   blinkFor={foundation.blinkFor}
                   icon={foundation.icon}
-                  //@todo rename to onclick
-                  onFoundationClick={(c) => this.interaction.foundation.click(index, c)}
+                  onClick={(c) => this.controller.foundation.click(index, c)}
                 />
               </Box>
             ))}
@@ -59,8 +57,7 @@ class Solitaire extends Component {
                   stackIndex={index}
                   stack={stack.stack}
                   blinkFor={stack.blinkFor}
-                  //@todo why source here but not elsewhere?
-                  onClick={(card, source) => this.interaction.tableauStack.click(card, index, source)}
+                  onClick={(card, source) => this.controller.tableauStack.click(card, index, source)}
                 />
               </Box>))}
           </div>

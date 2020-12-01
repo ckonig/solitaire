@@ -4,12 +4,12 @@ export default class Stock extends BaseInteraction {
     click = (card) => {
         if (!this.hand().isHoldingCard()) {
             if (card) {
-                this.engine.stock._moveToWaste(card);
+                this.service.stock.moveToWaste(card);
             } else {
-                this.engine.stock._recycleWaste();
+                this.service.stock.recycleWaste();
             }
         } else {
-            //@todo blink stock
+            this.service.stock.blink();
         }
     }
 }

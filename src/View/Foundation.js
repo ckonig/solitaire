@@ -30,7 +30,7 @@ export default function Foundation(props) {
 
     return (
         <div style={localOuterStyle}>
-            <div style={localCardStyle} onClick={() => props.onFoundationClick()}>
+            <div style={localCardStyle} onClick={() => props.onClick()}>
                 <div style={localFaceStyle} >
                     <h1>
                         {props.icon}
@@ -44,7 +44,7 @@ export default function Foundation(props) {
                         type={card.type}
                         source={"foundation-"+props.index}
                         face={card.face}
-                        clickCard={(c) => props.onFoundationClick(c)} />
+                        onClick={(c) => props.onClick(c)} />
                 </div>))}
         </div>
 

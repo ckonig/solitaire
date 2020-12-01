@@ -37,7 +37,7 @@ export default function TableauStack(props) {
                         isHidden={card.hidden}
                         blink={props.blinkFor}
                         canUncover={index == props.stack.length - 1}
-                        clickCard={(c) => props.onClick(c, "tableau-" + props.stackIndex)}
+                        onClick={(c) => props.onClick(c, "tableau-" + props.stackIndex)}
                     />
                 </div>
             ))}

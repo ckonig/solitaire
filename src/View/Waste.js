@@ -13,14 +13,14 @@ export default function Waste(props) {
     };
     return (
         <div style={localOuterStyle}>
-            <div style={targetStackStyle.cardStyle} onClick={() => props.clickOnWaste()}>&nbsp;</div>
+            <div style={targetStackStyle.cardStyle} onClick={() => props.onClick()}>&nbsp;</div>
             {props.stack.map((card, index) => (
                 <div style={localStyle}>
                     <Card type={card.type}
                         face={card.face}
                         offsetTop={index}
                         source="waste"
-                        clickCard={(c) => props.clickOnWaste(c)}
+                        onClick={(c) => props.onClick(c)}
                     />
                 </div>
 

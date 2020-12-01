@@ -18,8 +18,7 @@ export default class Waste extends Base {
             this.stateHolder.setState((state, props) => {
                 var current = this.hand().currentCard();
                 var top = this.state().waste[this.state().waste.length - 1];
-                //@todo use CardTools
-                if (current && current.props && (!top || top.face !== current.props.face || top.type.icon !== current.props.type.icon)) {
+                if (current && current.props && CardTools.cardNotEquals(current.props, top)) {
                     state.waste.push(this.hand().currentCard().props);
                 }
                 state.hand.putDown();
