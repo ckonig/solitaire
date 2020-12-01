@@ -46,6 +46,7 @@ class Solitaire extends Component {
                   index={index}
                   blinkFor={foundation.blinkFor}
                   icon={foundation.icon}
+                  //@todo rename to onclick
                   onFoundationClick={(c) => this.interaction.foundation.click(index, c)}
                 />
               </Box>
@@ -58,6 +59,7 @@ class Solitaire extends Component {
                   stackIndex={index}
                   stack={stack.stack}
                   blinkFor={stack.blinkFor}
+                  //@todo why source here but not elsewhere?
                   onClick={(card, source) => this.interaction.tableauStack.click(card, index, source)}
                 />
               </Box>))}
