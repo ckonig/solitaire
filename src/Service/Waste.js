@@ -19,7 +19,6 @@ export default class Waste extends Service {
                 state.waste.filterOut(card);
                 this.actions.startMove('waste', card, state)
             }
-            return { ...state };
         })
     }
 
@@ -29,7 +28,6 @@ export default class Waste extends Service {
                 state.waste.tryPutDown(state.hand.currentCard())
                     && state.hand.putDown()
                     && this.actions.endMove('waste', state)
-                return { ...state };
             });
         } else {
             this.blink();

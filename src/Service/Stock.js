@@ -19,7 +19,6 @@ export default class Stock extends Service {
                 this.actions.startMove('stock', card, state);
                 this.actions.endMove('stock', state);
             }
-            return { ...state };
         })
     }
 
@@ -27,7 +26,6 @@ export default class Stock extends Service {
         this._setState((state) => {
             state.stock.recycle(state.waste.recycle())
                 && this.actions.registerRecycle(state)
-            return { ...state };
         });
     }
 

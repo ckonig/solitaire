@@ -3,7 +3,10 @@ import Actions from "./Actions";
 export default class Service {
     constructor(stateholder) {
         this.actions = new Actions();
-        this._setState = (a, b, c) => stateholder.setState(a, b, c);
+        this._setState = (a, b) => stateholder.setState((state) => {
+            a(state);
+            return { ...state };
+        }, b);
         this.hand = () => stateholder.state.hand;
         this.state = () => stateholder.state;
     }
@@ -13,7 +16,6 @@ export default class Service {
     _toggleBlink(selector, blinkFor, cb) {
         this._setState((state) => {
             selector(state).blinkFor = blinkFor;
-            return { ...state };
         }, cb);
     }
 }

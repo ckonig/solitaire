@@ -38,7 +38,6 @@ export default class Actions {
         state.moves.push({ source: null, target: null, card: card });
         state.points += 5;
         console.debug('RATING: add 5 points for UNCOVER')
-        return { ...state }
     }
 
     _rateMove(move) {

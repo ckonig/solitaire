@@ -16,7 +16,6 @@ export default class Foundation extends Service {
                     state.hand.pickUp([card], card.props.source);
                     this.actions.startMove('foundation', card, state)
                 }
-                return { ...state };
             });
         } else {
             this.blink(index);
@@ -32,7 +31,6 @@ export default class Foundation extends Service {
                     this.actions.endMove('foundation', state)
                     this._tryDetectEnd(state)
                 }
-                return { ...state };
             });
         } else {
             this.blink(index);
@@ -40,8 +38,8 @@ export default class Foundation extends Service {
     }
 
     _tryDetectEnd(state) {
-        var reduced = state.foundation.stacks.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
-        if (reduced == 52) {
+        var nrofCards = state.foundation.stacks.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
+        if (nrofCards == 52) {
             state.isEnded = true;
             state.end = Date.now();
         }

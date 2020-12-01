@@ -9,7 +9,7 @@ export default class TableauStack extends Service {
 
     clickCard(card, index) {
         if (this.hand().isHoldingCard()) {
-            if (!this.tryUncover(card, index) && this.hand().isFromCurrentSource(card)) {
+            if (!this.tryUncover(card, index) && this.hand().isFromCurrentSource(card) && card.props.isHidden) {
                 this.tryPutDown(index)
             } else if (this.validateTableauStackMove(this.hand().currentCard(), card)) {
                 this.tryPutDown(index)
@@ -46,7 +46,6 @@ export default class TableauStack extends Service {
                 state.tableau.filterOut(card);
                 this.actions.startMove(card.props.source, card, state)
             }
-            return { ...state };
         });
     }
 
@@ -56,20 +55,18 @@ export default class TableauStack extends Service {
                 state.tableau.filterOut(state.hand.currentCard())
                 state.tableau.stacks[index].stack.push(...state.hand.putDown().map(e => e.props));
                 this.actions.endMove('tableau-' + index, state)
-                return { ...state };
             }
         });
     }
 
     tryUncover = (card, index) => {
-        if (!this.hand().isFromCurrentSource(card) && card.props.isHidden && card.props.canUncover) {
+        if (!this.hand().isHoldingCard() && card.props.isHidden && card.props.canUncover) {
             this._setState((state) => {
                 state.tableau.uncover(index, card) && this.actions.registerUncover(card, state);
-                return { ...state };
             });
             return true;
         }
-        return false;
+        return false
     }
 
     blink = (index) => this._blink(s => s.tableau.stacks[index])
