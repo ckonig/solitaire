@@ -34,7 +34,7 @@ class Solitaire extends Component {
           <Box>
             <Waste
               onClick={this.controller.waste.click}
-              stack={this.state.waste} />
+              stack={this.state.waste.stack} />
           </Box>
           <Box>&nbsp;</Box>
           <div>

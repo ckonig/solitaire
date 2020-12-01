@@ -1,6 +1,7 @@
 import Hand from './Game/Hand';
 import Tableau from './Game/Tableau';
 import TableauGenerator from './Game/TableauGenerator';
+import Waste from './Game/Waste';
 import generateFoundations from './Game/FoundationGenerator';
 import { getDeck } from './Deck/Deck';
 
@@ -10,7 +11,7 @@ const getInitialState = () => {
 
     return {
         stockPile: stockPile,
-        waste: [],
+        waste: new Waste(),
         currentMove: null,
         moves: [],
         points: 0,
