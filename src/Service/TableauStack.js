@@ -19,11 +19,12 @@ export default class TableauStack extends Base {
             if (!state.hand.isHoldingCard()) {
                 var following = state.tableau.findFollowing(card)
                 state.hand.pickUp([card, ...following], card.props.source);
-                state.tableau.filterOut(card); 
                 //@todo how come we dont need to filter the following?
+                state.tableau.filterOut(card);
+                this.actions.startMove(card.props.source, card, state)
             }
             return { ...state };
-        }, () => this.actions.startMove(card.props.source, card))
+        });
     }
 
     tryPutDown = (index) => {
@@ -31,9 +32,10 @@ export default class TableauStack extends Base {
             if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
                 state.tableau.filterOut(state.hand.currentCard())
                 state.tableau.stacks[index].stack.push(...state.hand.putDown().map(e => e.props));
+                this.actions.endMove('tableau-' + index, state)
                 return { ...state };
             }
-        }, () => this.actions.endMove('tableau-' + index));
+        });
     }
 
     tryUncover = (card, index) => {

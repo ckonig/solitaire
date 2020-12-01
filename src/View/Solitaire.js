@@ -40,7 +40,7 @@ class Solitaire extends Component {
           </Box>
           <Box>&nbsp;</Box>
           <div>
-            {this.state.foundations.map((foundation, index) => (
+            {this.state.foundation.stacks.map((foundation, index) => (
               <Box>
                 <Foundation
                   stack={foundation.stack}

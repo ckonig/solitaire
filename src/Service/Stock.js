@@ -7,9 +7,11 @@ export default class Stock extends Base {
         this.stateHolder.setState((state, props) => {
             if (CardTools.cardEquals(card.props, state.stock.stack[state.stock.stack.length - 1])) {
                 state.waste.stack.push(state.stock.stack.pop());
+                this.actions.startMove('stock', card, state);
+                this.actions.endMove('stock', state);
             }
             return { ...state };
-        }, () => this.actions.startMove('stock', card, () => this.actions.endMove('waste')));
+        });
     }
 
     recycleWaste() {
@@ -18,6 +20,6 @@ export default class Stock extends Base {
             return { ...state };
         });
     }
-    
+
     blink = () => this._blink(s => s.stock)
 }

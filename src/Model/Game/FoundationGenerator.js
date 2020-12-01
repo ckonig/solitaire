@@ -1,18 +1,9 @@
+import Foundation from './Foundation';
+import FoundationStack from './FoundationStack';
 import Suits from '../Deck/Suits';
-import { getTargetOrder } from '../Deck/CardRange'
-
-const getFoundation = (icon) => {
-    return {
-        stack: [],
-        acceptedCards: [...getTargetOrder()],
-        usedCards: [],
-        icon,
-        //@todo add functionality
-    };
-};
 
 export default function generateFoundations() {
-    return Object.keys(Suits)
+    return new Foundation(Object.keys(Suits)
         .map(key => Suits[key])
-        .map(suit => getFoundation(suit.icon));
+        .map(suit => new FoundationStack(suit.icon)));
 }

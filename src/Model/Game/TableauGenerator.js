@@ -1,4 +1,6 @@
-export default class TableauGenerator {
+import Tableau from "./Tableau";
+
+class TableauGenerator {
 
     getStacks = (deck) => {
         this.deck = deck;
@@ -30,4 +32,8 @@ export default class TableauGenerator {
         //@todo add functionality
         return { ...template };
     }
+}
+
+export default function generateTableau(cards) {
+    return new Tableau(new TableauGenerator().getStacks(cards));
 }

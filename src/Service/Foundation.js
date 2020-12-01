@@ -5,42 +5,39 @@ import CardTools from "../Model/Deck/CardTools";
 
 export default class Foundation extends Base {
     pickup(index) {
-        var stack = this.stateHolder.state.foundations[index].stack;
+        var stack = this.stateHolder.state.foundation.stacks[index].stack;
         if (stack[stack.length - 1]) {
             var pseudoCard = { props: stack[stack.length - 1] };
             this.stateHolder.setState((state) => {
-                var previous = [...state.foundations[index].usedCards].pop();
+                var previous = [...state.foundation.stacks[index].usedCards].pop();
                 if (previous && previous == pseudoCard.props.face) {
-                    state.foundations = CardTools.filterOut(state.foundations, pseudoCard)
-                    state.foundations[index].acceptedCards.push(state.foundations[index].usedCards.pop());
+                    state.foundation.filterOut(pseudoCard)
+                    state.foundation.stacks[index].acceptedCards.push(state.foundation.stacks[index].usedCards.pop());
                     state.hand.pickUp([pseudoCard], pseudoCard.props.source);
+                    this.actions.startMove('foundation', pseudoCard, state)
                 }
                 return { ...state };
-            }, () => this.actions.startMove('foundation', pseudoCard));
+            });
         } else {
-            this._blink(index);
+            this.blink(index);
         }
     }
 
     tryPutDown(index) {
-        var currentFoundation = this.state().foundations[index].acceptedCards;
-        var currentAccepted = currentFoundation[currentFoundation.length - 1];
-        if (this.state().foundations[index].icon == this.hand().currentCard().props.type.icon && currentAccepted == this.hand().currentCard().props.face) {
+        if (this.stateHolder.state.foundation.accepts(index, this.hand().currentCard())) {
             this.stateHolder.setState((state) => {
-                if (this.hand().isHoldingCard() && state.foundations[index].stack.indexOf(this.hand().currentCard()) == -1) {
-                    state.foundations[index].stack.push(this.hand().currentCard().props);
-                    var popped = state.foundations[index].acceptedCards.pop();
-                    if (popped) {
-                        state.foundations[index].usedCards.push(popped);
-                        state.hand.putDown();
-                    }
+                if (this.hand().isHoldingCard() && !state.foundation.contains(index, this.hand().currentCard())) {
+                    state.foundation.stacks[index].stack.push(this.hand().currentCard().props);
+                    state.foundation.stacks[index].usedCards.push(state.foundation.stacks[index].acceptedCards.pop());
+                    state.hand.putDown();
+                    this.actions.endMove('foundation', state)
                 }
                 return { ...state };
-            }, () => this.actions.endMove('foundation'));
+            });
         } else {
-            this._blink(index);
+            this.blink(index);
         }
     }
 
-    blink = (index) => this._blink(s => s.tableau.stacks[index])
+    blink = (index) => this._blink(s => s.foundation.stacks[index])
 }

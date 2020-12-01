@@ -1,24 +1,25 @@
 import Hand from './Game/Hand';
 import Stock from './Game/Stock';
-import Tableau from './Game/Tableau';
-import TableauGenerator from './Game/TableauGenerator';
 import Waste from './Game/Waste';
+import generateDeck from './Deck/DeckGenerator';
 import generateFoundations from './Game/FoundationGenerator';
-import { getDeck } from './Deck/Deck';
+import generateTableau from './Game/TableauGenerator';
 
 const getInitialState = () => {
-    var deck = getDeck(); //@todo generate deck & stacks in constructor, allow reset
-    
+    var deck = generateDeck().shuffle();
     return {
-        stock: new Stock(deck.slice(28)),
+        
         waste: new Waste(),
+        foundation: generateFoundations(),
+        stock: new Stock(deck.take(24)),
+        tableau: generateTableau([...deck.take(28)]),   
+            
+        hand: new Hand(),
+
         currentMove: null,
         moves: [],
         points: 0,
         started: Date.now(),
-        foundations: generateFoundations(),
-        tableau: new Tableau(new TableauGenerator().getStacks([...deck.slice(0, 28)])),
-        hand: new Hand(),
     };
 }
 

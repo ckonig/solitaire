@@ -10,48 +10,32 @@ export default class Actions {
         this.stateHolder = stateHolder;
     }
 
-    startMove(source, card, cb) {
-        if (this.stateHolder.state.currentMove == null) {
-            this.stateHolder.setState((state) => {
-                state.currentMove = {
-                    source,
-                    card: card.props,
-                    target: null
-                }
-                return { ...state }
-            }, cb);
+    startMove(source, card, state) {
+        if (state.currentMove == null) {
+            state.currentMove = {
+                source,
+                card: card.props,
+                target: null
+            }
         }
     }
 
-    endMove(target, cb) {
-        if (this.stateHolder.state.currentMove !== null) {
-            this.stateHolder.setState((state) => {
-                if (state.currentMove) {
-                    state.currentMove.target = target;
-                    state.moves.push({ ...state.currentMove });
-                    state.points += this._rateMove(state.currentMove);
-                    this._printMove(state.currentMove)
-                    state.currentMove = null;
-                }
-                return { ...state }
-            }, () => {
-                this._tryDetectEnd(cb);
-            });
-
+    endMove(target, state) {
+        if (state.currentMove) {
+            state.currentMove.target = target;
+            state.moves.push({ ...state.currentMove });
+            state.points += this._rateMove(state.currentMove);
+            this._printMove(state.currentMove)
+            state.currentMove = null;
+            this._tryDetectEnd(state)
         }
     }
 
-    _tryDetectEnd(cb) {
-        var reduced = this.stateHolder.state.foundations.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
+    _tryDetectEnd(state) {
+        var reduced = this.stateHolder.state.foundation.stacks.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
         if (reduced == 52) {
-            // end state	
-            this.stateHolder.setState((state) => {
-                state.isEnded = true;
-                state.end = Date.now();
-                return { ...state }
-            }, cb);
-        } else {
-            cb && cb();
+            state.isEnded = true;
+            state.end = Date.now();
         }
     }
 
