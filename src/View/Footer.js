@@ -8,6 +8,8 @@ export default function Footer(props) {
             <Clock started={props.started} end={props.end} />
             <br />
             Is Ended: { props.isEnded ? "Y" : "N"}
+            <br/>
+            Report Issues <a href="https://github.com/ckonig/solitaire/issues">here</a>.
         </div>
     );
 }
