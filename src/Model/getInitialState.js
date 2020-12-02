@@ -6,7 +6,7 @@ import generateTableau from './Game/TableauGenerator';
 
 const getInitialState = (deck) => {
     return {
-        stock: new Stock(deck.cards.slice(24)),
+        stock: new Stock(deck.cards.slice(28)),
         waste: new Waste(),
         foundation: generateFoundations(),
         tableau: generateTableau(deck.cards.slice(0,28)),
