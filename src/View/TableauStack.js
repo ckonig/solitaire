@@ -10,7 +10,7 @@ export default function TableauStack(props) {
     var localStyle = {
         position: 'absolute',
         left: '0px',
-        top: '-0px',
+        top: '0px',
     };
 
     var localOuterStyle = {

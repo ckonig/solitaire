@@ -1,9 +1,14 @@
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import { Component } from 'react';
+import Container from 'react-bootstrap/Container';
 import Footer from './Footer';
 import Foundation from './Foundation';
 import Hand from './Hand';
+import Row from 'react-bootstrap/Row';
 import Service from '../Service/Facade';
 import Stock from './Stock';
 import TableauStack from './TableauStack';
@@ -26,52 +31,54 @@ class Solitaire extends Component {
 
   render() {
     const style = styles.solitaire;
-    const Box = (props) => <div style={style.stackbox}>{props.children}</div>
     return (
       <div style={style.table} >
         <Hand stack={this.state.hand.stack} />
-        <div style={style.upperContainer}>
-          <Box>
-            <Stock
-              onClick={this.service.clickStock}
-              model={this.state.stock} />
-          </Box>
-          <Box>
-            <Waste
-              onClick={this.service.clickWaste}
-              model={this.state.waste} />
-          </Box>
-          <Box>&nbsp;</Box>
-          <div>
+        <Container fluid>
+          <Row xs={7} sm={7}>
+            <Col>
+              <Stock
+                onClick={this.service.clickStock}
+                model={this.state.stock} />
+            </Col>
+            <Col>
+              <Waste
+                onClick={this.service.clickWaste}
+                model={this.state.waste} />
+            </Col>
+            <Col></Col>
             {this.state.foundation.stacks.map((foundation, index) => (
-              <Box>
+              <Col>
                 <Foundation
                   model={foundation}
                   index={index}
                   onClick={(c) => this.service.clickFoundation(index, c)}
                 />
-              </Box>
+              </Col>
             ))}
-          </div>
-          <div style={style.middleContainer}>
+          </Row>
+          <Row xs={7}>
             {this.state.tableau.stacks.map((stack, index) => (
-              <Box>
+              <Col>
                 <TableauStack
                   stackIndex={index}
                   model={stack}
                   onClick={(card, source) => this.service.clickTableauStack(card, index, source)}
                 />
-              </Box>))}
-          </div>
-          <div style={style.lowerContainer}>
-            <Footer end={this.state.end}
-              started={this.state.started}
-              points={this.state.points}
-              isEnded={this.state.isEnded} />
-            <button onClick={this.reset}>reset</button>
-          </div>
-        </div>
+              </Col>))}
+          </Row>
+          <Row>
+            <Col>
+              <Footer end={this.state.end}
+                started={this.state.started}
+                points={this.state.points}
+                isEnded={this.state.isEnded} />
+              <Button variant="secondary" onClick={this.reset}>reset</Button>
+            </Col>
+          </Row>
+        </Container>
       </div>
+
     );
   }
 }

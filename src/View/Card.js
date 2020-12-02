@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { cardBaseStyle, faceBaseStyle, iconBaseStyles } from "../styles";
 
+import BCard from 'react-bootstrap/Card';
+
 export default class Card extends Component {
   //@todo sanitize styles
   render() {
@@ -33,8 +35,8 @@ export default class Card extends Component {
       br: { ...iconBaseStyles.br },
     };
 
-    iconLabelStyles['tl']['left'] = '20px';
-    iconLabelStyles['br']['right'] = '20px';
+    iconLabelStyles['tl']['left'] = '2vw';
+    iconLabelStyles['br']['right'] = '2vw';
 
     const getCardStyle = (color) => {
       var st = { ...cardStyle };
@@ -65,9 +67,9 @@ export default class Card extends Component {
     //@todo accept `Card` model and pass it to click handler // source as 2nd parameter? how to store in model?
     //source is not property of card, but of CardPlacement ? -> stack of placements, placement contains source and card
     return (
-      <div style={getCardStyle(this.props.type.color)} className={className} onClick={(e) => this.props.onClick(this)}>
+      <BCard style={getCardStyle(this.props.type.color)} className={className} onClick={(e) => this.props.onClick(this)}>
         { content}
-      </div>
+      </BCard>
     );
   }
 };

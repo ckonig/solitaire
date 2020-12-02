@@ -24,7 +24,7 @@ export default function Waste(props) {
                     <Card type={card.type}
                         face={card.face}
                         blink={props.model.blinkFor}
-                        offsetTop={index}
+                        //offsetTop={index}
                         source="waste"
                         onClick={(c) => props.onClick(c)}
                     />

@@ -14,7 +14,7 @@ export default function Foundation(props) {
 
     var localFaceStyle = {
         ...styles.faceStyle,
-        fontSize: '30px',
+        //fontSize: '30px',
         top: '0px',
     };
 

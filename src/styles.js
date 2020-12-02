@@ -2,11 +2,11 @@ export const cardBaseStyle = {
     borderStyle: 'solid',
     borderWidth: '1px',
     borderColor: 'black',
-    width: '80px',
-    height: '120px',
+    width: '9.45vw',
+    height: '13.2vw',
     float: 'left',
-    margin: '10px',
-    borderRadius: '5px',
+    margin: '0.1vw',
+    borderRadius: '0.5vw',
     position: 'relative',
     backgroundColor: 'white',
 };
@@ -14,56 +14,57 @@ export const cardBaseStyle = {
 export const faceBaseStyle = {
     textAlign: 'center',
     position: 'absolute',
-    top: '15px',
-    width: '80px',
-    fontSize: '60px',
+    left:'0vw',
+    top: '2vw',
+    width: '9.45vw',
+    fontSize: '6vw',
     fontWeight: 'bold',
 }
 
 export const iconBaseStyle = {
     position: 'absolute',
     display: 'inline-block',
-    fontSize: '20px',
+    fontSize: '2vw',
 }
 
 export const iconBaseStyles = {
     tl: {
         ...iconBaseStyle,
-        left: '5px',
-        top: '0px',
+        left:  '0.5vw',
+        top: '0vw',
     },
     tr: {
         ...iconBaseStyle,
-        right: '5px',
-        top: '0px',
+        right:  '0.5vw',
+        top: '0vw',
     },
     bl: {
         ...iconBaseStyle,
-        left: '5px',
-        bottom: '0px',
+        left:  '0.5vw',
+        bottom: '0vw',
     },
     br: {
         ...iconBaseStyle,
-        right: '5px',
-        bottom: '0px',
+        right:  '0.5vw',
+        bottom: '0vw',
     }
 };
 
 var faceStyle = {
     textAlign: 'center',
     position: 'absolute',
-    top: '20px',
-    width: '80px',
+    top: '6.5vw',
+    width: '6.45vw',
 };
 export const targetStackStyle = {
     cardStyle: {
         borderStyle: 'dashed',
         borderColor: 'gray',
-        width: '80px',
-        height: '120px',
+        width: '9.45vw',
+        height: '13.2vw',
         float: 'left',
-        margin: '10px',
-        borderRadius: '5px',
+       // margin: '0.1vw',
+        borderRadius: '0.3vw',
         position: 'relative',
     },
 
@@ -76,24 +77,17 @@ export const targetStackStyle = {
     },
 
 }
-var baseStyles = {
-    baseContainer: {
-        position: 'absolute',
-        left: '0px',
-        width: '800px'
-    },
-}
+
 export const styles = {
     solitaire: {
-
-        upperContainer: { ...baseStyles.baseContainer, top: '0px', height: '200px' },
-        middleContainer: { ...baseStyles.baseContainer, top: '200px', height: '400px' },
-        lowerContainer: { ...baseStyles.baseContainer, top: '600px', },
         table: {
             backgroundColor: 'darkgreen',
-            height: '600px',
             zIndex: -1,
         },
-        stackbox: { width: '110px', float: 'left' },
+        stackbox: {
+            width: '9.45vw',
+            height: '13.2vw',
+            float: 'left'
+        },
     }
 }
