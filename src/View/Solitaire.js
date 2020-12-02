@@ -31,50 +31,52 @@ class Solitaire extends Component {
 
   render() {
     const style = styles.solitaire;
+    var nullStyle = { paddingRight: '0px', paddingLeft: '0.5vw',  }
+    var MyCol = (props) => <Col style={nullStyle}><Container style={nullStyle}>{props.children}</Container></Col>
     return (
       <div style={style.table} >
         <Hand stack={this.state.hand.stack} />
         <Container fluid>
-          <Row xs={7} sm={7}>
-            <Col>
+          <Row xs={7}>
+            <MyCol>
               <Stock
                 onClick={this.service.clickStock}
                 model={this.state.stock} />
-            </Col>
-            <Col>
+            </MyCol>
+            <MyCol>
               <Waste
                 onClick={this.service.clickWaste}
                 model={this.state.waste} />
-            </Col>
-            <Col></Col>
+            </MyCol>
+            <MyCol></MyCol>
             {this.state.foundation.stacks.map((foundation, index) => (
-              <Col>
+              <MyCol>
                 <Foundation
                   model={foundation}
                   index={index}
                   onClick={(c) => this.service.clickFoundation(index, c)}
                 />
-              </Col>
+              </MyCol>
             ))}
           </Row>
-          <Row xs={7}>
+          <Row>
             {this.state.tableau.stacks.map((stack, index) => (
-              <Col>
+              <MyCol>
                 <TableauStack
                   stackIndex={index}
                   model={stack}
                   onClick={(card, source) => this.service.clickTableauStack(card, index, source)}
                 />
-              </Col>))}
+              </MyCol>))}
           </Row>
           <Row>
-            <Col>
+            <MyCol>
               <Footer end={this.state.end}
                 started={this.state.started}
                 points={this.state.points}
                 isEnded={this.state.isEnded} />
               <Button variant="secondary" onClick={this.reset}>reset</Button>
-            </Col>
+            </MyCol>
           </Row>
         </Container>
       </div>

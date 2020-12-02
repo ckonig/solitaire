@@ -1,6 +1,6 @@
 {
   "homepage": "http://ckonig.github.io/solitaire",
-  "name": "my-app",
+  "name": "solitaire-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

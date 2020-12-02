@@ -33,7 +33,7 @@ export default function TableauStack(props) {
                         type={card.type}
                         face={card.face}
                         blink={props.model.blinkFor}
-                        offsetTop={index * 20}
+                        offsetTop={index * 10}
                         //@todo control source in model
                         source={"tableau-" + props.stackIndex}
                         isHidden={card.hidden}
