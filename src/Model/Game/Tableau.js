@@ -12,6 +12,7 @@ export default class Tableau {
     findFollowing(card) {
         for (var i = 0; i < this.stacks.length; i++) {
             for (var j = 0; j < this.stacks[i].stack.length; j++) {
+                //@todo use cardtools
                 if (card.props && this.stacks[i].stack[j].face == card.props.face && this.stacks[i].stack[j].type.icon == card.props.type.icon) {
                     return this.stacks[i].stack.splice(j + 1, this.stacks[i].stack.length - 1).map(f => { return { props: f } })
                 }

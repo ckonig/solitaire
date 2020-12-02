@@ -2,6 +2,9 @@
  * End Detection and Move Rating
  * Also, preparation for UNDO functionality?
  */
+
+//@todo make model
+
 export default class Actions {
 
     constructor() {
