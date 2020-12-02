@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/solitaire/static/css/main.4b22e2c8.chunk.css",
+    "main.js": "/solitaire/static/js/main.963cfc9c.chunk.js",
+    "main.js.map": "/solitaire/static/js/main.963cfc9c.chunk.js.map",
+    "runtime-main.js": "/solitaire/static/js/runtime-main.4438a619.js",
+    "runtime-main.js.map": "/solitaire/static/js/runtime-main.4438a619.js.map",
+    "static/js/2.4d9a722c.chunk.js": "/solitaire/static/js/2.4d9a722c.chunk.js",
+    "static/js/2.4d9a722c.chunk.js.map": "/solitaire/static/js/2.4d9a722c.chunk.js.map",
+    "static/js/3.00722728.chunk.js": "/solitaire/static/js/3.00722728.chunk.js",
+    "static/js/3.00722728.chunk.js.map": "/solitaire/static/js/3.00722728.chunk.js.map",
+    "index.html": "/solitaire/index.html",
+    "static/css/main.4b22e2c8.chunk.css.map": "/solitaire/static/css/main.4b22e2c8.chunk.css.map",
+    "static/js/2.4d9a722c.chunk.js.LICENSE.txt": "/solitaire/static/js/2.4d9a722c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4438a619.js",
+    "static/js/2.4d9a722c.chunk.js",
+    "static/css/main.4b22e2c8.chunk.css",
+    "static/js/main.963cfc9c.chunk.js"
+  ]
+}
