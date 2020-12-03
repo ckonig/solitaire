@@ -1,16 +1,3 @@
-export const cardBaseStyle = {
-    borderStyle: 'solid',
-    borderWidth: '1px',
-    borderColor: 'black',
-    width: '9.45vw',
-    height: '13.2vw',
-    float: 'left',
-    //margin: '0.1vw',
-    borderRadius: '0.5vw',
-    position: 'relative',
-    backgroundColor: 'white',
-};
-
 export const faceBaseStyle = {
     textAlign: 'center',
     position: 'absolute',

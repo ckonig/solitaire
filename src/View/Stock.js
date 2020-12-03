@@ -26,7 +26,6 @@ export default function Stock(props) {
                         face={card.face}
                         blink={props.model.blinkFor}
                         source="main"
-                        //offsetTop={index}
                         isHidden={card.isHidden}
                         canUncover={index == props.model.stack.length - 1}
                         onClick={props.onClick}

@@ -39,7 +39,7 @@ export default class Foundation extends TouchAwareComponent {
         return (
             <div style={localOuterStyle}>
                 <div style={localCardStyle} onClick={() => this.props.onClick()}>
-                    <div className="mcontent" style={localFaceStyle}>
+                    <div className="alignt-center" style={localFaceStyle}>
                         {this.props.model.icon}
                     </div>
                 </div>
