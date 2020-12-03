@@ -15,6 +15,7 @@ export default function TableauStack(props) {
 
     var localOuterStyle = {
         position: 'relative',
+        height: '30vw',
 
     };
 
@@ -33,7 +34,7 @@ export default function TableauStack(props) {
                         type={card.type}
                         face={card.face}
                         blink={props.model.blinkFor}
-                        offsetTop={index * 10}
+                        offsetTop={index*20}
                         //@todo control source in model
                         source={"tableau-" + props.stackIndex}
                         isHidden={card.hidden}

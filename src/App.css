@@ -54,3 +54,33 @@
     hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
   );
 }
+
+.stock { grid-area: stock; }
+.waste { grid-area: waste; }
+.spacer { grid-area: spacer; }
+
+.f0 { grid-area: f0; }
+.f1 { grid-area: f1; }
+.f2 { grid-area: f2; }
+.f3 { grid-area: f3; }
+
+.t0 { grid-area: t0; }
+.t1 { grid-area: t1; }
+.t2 { grid-area: t2; }
+.t3 { grid-area: t3; }
+.t4 { grid-area: t4; }
+.t5 { grid-area: t5; }
+.t6 { grid-area: t6; }
+
+.footer { grid-area: footer; }
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'stock waste spacer f0 f1 f2 f3'
+    't0 t1 t2 t3 t4 t5 t6'
+    'footer footer footer footer footer footer footer';
+  grid-gap: 10px;
+  background-color: 'darkgreen';
+  padding: 10px;
+}

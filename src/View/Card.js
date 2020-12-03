@@ -15,9 +15,7 @@ export default class Card extends Component {
     }
 
     var className = '';
-    if (this.props.isHidden) {
-      className = 'karo';
-    }
+
 
     if (this.props.offset) {
       cardStyle['top'] = this.props.offset;
@@ -25,7 +23,7 @@ export default class Card extends Component {
     }
 
     if (this.props.offsetTop) {
-      cardStyle['top'] = this.props.offsetTop;
+      cardStyle['top'] = (this.props.offsetTop / 10) + "vw";
     }
 
     var iconLabelStyles = {
@@ -60,6 +58,8 @@ export default class Card extends Component {
         <div style={iconLabelStyles['br']}> {this.props.face}</div>
         <div style={iconBaseStyles['br']}> {this.props.type.icon}</div>
       </div>;
+    } else {
+      content = <div className="karo" style={{ margin: '5%', borderRadius: '5px', height: '92%', borderColor:'black', borderStyle:'solid', borderWidth:'1px' }}>&nbsp;</div>;
     }
 
     //@todo accept `Card` model and pass it to click handler // source as 2nd parameter? how to store in model?
