@@ -1,3 +1,5 @@
+import CardTools from "../Deck/CardTools";
+
 export default class Stock {
     constructor(stack) {
         this.stack = [...stack];
@@ -16,5 +18,9 @@ export default class Stock {
 
     getTop() {
         return this.stack[this.stack.length-1];
+    }
+
+    isOnTop(card) {
+        return CardTools.cardEquals(card, this.getTop());
     }
 }

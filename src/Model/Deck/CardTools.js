@@ -22,5 +22,6 @@ class CardTool {
         return stacks;
     }
 }
+
 const CardTools = new CardTool();
 export default CardTools 

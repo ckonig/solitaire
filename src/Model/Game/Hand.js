@@ -6,8 +6,10 @@ export default class Hand {
     }
 
     pickUp(stack, source) {
-        this.stack = stack;
-        this.source = source;
+        if (stack) {
+            this.stack = stack;
+            this.source = source;
+        }
     }
 
     putDown() {

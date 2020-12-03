@@ -6,7 +6,8 @@ export default class Waste extends Service {
         if (this.hand().isHoldingCard()) {
             this.tryPutDown();
         } else if (card) {
-            this.pickup(card) //@todo use model to get top card instead (shadow bug)
+            this.pickup(card)
+            //@todo use model to get top card instead (shadow bug)
         } else {
             this.blink();
         }
@@ -15,8 +16,7 @@ export default class Waste extends Service {
     pickup(card) {
         this._setState((state) => {
             if (!state.hand.isHoldingCard()) {
-                state.hand.pickUp([card], card.source);
-                state.waste.filterOut(card);
+                state.hand.pickUp([state.waste.popTop(card)], 'waste');
             }
         })
     }
@@ -25,7 +25,7 @@ export default class Waste extends Service {
         if (this.state().hand.source == 'waste') {
             this._setState((state) => {
                 state.waste.tryPutDown(state.hand.currentCard())
-                    && this.actions.registerMove('waste', state, state.hand.currentCard())
+                    && state.game.registerMove('waste', state.hand.currentCard())
                     && state.hand.putDown()
             });
         } else {

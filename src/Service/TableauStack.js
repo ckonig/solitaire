@@ -17,15 +17,17 @@ export default class TableauStack extends Service {
                 this.blink(index);
             }
         } else if (!this.tryUncover(card, index)) {
-            this.pickup(card)
+            this.pickup(card, index)
         }
     }
 
     clickEmpty(source, index) {
-        //@todo check if model is really empty (shadow bug)
+        //@todo check in model if stack is really empty (shadow bug)
         if (this.hand().isHoldingKing() || this.hand().source == source) {
             this.tryPutDown(index)
-        } 
+        } else {
+            this.blink(index);
+        }
     }
 
     validateTableauStackMove = (current, top) => {
@@ -36,12 +38,10 @@ export default class TableauStack extends Service {
         return (currentIndex + 1) == topIndex && (current.type.color != top.type.color);
     }
 
-    pickup = (card) => {
+    pickup = (card, index) => {
         this._setState((state) => {
             if (!state.hand.isHoldingCard() && !card.isHidden) {
-                var following = state.tableau.findFollowing(card)
-                state.hand.pickUp([card, ...following], card.source);
-                state.tableau.filterOut([card, ...following]);
+                state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source);
             }
         });
     }
@@ -49,8 +49,8 @@ export default class TableauStack extends Service {
     tryPutDown = (index) => {
         this._setState((state) => {
             if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
-                state.tableau.filterOut([state.hand.currentCard()])
-                this.actions.registerMove('tableau-' + index, state, state.hand.currentCard())
+                //state.tableau.filterOut([state.hand.currentCard()])
+                state.game.registerMove('tableau-' + index, state.hand.currentCard())
                 state.tableau.add(index, state.hand.putDown());
             }
         });
@@ -59,7 +59,7 @@ export default class TableauStack extends Service {
     tryUncover = (card, index) => {
         if (!this.hand().isHoldingCard() && card.isHidden && card.canUncover) {
             this._setState((state) => {
-                state.tableau.uncover(index, card) && this.actions.registerUncover(card, state);
+                state.tableau.uncover(index, card) && state.game.registerUncover(card, state);
             });
             return true;
         }

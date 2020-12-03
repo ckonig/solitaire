@@ -9,15 +9,23 @@ export default class Tableau {
         return this.stacks[index];
     }
 
-    findFollowing(card) {
-        for (var i = 0; i < this.stacks.length; i++) {
-            for (var j = 0; j < this.stacks[i].stack.length; j++) {
-                //@todo use cardtools
-                if (card && this.stacks[i].stack[j].face == card.face && this.stacks[i].stack[j].type.icon == card.type.icon) {
-                    return this.stacks[i].stack.slice(j + 1, this.stacks[i].stack.length)
-                }
+    findFollowing(card, i) {
+        for (var j = 0; j < this.stacks[i].stack.length; j++) {
+            if (card && CardTools.cardEquals(this.stacks[i].stack[j], card)) {
+                return this.stacks[i].stack.slice(j + 1, this.stacks[i].stack.length)
             }
         }
+        
+        return [];
+    }
+
+    popWithFollowing(card, i) {
+        for (var j = 0; j < this.stacks[i].stack.length; j++) {
+            if (card && CardTools.cardEquals(this.stacks[i].stack[j], card)) {
+                return this.stacks[i].stack.splice(j, this.stacks[i].stack.length)
+            }
+        }
+        
         return [];
     }
 

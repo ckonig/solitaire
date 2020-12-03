@@ -25,4 +25,8 @@ export default class TouchAwareComponent extends Component {
             return false;
         }
     }
+
+    shouldShowHand(source) {
+        return this.isTouch && this.props.hand.isHoldingCard() && this.props.hand.source === source
+    }
 }

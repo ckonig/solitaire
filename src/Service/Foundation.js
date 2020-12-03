@@ -10,7 +10,7 @@ export default class Foundation extends Service {
         var card = this.state().foundation.getTop(index)
         if (card) {
             this._setState((state) => {
-                if (state.foundation.getPreviousUsed(index) == card.face) {
+                if (state.foundation.getPreviousUsed(index) === card.face) {
                     state.foundation.remove(index, card)
                     state.hand.pickUp([card], card.source);
                 }
@@ -25,7 +25,7 @@ export default class Foundation extends Service {
             this._setState((state) => {
                 if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
                     state.foundation.add(index, state.hand.currentCard())
-                    this.actions.registerMove('foundation', state, state.hand.currentCard())
+                    state.game.registerMove('foundation', state.hand.currentCard())
                     state.hand.putDown();
                     this._tryDetectEnd(state)
                 }
@@ -37,7 +37,7 @@ export default class Foundation extends Service {
 
     _tryDetectEnd(state) {
         var nrofCards = state.foundation.stacks.map(f => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
-        if (nrofCards == 52) {
+        if (nrofCards === 52) {
             state.isEnded = true;
             state.end = Date.now();
         }

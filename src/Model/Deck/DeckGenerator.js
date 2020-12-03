@@ -12,10 +12,7 @@ export default function generateDeck() {
             deck.push({
                 face: CardRange[i],
                 type: suit,
-                key: key,
                 isHidden: true,
-                toString: () => key,
-                //@todo add functionality
             });
         }
     }

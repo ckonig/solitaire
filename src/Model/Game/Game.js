@@ -1,38 +1,36 @@
-/**	
- * End Detection and Move Rating
- * Also, preparation for UNDO functionality?
- */
-
-//@todo make model
-
-export default class Actions {
-
+export default class Game {
     constructor() {
         this.moves = [];
         this.currentMove = null;
+        this.points = 0;
+        this.started = Date.now();
     }
 
-    registerMove(target, state, card) {
+    registerMove(target, card) {
         var currentMove = {
             source: card.source,
             card: card,
             target: target
         }
 
-        state.moves.push({ ...currentMove });
-        state.points += this._rateMove(currentMove);
+        this.points += this._rateMove(currentMove);
+        this.moves.push({ ...currentMove });
+        this.points += this._rateMove(currentMove);
         return true;
     }
 
-    registerRecycle(state) {
-        state.moves.push({ source: 'waste', target: 'stock', card: null });
-        state.points -= 100;
+    registerRecycle() {
+        this.moves.push({ source: 'waste', target: 'stock', card: null });
+        this.points -= 100;
+        if (this.points < 0) {
+            this.points = 0;
+        }
         console.debug('RATING: subtract 100 points for RECYCLE')
     }
 
-    registerUncover(card, state) {
-        state.moves.push({ source: null, target: null, card: card });
-        state.points += 5;
+    registerUncover(card) {
+        this.moves.push({ source: null, target: null, card: card });
+        this.points += 5;
         console.debug('RATING: add 5 points for UNCOVER')
     }
 
@@ -62,4 +60,4 @@ export default class Actions {
 
         return 0;
     }
-} 
+}

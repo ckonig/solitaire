@@ -1,8 +1,5 @@
-import Actions from "./Actions";
-
 export default class Service {
     constructor(stateholder) {
-        this.actions = new Actions();
         this._setState = (a, b) => stateholder.setState((state) => {
             a(state);
             return { ...state };

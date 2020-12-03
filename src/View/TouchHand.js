@@ -1,33 +1,15 @@
-import React, { Component } from 'react';
-
 import Card from './Card';
+import TouchAwareComponent from './TouchAwareComponent';
 
-export default class Hand2 extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
+export default class TouchHand extends TouchAwareComponent {
     render() {
-        var outer = {
-            position: 'absolute',
-            left: '0px',
-            top: '0px',
-            width: '0px',
-            height: '0px',
+        if (!this.isTouch || !this.props.hand || this.props.parent !== this.props.hand.source) {
+            return null;
         }
-
-        var localStyle = {
-            position: 'absolute',
-            left: '0px',
-            top: '0px',
-        };
-
         return (
-            <div style={outer}>
-
-                {this.props.stack && this.props.stack.map((card, index) => (
-                    <div style={localStyle}>
+            <div>
+                {this.props.hand && this.props.hand.stack && this.props.hand.stack.map((card, index) => (
+                    <div className="stack-base" key={"h2"+index}>
                         <Card
                             offsetTop={this.props.offset + (index * 20)}
                             zIndex={1000 + (index * 20)}

@@ -10,20 +10,27 @@ export default class Waste {
     }
 
     add(card) {
-        this.stack.push(card);
+        if (card) {
+            card.source = 'waste';
+            card.isHidden = false;
+            this.stack.push(card);
+            return true;
+        }
     }
 
     canAdd(card) {
-        var top = this.getTopCard();
-        return card  && (!top || CardTools.cardNotEquals(card, top));
+        var top = this.getTop();
+        return card && (!top || CardTools.cardNotEquals(card, top));
     }
 
-    getTopCard() {
+    getTop() {
         return this.stack[this.stack.length - 1];
     }
 
-    filterOut(card) {
-        this.stack = CardTools.filterNotEqual(this.stack, card);
+    popTop(card) {
+        if (CardTools.cardEquals(card, this.getTop())) {
+            return this.stack.pop();
+        }
     }
 
     recycle() {

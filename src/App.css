@@ -1,3 +1,15 @@
+/* Page */
+
+body {
+  background-color: darkgreen;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Alignment Helpers */
 
 .align-left {
@@ -12,7 +24,7 @@
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-.alignt-center {
+.align-center {
   position: absolute;
   top:50%;
   left:50%;
@@ -22,49 +34,26 @@
 
 /* Main Layout Grid */
 
-.stock { grid-area: stock; }
-.waste { grid-area: waste; }
-.spacer { grid-area: spacer; }
-
-.f0 { grid-area: f0; }
-.f1 { grid-area: f1; }
-.f2 { grid-area: f2; }
-.f3 { grid-area: f3; }
-
-.t0 { grid-area: t0; }
-.t1 { grid-area: t1; }
-.t2 { grid-area: t2; }
-.t3 { grid-area: t3; }
-.t4 { grid-area: t4; }
-.t5 { grid-area: t5; }
-.t6 { grid-area: t6; }
-
 .footer { grid-area: footer; }
 
-.grid-container {
+.layout-grid-container {
   display: grid;
   grid-template-areas:
-    'stock waste spacer f0 f1 f2 f3'
-    't0 t1 t2 t3 t4 t5 t6'
+    'stock waste spacer foundation foundation foundation foundation'
+    'tableau tableau tableau tableau tableau tableau tableau'
     'footer footer footer footer footer footer footer';
   grid-gap: 10px;
   background-color: 'darkgreen';
- 
   padding: 10px;
+}
+
+.card-grid-container > div {
+  position: relative;
 }
 
 /* Card Layout Grid */
 
-.tlicon { grid-area: tlicon; position: relative; }
-.tlface { grid-area: tlface; position: relative;}
-.tspacer { grid-area: tspacer;position: relative; }
-.tricon { grid-area: tricon;position: relative;  }
-.mainface { grid-area: mainface; text-align: center; position: relative; font-size: 5vw;}
-.blicon { grid-area: blicon; vertical-align: bottom;position: relative;}
-.bspacer { grid-area: bspacer;position: relative; }
-.brface { grid-area: brface; position: relative;}
-.bricon { grid-area: bricon; position: relative;}
-
+.mainface { grid-area: mainface; text-align: center; font-size: 5vw;}
 
 .card-grid-container {
   padding-top: '5px';
@@ -72,24 +61,38 @@
   font-size: 2vw;
   grid-template-rows: 2.1vw 8.3vw 2.1vw;
   grid-template-areas:
-    'tlicon tlface tspacer tricon'
+    'suite-tl face-tl spacer-t suite-tr'
     'mainface mainface mainface mainface'
-    'blicon bspacer brface bricon';
+    'suite-bl spacer-b face-br suite-br';
   grid-gap: 0.2vw;
-  
+  height: 100%;
+  width: 100%;
 }
 
 /* Card Styling */
+
+.stack-base {
+  position: absolute;
+}
+
+.card-base {
+  width: 9.45vw;
+  height: 13.2vw;
+  border-radius: 0.5vw;
+  float: left;
+  position: relative;
+}
+
+.socket-empty {
+  border-style: dashed;
+  border-color: gray;
+}
+
 .card {
   border-style: solid;
   border-width: '1px';
   border-color: black;
-  float: left;
-  position: relative;
   background-color: white;
-  width: 9.45vw;
-  height: 13.2vw;
-  border-radius: 0.5vw;
   box-shadow: 2px 2px black;
 }
 
@@ -98,7 +101,7 @@
   border-color: yellow;
 }
 
-.card-blink {
+.blink {
   border-color: red;
   box-shadow: 2px 2px 2px 2px red;
 }
@@ -127,10 +130,16 @@
   border-width: 1px;
 }
 
+/* Foundation Stack Base Styling */
+
 .suit-♥ {
   color: red;
 }
 
 .suit-♦ {
   color: red;
+}
+
+.foundation-base {
+  font-size: 6vw;
 }

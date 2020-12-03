@@ -1,4 +1,5 @@
 export default class Deck {
+
     constructor(cards) {
         this.cards = cards;
     }
@@ -6,18 +7,6 @@ export default class Deck {
     shuffle() {
         this._shuffleArray(this.cards);
         return this;
-    }
-
-    take(i) {
-        if (i) {
-            var taken = this.cards.slice(0, i);
-            this.cards = this.cards.slice(i);
-            return taken;
-        } else {
-            var taken = [...this.cards];
-            this.cards = [];
-            return taken;
-        }
     }
 
     // credits: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array

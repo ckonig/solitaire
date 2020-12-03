@@ -1,28 +1,14 @@
 import Card from './Card';
-import { targetStackStyle } from '../styles';
+import StackBase from './StackBase';
 
 export default function Stock(props) {
-    var localStyle = {
-        position: 'absolute',
-        left: '0px',
-        top: '0px',
-    };
-
-    var localOuterStyle = {
-        position: 'relative',
-    };
-
-    var localBase = {...targetStackStyle.cardStyle}
-    if (props.blinkFor > 0) {
-        localBase.borderColor = 'red';
-    }
-
     return (
-        <div style={localOuterStyle}>
-            <div style={localBase} onClick={() => props.onClick()}>&nbsp;</div>
+        <div>
+            <StackBase blink={props.model.blinkFor} onClick={props.onClick} />
             {props.model.stack.map((card, index) => (
-                <div style={localStyle}>
+                <div className="stack-base" key={"sc"+index}>
                     <Card type={card.type}
+                        
                         face={card.face}
                         blink={props.model.blinkFor}
                         source="main"
