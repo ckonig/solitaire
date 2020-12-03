@@ -10,12 +10,12 @@ export default class Waste {
     }
 
     add(card) {
-        this.stack.push(card.props);
+        this.stack.push(card);
     }
 
     canAdd(card) {
         var top = this.getTopCard();
-        return card && card.props && (!top || CardTools.cardNotEquals(card.props, top));
+        return card  && (!top || CardTools.cardNotEquals(card, top));
     }
 
     getTopCard() {

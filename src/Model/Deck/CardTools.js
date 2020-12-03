@@ -10,7 +10,7 @@ class CardTool {
 
     filterNotEqual(stack, card) {
         return stack.filter((value, index, arr) => {
-            return CardTools.cardNotEquals(value, card.props);
+            return CardTools.cardNotEquals(value, card);
         });
     }
 

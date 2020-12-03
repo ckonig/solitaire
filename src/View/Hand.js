@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import Card from './Card';
-import { targetStackStyle } from '../styles';
+import TouchAwareComponent from './TouchAwareComponent';
 
-export default class Hand extends Component {
+export default class Hand extends TouchAwareComponent {
 
     constructor(props) {
         super(props);
@@ -12,13 +12,15 @@ export default class Hand extends Component {
 
     componentDidMount() {
         const node = this.myRef.current;
-        document.addEventListener('mousemove', (e) => {
-            var x = e.clientX,
-                y = e.clientY;
-            node.style.top = (y) + 'px';
-            node.style.left = (x) + 'px';
-            node.style.position = 'relative'
-        });
+        if (!this.is_touch_device()) {
+            document.addEventListener('mousemove', (e) => {
+                var x = e.clientX,
+                    y = e.clientY;
+                node.style.top = (y) + 'px';
+                node.style.left = (x) + 'px';
+                node.style.position = 'relative'
+            });
+        }
     }
 
     render() {
@@ -30,15 +32,15 @@ export default class Hand extends Component {
             height: '0px',
         }
 
-        var styles = {
-            ...targetStackStyle
-        };
-
         var localStyle = {
             position: 'absolute',
             left: '0px',
             top: '0px',
         };
+
+        if (this.isTouch) {
+            return (<span></span>);
+        }
 
         return (
             <div style={outer}>
@@ -49,8 +51,8 @@ export default class Hand extends Component {
                             <Card
                                 offsetTop={index * 20}
                                 zIndex={1000 + (index * 20)}
-                                type={card.props.type}
-                                face={card.props.face}
+                                type={card.type}
+                                face={card.face}
                                 isSelected={true}
                             />
                         </div>

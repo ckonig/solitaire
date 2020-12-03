@@ -6,7 +6,7 @@ export default class Stock {
     recycle(waste) {
         if (waste.length) {
             this.stack = [...waste].reverse().map(element => {
-                return { ...element, hidden: true }
+                return { ...element, isHidden: true }
             });
             return true;
         }

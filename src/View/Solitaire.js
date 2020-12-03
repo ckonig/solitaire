@@ -39,15 +39,17 @@ class Solitaire extends Component {
           <div className="waste">
             <Waste
               onClick={this.service.clickWaste}
+              hand={this.state.hand}
               model={this.state.waste} />
           </div>
-          <div className="spacer"></div>
+          <div className="spacer">&nbsp;</div>
           {this.state.foundation.stacks.map((foundation, index) => (
             <div className={"f" + index}>
 
               <Foundation
                 model={foundation}
                 index={index}
+                hand={this.state.hand}
                 onClick={(c) => this.service.clickFoundation(index, c)}
               />
 
@@ -59,6 +61,7 @@ class Solitaire extends Component {
               <TableauStack
                 stackIndex={index}
                 model={stack}
+                hand={this.state.hand}
                 onClick={(card, source) => this.service.clickTableauStack(card, index, source)}
               />
             </div>

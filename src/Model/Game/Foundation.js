@@ -16,19 +16,20 @@ export default class Foundation {
 
     accepts(index, card) {
         var currentAccepted = this.getCurrentAccepted(index);
-        return this.stacks[index].icon == card.props.type.icon && currentAccepted == card.props.face
+        return this.stacks[index].icon == card.type.icon && currentAccepted == card.face
     }
 
     contains(index, card) {
         return this.stacks[index].stack.indexOf(card) !== -1
     }
 
-    remove(index, card) {
+    add(index, card) {
+        card.source = 'foundation-' + index
         this.stacks[index].stack.push(card);
         this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
     }
 
-    add(index, card) {
+    remove(index, card) {
         this.filterOut(card)
         this.stacks[index].acceptedCards.push(this.stacks[index].usedCards.pop());
     }

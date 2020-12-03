@@ -15,7 +15,7 @@ export default class Waste extends Service {
     pickup(card) {
         this._setState((state) => {
             if (!state.hand.isHoldingCard()) {
-                state.hand.pickUp([card], card.props.source);
+                state.hand.pickUp([card], card.source);
                 state.waste.filterOut(card);
             }
         })

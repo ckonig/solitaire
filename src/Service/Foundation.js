@@ -7,13 +7,12 @@ export default class Foundation extends Service {
         : this.pickup(index)
 
     pickup(index) {
-        var top = this.state().foundation.getTop(index)
-        if (top) {
-            var card = { props: top };
+        var card = this.state().foundation.getTop(index)
+        if (card) {
             this._setState((state) => {
-                if (state.foundation.getPreviousUsed(index) == card.props.face) {
-                    state.foundation.add(index, card)
-                    state.hand.pickUp([card], card.props.source);
+                if (state.foundation.getPreviousUsed(index) == card.face) {
+                    state.foundation.remove(index, card)
+                    state.hand.pickUp([card], card.source);
                 }
             });
         } else {
@@ -25,7 +24,7 @@ export default class Foundation extends Service {
         if (!this.hand().hasMoreThanOneCard() && this.state().foundation.accepts(index, this.hand().currentCard())) {
             this._setState((state) => {
                 if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
-                    state.foundation.remove(index, state.hand.currentCard().props)
+                    state.foundation.add(index, state.hand.currentCard())
                     this.actions.registerMove('foundation', state, state.hand.currentCard())
                     state.hand.putDown();
                     this._tryDetectEnd(state)

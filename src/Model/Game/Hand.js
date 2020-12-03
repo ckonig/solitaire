@@ -22,7 +22,7 @@ export default class Hand {
     }
 
     isHoldingKing() {
-        return this.currentCard() && this.currentCard().props && this.currentCard().props.face == 'K'
+        return this.currentCard() && this.currentCard().face == 'K'
     }
 
     isCurrentCard(card) {
@@ -38,10 +38,10 @@ export default class Hand {
     }
 
     containsCurrentCard(stack) {
-        return stack && stack.indexOf(this.currentCard().props) !== -1
+        return stack && stack.indexOf(this.currentCard()) !== -1
     }
 
     isFromCurrentSource(card) {
-        return this.source && card.props.source == this.source;
+        return this.source && card.source == this.source;
     }
 }

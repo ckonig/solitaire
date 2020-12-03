@@ -14,8 +14,8 @@ export default class Actions {
 
     registerMove(target, state, card) {
         var currentMove = {
-            source: card.props.source,
-            card: card.props,
+            source: card.source,
+            card: card,
             target: target
         }
 
@@ -39,7 +39,6 @@ export default class Actions {
     _rateMove(move) {
         var sourceIsTableau = move.source.substr(0, 7) == 'tableau';
         var targetIsTableau = move.target.substr(0, 7) == 'tableau';
-        console.log('is tableau', sourceIsTableau, targetIsTableau);
         if (sourceIsTableau) {
             if (move.target == 'foundation') {
                 console.debug('RATING: add 10 points for MOVE tableau -> foundation')

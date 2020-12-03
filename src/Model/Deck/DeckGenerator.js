@@ -13,7 +13,7 @@ export default function generateDeck() {
                 face: CardRange[i],
                 type: suit,
                 key: key,
-                hidden: true,
+                isHidden: true,
                 toString: () => key,
                 //@todo add functionality
             });
