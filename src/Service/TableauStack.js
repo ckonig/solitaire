@@ -22,6 +22,7 @@ export default class TableauStack extends Service {
     }
 
     clickEmpty(source, index) {
+        //@todo check if model is really empty (shadow bug)
         if (this.hand().isHoldingKing() || this.hand().source == source) {
             this.tryPutDown(index)
         } 

@@ -5,7 +5,7 @@ export default class Stock extends Service {
     click = (card) => {
         if (this.hand().isHoldingCard()) {
             this.blink();
-        } else if (card) {
+        } else if (card) { //@todo card doesn't matter, we can use stock model to pick  top card (shadow bug)
             this.moveToWaste(card);
         } else {
             this.recycleWaste();

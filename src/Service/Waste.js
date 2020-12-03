@@ -4,9 +4,9 @@ export default class Waste extends Service {
 
     click = (card) => {
         if (this.hand().isHoldingCard()) {
-            this.tryPutDown(card);
+            this.tryPutDown();
         } else if (card) {
-            this.pickup(card)
+            this.pickup(card) //@todo use model to get top card instead (shadow bug)
         } else {
             this.blink();
         }
