@@ -13,11 +13,10 @@ export default function Foundation(props) {
     };
 
     var localFaceStyle = {
-        ...styles.faceStyle,
-        //fontSize: '30px',
-        top: '0px',
+        fontSize: '6vw',
     };
-
+    localFaceStyle.color = props.model.color;
+    
     var localOuterStyle = {
         position: 'relative',
     };
@@ -31,10 +30,8 @@ export default function Foundation(props) {
     return (
         <div style={localOuterStyle}>
             <div style={localCardStyle} onClick={() => props.onClick()}>
-                <div style={localFaceStyle} >
-                    <h1>
-                        {props.model.icon}
-                    </h1>
+                <div className="mcontent" style={localFaceStyle}>
+                    {props.model.icon}
                 </div>
             </div>
             {props.model.stack.map(card => (
@@ -42,7 +39,7 @@ export default function Foundation(props) {
                     <Card
                         blink={props.model.blinkFor}
                         type={card.type}
-                        source={"foundation-"+props.index}
+                        source={"foundation-" + props.index}
                         face={card.face}
                         onClick={(c) => props.onClick(c)} />
                 </div>))}

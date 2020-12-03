@@ -5,7 +5,7 @@ export const cardBaseStyle = {
     width: '9.45vw',
     height: '13.2vw',
     float: 'left',
-    margin: '0.1vw',
+    //margin: '0.1vw',
     borderRadius: '0.5vw',
     position: 'relative',
     backgroundColor: 'white',

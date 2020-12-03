@@ -49,17 +49,26 @@ export default class Card extends Component {
     }
     var content = <div></div>;
     if (!this.props.isHidden) {
-      content = <div>
-        <div style={iconBaseStyles['tl']}> {this.props.type.icon}</div>
-        <div style={iconLabelStyles['tl']}> {this.props.face}</div>
-        <div style={iconBaseStyles['tr']}> {this.props.type.icon}</div>
-        <div style={faceBaseStyle}> <a>{this.props.face}</a></div>
-        <div style={iconBaseStyles['bl']}> {this.props.type.icon}</div>
-        <div style={iconLabelStyles['br']}> {this.props.face}</div>
-        <div style={iconBaseStyles['br']}> {this.props.type.icon}</div>
+      content = <div className="card-grid-container" style={{ height: '100%', width: '100%' }}>
+        <div className="tlicon"><div className="mcontent"> {this.props.type.icon}</div></div>
+        <div className="tlface"><div className="lcontent"> {this.props.face}</div></div>
+        <div className="tspacer"></div>
+        <div className="tricon"><div className="mcontent"> {this.props.type.icon}</div></div>
+        <div className="mainface" > <div className="mcontent">{this.props.face}</div></div>
+        <div className="blicon"><div className="mcontent"> {this.props.type.icon}</div></div>
+        <div className="bspacer"></div>
+        <div className="brface"> <div className="rcontent">{this.props.face}</div></div>
+        <div className="bricon"> <div className="mcontent">{this.props.type.icon}</div></div>
       </div>;
     } else {
-      content = <div className="karo" style={{ margin: '5%', borderRadius: '5px', height: '92%', borderColor:'black', borderStyle:'solid', borderWidth:'1px' }}>&nbsp;</div>;
+      content = <div className="karo" style={{
+        margin: '5%',
+        bordeRradius: '5px',
+        height: '92%',
+        borderColor: 'black',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+      }}>&nbsp;</div>;
     }
 
     //@todo accept `Card` model and pass it to click handler // source as 2nd parameter? how to store in model?

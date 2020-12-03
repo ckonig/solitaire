@@ -39,7 +39,7 @@ export default class TableauStack extends Service {
 
     pickup = (card) => {
         this._setState((state) => {
-            if (!state.hand.isHoldingCard()) {
+            if (!state.hand.isHoldingCard() && !card.props.isHidden) {
                 var following = state.tableau.findFollowing(card)
                 state.hand.pickUp([card, ...following], card.props.source);
                 //@todo how come we dont need to filter the following?

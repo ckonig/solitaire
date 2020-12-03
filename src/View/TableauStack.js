@@ -25,6 +25,17 @@ export default function TableauStack(props) {
         localCardStyle.borderColor = 'red';
     }
 
+    var getOffset = (index) => {
+        var i = 0;
+        while (i <= index) {
+            if (props.model.stack[i] && !props.model.stack[i].hidden) {
+                return i * 12 + (index - i) * 24
+            }
+            i++;
+        }
+        return index*12;
+    }
+
     return (
         <div style={localOuterStyle}>
             <div style={localCardStyle} onClick={() => props.onClick(null, "tableau-" + props.stackIndex)}>&nbsp;</div>
@@ -34,7 +45,7 @@ export default function TableauStack(props) {
                         type={card.type}
                         face={card.face}
                         blink={props.model.blinkFor}
-                        offsetTop={index*20}
+                        offsetTop={getOffset(index)}
                         //@todo control source in model
                         source={"tableau-" + props.stackIndex}
                         isHidden={card.hidden}

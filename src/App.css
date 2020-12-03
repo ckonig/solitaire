@@ -53,6 +53,12 @@
     hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
     hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
   );
+  margin: '5%';
+  border-radius: '5px';
+  height: '92%';
+  border-color: 'black';
+  border-style: 'solid';
+  border-width: '1px';
 }
 
 .stock { grid-area: stock; }
@@ -82,5 +88,50 @@
     'footer footer footer footer footer footer footer';
   grid-gap: 10px;
   background-color: 'darkgreen';
+ 
   padding: 10px;
+}
+
+.tlicon { grid-area: tlicon; position: relative; }
+.tlface { grid-area: tlface; position: relative;}
+.tspacer { grid-area: tspacer;position: relative; }
+.tricon { grid-area: tricon;position: relative;  }
+.mainface { grid-area: mainface; text-align: center; position: relative; font-size: 5vw;}
+.blicon { grid-area: blicon; vertical-align: bottom;position: relative;}
+.bspacer { grid-area: bspacer;position: relative; }
+.brface { grid-area: brface; position: relative;}
+.bricon { grid-area: bricon; position: relative;}
+.lcontent {
+  left: 0;position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.rcontent {
+  right: 0;position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.mcontent {
+  position: absolute;
+  top:50%;
+  left:50%;
+  
+  
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.card-grid-container {
+  padding-top: '5px';
+  display: grid;
+  font-size: 2vw;
+  grid-template-rows: 2.1vw 8.3vw 2.1vw;
+  grid-template-areas:
+    'tlicon tlface tspacer tricon'
+    'mainface mainface mainface mainface'
+    'blicon bspacer brface bricon';
+  grid-gap: 0.2vw;
+  
 }
