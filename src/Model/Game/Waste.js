@@ -1,8 +1,9 @@
 import CardTools from "../Deck/CardTools";
+import StackHolder from "./StackHolder";
 
-export default class Waste {
+export default class Waste extends StackHolder {
     constructor() {
-        this.stack = [];
+        super([]);
     }
 
     tryPutDown(card) {
@@ -21,10 +22,6 @@ export default class Waste {
     canAdd(card) {
         const top = this.getTop();
         return card && (!top || CardTools.cardNotEquals(card, top));
-    }
-
-    getTop() {
-        return this.stack[this.stack.length - 1];
     }
 
     popTop(card) {

@@ -1,10 +1,7 @@
 import CardTools from "../Deck/CardTools";
+import StackHolder from "./StackHolder";
 
-export default class Stock {
-    constructor(stack) {
-        this.stack = [...stack];
-    }
-
+export default class Stock extends StackHolder {
     recycle(waste) {
         if (waste.length) {
             this.stack = [...waste].reverse().map((element) => {
@@ -14,10 +11,6 @@ export default class Stock {
         }
 
         return false;
-    }
-
-    getTop() {
-        return this.stack[this.stack.length - 1];
     }
 
     isOnTop(card) {

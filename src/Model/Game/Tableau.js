@@ -1,22 +1,18 @@
+import { CardRange } from "../Deck/CardRange";
 import CardTools from "../Deck/CardTools";
+import MultiStackHolder from "./MultiStackHolder";
 
-export default class Tableau {
-    constructor(stacks) {
-        this.stacks = stacks;
-    }
-
+export default class Tableau extends MultiStackHolder {
     getStack(index) {
         return this.stacks[index];
     }
 
-    findFollowing(card, i) {
-        for (let j = 0; j < this.stacks[i].stack.length; j++) {
-            if (card && CardTools.cardEquals(this.stacks[i].stack[j], card)) {
-                return this.stacks[i].stack.slice(j + 1, this.stacks[i].stack.length);
-            }
-        }
-
-        return [];
+    accepts(index, current) {
+        const top = this.getTop(index);
+        const range = [...CardRange];
+        const currentIndex = range.indexOf(current.face);
+        const topIndex = range.indexOf(top.face);
+        return currentIndex + 1 == topIndex && current.type.color != top.type.color;
     }
 
     popWithFollowing(card, i) {
@@ -29,35 +25,21 @@ export default class Tableau {
         return [];
     }
 
-    filterOut = (cards) => {
-        return cards.map((card) => CardTools.filterOut(this.stacks, card));
-    };
-
-    isCovered(index) {
-        return this.stacks[index].stack[this.stacks[index].length - 1];
-    }
-
     uncover(index) {
-        const stack = this.stacks[index];
-        const top = stack.stack[stack.stack.length - 1];
+        const top = this.getTop(index);
         if (top.isHidden) {
             top.isHidden = false;
             return true;
-        } 
+        }
 
         return false;
     }
 
-    add(index, card) {
-        if (Array.isArray(card)) {
-            card = card.map((c) => {
-                c.source = "tableau-" + index;
-                return c;
-            });
-            this.stacks[index].stack = this.stacks[index].stack.concat(card);
-        } else {
-            card.source = "tableau-" + index;
-            this.stacks[index].stack.push(card);
-        }
+    add(index, cards) {
+        const mapper = (c) => {
+            c.source = "tableau-" + index;
+            return c;
+        };
+        this.stacks[index].stack = this.stacks[index].stack.concat(cards.map(mapper));
     }
 }

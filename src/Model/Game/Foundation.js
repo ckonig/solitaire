@@ -1,17 +1,13 @@
 import CardTools from "../Deck/CardTools";
+import MultiStackHolder from "./MultiStackHolder";
 
-export default class Foundation {
-    //@todo Foundation and Tableau are both  containers for OrderedStacks (with different order)
-    constructor(stacks) {
-        this.stacks = stacks;
-    }
-
+export default class Foundation extends MultiStackHolder {
     filterOut = (card) => {
         this.stacks = CardTools.filterOut(this.stacks, card);
     };
 
     getCurrentAccepted = (index) => {
-        const currentFoundation = this.stacks[index].acceptedCards;
+         const currentFoundation = this.stacks[index].acceptedCards;
         return currentFoundation[currentFoundation.length - 1];
     };
 
@@ -35,11 +31,11 @@ export default class Foundation {
         this.stacks[index].acceptedCards.push(this.stacks[index].usedCards.pop());
     };
 
-    getTop = (index) => {
-        return this.stacks[index].stack[this.stacks[index].stack.length - 1];
-    };
-
     getPreviousUsed = (index) => {
         return [...this.stacks[index].usedCards].pop();
     };
+
+    countCards = () => {
+        this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
+    }
 }
