@@ -21,8 +21,8 @@ export default class Foundation extends Service {
         if (!this.hand().hasMoreThanOneCard() && this.state().foundation.accepts(index, this.hand().currentCard())) {
             this._setState((state) => {
                 if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
+                    state.game.registerMove("foundation-"+index, state.hand.currentCard());
                     state.foundation.add(index, state.hand.currentCard());
-                    state.game.registerMove("foundation", state.hand.currentCard());
                     state.hand.putDown();
                     this.tryDetectEnd(state);
                 }

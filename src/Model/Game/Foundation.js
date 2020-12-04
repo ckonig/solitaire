@@ -1,6 +1,7 @@
 import CardTools from "../Deck/CardTools";
 
 export default class Foundation {
+    //@todo Foundation and Tableau are both  containers for OrderedStacks (with different order)
     constructor(stacks) {
         this.stacks = stacks;
     }

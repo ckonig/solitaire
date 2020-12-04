@@ -2,10 +2,11 @@ import { CardRange } from "../Model/Deck/CardRange";
 import Service from "./BaseService";
 
 export default class TableauStack extends Service {
-    click = (card, index, source) => (card ? this.clickCard(card, index) : this.clickEmpty(source, index));
+    click = (card, index) => (card ? this.clickCard(card, index) : this.clickEmpty(index));
 
     clickCard(card, index) {
         if (this.hand().isHoldingCard()) {
+            //@todo rewrite to be atomic, to allow transaction like state handling in parent class
             if (!this.tryUncover(card, index) && this.hand().isFromCurrentSource(card) && card.isHidden) {
                 this.tryPutDown(index);
             } else if (this.validateTableauStackMove(this.hand().currentCard(), card)) {
@@ -18,9 +19,9 @@ export default class TableauStack extends Service {
         }
     }
 
-    clickEmpty(source, index) {
+    clickEmpty(index) {
         //@todo check in model if stack is really empty (shadow bug)
-        if (this.hand().isHoldingKing() || this.hand().source == source) {
+        if (this.hand().isHoldingKing() || this.hand().source == "tableau-" + index) {
             this.tryPutDown(index);
         } else {
             this.blink(index);
@@ -46,7 +47,6 @@ export default class TableauStack extends Service {
     tryPutDown = (index) => {
         this._setState((state) => {
             if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
-                //state.tableau.filterOut([state.hand.currentCard()])
                 state.game.registerMove("tableau-" + index, state.hand.currentCard());
                 state.tableau.add(index, state.hand.putDown());
             }
@@ -54,6 +54,7 @@ export default class TableauStack extends Service {
     };
 
     tryUncover = (card, index) => {
+        //@todo decide and check in model if can be uncovered
         if (!this.hand().isHoldingCard() && card.isHidden && card.canUncover) {
             this._setState((state) => {
                 state.tableau.uncover(index, card) && state.game.registerUncover(card, state);

@@ -40,7 +40,7 @@ export default class App extends Component {
                             index={index}
                             model={stack}
                             hand={this.state.hand}
-                            onClick={(card, source) => this.game.clickTableauStack(card, index, source)}
+                            onClick={(card) => this.game.clickTableauStack(card, index)}
                         />
                     ))}
                     <Footer reset={this.game.reset} model={this.state.game} />

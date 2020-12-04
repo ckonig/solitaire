@@ -36,13 +36,15 @@ export default class Game {
     rateMove(move) {
         const sourceIsTableau = move.source.substr(0, 7) == "tableau";
         const targetIsTableau = move.target.substr(0, 7) == "tableau";
+        const sourceIsFoundation = move.source.substr(0, 10) == "foundation";
+        const targetIsFoundation = move.target.substr(0, 10) == "foundation";
         if (sourceIsTableau) {
-            if (move.target == "foundation") {
+            if (targetIsFoundation) {
                 console.debug("RATING: add 10 points for MOVE tableau -> foundation");
                 return 10;
             }
         } else if (move.source == "waste") {
-            if (move.target == "foundation") {
+            if (targetIsFoundation) {
                 console.debug("RATING: add 10 points for MOVE waste -> foundation");
                 return 10;
             }
@@ -50,12 +52,13 @@ export default class Game {
                 console.debug("RATING: add 5 points for MOVE waste -> tableau");
                 return 5;
             }
-        } else if (move.source == "foundation") {
+        } else if (sourceIsFoundation) {
             if (targetIsTableau) {
                 console.debug("RATING: subtract 15 points for MOVE foundation -> tableau");
                 return -15;
             }
         }
+        console.debug("tried to rate move", move);
 
         return 0;
     }

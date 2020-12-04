@@ -33,14 +33,17 @@ export default class Tableau {
         return cards.map((card) => CardTools.filterOut(this.stacks, card));
     };
 
-    uncover(index, card) {
-        //@todo this can be just the top card, why search?
-        for (let i = 0; i < this.stacks[index].stack.length; i++) {
-            if (CardTools.cardEquals(this.stacks[index].stack[i], card) && this.stacks[index].stack[i].isHidden) {
-                this.stacks[index].stack[i].isHidden = false;
-                return true;
-            }
-        }
+    isCovered(index) {
+        return this.stacks[index].stack[this.stacks[index].length - 1];
+    }
+
+    uncover(index) {
+        const stack = this.stacks[index];
+        const top = stack.stack[stack.stack.length - 1];
+        if (top.isHidden) {
+            top.isHidden = false;
+            return true;
+        } 
 
         return false;
     }

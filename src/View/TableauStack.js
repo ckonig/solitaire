@@ -28,14 +28,14 @@ export default function TableauStack(props) {
                     blink={props.model.blinkFor}
                     offsetTop={getOffset(index)}
                     canUncover={index == props.model.stack.length - 1}
-                    onClick={(c) => props.onClick(c, "tableau-" + props.index)}
+                    onClick={props.onClick}
                 />
             ))}
             <TouchHand
                 parent={"tableau-" + props.index}
                 hand={props.hand}
                 offset={getOffset(props.model.stack.length)}
-                onClick={() => props.onClick(props.model.stack[props.model.stack.length - 1], "tableau-" + props.index)}
+                onClick={() => props.onClick(props.model.stack[props.model.stack.length - 1])}
             />
         </div>
     );
