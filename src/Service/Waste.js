@@ -1,10 +1,12 @@
 import Service from "./BaseService";
 
 export default class Waste extends Service {
-    click = (card) => {
-        if (this.hand().isHoldingCard()) {
-            this.tryPutDown();
-        } else if (card) {
+    dispatchPutDown = () => {
+        this.tryPutDown();
+    };
+
+    dispatchPickup = (card) => {
+        if (card) {
             this.pickup(card);
             //@todo use model to get top card instead (shadow bug)
         } else {

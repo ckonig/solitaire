@@ -18,12 +18,13 @@ export default class App extends Component {
     }
 
     render() {
+        const handlers = this.game.getHandlers();
         return (
             <div>
                 <Hand stack={this.state.hand.stack} />
                 <div className="layout-grid-container">
-                    <Stock model={this.state.stock} onClick={this.game.clickStock} />
-                    <Waste model={this.state.waste} hand={this.state.hand} onClick={this.game.clickWaste} />
+                    <Stock model={this.state.stock} onClick={handlers.clickStock} />
+                    <Waste model={this.state.waste} hand={this.state.hand} onClick={handlers.clickWaste} />
                     <div className="spacer">&nbsp;</div>
                     {this.state.foundation.stacks.map((foundation, index) => (
                         <Foundation
@@ -31,7 +32,7 @@ export default class App extends Component {
                             index={index}
                             model={foundation}
                             hand={this.state.hand}
-                            onClick={(c) => this.game.clickFoundation(index, c)}
+                            onClick={(c) => handlers.clickFoundation(c, index)}
                         />
                     ))}
                     {this.state.tableau.stacks.map((stack, index) => (
@@ -40,7 +41,7 @@ export default class App extends Component {
                             index={index}
                             model={stack}
                             hand={this.state.hand}
-                            onClick={(card) => this.game.clickTableauStack(card, index)}
+                            onClick={(card) => handlers.clickTableauStack(card, index)}
                         />
                     ))}
                     <Footer reset={this.game.reset} model={this.state.game} />

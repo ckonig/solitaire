@@ -15,10 +15,23 @@ export default class Game {
         this.stateholder = stateholder;
         this.deck = generateDeck();
         this.deck.shuffle();
-        this.clickTableauStack = new TableauStack(stateholder).click;
-        this.clickFoundation = new Foundation(stateholder).click;
-        this.clickStock = new Stock(stateholder).click;
-        this.clickWaste = new Waste(stateholder).click;
+    }
+
+    getHandlers() {
+        if (this.stateholder.state && this.stateholder.state.hand && this.stateholder.state.hand.isHoldingCard())
+            return {
+                clickTableauStack: new TableauStack(this.stateholder).dispatchPutDown,
+                clickFoundation: new Foundation(this.stateholder).dispatchPutDown,
+                clickStock: new Stock(this.stateholder).dispatchPutDown,
+                clickWaste: new Waste(this.stateholder).dispatchPutDown,
+            };
+        else
+            return {
+                clickTableauStack: new TableauStack(this.stateholder).dispatchPickup,
+                clickFoundation: new Foundation(this.stateholder).dispatchPickup,
+                clickStock: new Stock(this.stateholder).dispatchPickup,
+                clickWaste: new Waste(this.stateholder).dispatchPickup,
+            };
     }
 
     getInitialState = () => ({

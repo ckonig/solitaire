@@ -1,10 +1,12 @@
 import Service from "./BaseService";
 
 export default class Stock extends Service {
-    click = (card) => {
-        if (this.hand().isHoldingCard()) {
-            this.blink();
-        } else if (card) {
+    dispatchPutDown = () => {
+        this.blink();
+    };
+
+    dispatchPickup = (card) => {
+        if (card) {
             this.moveToWaste(card);
         } else {
             this.recycleWaste();

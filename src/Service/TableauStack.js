@@ -2,10 +2,9 @@ import { CardRange } from "../Model/Deck/CardRange";
 import Service from "./BaseService";
 
 export default class TableauStack extends Service {
-    click = (card, index) => (card ? this.clickCard(card, index) : this.clickEmpty(index));
-
-    clickCard(card, index) {
-        if (this.hand().isHoldingCard()) {
+    dispatchPutDown = (card, index) => {
+        console.log("dispatch put down");
+        if (card) {
             //@todo rewrite to be atomic, to allow transaction like state handling in parent class
             if (!this.tryUncover(card, index) && this.hand().isFromCurrentSource(card) && card.isHidden) {
                 this.tryPutDown(index);
@@ -14,19 +13,23 @@ export default class TableauStack extends Service {
             } else {
                 this.blink(index);
             }
-        } else if (!this.tryUncover(card, index)) {
-            this.pickup(card, index);
-        }
-    }
-
-    clickEmpty(index) {
-        //@todo check in model if stack is really empty (shadow bug)
-        if (this.hand().isHoldingKing() || this.hand().source == "tableau-" + index) {
+        } else if (this.hand().isHoldingKing() || this.hand().source == "tableau-" + index) {
             this.tryPutDown(index);
         } else {
             this.blink(index);
         }
-    }
+    };
+
+    dispatchPickup = (card, index) => {
+        console.log("dispatch pick up");
+        if (card && !this.tryUncover(card, index)) {
+            this.pickup(card, index);
+        } else {
+            this.blink(index);
+        }
+    };
+
+    click = (card, index) => (card ? this.clickCard(card, index) : this.clickEmpty(index));
 
     validateTableauStackMove = (current, top) => {
         // @todo this is different from acceptedCards in foundation although they are very similar -> fix inconsistency
