@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function StackBase(props) {
+const StackBase = (props) => {
     let classname = "card-base socket-empty";
     if (props.blink) {
         classname += " blink";
@@ -10,4 +10,5 @@ export default function StackBase(props) {
             {props.children}
         </div>
     );
-}
+};
+export default StackBase;

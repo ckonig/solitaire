@@ -1,7 +1,7 @@
-import { CardRange } from "./Deck/CardRange";
+import { CardRange, getTargetOrder } from "./Deck/CardRange";
+
 import Deck from "./Deck/Deck";
 import Foundation from "./Game/Foundation";
-import FoundationStack from "./Game/FoundationStack";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
 import Stock from "./Game/Stock";
@@ -10,16 +10,16 @@ import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
 export default class Factory {
-    getInitialState = (deck) => ({
+    static getInitialState = (deck) => ({
         stock: new Stock([...deck.cards.slice(28)]),
         waste: new Waste(),
-        foundation: this.generateFoundations(),
-        tableau: this.generateTableau([...deck.cards.slice(0, 28)]),
+        foundation: Factory.generateFoundations(),
+        tableau: Factory.generateTableau([...deck.cards.slice(0, 28)]),
         hand: new Hand(),
         game: new Game(),
     });
 
-    generateDeck() {
+    static generateDeck() {
         const deck = [];
         const keys = Object.keys(Suits);
         for (let i = 0; i < CardRange.length; i++) {
@@ -35,15 +35,22 @@ export default class Factory {
         return new Deck(deck);
     }
 
-    generateFoundations() {
+    static generateFoundations() {
+        const template = () => ({
+            stack: [],
+            acceptedCards: [...getTargetOrder()],
+            usedCards: [],
+            icon: null,
+            color: null,
+        });
         return new Foundation(
             Object.keys(Suits)
                 .map((key) => Suits[key])
-                .map((suit) => new FoundationStack(suit.icon, suit.color))
+                .map((suit) => ({ ...template(), ...suit }))
         );
     }
 
-    generateTableau(cards) {
+    static generateTableau(cards) {
         return new Tableau(new TableauGenerator().getStacks(cards));
     }
 }
@@ -54,7 +61,11 @@ class TableauGenerator {
         this.pointer = 0;
         this.oldpointer = this.pointer;
         const ids = [0, 1, 2, 3, 4, 5, 6];
-        this.stacks = ids.map((id) => this.getStack(id));
+        const template = (id) => ({
+            stack: [],
+            id,
+        });
+        this.stacks = ids.map((id) => template(id));
         ids.reverse().forEach((id) => {
             this.generateStack(id);
         });
@@ -65,11 +76,11 @@ class TableauGenerator {
         this.pointer += 6 - id + 1;
         this.stacks[id].stack = this.deck
             .slice(this.oldpointer, this.pointer)
-            .map((c) => {
-                c.isHidden = true;
-                c.source = "tableau-" + id;
-                return c;
-            })
+            .map((c) => ({
+                ...c,
+                isHidden: true,
+                source: "tableau-" + id,
+            }))
             .reverse();
         if (this.stacks[id].stack[this.stacks[id].stack.length - 1]) {
             this.stacks[id].stack[this.stacks[id].stack.length - 1].isHidden = false;
@@ -79,11 +90,5 @@ class TableauGenerator {
 
     getRndInteger = (min, max) => {
         return Math.floor(Math.random() * (max - min)) + min;
-    };
-
-    getStack = (id) => {
-        const template = { stack: [], id };
-        //@todo add functionality
-        return { ...template };
     };
 }

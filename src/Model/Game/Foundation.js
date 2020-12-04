@@ -7,7 +7,7 @@ export default class Foundation extends MultiStackHolder {
     };
 
     getCurrentAccepted = (index) => {
-         const currentFoundation = this.stacks[index].acceptedCards;
+        const currentFoundation = this.stacks[index].acceptedCards;
         return currentFoundation[currentFoundation.length - 1];
     };
 
@@ -16,11 +16,8 @@ export default class Foundation extends MultiStackHolder {
         return this.stacks[index].icon == card.type.icon && currentAccepted == card.face;
     };
 
-    contains = (index, card) => {
-        return this.stacks[index].stack.indexOf(card) !== -1;
-    };
-
     add = (index, card) => {
+        //@todo also set in constructor
         card.source = "foundation-" + index;
         this.stacks[index].stack.push(card);
         this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
@@ -37,5 +34,5 @@ export default class Foundation extends MultiStackHolder {
 
     countCards = () => {
         this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
-    }
+    };
 }

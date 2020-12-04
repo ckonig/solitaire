@@ -4,11 +4,10 @@ import Stock from "./Stock";
 import TableauStack from "./TableauStack";
 import Waste from "./Waste";
 
-export default class Game {
+export default class Facade {
     constructor(stateholder) {
         this.stateholder = stateholder;
-        this.factory = new Factory();
-        this.deck = this.factory.generateDeck();
+        this.deck = Factory.generateDeck();
         this.deck.shuffle();
         this.services = {
             tableauStack: new TableauStack(stateholder),
@@ -18,7 +17,7 @@ export default class Game {
         };
     }
 
-    getInitialState = () => this.factory.getInitialState(this.deck);
+    getInitialState = () => Factory.getInitialState(this.deck);
 
     getHandlers() {
         let handler = "dispatchPickup";

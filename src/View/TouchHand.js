@@ -14,7 +14,7 @@ export default class TouchHand extends TouchAwareComponent {
                     this.props.hand.stack.map((card, index) => (
                         <Card
                             model={card}
-                            key={"h2" + index}
+                            key={index}
                             offsetTop={this.props.offset + index * 20}
                             zIndex={1000 + index * 20}
                             isSelected={true}

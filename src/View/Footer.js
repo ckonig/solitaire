@@ -1,7 +1,7 @@
 import Clock from "./Clock";
 import React from "react";
 
-export default function Footer(props) {
+const Footer = (props) => {
     return (
         <div className="footer">
             <div className="footer-grid-container">
@@ -15,4 +15,5 @@ export default function Footer(props) {
             </div>
         </div>
     );
-}
+};
+export default Footer;

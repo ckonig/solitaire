@@ -24,13 +24,8 @@ export default class TableauStack extends Service {
         }
     };
 
-    tryUncover = (card, index, state) => {
-        if (!state.hand.isHoldingCard() && card.isHidden && card.canUncover) {
-            state.tableau.uncover(index, card) && state.game.registerUncover(card, state);
-            return true;
-        }
-        return false;
-    };
+    tryUncover = (card, index, state) =>
+        !state.hand.isHoldingCard() && card.isHidden && state.tableau.uncover(index, card) && state.game.registerUncover(card, state);
 
     blink = (index, state) => this._blink((s) => s.tableau.stacks[index], state);
 }

@@ -5,7 +5,6 @@ import StackBase from "./StackBase";
 import TouchHand from "./TouchHand";
 
 export default class TableauStack extends BlinkingComponent {
-
     render() {
         const props = this.props;
         let offset = 0;
@@ -26,14 +25,7 @@ export default class TableauStack extends BlinkingComponent {
             <div>
                 <StackBase blink={props.model.blinkFor} onClick={() => props.onClick(null, "tableau-" + props.index)} />
                 {props.model.stack.map((card, index) => (
-                    <Card
-                        model={card}
-                        key={"tsc" + index}
-                        blink={props.model.blinkFor}
-                        offsetTop={getOffset(index)}
-                        canUncover={index == props.model.stack.length - 1}
-                        onClick={props.onClick}
-                    />
+                    <Card model={card} key={index} blink={props.model.blinkFor} offsetTop={getOffset(index)} onClick={props.onClick} />
                 ))}
                 <TouchHand
                     parent={"tableau-" + props.index}

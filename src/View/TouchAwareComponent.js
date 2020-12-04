@@ -10,9 +10,7 @@ export default class TouchAwareComponent extends Component {
         try {
             const prefixes = " -webkit- -moz- -o- -ms- ".split(" ");
 
-            const mq = function (query) {
-                return window.matchMedia(query).matches;
-            };
+            const mq = (query) => window.matchMedia(query).matches;
 
             if ("ontouchstart" in window || (typeof window.DocumentTouch !== "undefined" && document instanceof window.DocumentTouch)) {
                 return true;

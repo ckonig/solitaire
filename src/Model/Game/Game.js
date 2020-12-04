@@ -31,6 +31,7 @@ export default class Game {
         this.moves.push({ source: null, target: null, card: card });
         this.points += 5;
         console.debug("RATING: add 5 points for UNCOVER");
+        return true;
     }
 
     rateMove(move) {

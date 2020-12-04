@@ -13,13 +13,7 @@ export default class Foundation extends BlinkingComponent {
                     <div className={"align-center foundation-base suit-" + props.model.icon}>{props.model.icon}</div>
                 </StackBase>
                 {props.model.stack.map((card, index) => (
-                    <Card
-                        model={card}
-                        key={"fc" + index}
-                        blink={props.model.blinkFor}
-                        canUncover={index == props.model.stack.length - 1}
-                        onClick={(c) => props.onClick(c)}
-                    />
+                    <Card model={card} key={index} blink={props.model.blinkFor} onClick={props.onClick} />
                 ))}
                 <TouchHand
                     parent={"foundation-" + props.index}

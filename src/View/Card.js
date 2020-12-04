@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Card(props) {
+const Card = (props) => {
     const model = props.model;
     let className = "card card-base suit-" + model.type.icon;
     className += props.isSelected ? " card-selected" : "";
@@ -9,7 +9,6 @@ export default function Card(props) {
         zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,
         top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
     };
-    //@todo props contains canUncover this should be part of the model. Until then we mix both into fake card object.
     return (
         <div className="stack-base">
             <div style={style} className={className} onClick={() => props.onClick({ ...props, ...model })}> 
@@ -46,3 +45,4 @@ export default function Card(props) {
         </div>
     );
 }
+export default Card;

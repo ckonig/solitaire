@@ -3,7 +3,7 @@ import "./App.css";
 import { Component } from "react";
 import Footer from "./View/Footer";
 import Foundation from "./View/Foundation";
-import Game from "./Service/Game";
+import Game from "./Service/Facade";
 import Hand from "./View/MouseHand";
 import React from "react";
 import Stock from "./View/Stock";
