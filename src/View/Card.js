@@ -1,44 +1,48 @@
 import React from "react";
 
 export default function Card(props) {
-    var className = "card card-base suit-" + props.type.icon;
+    const model = props.model;
+    let className = "card card-base suit-" + model.type.icon;
     className += props.isSelected ? " card-selected" : "";
     className += props.blink ? " blink" : "";
-    var style = {
+    const style = {
         zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,
         top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
     };
+    //@todo props contains canUncover this should be part of the model. Until then we mix both into fake card object.
     return (
-        <div style={style} className={className} onClick={() => props.onClick({ ...props })}>
-            {props.isHidden ? (
-                <div className="card-back">&nbsp;</div>
-            ) : (
-                <div className="card-grid-container">
-                    <div>
-                        <div className="align-center">{props.type.icon}</div>
+        <div className="stack-base">
+            <div style={style} className={className} onClick={() => props.onClick({ ...props, ...model })}> 
+                {model.isHidden ? (
+                    <div className="card-back quarot">&nbsp;</div>
+                ) : (
+                    <div className="card-grid-container">
+                        <div>
+                            <div className="align-center">{model.type.icon}</div>
+                        </div>
+                        <div>
+                            <div className="align-left">{model.face}</div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <div>
+                            <div className="align-center">{model.type.icon}</div>
+                        </div>
+                        <div className="mainface">
+                            <div className="align-center">{model.face}</div>
+                        </div>
+                        <div>
+                            <div className="align-center">{model.type.icon}</div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <div>
+                            <div className="align-right">{model.face}</div>
+                        </div>
+                        <div>
+                            <div className="align-center">{model.type.icon}</div>
+                        </div>
                     </div>
-                    <div>
-                        <div className="align-left">{props.face}</div>
-                    </div>
-                    <div>&nbsp;</div>
-                    <div>
-                        <div className="align-center">{props.type.icon}</div>
-                    </div>
-                    <div className="mainface">
-                        <div className="align-center">{props.face}</div>
-                    </div>
-                    <div>
-                        <div className="align-center">{props.type.icon}</div>
-                    </div>
-                    <div>&nbsp;</div>
-                    <div>
-                        <div className="align-right">{props.face}</div>
-                    </div>
-                    <div>
-                        <div className="align-center">{props.type.icon}</div>
-                    </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

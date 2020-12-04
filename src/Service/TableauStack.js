@@ -29,9 +29,9 @@ export default class TableauStack extends Service {
 
     validateTableauStackMove = (current, top) => {
         // @todo this is different from acceptedCards in foundation although they are very similar -> fix inconsistency
-        var range = [...CardRange];
-        var currentIndex = range.indexOf(current.face);
-        var topIndex = range.indexOf(top.face);
+        const range = [...CardRange];
+        const currentIndex = range.indexOf(current.face);
+        const topIndex = range.indexOf(top.face);
         return currentIndex + 1 == topIndex && current.type.color != top.type.color;
     };
 

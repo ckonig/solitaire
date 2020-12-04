@@ -14,7 +14,7 @@ class CardTool {
     }
 
     filterOut(stacks, card) {
-        for (var i = 0; i < stacks.length; i++) {
+        for (let i = 0; i < stacks.length; i++) {
             stacks[i].stack = CardTools.filterNotEqual(stacks[i].stack, card);
         }
 

@@ -8,9 +8,9 @@ export default class TouchAwareComponent extends Component {
 
     is_touch_device() {
         try {
-            let prefixes = " -webkit- -moz- -o- -ms- ".split(" ");
+            const prefixes = " -webkit- -moz- -o- -ms- ".split(" ");
 
-            let mq = function (query) {
+            const mq = function (query) {
                 return window.matchMedia(query).matches;
             };
 

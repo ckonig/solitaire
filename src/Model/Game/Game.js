@@ -7,15 +7,14 @@ export default class Game {
     }
 
     registerMove(target, card) {
-        var currentMove = {
+        const currentMove = {
             source: card.source,
             card: card,
             target: target,
         };
 
-        this.points += this._rateMove(currentMove);
+        this.points += this.rateMove(currentMove);
         this.moves.push({ ...currentMove });
-        this.points += this._rateMove(currentMove);
         return true;
     }
 
@@ -34,9 +33,9 @@ export default class Game {
         console.debug("RATING: add 5 points for UNCOVER");
     }
 
-    _rateMove(move) {
-        var sourceIsTableau = move.source.substr(0, 7) == "tableau";
-        var targetIsTableau = move.target.substr(0, 7) == "tableau";
+    rateMove(move) {
+        const sourceIsTableau = move.source.substr(0, 7) == "tableau";
+        const targetIsTableau = move.target.substr(0, 7) == "tableau";
         if (sourceIsTableau) {
             if (move.target == "foundation") {
                 console.debug("RATING: add 10 points for MOVE tableau -> foundation");

@@ -10,15 +10,13 @@ export default function Foundation(props) {
                 <div className={"align-center foundation-base suit-" + props.model.icon}>{props.model.icon}</div>
             </StackBase>
             {props.model.stack.map((card, index) => (
-                <div className="stack-base" key={"fc" + index}>
-                    <Card
-                        blink={props.model.blinkFor}
-                        type={card.type}
-                        source={card.source}
-                        face={card.face}
-                        onClick={(c) => props.onClick(c)}
-                    />
-                </div>
+                <Card
+                    model={card}
+                    key={"fc" + index}
+                    blink={props.model.blinkFor}
+                    canUncover={index == props.model.stack.length - 1}
+                    onClick={(c) => props.onClick(c)}
+                />
             ))}
             <TouchHand
                 parent={"foundation-" + props.index}

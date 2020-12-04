@@ -10,12 +10,12 @@ export default class Foundation {
     }
 
     getCurrentAccepted(index) {
-        var currentFoundation = this.stacks[index].acceptedCards;
+        const currentFoundation = this.stacks[index].acceptedCards;
         return currentFoundation[currentFoundation.length - 1];
     }
 
     accepts(index, card) {
-        var currentAccepted = this.getCurrentAccepted(index);
+        const currentAccepted = this.getCurrentAccepted(index);
         return this.stacks[index].icon == card.type.icon && currentAccepted == card.face;
     }
 

@@ -12,7 +12,7 @@ export default class Hand {
     }
 
     putDown() {
-        var cards = [...this.stack];
+        const cards = [...this.stack];
         this.stack = [];
         this.source = null;
         return cards;

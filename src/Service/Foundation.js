@@ -4,7 +4,7 @@ export default class Foundation extends Service {
     click = (index) => (this.hand().isHoldingCard() ? this.tryPutDown(index) : this.pickup(index));
 
     pickup(index) {
-        var card = this.state().foundation.getTop(index);
+        const card = this.state().foundation.getTop(index);
         if (card) {
             this._setState((state) => {
                 if (state.foundation.getPreviousUsed(index) === card.face) {
@@ -24,7 +24,7 @@ export default class Foundation extends Service {
                     state.foundation.add(index, state.hand.currentCard());
                     state.game.registerMove("foundation", state.hand.currentCard());
                     state.hand.putDown();
-                    this._tryDetectEnd(state);
+                    this.tryDetectEnd(state);
                 }
             });
         } else {
@@ -32,8 +32,8 @@ export default class Foundation extends Service {
         }
     }
 
-    _tryDetectEnd(state) {
-        var nrofCards = state.foundation.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
+    tryDetectEnd(state) {
+        const nrofCards = state.foundation.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
         if (nrofCards === 52) {
             state.isEnded = true;
             state.end = Date.now();

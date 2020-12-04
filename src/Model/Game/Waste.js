@@ -19,7 +19,7 @@ export default class Waste {
     }
 
     canAdd(card) {
-        var top = this.getTop();
+        const top = this.getTop();
         return card && (!top || CardTools.cardNotEquals(card, top));
     }
 
@@ -34,7 +34,7 @@ export default class Waste {
     }
 
     recycle() {
-        var ret = [...this.stack];
+        const ret = [...this.stack];
         this.stack = [];
         return ret;
     }

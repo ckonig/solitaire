@@ -8,9 +8,13 @@ export default function Waste(props) {
         <div>
             <StackBase blink={props.model.blinkFor} onClick={props.onClick} />
             {props.model.stack.map((card, index) => (
-                <div className="stack-base" key={"wc" + index}>
-                    <Card type={card.type} face={card.face} blink={props.model.blinkFor} source="waste" onClick={(c) => props.onClick(c)} />
-                </div>
+                <Card
+                    model={card}
+                    key={"wc" + index}
+                    blink={props.model.blinkFor}
+                    canUncover={index == props.model.stack.length - 1}
+                    onClick={(c) => props.onClick(c)}
+                />
             ))}
             <TouchHand parent="waste" hand={props.hand} onClick={(c) => props.onClick(c, "waste")} />
         </div>

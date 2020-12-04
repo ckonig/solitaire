@@ -10,7 +10,7 @@ export default class Tableau {
     }
 
     findFollowing(card, i) {
-        for (var j = 0; j < this.stacks[i].stack.length; j++) {
+        for (let j = 0; j < this.stacks[i].stack.length; j++) {
             if (card && CardTools.cardEquals(this.stacks[i].stack[j], card)) {
                 return this.stacks[i].stack.slice(j + 1, this.stacks[i].stack.length);
             }
@@ -20,7 +20,7 @@ export default class Tableau {
     }
 
     popWithFollowing(card, i) {
-        for (var j = 0; j < this.stacks[i].stack.length; j++) {
+        for (let j = 0; j < this.stacks[i].stack.length; j++) {
             if (card && CardTools.cardEquals(this.stacks[i].stack[j], card)) {
                 return this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
             }
@@ -34,7 +34,8 @@ export default class Tableau {
     };
 
     uncover(index, card) {
-        for (var i = 0; i < this.stacks[index].stack.length; i++) {
+        //@todo this can be just the top card, why search?
+        for (let i = 0; i < this.stacks[index].stack.length; i++) {
             if (CardTools.cardEquals(this.stacks[index].stack[i], card) && this.stacks[index].stack[i].isHidden) {
                 this.stacks[index].stack[i].isHidden = false;
                 return true;

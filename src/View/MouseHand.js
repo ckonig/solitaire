@@ -12,10 +12,10 @@ export default class MouseHand extends TouchAwareComponent {
         if (!this.isTouch) {
             const node = this.myRef.current;
             document.addEventListener("mousemove", (e) => {
-                var x = e.clientX,
+                const x = e.clientX,
                     y = e.clientY;
-                node.style.top = y + "px";
-                node.style.left = x + "px";
+                node.style.top = y + 25 +"px";
+                node.style.left = x + 25 +"px";
                 node.style.position = "relative";
             });
         }
@@ -26,18 +26,16 @@ export default class MouseHand extends TouchAwareComponent {
             <div ref={this.myRef}>
                 {this.props.stack &&
                     this.props.stack.map((card, index) => (
-                        <div className="stack-base" key={"H" + index}>
-                            <Card
-                                onClick={() => {
-                                    console.log("clicked card in hand");
-                                }}
-                                offsetTop={index * 20}
-                                zIndex={1000 + index * 20}
-                                type={card.type}
-                                face={card.face}
-                                isSelected={true}
-                            />
-                        </div>
+                        <Card
+                            model={card}
+                            key={"H" + index}
+                            onClick={() => {
+                                console.log("clicked card in hand");
+                            }}
+                            offsetTop={index * 20}
+                            zIndex={1000 + index * 20}
+                            isSelected={true}
+                        />
                     ))}
             </div>
         );

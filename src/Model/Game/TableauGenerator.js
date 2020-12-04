@@ -5,15 +5,15 @@ class TableauGenerator {
         this.deck = deck;
         this.pointer = 0;
         this.oldpointer = this.pointer;
-        var ids = [0, 1, 2, 3, 4, 5, 6];
-        this.stacks = ids.map((id) => this._getStack(id));
+        const ids = [0, 1, 2, 3, 4, 5, 6];
+        this.stacks = ids.map((id) => this.getStack(id));
         ids.reverse().forEach((id) => {
-            this._generateStack(id);
+            this.generateStack(id);
         });
         return this.stacks;
     };
 
-    _generateStack = (id) => {
+    generateStack = (id) => {
         this.pointer += 6 - id + 1;
         this.stacks[id].stack = this.deck
             .slice(this.oldpointer, this.pointer)
@@ -29,12 +29,12 @@ class TableauGenerator {
         this.oldpointer = this.pointer;
     };
 
-    _getRndInteger = (min, max) => {
+    getRndInteger = (min, max) => {
         return Math.floor(Math.random() * (max - min)) + min;
     };
 
-    _getStack = (id) => {
-        var template = { stack: [], id };
+    getStack = (id) => {
+        const template = { stack: [], id };
         //@todo add functionality
         return { ...template };
     };

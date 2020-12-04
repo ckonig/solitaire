@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function StackBase(props) {
-    var classname = "card-base socket-empty";
+    let classname = "card-base socket-empty";
     if (props.blink) {
         classname += " blink";
     }

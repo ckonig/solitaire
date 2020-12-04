@@ -7,6 +7,12 @@ body {
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Alignment Helpers */
@@ -97,7 +103,7 @@ body {
 
 .card {
     border-style: solid;
-    border-width: "1px";
+    border-width: 1px;
     border-color: black;
     background-color: white;
     box-shadow: 2px 2px black;

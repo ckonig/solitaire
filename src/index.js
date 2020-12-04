@@ -1,10 +1,10 @@
+import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
-import Solitaire from "./Solitaire";
 
 ReactDOM.render(
     <React.StrictMode>
-        <Solitaire />
+        <App />
     </React.StrictMode>,
     document.getElementById("root")
 );

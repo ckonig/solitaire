@@ -3,18 +3,18 @@ import "./App.css";
 import { Component } from "react";
 import Footer from "./View/Footer";
 import Foundation from "./View/Foundation";
+import Game from "./Service/Game";
 import Hand from "./View/MouseHand";
 import React from "react";
-import Service from "./Service/Facade";
 import Stock from "./View/Stock";
 import TableauStack from "./View/TableauStack";
 import Waste from "./View/Waste";
 
-class Solitaire extends Component {
+export default class App extends Component {
     constructor(props) {
         super(props);
-        this.service = new Service(this);
-        this.state = this.service.getInitialState();
+        this.game = new Game(this);
+        this.state = this.game.getInitialState();
     }
 
     render() {
@@ -22,8 +22,8 @@ class Solitaire extends Component {
             <div>
                 <Hand stack={this.state.hand.stack} />
                 <div className="layout-grid-container">
-                    <Stock model={this.state.stock} onClick={this.service.clickStock} />
-                    <Waste model={this.state.waste} hand={this.state.hand} onClick={this.service.clickWaste} />
+                    <Stock model={this.state.stock} onClick={this.game.clickStock} />
+                    <Waste model={this.state.waste} hand={this.state.hand} onClick={this.game.clickWaste} />
                     <div className="spacer">&nbsp;</div>
                     {this.state.foundation.stacks.map((foundation, index) => (
                         <Foundation
@@ -31,7 +31,7 @@ class Solitaire extends Component {
                             index={index}
                             model={foundation}
                             hand={this.state.hand}
-                            onClick={(c) => this.service.clickFoundation(index, c)}
+                            onClick={(c) => this.game.clickFoundation(index, c)}
                         />
                     ))}
                     {this.state.tableau.stacks.map((stack, index) => (
@@ -40,14 +40,12 @@ class Solitaire extends Component {
                             index={index}
                             model={stack}
                             hand={this.state.hand}
-                            onClick={(card, source) => this.service.clickTableauStack(card, index, source)}
+                            onClick={(card, source) => this.game.clickTableauStack(card, index, source)}
                         />
                     ))}
-                    <Footer reset={this.service.reset} model={this.state.game} />
+                    <Footer reset={this.game.reset} model={this.state.game} />
                 </div>
             </div>
         );
     }
 }
-
-export default Solitaire;
