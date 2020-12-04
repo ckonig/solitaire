@@ -1,9 +1,13 @@
+import React from "react";
+
 export default function StackBase(props) {
-    var classname = "card-base socket-empty"
+    var classname = "card-base socket-empty";
     if (props.blink) {
-        classname += " blink"
+        classname += " blink";
     }
     return (
-        <div className={classname} onClick={() => props.onClick()}>{props.children}</div>
-    )
+        <div className={classname} onClick={() => props.onClick()}>
+            {props.children}
+        </div>
+    );
 }

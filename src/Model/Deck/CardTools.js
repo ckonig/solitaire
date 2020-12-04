@@ -1,7 +1,6 @@
 class CardTool {
-
     cardEquals(card, otherCard) {
-        return (!card && !otherCard) || card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon;
+        return (!card && !otherCard) || (card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon);
     }
 
     cardNotEquals(card, otherCard) {
@@ -9,7 +8,7 @@ class CardTool {
     }
 
     filterNotEqual(stack, card) {
-        return stack.filter((value, index, arr) => {
+        return stack.filter((value) => {
             return CardTools.cardNotEquals(value, card);
         });
     }
@@ -24,4 +23,4 @@ class CardTool {
 }
 
 const CardTools = new CardTool();
-export default CardTools 
+export default CardTools;

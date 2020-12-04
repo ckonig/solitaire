@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import { Component } from "react";
+import React from "react";
 
 export default class Clock extends Component {
     constructor(props) {
@@ -19,13 +20,13 @@ export default class Clock extends Component {
                 msec -= mm * 1000 * 60;
                 var ss = Math.floor(msec / 1000);
                 msec -= ss * 1000;
-                state.timeElapsed = hh ? (hh+':'+mm+':'+ss) : (mm+':'+ss);
+                state.timeElapsed = hh ? hh + ":" + mm + ":" + ss : mm + ":" + ss;
                 return { ...state };
-            })
+            });
         }, 1000);
     }
 
     render() {
-        return (<span>Time Elapsed: {this.state.timeElapsed}</span>);
+        return <span>Time Elapsed: {this.state.timeElapsed}</span>;
     }
 }

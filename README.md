@@ -17,6 +17,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `npm run deploy`
 
-Builds the latest versio of the game and deploys it to the [github page](https://ckonig.github.io/solitaire/). 
+Builds the latest versio of the game and deploys it to the [github page](https://ckonig.github.io/solitaire/).
 
 Enabled by [gh-pages](https://www.npmjs.com/package/gh-pages).

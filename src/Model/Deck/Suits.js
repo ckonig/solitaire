@@ -1,19 +1,19 @@
 const Suits = {
     heart: {
-        icon: '♥',
-        color: 'red',
+        icon: "♥",
+        color: "red",
     },
     diamond: {
-        icon: '♦',
-        color: 'red',
+        icon: "♦",
+        color: "red",
     },
     club: {
-        icon: '♣',
-        color: 'black',
+        icon: "♣",
+        color: "black",
     },
     spade: {
-        icon: '♠',
-        color: 'black',
+        icon: "♠",
+        color: "black",
     },
 };
 

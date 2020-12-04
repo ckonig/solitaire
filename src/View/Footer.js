@@ -1,4 +1,5 @@
-import Clock from './Clock';
+import Clock from "./Clock";
+import React from "react";
 
 export default function Footer(props) {
     return (
@@ -7,7 +8,7 @@ export default function Footer(props) {
             <br />
             <Clock started={props.model.started} end={props.model.end} />
             <br />
-            Is Ended: { props.model.isEnded ? "Y" : "N"}
+            Is Ended: {props.model.isEnded ? "Y" : "N"}
             <br />
             <button onClick={props.reset}>reset</button>
             <br />

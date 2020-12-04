@@ -1,6 +1,6 @@
-import { CardRange } from './CardRange';
-import Deck from './Deck';
-import Suits from './Suits';
+import { CardRange } from "./CardRange";
+import Deck from "./Deck";
+import Suits from "./Suits";
 
 export default function generateDeck() {
     var deck = [];
@@ -8,7 +8,6 @@ export default function generateDeck() {
     for (var i = 0; i < CardRange.length; i++) {
         for (var j = 0; j < keys.length; j++) {
             var suit = Suits[keys[j]];
-            var key = CardRange[i] + "" + suit.icon;
             deck.push({
                 face: CardRange[i],
                 type: suit,

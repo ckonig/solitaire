@@ -11,7 +11,7 @@ export default class Waste {
 
     add(card) {
         if (card) {
-            card.source = 'waste';
+            card.source = "waste";
             card.isHidden = false;
             this.stack.push(card);
             return true;

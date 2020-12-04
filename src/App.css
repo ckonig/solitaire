@@ -1,145 +1,190 @@
 /* Page */
 
 body {
-  background-color: darkgreen;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    background-color: darkgreen;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Alignment Helpers */
 
 .align-left {
-  left: 0;position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+    left: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 .align-right {
-  right: 0;position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+    right: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 .align-center {
-  position: absolute;
-  top:50%;
-  left:50%;
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 /* Main Layout Grid */
 
-.footer { grid-area: footer; }
+.footer {
+    grid-area: footer;
+}
 
 .layout-grid-container {
-  display: grid;
-  grid-template-areas:
-    'stock waste spacer foundation foundation foundation foundation'
-    'tableau tableau tableau tableau tableau tableau tableau'
-    'footer footer footer footer footer footer footer';
-  grid-gap: 10px;
-  background-color: 'darkgreen';
-  padding: 10px;
+    display: grid;
+    grid-template-areas:
+        "stock waste spacer foundation foundation foundation foundation"
+        "tableau tableau tableau tableau tableau tableau tableau"
+        "footer footer footer footer footer footer footer";
+    grid-gap: 10px;
+    background-color: "darkgreen";
+    padding: 10px;
 }
 
 .card-grid-container > div {
-  position: relative;
+    position: relative;
 }
 
 /* Card Layout Grid */
 
-.mainface { grid-area: mainface; text-align: center; font-size: 5vw;}
+.mainface {
+    grid-area: mainface;
+    text-align: center;
+    font-size: 5vw;
+}
 
 .card-grid-container {
-  padding-top: '5px';
-  display: grid;
-  font-size: 2vw;
-  grid-template-rows: 2.1vw 8.3vw 2.1vw;
-  grid-template-areas:
-    'suite-tl face-tl spacer-t suite-tr'
-    'mainface mainface mainface mainface'
-    'suite-bl spacer-b face-br suite-br';
-  grid-gap: 0.2vw;
-  height: 100%;
-  width: 100%;
+    padding-top: "5px";
+    display: grid;
+    font-size: 2vw;
+    grid-template-rows: 2.1vw 8.3vw 2.1vw;
+    grid-template-areas:
+        "suite-tl face-tl spacer-t suite-tr"
+        "mainface mainface mainface mainface"
+        "suite-bl spacer-b face-br suite-br";
+    grid-gap: 0.2vw;
+    height: 100%;
+    width: 100%;
 }
 
 /* Card Styling */
 
 .stack-base {
-  position: absolute;
+    position: absolute;
 }
 
 .card-base {
-  width: 9.45vw;
-  height: 13.2vw;
-  border-radius: 0.5vw;
-  float: left;
-  position: relative;
+    width: 9.45vw;
+    height: 13.2vw;
+    border-radius: 0.5vw;
+    float: left;
+    position: relative;
 }
 
 .socket-empty {
-  border-style: dashed;
-  border-color: gray;
+    border-style: dashed;
+    border-color: gray;
 }
 
 .card {
-  border-style: solid;
-  border-width: '1px';
-  border-color: black;
-  background-color: white;
-  box-shadow: 2px 2px black;
+    border-style: solid;
+    border-width: "1px";
+    border-color: black;
+    background-color: white;
+    box-shadow: 2px 2px black;
 }
 
 .card-selected {
-  background-color: lightgray;
-  border-color: yellow;
+    background-color: lightgray;
+    border-color: yellow;
 }
 
 .blink {
-  border-color: red;
-  box-shadow: 2px 2px 2px 2px red;
+    border-color: red;
+    box-shadow: 2px 2px 2px 2px red;
 }
 
 .card-back {
-  background-color: hsl(34, 53%, 82%);
-  background-image: repeating-linear-gradient(45deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-    hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-    hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-    hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-    hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-    hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 120px, hsla(197, 62%, 11%, 0.5) 120px, hsla(197, 62%, 11%, 0.5) 140px
-    ),
-  repeating-linear-gradient(135deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-    hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-    hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-    hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-    hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-    hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
-  );
-  margin: 5%;
-  border-radius: 0.5vw;
-  height: 92%;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
+    background-color: hsl(34, 53%, 82%);
+    background-image: repeating-linear-gradient(
+            45deg,
+            transparent 5px,
+            hsla(197, 62%, 11%, 0.5) 5px,
+            hsla(197, 62%, 11%, 0.5) 10px,
+            hsla(5, 53%, 63%, 0) 10px,
+            hsla(5, 53%, 63%, 0) 35px,
+            hsla(5, 53%, 63%, 0.5) 35px,
+            hsla(5, 53%, 63%, 0.5) 40px,
+            hsla(197, 62%, 11%, 0.5) 40px,
+            hsla(197, 62%, 11%, 0.5) 50px,
+            hsla(197, 62%, 11%, 0) 50px,
+            hsla(197, 62%, 11%, 0) 60px,
+            hsla(5, 53%, 63%, 0.5) 60px,
+            hsla(5, 53%, 63%, 0.5) 70px,
+            hsla(35, 91%, 65%, 0.5) 70px,
+            hsla(35, 91%, 65%, 0.5) 80px,
+            hsla(35, 91%, 65%, 0) 80px,
+            hsla(35, 91%, 65%, 0) 90px,
+            hsla(5, 53%, 63%, 0.5) 90px,
+            hsla(5, 53%, 63%, 0.5) 110px,
+            hsla(5, 53%, 63%, 0) 110px,
+            hsla(5, 53%, 63%, 0) 120px,
+            hsla(197, 62%, 11%, 0.5) 120px,
+            hsla(197, 62%, 11%, 0.5) 140px
+        ),
+        repeating-linear-gradient(
+            135deg,
+            transparent 5px,
+            hsla(197, 62%, 11%, 0.5) 5px,
+            hsla(197, 62%, 11%, 0.5) 10px,
+            hsla(5, 53%, 63%, 0) 10px,
+            hsla(5, 53%, 63%, 0) 35px,
+            hsla(5, 53%, 63%, 0.5) 35px,
+            hsla(5, 53%, 63%, 0.5) 40px,
+            hsla(197, 62%, 11%, 0.5) 40px,
+            hsla(197, 62%, 11%, 0.5) 50px,
+            hsla(197, 62%, 11%, 0) 50px,
+            hsla(197, 62%, 11%, 0) 60px,
+            hsla(5, 53%, 63%, 0.5) 60px,
+            hsla(5, 53%, 63%, 0.5) 70px,
+            hsla(35, 91%, 65%, 0.5) 70px,
+            hsla(35, 91%, 65%, 0.5) 80px,
+            hsla(35, 91%, 65%, 0) 80px,
+            hsla(35, 91%, 65%, 0) 90px,
+            hsla(5, 53%, 63%, 0.5) 90px,
+            hsla(5, 53%, 63%, 0.5) 110px,
+            hsla(5, 53%, 63%, 0) 110px,
+            hsla(5, 53%, 63%, 0) 140px,
+            hsla(197, 62%, 11%, 0.5) 140px,
+            hsla(197, 62%, 11%, 0.5) 160px
+        );
+    margin: 5%;
+    border-radius: 0.5vw;
+    height: 92%;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
 }
 
 /* Foundation Stack Base Styling */
 
 .suit-♥ {
-  color: red;
+    color: red;
 }
 
 .suit-♦ {
-  color: red;
+    color: red;
 }
 
 .foundation-base {
-  font-size: 6vw;
+    font-size: 6vw;
 }

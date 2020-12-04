@@ -1,15 +1,15 @@
-import GameModel from '../Model/Game/Game';
-import Hand from '../Model/Game/Hand';
+import GameModel from "../Model/Game/Game";
+import Hand from "../Model/Game/Hand";
 import Service from "./BaseService";
-import Stock from '../Model/Game/Stock';
-import Waste from '../Model/Game/Waste';
-import generateDeck from '../Model/Deck/DeckGenerator';
-import generateFoundations from '../Model/Game/FoundationGenerator';
-import generateTableau from '../Model/Game/TableauGenerator';
+import Stock from "../Model/Game/Stock";
+import Waste from "../Model/Game/Waste";
+import generateDeck from "../Model/Deck/DeckGenerator";
+import generateFoundations from "../Model/Game/FoundationGenerator";
+import generateTableau from "../Model/Game/TableauGenerator";
 
 export default class Game extends Service {
     constructor(stateholder) {
-        super(stateholder)
+        super(stateholder);
         this.deck = generateDeck();
         this.deck.shuffle();
     }
@@ -23,9 +23,9 @@ export default class Game extends Service {
             hand: new Hand(),
             game: new GameModel(),
         };
-    }
+    };
 
     reset = () => {
-        this._setState(() => ({ ...this.getInitialState() }))
-    }
+        this._setState(() => ({ ...this.getInitialState() }));
+    };
 }

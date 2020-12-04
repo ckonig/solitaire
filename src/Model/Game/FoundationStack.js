@@ -8,5 +8,4 @@ export default class FoundationStack {
         this.icon = icon;
         this.color = color;
     }
-
 }

@@ -7,8 +7,8 @@ export default class Stock {
 
     recycle(waste) {
         if (waste.length) {
-            this.stack = [...waste].reverse().map(element => {
-                return { ...element, isHidden: true }
+            this.stack = [...waste].reverse().map((element) => {
+                return { ...element, isHidden: true };
             });
             return true;
         }
@@ -17,7 +17,7 @@ export default class Stock {
     }
 
     getTop() {
-        return this.stack[this.stack.length-1];
+        return this.stack[this.stack.length - 1];
     }
 
     isOnTop(card) {

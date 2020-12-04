@@ -1,5 +1,4 @@
 export default class Hand {
-
     constructor() {
         this.stack = [];
         this.source = null;
@@ -13,7 +12,7 @@ export default class Hand {
     }
 
     putDown() {
-        var cards = [...this.stack]
+        var cards = [...this.stack];
         this.stack = [];
         this.source = null;
         return cards;
@@ -24,7 +23,7 @@ export default class Hand {
     }
 
     isHoldingKing() {
-        return this.currentCard() && this.currentCard().face == 'K'
+        return this.currentCard() && this.currentCard().face == "K";
     }
 
     isCurrentCard(card) {
@@ -40,7 +39,7 @@ export default class Hand {
     }
 
     containsCurrentCard(stack) {
-        return stack && stack.indexOf(this.currentCard()) !== -1
+        return stack && stack.indexOf(this.currentCard()) !== -1;
     }
 
     isFromCurrentSource(card) {
