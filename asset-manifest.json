@@ -1,22 +1,20 @@
 {
   "files": {
-    "main.css": "/solitaire/static/css/main.72553653.chunk.css",
-    "main.js": "/solitaire/static/js/main.4b732c7d.chunk.js",
-    "main.js.map": "/solitaire/static/js/main.4b732c7d.chunk.js.map",
-    "runtime-main.js": "/solitaire/static/js/runtime-main.dba3e4bd.js",
-    "runtime-main.js.map": "/solitaire/static/js/runtime-main.dba3e4bd.js.map",
-    "static/js/2.a60b6575.chunk.js": "/solitaire/static/js/2.a60b6575.chunk.js",
-    "static/js/2.a60b6575.chunk.js.map": "/solitaire/static/js/2.a60b6575.chunk.js.map",
-    "static/js/3.7c3ac5e0.chunk.js": "/solitaire/static/js/3.7c3ac5e0.chunk.js",
-    "static/js/3.7c3ac5e0.chunk.js.map": "/solitaire/static/js/3.7c3ac5e0.chunk.js.map",
+    "main.css": "/solitaire/static/css/main.1fc9de48.chunk.css",
+    "main.js": "/solitaire/static/js/main.acfa5832.chunk.js",
+    "main.js.map": "/solitaire/static/js/main.acfa5832.chunk.js.map",
+    "runtime-main.js": "/solitaire/static/js/runtime-main.f1d558ff.js",
+    "runtime-main.js.map": "/solitaire/static/js/runtime-main.f1d558ff.js.map",
+    "static/js/2.246de663.chunk.js": "/solitaire/static/js/2.246de663.chunk.js",
+    "static/js/2.246de663.chunk.js.map": "/solitaire/static/js/2.246de663.chunk.js.map",
     "index.html": "/solitaire/index.html",
-    "static/css/main.72553653.chunk.css.map": "/solitaire/static/css/main.72553653.chunk.css.map",
-    "static/js/2.a60b6575.chunk.js.LICENSE.txt": "/solitaire/static/js/2.a60b6575.chunk.js.LICENSE.txt"
+    "static/css/main.1fc9de48.chunk.css.map": "/solitaire/static/css/main.1fc9de48.chunk.css.map",
+    "static/js/2.246de663.chunk.js.LICENSE.txt": "/solitaire/static/js/2.246de663.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.dba3e4bd.js",
-    "static/js/2.a60b6575.chunk.js",
-    "static/css/main.72553653.chunk.css",
-    "static/js/main.4b732c7d.chunk.js"
+    "static/js/runtime-main.f1d558ff.js",
+    "static/js/2.246de663.chunk.js",
+    "static/css/main.1fc9de48.chunk.css",
+    "static/js/main.acfa5832.chunk.js"
   ]
 }
