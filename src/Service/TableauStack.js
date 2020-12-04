@@ -2,34 +2,31 @@ import { CardRange } from "../Model/Deck/CardRange";
 import Service from "./BaseService";
 
 export default class TableauStack extends Service {
-    dispatchPutDown = (card, index) => {
-        console.log("dispatch put down");
+    _dispatchPutDown = (card, index, state) => {
         if (card) {
-            //@todo rewrite to be atomic, to allow transaction like state handling in parent class
-            if (!this.tryUncover(card, index) && this.hand().isFromCurrentSource(card) && card.isHidden) {
-                this.tryPutDown(index);
-            } else if (this.validateTableauStackMove(this.hand().currentCard(), card)) {
-                this.tryPutDown(index);
+            if (!this.tryUncover(card, index, state) && state.hand.isFromCurrentSource(card) && card.isHidden) {
+                this.tryPutDown(index, state);
+            } else if (this.validateTableauStackMove(state.hand.currentCard(), card)) {
+                this.tryPutDown(index, state);
             } else {
-                this.blink(index);
+                console.debug("blink for no damn reason");
+                this.blink(index, state);
             }
-        } else if (this.hand().isHoldingKing() || this.hand().source == "tableau-" + index) {
-            this.tryPutDown(index);
+        } else if (state.hand.isHoldingKing() || state.hand.source == "tableau-" + index) {
+            this.tryPutDown(index, state);
         } else {
-            this.blink(index);
+            console.debug("blink for unknown reason");
+            this.blink(index, state);
         }
     };
 
-    dispatchPickup = (card, index) => {
-        console.log("dispatch pick up");
-        if (card && !this.tryUncover(card, index)) {
-            this.pickup(card, index);
-        } else {
-            this.blink(index);
+    _dispatchPickup = (card, index, state) => {
+        if (card && !this.tryUncover(card, index, state)) {
+            this.pickup(card, index, state);
+        } else if (!card) {
+            this.blink(index, state);
         }
     };
-
-    click = (card, index) => (card ? this.clickCard(card, index) : this.clickEmpty(index));
 
     validateTableauStackMove = (current, top) => {
         // @todo this is different from acceptedCards in foundation although they are very similar -> fix inconsistency
@@ -39,33 +36,43 @@ export default class TableauStack extends Service {
         return currentIndex + 1 == topIndex && current.type.color != top.type.color;
     };
 
-    pickup = (card, index) => {
-        this._setState((state) => {
-            if (!state.hand.isHoldingCard() && !card.isHidden) {
-                state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source);
-            }
-        });
+    pickup = (card, index, state) => {
+        if (!state.hand.isHoldingCard() && !card.isHidden) {
+            state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source);
+        }
     };
 
-    tryPutDown = (index) => {
-        this._setState((state) => {
-            if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
-                state.game.registerMove("tableau-" + index, state.hand.currentCard());
-                state.tableau.add(index, state.hand.putDown());
-            }
-        });
+    tryPutDown = (index, state) => {
+        if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
+            state.game.registerMove("tableau-" + index, state.hand.currentCard());
+            state.tableau.add(index, state.hand.putDown());
+        }
     };
 
-    tryUncover = (card, index) => {
+    tryUncover = (card, index, state) => {
         //@todo decide and check in model if can be uncovered
         if (!this.hand().isHoldingCard() && card.isHidden && card.canUncover) {
-            this._setState((state) => {
-                state.tableau.uncover(index, card) && state.game.registerUncover(card, state);
-            });
+            state.tableau.uncover(index, card) && state.game.registerUncover(card, state);
             return true;
         }
         return false;
     };
 
-    blink = (index) => this._blink((s) => s.tableau.stacks[index]);
+    blink = (index, state) => this._blink((s) => s.tableau.stacks[index], state);
+
+    _blink = (selector, state) => this.startBlink(selector, 10, state);
+
+    startBlink = (selector, blinkFor, state) => {
+        selector(state).blinkFor = blinkFor;
+        selector(state).unblink = () => setTimeout(() => this.toggleBlink(selector, 0), 100);
+    };
+
+    //@todo set timeout after mounting component for best controlled effect
+    toggleBlink = (selector, blinkFor) =>
+        this._setState((state) => {
+            console.log("turn off blink");
+            selector(state).blinkFor = blinkFor;
+        });
+
+    //@todo add universal click handler, as the only place where setState is applied.
 }

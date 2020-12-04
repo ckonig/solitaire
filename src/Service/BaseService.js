@@ -9,6 +9,26 @@ export default class Service {
         this.state = () => stateholder.state;
     }
 
+    dispatchPutDown = (card, index) => {
+        this._setState((state) => {
+            if (state.hand.isHoldingCard()) {
+                this._dispatchPutDown(card, index, state);
+            } else {
+                console.debug("avoided double execution putdown (thx 2 strict mode)");
+            }
+        });
+    };
+
+    dispatchPickup = (card, index) => {
+        this._setState((state) => {
+            if (!state.hand.isHoldingCard()) {
+                this._dispatchPickup(card, index, state);
+            } else {
+                console.debug("avoided double execution pickup (thx 2 strict mode)");
+            }
+        });
+    };
+
     _blink = (selector) => this.startBlink(selector, 10);
 
     startBlink = (selector, blinkFor) => {
