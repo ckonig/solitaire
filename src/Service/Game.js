@@ -14,7 +14,7 @@ export default class Game {
     constructor(stateholder) {
         this.stateholder = stateholder;
         this.deck = generateDeck();
-        //this.deck.shuffle();
+        this.deck.shuffle();
         this.clickTableauStack = new TableauStack(stateholder).click;
         this.clickFoundation = new Foundation(stateholder).click;
         this.clickStock = new Stock(stateholder).click;
