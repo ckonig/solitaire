@@ -37,7 +37,6 @@ export default class Service {
     //@todo set timeout after mounting component for best controlled effect
     toggleBlink = (selector, blinkFor) =>
         this._setState((state) => {
-            console.log("turn off blink");
             selector(state).blinkFor = blinkFor;
         });
 

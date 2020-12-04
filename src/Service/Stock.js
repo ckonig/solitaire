@@ -8,8 +8,8 @@ export default class Stock extends Service {
     moveToWaste = (card, state) =>
         state.stock.isOnTop(card) && state.waste.add(state.stock.stack.pop()) && state.game.registerMove("stock", state.waste.getTop());
 
-    recycleWaste = (card, state) =>
+    recycleWaste = (_card, state) =>
         !state.stock.getTop() && !!state.waste.getTop() && state.stock.recycle(state.waste.recycle()) && state.game.registerRecycle(state);
 
-    blink = (card, state) => this._blink((s) => s.stock, state);
+    blink = (_card, state) => this._blink((s) => s.stock, state);
 }

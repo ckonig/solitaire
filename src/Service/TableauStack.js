@@ -9,13 +9,11 @@ export default class TableauStack extends Service {
             } else if (this.validateTableauStackMove(state.hand.currentCard(), card)) {
                 this.tryPutDown(index, state);
             } else {
-                console.debug("blink for no damn reason");
                 this.blink(index, state);
             }
         } else if (state.hand.isHoldingKing() || state.hand.source == "tableau-" + index) {
             this.tryPutDown(index, state);
         } else {
-            console.debug("blink for unknown reason");
             this.blink(index, state);
         }
     };
@@ -46,6 +44,8 @@ export default class TableauStack extends Service {
         if (state.hand.isHoldingCard() && !state.hand.containsCurrentCard(state.tableau.stacks[index].stack)) {
             state.game.registerMove("tableau-" + index, state.hand.currentCard());
             state.tableau.add(index, state.hand.putDown());
+        } else {
+            this.blink(index, state);
         }
     };
 

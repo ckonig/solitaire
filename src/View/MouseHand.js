@@ -30,7 +30,7 @@ export default class MouseHand extends TouchAwareComponent {
                             model={card}
                             key={"H" + index}
                             onClick={() => {
-                                console.log("clicked card in hand");
+                                console.error("clicked card in mouse hand");
                             }}
                             offsetTop={index * 20}
                             zIndex={1000 + index * 20}
