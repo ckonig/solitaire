@@ -1,32 +1,15 @@
 import Service from "./BaseService";
 
 export default class Stock extends Service {
-    dispatchPutDown = () => {
-        this.blink();
-    };
+    _dispatchPutDown = (card, state) => this.blink(card, state);
 
-    dispatchPickup = (card) => {
-        if (card) {
-            this.moveToWaste(card);
-        } else {
-            this.recycleWaste();
-        }
-    };
+    _dispatchPickup = (card, state) => (card ? this.moveToWaste(card, state) : this.recycleWaste(card, state));
 
-    moveToWaste(card) {
-        this._setState((state) => {
-            state.stock.isOnTop(card) && state.waste.add(state.stock.stack.pop()) && state.game.registerMove("stock", state.waste.getTop());
-        });
-    }
+    moveToWaste = (card, state) =>
+        state.stock.isOnTop(card) && state.waste.add(state.stock.stack.pop()) && state.game.registerMove("stock", state.waste.getTop());
 
-    recycleWaste() {
-        this._setState((state) => {
-            !state.stock.getTop() &&
-                !!state.waste.getTop() &&
-                state.stock.recycle(state.waste.recycle()) &&
-                state.game.registerRecycle(state);
-        });
-    }
+    recycleWaste = (card, state) =>
+        !state.stock.getTop() && !!state.waste.getTop() && state.stock.recycle(state.waste.recycle()) && state.game.registerRecycle(state);
 
-    blink = () => this._blink((s) => s.stock);
+    blink = (card, state) => this._blink((s) => s.stock, state);
 }

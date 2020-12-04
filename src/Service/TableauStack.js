@@ -2,7 +2,7 @@ import { CardRange } from "../Model/Deck/CardRange";
 import Service from "./BaseService";
 
 export default class TableauStack extends Service {
-    _dispatchPutDown = (card, index, state) => {
+    _dispatchPutDown = (card, state, index) => {
         if (card) {
             if (!this.tryUncover(card, index, state) && state.hand.isFromCurrentSource(card) && card.isHidden) {
                 this.tryPutDown(index, state);
@@ -20,7 +20,7 @@ export default class TableauStack extends Service {
         }
     };
 
-    _dispatchPickup = (card, index, state) => {
+    _dispatchPickup = (card, state, index) => {
         if (card && !this.tryUncover(card, index, state)) {
             this.pickup(card, index, state);
         } else if (!card) {
@@ -51,7 +51,7 @@ export default class TableauStack extends Service {
 
     tryUncover = (card, index, state) => {
         //@todo decide and check in model if can be uncovered
-        if (!this.hand().isHoldingCard() && card.isHidden && card.canUncover) {
+        if (!state.hand.isHoldingCard() && card.isHidden && card.canUncover) {
             state.tableau.uncover(index, card) && state.game.registerUncover(card, state);
             return true;
         }
@@ -59,20 +59,4 @@ export default class TableauStack extends Service {
     };
 
     blink = (index, state) => this._blink((s) => s.tableau.stacks[index], state);
-
-    _blink = (selector, state) => this.startBlink(selector, 10, state);
-
-    startBlink = (selector, blinkFor, state) => {
-        selector(state).blinkFor = blinkFor;
-        selector(state).unblink = () => setTimeout(() => this.toggleBlink(selector, 0), 100);
-    };
-
-    //@todo set timeout after mounting component for best controlled effect
-    toggleBlink = (selector, blinkFor) =>
-        this._setState((state) => {
-            console.log("turn off blink");
-            selector(state).blinkFor = blinkFor;
-        });
-
-    //@todo add universal click handler, as the only place where setState is applied.
 }

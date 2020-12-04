@@ -1,42 +1,30 @@
 import Service from "./BaseService";
 
 export default class Foundation extends Service {
-    dispatchPutDown = (card, index) => {
-        this.tryPutDown(index)
+    _dispatchPutDown = (card, state, index) => {
+        if (!state.hand.hasMoreThanOneCard() && state.foundation.accepts(index, state.hand.currentCard())) {
+            if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
+                state.game.registerMove("foundation-" + index, state.hand.currentCard());
+                state.foundation.add(index, state.hand.currentCard());
+                state.hand.putDown();
+                this.tryDetectEnd(state);
+            }
+        } else {
+            this.blink(index, state);
+        }
     };
 
-    dispatchPickup = (card, index) => {
-        this.pickup(index)
-    };
-
-    pickup(index) {
-        const card = this.state().foundation.getTop(index);
+    _dispatchPickup = (_card, state, index) => {
+        const card = state.foundation.getTop(index);
         if (card) {
-            this._setState((state) => {
-                if (state.foundation.getPreviousUsed(index) === card.face) {
-                    state.foundation.remove(index, card);
-                    state.hand.pickUp([card], card.source);
-                }
-            });
+            if (state.foundation.getPreviousUsed(index) === card.face) {
+                state.foundation.remove(index, card);
+                state.hand.pickUp([card], card.source);
+            }
         } else {
-            this.blink(index);
+            this.blink(index, state);
         }
-    }
-
-    tryPutDown(index) {
-        if (!this.hand().hasMoreThanOneCard() && this.state().foundation.accepts(index, this.hand().currentCard())) {
-            this._setState((state) => {
-                if (state.hand.isHoldingCard() && !state.foundation.contains(index, state.hand.currentCard())) {
-                    state.game.registerMove("foundation-" + index, state.hand.currentCard());
-                    state.foundation.add(index, state.hand.currentCard());
-                    state.hand.putDown();
-                    this.tryDetectEnd(state);
-                }
-            });
-        } else {
-            this.blink(index);
-        }
-    }
+    };
 
     tryDetectEnd(state) {
         const nrofCards = state.foundation.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
@@ -46,5 +34,5 @@ export default class Foundation extends Service {
         }
     }
 
-    blink = (index) => this._blink((s) => s.foundation.stacks[index]);
+    blink = (index, state) => this._blink((s) => s.foundation.stacks[index], state);
 }

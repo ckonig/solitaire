@@ -1,38 +1,23 @@
 import Service from "./BaseService";
 
 export default class Waste extends Service {
-    dispatchPutDown = () => {
-        this.tryPutDown();
+    _dispatchPutDown = (card, state) => {
+        if (state.hand.source == "waste") {
+            state.waste.tryPutDown(state.hand.currentCard()) &&
+                state.game.registerMove("waste", state.hand.currentCard()) &&
+                state.hand.putDown();
+        } else {
+            this.blink(card, state);
+        }
     };
 
-    dispatchPickup = (card) => {
+    _dispatchPickup = (card, state) => {
         if (card) {
-            this.pickup(card);
-            //@todo use model to get top card instead (shadow bug)
+            state.hand.pickUp([state.waste.popTop(card)], "waste");
         } else {
-            this.blink();
+            this.blink(card, state);
         }
     };
 
-    pickup(card) {
-        this._setState((state) => {
-            if (!state.hand.isHoldingCard()) {
-                state.hand.pickUp([state.waste.popTop(card)], "waste");
-            }
-        });
-    }
-
-    tryPutDown() {
-        if (this.state().hand.source == "waste") {
-            this._setState((state) => {
-                state.waste.tryPutDown(state.hand.currentCard()) &&
-                    state.game.registerMove("waste", state.hand.currentCard()) &&
-                    state.hand.putDown();
-            });
-        } else {
-            this.blink();
-        }
-    }
-
-    blink = () => this._blink((s) => s.waste);
+    blink = (card, state) => this._blink((s) => s.waste, state);
 }
