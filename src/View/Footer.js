@@ -4,15 +4,15 @@ import React from "react";
 export default function Footer(props) {
     return (
         <div className="footer">
-            Points: {props.model.points}
-            <br />
-            <Clock started={props.model.started} end={props.model.end} />
-            <br />
-            Is Ended: {props.model.isEnded ? "Y" : "N"}
-            <br />
-            <button onClick={props.reset}>reset</button>
-            <br />
-            Report Issues <a href="https://github.com/ckonig/solitaire/issues">here</a>.
+            <div className="footer-grid-container">
+                <span>Points: {props.model.points}</span>
+                <Clock className="clock" started={props.model.started} end={props.model.end} />
+                <span>Is Ended: {props.model.isEnded ? "Y" : "N"}</span>
+                <button onClick={props.reset}>reset</button>
+                <span className="report">
+                    Report Issues <a href="https://github.com/ckonig/solitaire/issues">here</a>.
+                </span>
+            </div>
         </div>
     );
 }

@@ -27,6 +27,6 @@ export default class Clock extends Component {
     }
 
     render() {
-        return <span>Time Elapsed: {this.state.timeElapsed}</span>;
+        return <span className={this.props.className}>Time Elapsed: {this.state.timeElapsed}</span>;
     }
 }

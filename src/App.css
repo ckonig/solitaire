@@ -51,6 +51,7 @@ body {
         "stock waste spacer foundation foundation foundation foundation"
         "tableau tableau tableau tableau tableau tableau tableau"
         "footer footer footer footer footer footer footer";
+    grid-template-rows: 14vw 40vw 5vw;
     grid-gap: 10px;
     background-color: "darkgreen";
     padding: 10px;
@@ -58,6 +59,20 @@ body {
 
 .card-grid-container > div {
     position: relative;
+}
+
+/* Footer Layout Grid */
+.footer-grid-container {
+    display: grid;
+    grid-template-areas: "Points clock IsEnded Reset report";
+}
+
+.clock {
+    grid-area: clock;
+}
+
+.report {
+    grid-area: report;
 }
 
 /* Card Layout Grid */
