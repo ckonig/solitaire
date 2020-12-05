@@ -15,8 +15,7 @@ export default class Foundation extends Service {
     _dispatchPickup = (_card, state, index) => {
         const card = state.foundation.getTop(index);
         if (card && state.foundation.getPreviousUsed(index) === card.face) {
-            state.foundation.remove(index, card);
-            state.hand.pickUp([card], card.source);
+            state.hand.pickUp([state.foundation.remove(index, card)], card.source);
         } else {
             this.blink(index, state);
         }

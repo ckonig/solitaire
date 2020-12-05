@@ -11,10 +11,9 @@ export default class Tableau extends Service {
     };
 
     canPutDown = (card, state, index) =>
-        !state.hand.containsCurrentCard(state.tableau.stacks[index].stack) &&
-        ((card && state.hand.isFromCurrentSource(card) && card.isHidden) ||
-            (card && state.tableau.accepts(index, state.hand.currentCard())) ||
-            (!card && (state.hand.isHoldingKing() || state.hand.source == "tableau-" + index)));
+        (card && card.isHidden && state.hand.isFromCurrentSource(card)) ||
+        state.tableau.accepts(index, state.hand.currentCard()) ||
+        (!card && state.hand.source == "tableau-" + index);
 
     _dispatchPickup = (card, state, index) => {
         if (card && !this.tryUncover(card, index, state) && !card.isHidden) {

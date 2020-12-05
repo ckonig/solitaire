@@ -1,5 +1,3 @@
-import Card from "../Deck/Card";
-
 export default class Waste {
     constructor() {
         this.stack = [];
@@ -15,9 +13,9 @@ export default class Waste {
         return card;
     };
 
-    canAdd = (card) => card && (!this.getTop() || Card.notEquals(card, this.getTop()));
+    canAdd = (card) => card && (!this.getTop() || !card.equals(this.getTop()));
 
-    popTop = (card) => Card.equals(card, this.getTop()) && this.stack.pop();
+    popTop = (card) => card && card.equals(this.getTop()) && this.stack.pop();
 
     recycle = () => this.stack.splice(0, this.stack.length);
 

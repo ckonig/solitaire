@@ -11,7 +11,7 @@ const Card = (props) => {
     };
     return (
         <div className="stack-base">
-            <div style={style} className={className} onClick={() => props.onClick({ ...props, ...model })}> 
+            <div style={style} className={className} onClick={() => props.onClick({ ...model })}> 
                 {model.isHidden ? (
                     <div className="card-back quarot">&nbsp;</div>
                 ) : (

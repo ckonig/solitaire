@@ -1,4 +1,3 @@
-import Card from "../Deck/Card";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 export default class Tableau {
@@ -12,6 +11,12 @@ export default class Tableau {
 
     accepts = (index, current) => {
         const top = this.getTop(index);
+        if (!top) {
+            return current && current.face == "K";
+        }
+        if (top.isHidden) {
+            return false;
+        }
         const range = [...getTableauOrder()];
         const currentIndex = range.indexOf(current.face);
         const topIndex = range.indexOf(top.face);
@@ -20,7 +25,7 @@ export default class Tableau {
 
     popWithFollowing = (card, i) => {
         for (let j = 0; j < this.stacks[i].stack.length; j++) {
-            if (card && Card.equals(this.stacks[i].stack[j], card)) {
+            if (card && card.equals(this.stacks[i].stack[j])) {
                 return this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
             }
         }
@@ -30,7 +35,7 @@ export default class Tableau {
 
     uncover = (index, card) => {
         const top = this.getTop(index);
-        if (top.isHidden && Card.equals(card, this.getTop(index))) {
+        if (top.isHidden && card && card.equals(this.getTop(index))) {
             top.isHidden = false;
             return true;
         }

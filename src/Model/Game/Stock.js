@@ -1,5 +1,3 @@
-import Card from "../Deck/Card";
-
 export default class Stock {
     constructor(stack) {
         this.stack = [...stack];
@@ -16,7 +14,7 @@ export default class Stock {
         return false;
     }
 
-    isOnTop = (card) => Card.equals(card, this.getTop());
+    isOnTop = (card) => card && card.equals(this.getTop());
 
     getTop = () => this.stack[this.stack.length - 1];
 }

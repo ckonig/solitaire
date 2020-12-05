@@ -1,4 +1,3 @@
-import Card from "../Deck/Card";
 import Suits from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
@@ -17,10 +16,6 @@ export default class Foundation {
         this.stacks = [...stacks];
     }
 
-    filterOut = (card) => {
-        this.stacks = Card.filterOut(this.stacks, card);
-    };
-
     getCurrentAccepted = (index) => {
         const currentFoundation = this.stacks[index].acceptedCards;
         return currentFoundation[currentFoundation.length - 1];
@@ -38,8 +33,8 @@ export default class Foundation {
     };
 
     remove = (index, card) => {
-        this.filterOut(card);
         this.stacks[index].acceptedCards.push(this.stacks[index].usedCards.pop());
+        return card && card.equals(this.getTop(index)) && this.stacks[index].stack.pop();
     };
 
     getPreviousUsed = (index) => {
