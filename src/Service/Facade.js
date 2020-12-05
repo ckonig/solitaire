@@ -30,18 +30,8 @@ export default class Facade {
         };
     }
 
-    reset = (stateholder) => {
-        stateholder.setState(() => ({ ...this.getInitialState() }));
-    };
+    reset = (stateholder) =>
+        stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : { ...this.getInitialState() }));
 
-    undo = (id, stateholder, currentState) => {
-        stateholder.setState((state) => {
-            const previous = state.game.popPreviousState(id, currentState);
-            if (previous) {
-                return previous;
-            }
-
-            return null;
-        });
-    };
+    undo = (id, stateholder, currentState) => stateholder.setState((state) => state.game.popPreviousState(id, currentState) || null);
 }
