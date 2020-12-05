@@ -1,8 +1,18 @@
+import Model from "../Model/Facade";
+
 export default class Service {
     constructor(stateholder) {
         this._setState = (a, b) =>
             stateholder.setState((state) => {
+                state.game.modified = false;
+                const previous = Model.copy(state);
                 a(state);
+                if (state.game.modified) {
+                    previous.game.modified = false;
+                    state.game.previousStates.push(previous);
+                    // @todo enable browser navigation (back) for undoing 
+                    // stateholder.navigate(state.game.previousStates.length);
+                }
                 return { ...state };
             }, b);
     }

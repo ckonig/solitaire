@@ -1,8 +1,9 @@
+import Card from "../Deck/Card";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 export default class Tableau {
     constructor(cards) {
-        this.stacks = new TableauGenerator().generateStacks(cards);
+        this.stacks = !cards ? [] : new TableauGenerator().generateStacks(cards);
     }
 
     getStack = (index) => {
@@ -46,6 +47,7 @@ export default class Tableau {
     add = (index, cards) => {
         this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
         //this.stacks[index].stack.push(cards.map((c) => this.setCardProperties(c, index))); //@todo investigate why this doesn't work
+        return cards;
     };
 
     setCardProperties = (card, index) => {
@@ -55,6 +57,12 @@ export default class Tableau {
 
     getTop(index) {
         return this.stacks[index].stack[this.stacks[index].stack.length - 1];
+    }
+
+    static copy = (orig) => {
+        const copy = new Tableau([]);
+        copy.stacks = orig.stacks.map(stack => ({stack: Card.copyAll(stack.stack)}));
+        return copy;
     }
 }
 

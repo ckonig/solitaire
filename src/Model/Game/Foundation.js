@@ -1,3 +1,4 @@
+import Card from "../Deck/Card";
 import Suits from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
@@ -27,10 +28,11 @@ export default class Foundation {
         return this.stacks[index].icon == card.type.icon && currentAccepted == card.face;
     };
 
-    add = (index, card) => {
+    add = (index, cards) => {
+        const card = cards[0]
         card.source = "foundation-" + index;
         this.stacks[index].stack.push(card);
-        this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
+        return this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
     };
 
     remove = (index, card) => {
@@ -49,4 +51,16 @@ export default class Foundation {
     getTop(index) {
         return this.stacks[index].stack[this.stacks[index].stack.length - 1];
     }
+
+    static copy = (orig) => {
+        const copy = new Foundation();
+        copy.stacks = orig.stacks.map((origStack) => ({
+            stack: Card.copyAll(origStack.stack),
+            acceptedCards: [...origStack.acceptedCards],
+            usedCards: [...origStack.usedCards],
+            icon: origStack.icon,
+            color: origStack.color,
+        }));
+        return copy;
+    };
 }

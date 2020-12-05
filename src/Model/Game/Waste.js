@@ -1,3 +1,5 @@
+import Card from "../Deck/Card";
+
 export default class Waste {
     constructor() {
         this.stack = [];
@@ -20,4 +22,10 @@ export default class Waste {
     recycle = () => this.stack.splice(0, this.stack.length);
 
     getTop = () => this.stack[this.stack.length - 1];
+
+    static copy = (orig) => {
+        const copy = new Waste();
+        copy.stack = Card.copyAll(orig.stack);
+        return copy;
+    }
 }

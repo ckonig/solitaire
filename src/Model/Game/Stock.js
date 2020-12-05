@@ -1,3 +1,5 @@
+import Card from "../Deck/Card";
+
 export default class Stock {
     constructor(stack) {
         this.stack = [...stack];
@@ -17,4 +19,10 @@ export default class Stock {
     isOnTop = (card) => card && card.equals(this.getTop());
 
     getTop = () => this.stack[this.stack.length - 1];
+
+    static copy = (orig) => {
+        const copy = new Stock([]);
+        copy.stack = Card.copyAll(orig.stack);
+        return copy;
+    }
 }

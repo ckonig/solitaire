@@ -6,34 +6,41 @@ import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 export default class Facade {
-    constructor(stateholder) {
-        this.stateholder = stateholder;
+    constructor() {
         this.deck = new Deck();
-        this.deck.shuffle();
-        this.services = {
-            tableau: new Tableau(stateholder),
-            foundation: new Foundation(stateholder),
-            stock: new Stock(stateholder),
-            waste: new Waste(stateholder),
-        };
+        //this.deck.shuffle();
     }
 
     getInitialState = () => Model.getInitialState(this.deck);
 
-    getHandlers() {
+    getHandlers(stateholder, state) {
         let handler = "dispatchPickup";
-        if (this.stateholder.state && this.stateholder.state.hand && this.stateholder.state.hand.isHoldingCard()) {
+        if (state && state.hand && state.hand.isHoldingCard()) {
             handler = "dispatchPutDown";
         }
+
         return {
-            clickTableau: this.services.tableau[handler],
-            clickFoundation: this.services.foundation[handler],
-            clickStock: this.services.stock[handler],
-            clickWaste: this.services.waste[handler],
+            clickTableau: new Tableau(stateholder)[handler],
+            clickFoundation: new Foundation(stateholder)[handler],
+            clickStock: new Stock(stateholder)[handler],
+            clickWaste: new Waste(stateholder)[handler],
+            undo: () => this.undo(state.game.previousStates.length - 1, stateholder),
+            reset: () => this.reset(stateholder),
         };
     }
 
-    reset = () => {
-        this.stateholder.setState(() => ({ ...this.getInitialState() }));
+    reset = (stateholder) => {
+        stateholder.setState(() => ({ ...this.getInitialState() }));
+    };
+
+    undo = (id, stateholder) => {
+        stateholder.setState((state) => {
+            const previous = state.game.popPreviousState(id);
+            if (previous) {
+                return { ...previous };
+            }
+            
+            return null;
+        });
     };
 }

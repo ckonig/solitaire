@@ -25,4 +25,10 @@ export default class Hand {
     hasMoreThanOneCard = () => this.stack.length > 1;
 
     isFromCurrentSource = (card) => this.source && card.source == this.source;
+
+    static copy = (orig) => {
+        const copy = new Hand();
+        copy.stack = orig.stack; //@todo copy
+        return copy;
+    }
 }

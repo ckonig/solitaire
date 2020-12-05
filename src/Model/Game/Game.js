@@ -4,21 +4,45 @@ export default class Game {
         this.currentMove = null;
         this.points = 0;
         this.started = Date.now();
+        this.modified = false;
+        this.memorable = true;
+        this.previousStates = [];
     }
 
-    registerMove(target, card) {
+    registerMove(target, source) {
+        this.memorable = true;
+        this.modified = true;
         const currentMove = {
-            source: card.source,
-            card: card,
+            source: source,
             target: target,
         };
+        if (source == target) {
+            this.memorable = false;
+        }
 
-        this.points += this.rateMove(currentMove);
+         this.points += this.rateMove(currentMove);
         this.moves.push({ ...currentMove });
         return true;
     }
 
+    registerPickup() {
+        this.modified = true;
+        this.memorable = false;
+    }
+
+    popPreviousState = (id) => {
+        const isRequested = this.previousStates.length - 1 == id;
+        const popPrevious = () => isRequested && this.previousStates && this.previousStates.pop();
+        let previous = popPrevious();
+        while (previous && !previous.game.memorable) {
+            previous = popPrevious();
+        }
+        return previous;
+    };
+
     registerRecycle() {
+        this.memorable = true;
+        this.modified = true;
         this.moves.push({ source: "waste", target: "stock", card: null });
         this.points -= 100;
         if (this.points < 0) {
@@ -28,6 +52,8 @@ export default class Game {
     }
 
     registerUncover(card) {
+        this.memorable = true;
+        this.modified = true;
         this.moves.push({ source: null, target: null, card: card });
         this.points += 5;
         console.debug("RATING: add 5 points for UNCOVER");
@@ -63,4 +89,16 @@ export default class Game {
 
         return 0;
     }
+
+    static copy = (orig, modelCopy) => {
+        const copy = new Game();
+        copy.moves = orig.moves;
+        copy.currentMove = orig.currentMove;
+        copy.points = orig.points;
+        copy.started = orig.started;
+        copy.modified = orig.modified;
+        copy.memorable = orig.memorable;
+        copy.previousStates = [...orig.previousStates].map((state) => modelCopy(state, true));
+        return copy;
+    };
 }

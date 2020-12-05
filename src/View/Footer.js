@@ -9,6 +9,7 @@ const Footer = (props) => {
                 <Clock className="clock" started={props.model.started} end={props.model.end} />
                 <span>Is Ended: {props.model.isEnded ? "Y" : "N"}</span>
                 <button onClick={props.reset}>reset</button>
+                <button onClick={props.undo}>undo</button>
                 <span className="report">
                     Report Issues <a href="https://github.com/ckonig/solitaire/issues">here</a>.
                 </span>

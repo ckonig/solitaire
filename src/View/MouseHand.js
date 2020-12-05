@@ -14,9 +14,14 @@ export default class MouseHand extends TouchAwareComponent {
             document.addEventListener("mousemove", (e) => {
                 const x = e.clientX,
                     y = e.clientY;
-                node.style.top = y + 25 +"px";
-                node.style.left = x + 25 +"px";
+                node.style.top = y + 25 + "px";
+                node.style.left = x + 25 + "px";
                 node.style.position = "relative";
+            });
+
+            document.addEventListener("keydown", (e) => {
+                const evtobj = window.event ? event : e;
+                if (evtobj.keyCode == 90 && evtobj.ctrlKey) this.props.undo();
             });
         }
     }

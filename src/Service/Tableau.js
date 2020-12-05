@@ -3,8 +3,8 @@ import Service from "./BaseService";
 export default class Tableau extends Service {
     _dispatchPutDown = (card, state, index) => {
         if (this.canPutDown(card, state, index)) {
-            state.game.registerMove("tableau-" + index, state.hand.currentCard());
-            state.tableau.add(index, state.hand.putDown());
+            const src = state.hand.source;
+            state.tableau.add(index, state.hand.putDown()) && state.game.registerMove("tableau-" + index, src);
         } else {
             this.blink(index, state);
         }
@@ -17,7 +17,7 @@ export default class Tableau extends Service {
 
     _dispatchPickup = (card, state, index) => {
         if (card && !this.tryUncover(card, index, state) && !card.isHidden) {
-            state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source);
+            state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source) && state.game.registerPickup();
         } else if (!card) {
             this.blink(index, state);
         }
