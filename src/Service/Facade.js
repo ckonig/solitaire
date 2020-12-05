@@ -8,7 +8,7 @@ import Waste from "./Waste";
 export default class Facade {
     constructor() {
         this.deck = new Deck();
-        //this.deck.shuffle();
+        this.deck.shuffle();
     }
 
     getInitialState = () => Model.getInitialState(this.deck);
