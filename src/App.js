@@ -7,7 +7,7 @@ import Game from "./Service/Facade";
 import Hand from "./View/MouseHand";
 import React from "react";
 import Stock from "./View/Stock";
-import TableauStack from "./View/TableauStack";
+import Tableau from "./View/Tableau";
 import Waste from "./View/Waste";
 
 export default class App extends Component {
@@ -36,12 +36,12 @@ export default class App extends Component {
                         />
                     ))}
                     {this.state.tableau.stacks.map((stack, index) => (
-                        <TableauStack
+                        <Tableau
                             key={"t" + index}
                             index={index}
                             model={stack}
                             hand={this.state.hand}
-                            onClick={(card) => handlers.clickTableauStack(card, index)}
+                            onClick={(card) => handlers.clickTableau(card, index)}
                         />
                     ))}
                     <Footer reset={this.game.reset} model={this.state.game} />

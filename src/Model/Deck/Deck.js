@@ -1,5 +1,20 @@
+import { DeckSize } from "./DeckSize";
+import Suits from "./Suits";
+
 export default class Deck {
-    constructor(cards) {
+    constructor() {
+        const cards = [];
+        const keys = Object.keys(Suits);
+        for (let i = 0; i < DeckSize.length; i++) {
+            for (let j = 0; j < keys.length; j++) {
+                const suit = Suits[keys[j]];
+                cards.push({
+                    face: DeckSize[i],
+                    type: suit,
+                    isHidden: true,
+                });
+            }
+        }
         this.cards = cards;
     }
 

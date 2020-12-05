@@ -1,6 +1,6 @@
 import Service from "./BaseService";
 
-export default class TableauStack extends Service {
+export default class Tableau extends Service {
     _dispatchPutDown = (card, state, index) => {
         if (this.canPutDown(card, state, index)) {
             state.game.registerMove("tableau-" + index, state.hand.currentCard());

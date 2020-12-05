@@ -14,10 +14,8 @@ export default class Hand {
     }
 
     putDown() {
-        const cards = [...this.stack];
-        this.stack = [];
         this.source = null;
-        return cards;
+        return this.stack.splice(0, this.stack.length);
     }
 
     isHoldingCard = () => !!this.stack.length;

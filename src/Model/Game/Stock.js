@@ -1,7 +1,10 @@
-import CardTools from "../Deck/CardTools";
-import StackHolder from "./StackHolder";
+import Card from "../Deck/Card";
 
-export default class Stock extends StackHolder {
+export default class Stock {
+    constructor(stack) {
+        this.stack = [...stack];
+    }
+
     recycle(waste) {
         if (waste.length) {
             this.stack = [...waste].reverse().map((element) => {
@@ -13,7 +16,7 @@ export default class Stock extends StackHolder {
         return false;
     }
 
-    isOnTop(card) {
-        return CardTools.cardEquals(card, this.getTop());
-    }
+    isOnTop = (card) => Card.equals(card, this.getTop());
+
+    getTop = () => this.stack[this.stack.length - 1];
 }

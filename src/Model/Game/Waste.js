@@ -1,38 +1,25 @@
-import CardTools from "../Deck/CardTools";
-import StackHolder from "./StackHolder";
+import Card from "../Deck/Card";
 
-export default class Waste extends StackHolder {
+export default class Waste {
     constructor() {
-        super([]);
-    }
-
-    tryPutDown(card) {
-        return this.canAdd(card) && (this.add(card) || true);
-    }
-
-    add(card) {
-        if (card) {
-            card.source = "waste";
-            card.isHidden = false;
-            this.stack.push(card);
-            return true;
-        }
-    }
-
-    canAdd(card) {
-        const top = this.getTop();
-        return card && (!top || CardTools.cardNotEquals(card, top));
-    }
-
-    popTop(card) {
-        if (CardTools.cardEquals(card, this.getTop())) {
-            return this.stack.pop();
-        }
-    }
-
-    recycle() {
-        const ret = [...this.stack];
         this.stack = [];
-        return ret;
     }
+
+    tryPutDown = (card) => this.canAdd(card) && (this.add(card) || true);
+
+    add = (card) => card && this.stack.push(this.setCardProperties(card));
+
+    setCardProperties = (card) => {
+        card.source = "waste";
+        card.isHidden = false;
+        return card;
+    };
+
+    canAdd = (card) => card && (!this.getTop() || Card.notEquals(card, this.getTop()));
+
+    popTop = (card) => Card.equals(card, this.getTop()) && this.stack.pop();
+
+    recycle = () => this.stack.splice(0, this.stack.length);
+
+    getTop = () => this.stack[this.stack.length - 1];
 }

@@ -4,7 +4,7 @@ import React from "react";
 import StackBase from "./StackBase";
 import TouchHand from "./TouchHand";
 
-export default class TableauStack extends BlinkingComponent {
+export default class Tableau extends BlinkingComponent {
     render() {
         const props = this.props;
         let offset = 0;

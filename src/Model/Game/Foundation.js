@@ -1,9 +1,24 @@
-import CardTools from "../Deck/CardTools";
-import MultiStackHolder from "./MultiStackHolder";
+import Card from "../Deck/Card";
+import Suits from "../Deck/Suits";
+import { getFoundationOrder } from "../Deck/DeckSize";
 
-export default class Foundation extends MultiStackHolder {
+export default class Foundation {
+    constructor() {
+        const template = () => ({
+            stack: [],
+            acceptedCards: [...getFoundationOrder()],
+            usedCards: [],
+            icon: null,
+            color: null,
+        });
+        const stacks = Object.keys(Suits)
+            .map((key) => Suits[key])
+            .map((suit) => ({ ...template(), ...suit }));
+        this.stacks = [...stacks];
+    }
+
     filterOut = (card) => {
-        this.stacks = CardTools.filterOut(this.stacks, card);
+        this.stacks = Card.filterOut(this.stacks, card);
     };
 
     getCurrentAccepted = (index) => {
@@ -17,7 +32,6 @@ export default class Foundation extends MultiStackHolder {
     };
 
     add = (index, card) => {
-        //@todo also set in constructor
         card.source = "foundation-" + index;
         this.stacks[index].stack.push(card);
         this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
@@ -35,4 +49,8 @@ export default class Foundation extends MultiStackHolder {
     countCards = () => {
         this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
     };
+
+    getTop(index) {
+        return this.stacks[index].stack[this.stacks[index].stack.length - 1];
+    }
 }
