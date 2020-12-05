@@ -21,6 +21,7 @@ export default class Foundation {
         return currentFoundation[currentFoundation.length - 1];
     };
 
+    //@todo same (similar) in tableau
     accepts = (index, card) => {
         const currentAccepted = this.getCurrentAccepted(index);
         return this.stacks[index].icon == card.type.icon && currentAccepted == card.face;
