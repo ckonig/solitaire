@@ -18,14 +18,14 @@ export default class Facade {
         return state;
     };
 
-    static copy = (state, shallow) => {
+    static copy = (state) => {
         return {
             stock: Stock.copy(state.stock),
             waste: Waste.copy(state.waste),
             foundation: Foundation.copy(state.foundation),
             tableau: Tableau.copy(state.tableau),
             hand: Hand.copy(state.hand),
-            game: Game.copy(state.game, shallow ? (g) => g : Facade.copy),
+            game: Game.copy(state.game),
         };
     };
 }

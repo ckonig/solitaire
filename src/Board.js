@@ -36,7 +36,7 @@ export default class Board extends Component {
                             onClick={(card) => this.props.handlers.clickTableau(card, index)}
                         />
                     ))}
-                    <Footer reset={this.props.handlers.reset} undo={this.props.handlers.undo} model={this.props.model.game} />
+                    <Footer reset={this.props.handlers.reset} undoLabel={this.props.handlers.undoLabel} undo={this.props.handlers.undo} model={this.props.model.game} />
                 </div>
             </div>
         );

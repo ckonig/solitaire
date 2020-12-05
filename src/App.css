@@ -64,7 +64,7 @@ body {
 /* Footer Layout Grid */
 .footer-grid-container {
     display: grid;
-    grid-template-areas: "Points clock IsEnded Reset report";
+    grid-template-areas: "Points clock IsEnded Reset Undo report";
 }
 
 .clock {

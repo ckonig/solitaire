@@ -8,21 +8,25 @@ export default class Service {
                 const previous = Model.copy(state);
                 a(state);
                 if (state.game.modified) {
-                    previous.game.modified = false;
-                    state.game.previousStates.push(previous);
-                    // @todo enable browser navigation (back) for undoing 
-                    // stateholder.navigate(state.game.previousStates.length);
+                    state.game.pushPreviousState(previous);
+                    return { ...state };
                 }
-                return { ...state };
+
+                // @todo enable undoing via browser back gesture/button
+                return null;
             }, b);
     }
 
     dispatchPutDown = (card, index) => {
-        this._setState((state) => {
-            if (state.hand.isHoldingCard()) {
-                this._dispatchPutDown(card, state, index);
-            }
-        });
+        this._setState(
+            (state) => {
+                if (state.hand.isHoldingCard()) {
+                    this._dispatchPutDown(card, state, index);
+                }
+            },
+            null,
+            true
+        );
     };
 
     dispatchPickup = (card, index) => {
@@ -37,11 +41,13 @@ export default class Service {
 
     startBlink = (selector, blinkFor, state) => {
         selector(state).blinkFor = blinkFor;
+        state.game.registerBlink();
         selector(state).unblink = () => setTimeout(() => this.toggleBlink(selector, 0), 100);
     };
 
     toggleBlink = (selector, blinkFor) =>
         this._setState((state) => {
             selector(state).blinkFor = blinkFor;
+            state.game.registerBlink();
         });
 }

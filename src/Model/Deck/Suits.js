@@ -3,13 +3,13 @@ const Suits = {
         icon: "♥",
         color: "red",
     },
-    diamond: {
-        icon: "♦",
-        color: "red",
-    },
     club: {
         icon: "♣",
         color: "black",
+    },
+    diamond: {
+        icon: "♦",
+        color: "red",
     },
     spade: {
         icon: "♠",

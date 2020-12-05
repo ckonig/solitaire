@@ -24,8 +24,9 @@ export default class Facade {
             clickFoundation: new Foundation(stateholder)[handler],
             clickStock: new Stock(stateholder)[handler],
             clickWaste: new Waste(stateholder)[handler],
-            undo: () => this.undo(state.game.previousStates.length - 1, stateholder),
+            undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
+            undoLabel: () => Math.pow(2, stateholder.state.game.multiplicator),
         };
     }
 
@@ -33,13 +34,13 @@ export default class Facade {
         stateholder.setState(() => ({ ...this.getInitialState() }));
     };
 
-    undo = (id, stateholder) => {
+    undo = (id, stateholder, currentState) => {
         stateholder.setState((state) => {
-            const previous = state.game.popPreviousState(id);
+            const previous = state.game.popPreviousState(id, currentState);
             if (previous) {
-                return { ...previous };
+                return previous;
             }
-            
+
             return null;
         });
     };

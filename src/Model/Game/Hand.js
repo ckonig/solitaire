@@ -26,9 +26,8 @@ export default class Hand {
 
     isFromCurrentSource = (card) => this.source && card.source == this.source;
 
-    static copy = (orig) => {
+    static copy = () => {
         const copy = new Hand();
-        copy.stack = orig.stack; //@todo copy
         return copy;
     }
 }

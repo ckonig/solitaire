@@ -4,8 +4,8 @@ export default class Waste extends Service {
     _dispatchPutDown = (card, state) =>
         (state.hand.source == "waste" &&
             state.waste.tryPutDown(state.hand.currentCard()) &&
-            state.game.registerMove("waste", "waste") &&
-            state.hand.putDown()) ||
+            state.hand.putDown() &&
+            state.game.registerMove("waste", "waste")) ||
         this.blink(card, state);
 
     _dispatchPickup = (card, state) =>
