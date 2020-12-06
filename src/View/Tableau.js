@@ -9,13 +9,11 @@ export default class Tableau extends BlinkingComponent {
         const props = this.props;
         let offset = 0;
         const getOffset = (index) => {
-            let i = 0;
-            while (i <= index) {
+            for (let i = 0; i <= index; i++) {
                 if (props.model.stack[i] && !props.model.stack[i].isHidden) {
                     offset = i * 12 + (index - i) * 24;
                     return offset;
                 }
-                i++;
             }
             offset = index * 12;
             return offset;
