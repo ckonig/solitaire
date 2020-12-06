@@ -16,13 +16,18 @@ export default class MouseHand extends TouchAwareComponent {
                     y = e.clientY;
                 node.style.top = y + 25 + "px";
                 node.style.left = x + 25 + "px";
-                node.style.position = "relative";
+                node.style.position = "absolute";
             });
 
+            //@todo move to reset component in footer
             document.addEventListener("keydown", (e) => {
                 const evtobj = window.event ? event : e;
                 if (evtobj.keyCode == 90 && evtobj.ctrlKey) this.props.undo();
             });
+
+            //@todo implement abort-pickup on ESC, triggering putDown on source stack, acting like a "free" undo to before pickup state
+            //potentially by rendering the hand optionally inside stack just like touch hand
+            //this could be path to drag & drop too
         }
     }
 

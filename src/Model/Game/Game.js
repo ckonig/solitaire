@@ -91,7 +91,6 @@ export default class Game {
     }
 
     registerBlink() {
-        console.debug("BLINK INVALIDATES ALL MOVES");
         this.modified = true;
         this.memorable = false;
         return true;

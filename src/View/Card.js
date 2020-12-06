@@ -1,6 +1,10 @@
 import React from "react";
 
 const Card = (props) => {
+    //@todo 3d flip https://3dtransforms.desandro.com/card-flip
+    //run css animation first like this:
+    //https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
+    //then trigger re-render through state change in parent
     const model = props.model;
     let className = "card card-base suit-" + model.type.icon;
     className += props.isSelected ? " card-selected" : "";
@@ -11,7 +15,7 @@ const Card = (props) => {
     };
     return (
         <div className="stack-base">
-            <div style={style} className={className} onClick={() => props.onClick({ ...model })}> 
+            <div style={style} className={className} onClick={() => props.onClick({ ...model })}>
                 {model.isHidden ? (
                     <div className="card-back quarot">&nbsp;</div>
                 ) : (
@@ -44,5 +48,5 @@ const Card = (props) => {
             </div>
         </div>
     );
-}
+};
 export default Card;

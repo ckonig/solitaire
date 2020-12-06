@@ -1,6 +1,6 @@
 import "./App.css";
 
-import Board from "./Board";
+import Board from "./View/Board";
 import { Component } from "react";
 import Game from "./Service/Facade";
 import React from "react";
