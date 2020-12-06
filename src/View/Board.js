@@ -1,6 +1,5 @@
 import Footer from "./Footer";
 import Foundation from "./Foundation";
-import Hand from "./MouseHand";
 import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
@@ -9,7 +8,6 @@ import Waste from "./Waste";
 const Board = (props) => {
     return (
         <div>
-            <Hand stack={props.model.hand.stack} undo={props.handlers.undo} />
             <div className="layout-grid-container">
                 <Stock model={props.model.stock} onClick={props.handlers.clickStock} />
                 <Waste model={props.model.waste} hand={props.model.hand} onClick={props.handlers.clickWaste} />
@@ -36,6 +34,7 @@ const Board = (props) => {
                     reset={props.handlers.reset}
                     undoLabel={props.handlers.undoLabel}
                     undo={props.handlers.undo}
+                    beat={props.handlers.beat}
                     model={props.model.game}
                 />
             </div>

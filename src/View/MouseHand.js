@@ -6,39 +6,54 @@ export default class MouseHand extends TouchAwareComponent {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
+        this.onMouseMove = this.onMouseMove.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
     }
 
     componentDidMount() {
         if (!this.isTouch) {
-            const node = this.myRef.current;
-            document.addEventListener("mousemove", (e) => {
-                const x = e.clientX,
-                    y = e.clientY;
-                node.style.top = y + 25 + "px";
-                node.style.left = x + 25 + "px";
-                node.style.position = "absolute";
-            });
+            document.addEventListener("mousemove", this.onMouseMove, false);
 
-            //@todo move to reset component in footer
-            document.addEventListener("keydown", (e) => {
-                const evtobj = window.event ? event : e;
-                if (evtobj.keyCode == 90 && evtobj.ctrlKey) this.props.undo();
-            });
-
-            //@todo implement abort-pickup on ESC, triggering putDown on source stack, acting like a "free" undo to before pickup state
-            //potentially by rendering the hand optionally inside stack just like touch hand
-            //this could be path to drag & drop too
+            if (this.props.putBack) {
+                document.addEventListener("keydown", this.onKeyDown, false);
+            }
         }
     }
 
+    componentWillUnmount() {
+        if (!this.isTouch) {
+            document.removeEventListener("mousemove", this.onMouseMove, false);
+            document.addEventListener("keydown", this.onKeyDown, false);
+        }
+    }
+
+    onMouseMove(e) {
+        if (!this.isTouch && this.props.hand && this.props.parent == this.props.hand.source) {
+            const node = this.myRef.current;
+            const x = e.clientX,
+                y = e.clientY;
+            node.style.top = y + 25 + "px";
+            node.style.left = x + 25 + "px";
+            node.style.position = "absolute";
+        }
+    }
+
+    onKeyDown(e) {
+        const evtobj = window.event ? event : e;
+        if (evtobj.keyCode == 27 && !this.isTouch && this.props.hand && this.props.parent == this.props.hand.source) this.props.putBack();
+    }
+
     render() {
-        return this.isTouch ? null : (
+        return (
             <div ref={this.myRef}>
-                {this.props.stack &&
+                {!this.isTouch &&
+                    this.props.hand &&
+                    this.props.parent == this.props.hand.source &&
+                    this.props.stack &&
                     this.props.stack.map((card, index) => (
                         <Card
                             model={card}
-                            key={"H" + index}
+                            key={index}
                             onClick={() => {
                                 console.error("clicked card in mouse hand");
                             }}

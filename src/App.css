@@ -46,6 +46,8 @@ body {
 }
 
 .layout-grid-container {
+    margin-left: 1vw;
+    margin-top: 1vw;
     display: grid;
     grid-template-areas:
         "stock waste spacer foundation foundation foundation foundation"
@@ -121,7 +123,7 @@ body {
     border-width: 1px;
     border-color: black;
     background-color: white;
-    box-shadow: 2px 2px black;
+    box-shadow: 0px 0px 2px 2px black;
 }
 
 .card-selected {
@@ -131,7 +133,6 @@ body {
 
 .blink {
     border-color: red;
-    box-shadow: 2px 2px 2px 2px red;
 }
 
 .card-back {

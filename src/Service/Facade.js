@@ -26,8 +26,13 @@ export default class Facade {
             clickWaste: new Waste(stateholder)[handler],
             undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
+            beat: () => this.beat(stateholder),
             undoLabel: () => Math.pow(2, stateholder.state.game.multiplicator),
         };
+    }
+
+    beat = (stateholder) => {
+        stateholder.setState((state) => Model.copy(state));
     }
 
     reset = (stateholder) =>

@@ -30,6 +30,7 @@ export default class Foundation {
 
     add = (index, cards) => {
         const card = cards[0]
+        card.causeEntropy(3);
         card.source = "foundation-" + index;
         this.stacks[index].stack.push(card);
         return this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());

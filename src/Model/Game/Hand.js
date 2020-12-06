@@ -8,6 +8,7 @@ export default class Hand {
         if (stack) {
             this.stack = stack;
             this.source = source;
+            console.log('picked up', this.stack)
         }
 
         return stack;

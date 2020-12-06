@@ -7,8 +7,10 @@ export default class Stock {
 
     recycle(waste) {
         if (waste.length) {
-            this.stack = [...waste].reverse().map((element) => {
-                return { ...element, isHidden: true };
+            this.stack = waste.reverse().map((element) => {
+                element.causeEntropy(3);
+                element.isHidden = true;
+                return element;
             });
             return true;
         }

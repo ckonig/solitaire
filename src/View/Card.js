@@ -9,10 +9,14 @@ const Card = (props) => {
     let className = "card card-base suit-" + model.type.icon;
     className += props.isSelected ? " card-selected" : "";
     className += props.blink ? " blink" : "";
+    const shadowOffset = props.shadowOffset || 0;
     const style = {
         zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,
         top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
+        boxShadow: shadowOffset+'px -1px 2px 2px black',
+        ...props.model.entropyStyle,
     };
+
     return (
         <div className="stack-base">
             <div style={style} className={className} onClick={() => props.onClick({ ...model })}>

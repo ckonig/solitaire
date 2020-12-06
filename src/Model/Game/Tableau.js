@@ -45,13 +45,16 @@ export default class Tableau {
     };
 
     add = (index, cards) => {
+        this.getTop(index) && this.getTop(index).causeEntropy(3);
         this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
+
         //this.stacks[index].stack.push(cards.map((c) => this.setCardProperties(c, index))); //@todo investigate why this doesn't work
         return cards;
     };
 
     setCardProperties = (card, index) => {
         card.source = "tableau-" + index;
+        card.causeEntropy(4);
         return card;
     };
 
