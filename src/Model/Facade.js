@@ -28,4 +28,15 @@ export default class Facade {
             game: Game.copy(state.game),
         };
     };
+
+    static trip = (state) => {
+        return {
+            stock: state.stock.trip(),
+            waste: state.waste.trip(),
+            foundation: state.foundation.trip(),
+            tableau: state.tableau.trip(),
+            hand: state.hand,
+            game: state.game,
+        };
+    };
 }

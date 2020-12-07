@@ -12,17 +12,16 @@ export default class Card {
         //@todo this is awesome but move it to model
         const random = () => Math.random() < 0.5;
         const randomInt = (min, max) => Math.random() * (max - min) + min;
-            //shift
+        //shift
+        if (random()) {
             if (random()) {
                 this.entropyStyle["left"] = randomInt(0, level / 2);
             } else {
                 this.entropyStyle["right"] = randomInt(0, level / 2);
             }
-           //rotate
-            console.log("rotating");
-            this.entropyStyle["transform"] = "rotate(" + randomInt(level * -1, level) + "deg)";
-            console.log(this.entropyStyle);
-        
+        }
+        //rotate
+        this.entropyStyle["transform"] = "rotate(" + randomInt(level * -1, level) + "deg)";
     };
 
     equals = (other) => {

@@ -67,6 +67,13 @@ export default class Tableau {
         copy.stacks = orig.stacks.map(stack => ({stack: Card.copyAll(stack.stack)}));
         return copy;
     }
+
+    trip = () => {
+        const randomStack = this.stacks[Math.floor(Math.random() * this.stacks.length)];
+        const randomElement = randomStack && randomStack.stack[Math.floor(Math.random() * randomStack.stack.length)];
+        randomElement && randomElement.causeEntropy(4);        
+        return this;
+    }
 }
 
 class TableauGenerator {

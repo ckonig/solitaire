@@ -10,7 +10,16 @@ export default class Stock extends BlinkingComponent {
             <div>
                 <StackBase blink={props.model.blinkFor} onClick={props.onClick} />
                 {props.model.stack.map((card, index) => (
-                    <Card model={card} key={index} blink={props.model.blinkFor} shadowOffset={-6} source="main" entropy={6} onClick={props.onClick} />
+                    <Card
+                        model={card}
+                        key={index}
+                        blink={props.model.blinkFor}
+                        shadowOffsetX={-6}
+                        shadowOffsetY={-3}
+                        source="main"
+                        entropy={6}
+                        onClick={props.onClick}
+                    />
                 ))}
             </div>
         );

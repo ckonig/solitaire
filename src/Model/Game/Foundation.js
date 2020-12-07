@@ -64,4 +64,11 @@ export default class Foundation {
         }));
         return copy;
     };
+
+    trip = () => {
+        const randomStack = this.stacks[Math.floor(Math.random() * this.stacks.length)];
+        const randomElement = randomStack.stack[Math.floor(Math.random() * randomStack.stack.length)];
+        randomElement && randomElement.causeEntropy(4);        
+        return this;
+    }
 }

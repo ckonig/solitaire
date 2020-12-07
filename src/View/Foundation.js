@@ -14,7 +14,7 @@ export default class Foundation extends BlinkingComponent {
                     <div className={"align-center foundation-base suit-" + props.model.icon}>{props.model.icon}</div>
                 </StackBase>
                 {props.model.stack.map((card, index) => (
-                    <Card model={card} key={index} shadowOffset={(props.index)*2} blink={props.model.blinkFor} entropy={6} onClick={props.onClick} />
+                    <Card model={card} key={index} shadowOffsetX={(props.index)*2} shadowOffsetY={-3} blink={props.model.blinkFor} entropy={6} onClick={props.onClick} />
                 ))}
                 <TouchHand
                     parent={"foundation-" + props.index}

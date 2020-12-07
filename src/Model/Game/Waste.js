@@ -29,4 +29,10 @@ export default class Waste {
         copy.stack = Card.copyAll(orig.stack);
         return copy;
     }
+
+    trip = () => {
+        const randomElement = this.stack[Math.floor(Math.random() * this.stack.length)];
+        randomElement && randomElement.causeEntropy(4);     
+        return this;
+    }
 }

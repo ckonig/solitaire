@@ -8,6 +8,7 @@ export default class Game {
         this.memorable = true;
         this.modified = false;
         this.multiplicator = 1;
+        this.trippy = false;
     }
 
     registerMove(target, source) {

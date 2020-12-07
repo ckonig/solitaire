@@ -1,3 +1,5 @@
+import Card from "../Deck/Card";
+
 export default class Hand {
     constructor() {
         this.stack = [];
@@ -5,7 +7,7 @@ export default class Hand {
     }
 
     pickUp(stack, source) {
-        if (stack) {
+        if (stack && stack[0]) {
             this.stack = stack;
             this.source = source;
             console.log('picked up', this.stack)
@@ -27,8 +29,10 @@ export default class Hand {
 
     isFromCurrentSource = (card) => this.source && card.source == this.source;
 
-    static copy = () => {
+    static copy = (orig) => {
         const copy = new Hand();
+        copy.stack = Card.copyAll(orig.stack)
+        copy.source = orig.source;
         return copy;
     }
 }

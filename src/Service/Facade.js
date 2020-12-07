@@ -27,6 +27,7 @@ export default class Facade {
             undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
             beat: () => this.beat(stateholder),
+            trip: () => this.trip(stateholder),
             undoLabel: () => Math.pow(2, stateholder.state.game.multiplicator),
         };
     }
@@ -39,4 +40,11 @@ export default class Facade {
         stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : { ...this.getInitialState() }));
 
     undo = (id, stateholder, currentState) => stateholder.setState((state) => state.game.popPreviousState(id, currentState) || null);
+
+    trip = (stateholder) => {
+        console.log('start tripping')
+        setInterval(() =>{
+            stateholder.setState((state) => Model.copy(state));
+        }, 250);
+    }
 }

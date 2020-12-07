@@ -29,7 +29,7 @@ export default class Tableau extends BlinkingComponent {
                         key={index}
                         blink={props.model.blinkFor}
                         entropy={4}
-                        shadowOffset={(4 - 7 + props.index)*2}
+                        shadowOffsetX={(4 - 7 + props.index)*2}
                         offsetTop={getOffset(index)}
                         onClick={props.onClick}
                     />
