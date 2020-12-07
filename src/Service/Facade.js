@@ -33,7 +33,7 @@ export default class Facade {
     }
 
     beat = (stateholder) => {
-        stateholder.setState((state) => Model.copy(state));
+        stateholder.setState((state) => Model.trip(state));
     }
 
     reset = (stateholder) =>
@@ -44,7 +44,7 @@ export default class Facade {
     trip = (stateholder) => {
         console.log('start tripping')
         setInterval(() =>{
-            stateholder.setState((state) => Model.copy(state));
+            stateholder.setState((state) => Model.trip(state));
         }, 250);
     }
 }

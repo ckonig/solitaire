@@ -13,6 +13,7 @@ export default class Stock extends BlinkingComponent {
                     <Card
                         model={card}
                         key={index}
+                        offsetTop={index/2*-1}
                         blink={props.model.blinkFor}
                         shadowOffsetX={-6}
                         shadowOffsetY={-3}

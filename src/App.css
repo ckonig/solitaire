@@ -1,7 +1,9 @@
 /* Page */
 
 body {
-    background-color: darkgreen;
+    background-color: #013b0e;
+    background-image: url("./felt.png");
+    /*https://www.transparenttextures.com/felt.html This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;

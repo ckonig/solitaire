@@ -14,6 +14,10 @@ const Card = (props) => {
         top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
         ...props.model.entropyStyle,
     };
+    if(props.model.offsetTop) {
+      console.log('found it', props.model.offsetTop)
+      style['top'] += props.model.offsetTop;
+    }
     if (props.shadowOffsetX || (!props.shadowOffsetX && props.shadowOffsetX === 0)) {
         const offsetY = props.shadowOffsetY || "-1";
         style["boxShadow"] = props.shadowOffsetX + "px " + offsetY + "px 4px 4px rgba(0, 0, 0, 0.75)";

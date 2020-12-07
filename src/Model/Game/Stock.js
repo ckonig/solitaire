@@ -8,7 +8,7 @@ export default class Stock {
     recycle(waste) {
         if (waste.length) {
             this.stack = waste.reverse().map((element) => {
-                element.causeEntropy(3);
+                element.causeEntropy(1);
                 element.isHidden = true;
                 return element;
             });
@@ -30,7 +30,7 @@ export default class Stock {
 
     trip = () => {
         const randomElement = this.stack[Math.floor(Math.random() * this.stack.length)];
-        randomElement && randomElement.causeEntropy(4);      
+        randomElement && randomElement.causeEntropy(1);      
         return this;
     }
 }

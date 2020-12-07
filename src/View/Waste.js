@@ -16,6 +16,7 @@ export default class Waste extends BlinkingComponent {
                         model={card}
                         shadowOffsetX={-4}
                         shadowOffsetY={-3}
+                        offsetTop={index/2*-1}
                         key={index}
                         blink={props.model.blinkFor}
                         onClick={(c) => props.onClick(c)}

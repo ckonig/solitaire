@@ -4,7 +4,8 @@ export default class Card {
         this.type = type;
         this.isHidden = isHidden;
         this.entropyStyle = {};
-        this.causeEntropy(3);
+        this.offsetTop = 0;
+        this.causeEntropy(1);
     }
 
     causeEntropy = (lvl) => {
@@ -18,6 +19,9 @@ export default class Card {
                 this.entropyStyle["left"] = randomInt(0, level / 2);
             } else {
                 this.entropyStyle["right"] = randomInt(0, level / 2);
+            }
+            if (random()) {
+                //this.offsetTop -= randomInt(lvl , lvl);
             }
         }
         //rotate
@@ -35,6 +39,7 @@ export default class Card {
     static copy = (orig) => {
         const copy = new Card(orig.face, orig.type, orig.isHidden);
         copy.source = orig.source;
+        copy.entropyStyle = orig.entropyStyle
         return copy;
     };
 

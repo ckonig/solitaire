@@ -38,6 +38,8 @@ export default class Tableau {
         const top = this.getTop(index);
         if (top.isHidden && card && card.equals(this.getTop(index))) {
             top.isHidden = false;
+            //@todo also entropy to next card
+            top.causeEntropy(4);
             return true;
         }
 

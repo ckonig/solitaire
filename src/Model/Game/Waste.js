@@ -12,7 +12,7 @@ export default class Waste {
     setCardProperties = (card) => {
         card.source = "waste";
         card.isHidden = false;
-        card.causeEntropy(3);
+        card.causeEntropy(1);
         return card;
     };
 
