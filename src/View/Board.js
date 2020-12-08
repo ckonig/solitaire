@@ -38,7 +38,8 @@ const Board = (props) => {
                     reset={props.handlers.reset}
                     undoLabel={props.handlers.undoLabel}
                     undo={props.handlers.undo}
-                    setEntropy={props.handlers.setEntropy}
+                    setBaseEntropy={props.handlers.setBaseEntropy}
+                    setInteractionEntropy={props.handlers.setInteractionEntropy}
                     beat={props.handlers.beat}
                     settings={props.model.settings}
                     model={props.model.game}

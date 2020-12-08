@@ -27,13 +27,14 @@ export default class Facade {
             undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
             beat: () => this.beat(stateholder),
-            setEntropy: (lvl) => this.setEntropy(stateholder, lvl),
+            setBaseEntropy: (lvl) => this.setBaseEntropy(stateholder, lvl),
+            setInteractionEntropy: (lvl) => this.setInteractionEntropy(stateholder, lvl),
             undoLabel: () => Math.pow(2, stateholder.state.game.multiplicator),
         };
     }
 
     beat = (stateholder) => {
-        this.setEntropy(stateholder, 4);
+        this.setBaseEntropy(stateholder, 4);
     };
 
     reset = (stateholder) =>
@@ -41,10 +42,17 @@ export default class Facade {
 
     undo = (id, stateholder, currentState) => stateholder.setState((state) => state.game.popPreviousState(id, currentState) || null);
 
-    setEntropy = (stateholder, lvl) => {
+    setBaseEntropy = (stateholder, lvl) => {
         stateholder.setState((state) => {
-            state.settings.entropyLevel = lvl;
-            stateholder.setState((state) => Model.setEntropy(state, state.settings.entropyLevel));
+            state.settings.baseEntropy = lvl;
+            stateholder.setState((state) => Model.setEntropy(state, state.settings.baseEntropy));
+            return state;
+        });
+    };
+
+    setInteractionEntropy = (stateholder, lvl) => {
+        stateholder.setState((state) => {
+            state.settings.interactionEntropy = lvl;
             return state;
         });
     };

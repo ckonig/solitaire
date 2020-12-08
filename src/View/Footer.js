@@ -17,8 +17,18 @@ const Footer = (props) => {
                     <button onClick={props.beat}>beat on table</button>
                 </div>
                 <div>
-                    Entropy Level
-                    <select onChange={(e) => props.setEntropy(e.target.value)} value={props.settings.entropyLevel}>
+                    Base Entropy Level
+                    <select onChange={(e) => props.setBaseEntropy(e.target.value)} value={props.settings.baseEntropy}>
+                        {props.settings.entropyLevels.map((entropyLevel, index) => (
+                            <option key={entropyLevel} value={index}>
+                                {entropyLevel}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    Interaction Entropy Level
+                    <select onChange={(e) => props.setInteractionEntropy(e.target.value)} value={props.settings.interactionEntropy}>
                         {props.settings.entropyLevels.map((entropyLevel, index) => (
                             <option key={entropyLevel} value={index}>
                                 {entropyLevel}

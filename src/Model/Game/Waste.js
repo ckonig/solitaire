@@ -13,7 +13,7 @@ export default class Waste {
     setCardProperties = (card) => {
         card.source = "waste";
         card.isHidden = false;
-        card.causeEntropy(Math.min(this.settings.entropyLevel, 1));
+        card.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
         return card;
     };
 

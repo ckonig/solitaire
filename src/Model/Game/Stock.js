@@ -9,7 +9,7 @@ export default class Stock {
     recycle(waste) {
         if (waste.length) {
             this.stack = waste.reverse().map((element) => {
-                element.causeEntropy(Math.min(this.settings.entropyLevel, 1));
+                element.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
                 element.isHidden = true;
                 return element;
             });
