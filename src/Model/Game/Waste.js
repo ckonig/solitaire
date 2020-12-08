@@ -1,7 +1,8 @@
 import Card from "../Deck/Card";
 
 export default class Waste {
-    constructor() {
+    constructor(settings) {
+        this.settings = settings;
         this.stack = [];
     }
 
@@ -12,7 +13,7 @@ export default class Waste {
     setCardProperties = (card) => {
         card.source = "waste";
         card.isHidden = false;
-        card.causeEntropy(1);
+        card.causeEntropy(Math.min(this.settings.entropyLevel, 1));
         return card;
     };
 
@@ -25,7 +26,7 @@ export default class Waste {
     getTop = () => this.stack[this.stack.length - 1];
 
     static copy = (orig) => {
-        const copy = new Waste();
+        const copy = new Waste(orig.settings);
         copy.stack = Card.copyAll(orig.stack);
         return copy;
     }

@@ -10,9 +10,9 @@ export default class Facade {
     static getInitialState = (deck) => {
         const settings = new Settings();
         const state = {
-            stock: new Stock([...deck.cards.slice(28)]),
-            waste: new Waste(),
-            foundation: new Foundation(),
+            stock: new Stock([...deck.cards.slice(28)], settings),
+            waste: new Waste(settings),
+            foundation: new Foundation(settings),
             tableau: new Tableau([...deck.cards.slice(0, 28)], settings),
             hand: new Hand(),
             game: new Game(),

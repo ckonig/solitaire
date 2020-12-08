@@ -10,7 +10,7 @@ export default class Foundation extends BlinkingComponent {
         const props = this.props;
         return (
             <div>
-                <StackBase blink={props.model.blinkFor} onClick={() => props.onClick()} visible={props.model.stack.length} >
+                <StackBase blink={props.model.blinkFor} onClick={() => props.onClick()} visible={!props.model.stack.length} >
                     <div className={"align-center foundation-base suit-" + props.model.icon}>{props.model.icon}</div>
                 </StackBase>
                 {props.model.stack.map((card, index) => (

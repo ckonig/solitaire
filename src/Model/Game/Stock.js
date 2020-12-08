@@ -1,14 +1,15 @@
 import Card from "../Deck/Card";
 
 export default class Stock {
-    constructor(stack) {
+    constructor(stack, settings) {
+        this.settings = settings;
         this.stack = [...stack];
     }
 
     recycle(waste) {
         if (waste.length) {
             this.stack = waste.reverse().map((element) => {
-                element.causeEntropy(1);
+                element.causeEntropy(Math.min(this.settings.entropyLevel, 1));
                 element.isHidden = true;
                 return element;
             });
@@ -23,7 +24,7 @@ export default class Stock {
     getTop = () => this.stack[this.stack.length - 1];
 
     static copy = (orig) => {
-        const copy = new Stock([]);
+        const copy = new Stock([], orig.settings);
         copy.stack = Card.copyAll(orig.stack);
         return copy;
     }

@@ -65,7 +65,7 @@ export default class Tableau {
     }
 
     static copy = (orig) => {
-        const copy = new Tableau([]);
+        const copy = new Tableau([], orig.settings);
         copy.stacks = orig.stacks.map(stack => ({stack: Card.copyAll(stack.stack)}));
         return copy;
     }

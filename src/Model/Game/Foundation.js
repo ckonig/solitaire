@@ -3,7 +3,8 @@ import Suits from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
 export default class Foundation {
-    constructor() {
+    constructor(settings) {
+        this.settings = settings;
         const template = () => ({
             stack: [],
             acceptedCards: [...getFoundationOrder()],
@@ -30,7 +31,7 @@ export default class Foundation {
 
     add = (index, cards) => {
         const card = cards[0];
-        card.causeEntropy(3);
+        card.causeEntropy(Math.min(this.settings.entropyLevel, 3));
         card.source = "foundation-" + index;
         this.stacks[index].stack.push(card);
         return this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
@@ -54,7 +55,7 @@ export default class Foundation {
     }
 
     static copy = (orig) => {
-        const copy = new Foundation();
+        const copy = new Foundation(orig.settings);
         copy.stacks = orig.stacks.map((origStack) => ({
             stack: Card.copyAll(origStack.stack),
             acceptedCards: [...origStack.acceptedCards],
