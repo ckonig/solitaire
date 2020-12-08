@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/solitaire/static/css/main.246835c9.chunk.css",
-    "main.js": "/solitaire/static/js/main.e3ccfa23.chunk.js",
-    "main.js.map": "/solitaire/static/js/main.e3ccfa23.chunk.js.map",
+    "main.css": "/solitaire/static/css/main.9d2bbd44.chunk.css",
+    "main.js": "/solitaire/static/js/main.49c81815.chunk.js",
+    "main.js.map": "/solitaire/static/js/main.49c81815.chunk.js.map",
     "runtime-main.js": "/solitaire/static/js/runtime-main.f1d558ff.js",
     "runtime-main.js.map": "/solitaire/static/js/runtime-main.f1d558ff.js.map",
-    "static/js/2.05d1722d.chunk.js": "/solitaire/static/js/2.05d1722d.chunk.js",
-    "static/js/2.05d1722d.chunk.js.map": "/solitaire/static/js/2.05d1722d.chunk.js.map",
+    "static/js/2.0dbe3083.chunk.js": "/solitaire/static/js/2.0dbe3083.chunk.js",
+    "static/js/2.0dbe3083.chunk.js.map": "/solitaire/static/js/2.0dbe3083.chunk.js.map",
     "index.html": "/solitaire/index.html",
-    "static/css/main.246835c9.chunk.css.map": "/solitaire/static/css/main.246835c9.chunk.css.map",
-    "static/js/2.05d1722d.chunk.js.LICENSE.txt": "/solitaire/static/js/2.05d1722d.chunk.js.LICENSE.txt",
+    "static/css/main.9d2bbd44.chunk.css.map": "/solitaire/static/css/main.9d2bbd44.chunk.css.map",
+    "static/js/2.0dbe3083.chunk.js.LICENSE.txt": "/solitaire/static/js/2.0dbe3083.chunk.js.LICENSE.txt",
     "static/media/App.css": "/solitaire/static/media/felt.5b148bae.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f1d558ff.js",
-    "static/js/2.05d1722d.chunk.js",
-    "static/css/main.246835c9.chunk.css",
-    "static/js/main.e3ccfa23.chunk.js"
+    "static/js/2.0dbe3083.chunk.js",
+    "static/css/main.9d2bbd44.chunk.css",
+    "static/js/main.49c81815.chunk.js"
   ]
 }
