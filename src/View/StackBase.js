@@ -5,6 +5,9 @@ const StackBase = (props) => {
     if (props.blink) {
         classname += " blink";
     }
+    if (props.visible) {
+        classname += "socket-empty";
+    }
     return (
         <div className={classname} onClick={() => props.onClick()}>
             {props.children}
