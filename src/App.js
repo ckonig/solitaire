@@ -8,6 +8,7 @@ import React from "react";
 export default class App extends Component {
     constructor(props) {
         super(props);
+        //@todo allow resuming earlier game.
         this.game = new Game();
         this.state = this.game.getInitialState(this);
     }

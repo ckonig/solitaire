@@ -14,16 +14,11 @@ export default class Facade {
     getInitialState = () => Model.getInitialState(this.deck);
 
     getHandlers(stateholder, state) {
-        let handler = "dispatchPickup";
-        if (state && state.hand && state.hand.isHoldingCard()) {
-            handler = "dispatchPutDown";
-        }
-
         return {
-            clickTableau: new Tableau(stateholder)[handler],
-            clickFoundation: new Foundation(stateholder)[handler],
-            clickStock: new Stock(stateholder)[handler],
-            clickWaste: new Waste(stateholder)[handler],
+            clickTableau: new Tableau(stateholder, state.hand).getHandler(state.hand),
+            clickFoundation: new Foundation(stateholder).getHandler(state.hand),
+            clickStock: new Stock(stateholder).getHandler(state.hand),
+            clickWaste: new Waste(stateholder).getHandler(state.hand),
             undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
             beat: () => this.beat(stateholder),
@@ -35,6 +30,7 @@ export default class Facade {
         };
     }
 
+    //@todo move to new service
     beat = (stateholder) => {
         this.setBaseEntropy(stateholder, 4);
     };

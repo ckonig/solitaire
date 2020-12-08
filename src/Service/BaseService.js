@@ -1,6 +1,14 @@
 import Model from "../Model/Facade";
 
 export default class Service {
+    getHandler(hand) {
+        let handler = "dispatchPickup";
+        if (hand && hand.isHoldingCard()) {
+            handler = "dispatchPutDown";
+        }
+        return this[handler];
+    }
+
     constructor(stateholder) {
         this._setState = (a, b) =>
             stateholder.setState((state) => {
@@ -8,6 +16,7 @@ export default class Service {
                 const previous = Model.copy(state);
                 a(state);
                 if (state.game.modified) {
+                    //@todo  use localstorage for previous state, reduce react state for performance
                     state.game.pushPreviousState(previous);
                     return { ...state };
                 }

@@ -47,7 +47,7 @@ export default class Foundation {
     };
 
     countCards = () => {
-        this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
+        return this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
     };
 
     getTop(index) {
