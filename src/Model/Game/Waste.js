@@ -30,9 +30,8 @@ export default class Waste {
         return copy;
     }
 
-    trip = () => {
-        const randomElement = this.stack[Math.floor(Math.random() * this.stack.length)];
-        randomElement && randomElement.causeEntropy(4);     
+    setEntropy = (lvl) => {
+        this.stack.forEach(element => element.causeEntropy(Math.min(lvl,1)));
         return this;
     }
 }

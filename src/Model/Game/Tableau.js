@@ -2,8 +2,9 @@ import Card from "../Deck/Card";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 export default class Tableau {
-    constructor(cards) {
+    constructor(cards, settings) {
         this.stacks = !cards ? [] : new TableauGenerator().generateStacks(cards);
+        this.settings = settings;
     }
 
     getStack = (index) => {
@@ -27,6 +28,7 @@ export default class Tableau {
     popWithFollowing = (card, i) => {
         for (let j = 0; j < this.stacks[i].stack.length; j++) {
             if (card && card.equals(this.stacks[i].stack[j])) {
+                //@todo also entropy to next card
                 return this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
             }
         }
@@ -39,7 +41,7 @@ export default class Tableau {
         if (top.isHidden && card && card.equals(this.getTop(index))) {
             top.isHidden = false;
             //@todo also entropy to next card
-            top.causeEntropy(4);
+            top.causeEntropy(this.settings.entropyLevel);
             return true;
         }
 
@@ -47,16 +49,14 @@ export default class Tableau {
     };
 
     add = (index, cards) => {
-        this.getTop(index) && this.getTop(index).causeEntropy(3);
+        this.getTop(index) && this.getTop(index).causeEntropy(this.settings.entropyLevel);
         this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
-
-        //this.stacks[index].stack.push(cards.map((c) => this.setCardProperties(c, index))); //@todo investigate why this doesn't work
         return cards;
     };
 
     setCardProperties = (card, index) => {
         card.source = "tableau-" + index;
-        card.causeEntropy(4);
+        card.causeEntropy(this.settings.entropyLevel);
         return card;
     };
 
@@ -70,12 +70,10 @@ export default class Tableau {
         return copy;
     }
 
-    trip = () => {
-        const randomStack = this.stacks[Math.floor(Math.random() * this.stacks.length)];
-        const randomElement = randomStack && randomStack.stack[Math.floor(Math.random() * randomStack.stack.length)];
-        randomElement && randomElement.causeEntropy(4);        
+    setEntropy = (lvl) => {
+        this.stacks.forEach((stack) => stack.stack.forEach((element) => element.causeEntropy(Math.min(lvl, 4))));
         return this;
-    }
+    };
 }
 
 class TableauGenerator {

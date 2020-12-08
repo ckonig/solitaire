@@ -81,7 +81,7 @@ body {
 /* Footer Layout Grid */
 .footer-grid-container {
     display: grid;
-    grid-template-areas: "Points clock IsEnded Reset Beat Trip Undo report";
+    grid-template-areas: "Points clock IsEnded Reset Beat Entropy Undo report";
 }
 
 .clock {

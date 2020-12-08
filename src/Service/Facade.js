@@ -27,24 +27,25 @@ export default class Facade {
             undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
             beat: () => this.beat(stateholder),
-            trip: () => this.trip(stateholder),
+            setEntropy: (lvl) => this.setEntropy(stateholder, lvl),
             undoLabel: () => Math.pow(2, stateholder.state.game.multiplicator),
         };
     }
 
     beat = (stateholder) => {
-        stateholder.setState((state) => Model.trip(state));
-    }
+        this.setEntropy(stateholder, 4);
+    };
 
     reset = (stateholder) =>
         stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : { ...this.getInitialState() }));
 
     undo = (id, stateholder, currentState) => stateholder.setState((state) => state.game.popPreviousState(id, currentState) || null);
 
-    trip = (stateholder) => {
-        console.log('start tripping')
-        setInterval(() =>{
-            stateholder.setState((state) => Model.trip(state));
-        }, 250);
-    }
+    setEntropy = (stateholder, lvl) => {
+        stateholder.setState((state) => {
+            state.settings.entropyLevel = lvl;
+            stateholder.setState((state) => Model.setEntropy(state, state.settings.entropyLevel));
+            return state;
+        });
+    };
 }

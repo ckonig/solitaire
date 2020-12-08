@@ -1,19 +1,22 @@
 import Foundation from "./Game/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
+import Settings from "./Game/Settings";
 import Stock from "./Game/Stock";
 import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
 export default class Facade {
     static getInitialState = (deck) => {
+        const settings = new Settings();
         const state = {
             stock: new Stock([...deck.cards.slice(28)]),
             waste: new Waste(),
             foundation: new Foundation(),
-            tableau: new Tableau([...deck.cards.slice(0, 28)]),
+            tableau: new Tableau([...deck.cards.slice(0, 28)], settings),
             hand: new Hand(),
             game: new Game(),
+            settings: settings,
         };
         return state;
     };
@@ -26,17 +29,19 @@ export default class Facade {
             tableau: Tableau.copy(state.tableau),
             hand: Hand.copy(state.hand),
             game: Game.copy(state.game),
+            settings: state.settings,
         };
     };
 
-    static trip = (state) => {
+    static setEntropy = (state, lvl) => {
         return {
-            stock: state.stock.trip(),
-            waste: state.waste.trip(),
-            foundation: state.foundation.trip(),
-            tableau: state.tableau.trip(),
+            stock: state.stock.setEntropy(lvl),
+            waste: state.waste.setEntropy(lvl),
+            foundation: state.foundation.setEntropy(lvl),
+            tableau: state.tableau.setEntropy(lvl),
             hand: state.hand,
             game: state.game,
+            settings: state.settings,
         };
     };
 }

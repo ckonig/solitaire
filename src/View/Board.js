@@ -38,8 +38,9 @@ const Board = (props) => {
                     reset={props.handlers.reset}
                     undoLabel={props.handlers.undoLabel}
                     undo={props.handlers.undo}
+                    setEntropy={props.handlers.setEntropy}
                     beat={props.handlers.beat}
-                    trip={props.handlers.trip}
+                    settings={props.model.settings}
                     model={props.model.game}
                 />
             </div>

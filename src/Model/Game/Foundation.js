@@ -29,7 +29,7 @@ export default class Foundation {
     };
 
     add = (index, cards) => {
-        const card = cards[0]
+        const card = cards[0];
         card.causeEntropy(3);
         card.source = "foundation-" + index;
         this.stacks[index].stack.push(card);
@@ -65,10 +65,8 @@ export default class Foundation {
         return copy;
     };
 
-    trip = () => {
-        const randomStack = this.stacks[Math.floor(Math.random() * this.stacks.length)];
-        const randomElement = randomStack.stack[Math.floor(Math.random() * randomStack.stack.length)];
-        randomElement && randomElement.causeEntropy(4);        
+    setEntropy = (lvl) => {
+        this.stacks.forEach((stack) => stack.stack.forEach((element) => element.causeEntropy(Math.min(3, lvl))));
         return this;
-    }
+    };
 }

@@ -28,9 +28,8 @@ export default class Stock {
         return copy;
     }
 
-    trip = () => {
-        const randomElement = this.stack[Math.floor(Math.random() * this.stack.length)];
-        randomElement && randomElement.causeEntropy(1);      
+    setEntropy = (lvl) => {
+        this.stack.forEach(element => element.causeEntropy(Math.min(lvl,1)));
         return this;
     }
 }
