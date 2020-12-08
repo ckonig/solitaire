@@ -11,7 +11,7 @@ export default class Settings {
         this.drawModes = ["single"];
         this.drawMode = "single"; //@todo implement triple draw
 
-        this.is3D = true;
+        this.is3D = false;
     }
 
     is_touch_device() {

@@ -6,6 +6,10 @@ export default class MouseHand extends Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
+
+        this.state = {
+            positionFixed: true,
+        };
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
     }
@@ -15,6 +19,9 @@ export default class MouseHand extends Component {
         if (this.props.putBack) {
             document.addEventListener("keydown", this.onKeyDown, false);
         }
+        this.setState(() => ({
+            positionFixed: true,
+        }));
     }
 
     componentWillUnmount() {
@@ -22,40 +29,28 @@ export default class MouseHand extends Component {
         document.addEventListener("keydown", this.onKeyDown, false);
     }
 
-    onMouseMove(e) {
+    onMouseMove = (e) => {
+        if (this.state.positionFixed) {
+            this.setState((state) => {
+                state.positionFixed = false;
+                return { ...state };
+            });
+        }
         this.updateDisplay(e);
-    }
+    };
 
     updateDisplay(e) {
-        const node = this.myRef.current;
-        if (this.props.hand && this.props.parent == this.props.hand.source) {
-            if (e) {
-                const x = e.clientX - this.props.hand.position.click.x + this.props.hand.position.element.x,
-                    y = e.clientY - this.props.hand.position.click.y + this.props.hand.position.element.y;
-                node.style.top = y + "px";
-                node.style.left = x + "px";
-                node.style.display = "block";
-            } else {
-                this.setBasePosition(node);
+        if (!this.state.positionFixed) {
+            const node = this.myRef.current;
+            if (this.props.hand && this.props.parent == this.props.hand.source) {
+                if (e) {
+                    const x = e.clientX - this.props.hand.position.click.x + this.props.hand.position.element.x,
+                        y = e.clientY - this.props.hand.position.click.y + this.props.hand.position.element.y;
+                    node.style.top = y + "px";
+                    node.style.left = x + "px";
+                    node.style.position = "absolute";
+                }
             }
-
-            node.style.position = "absolute";
-        } else {
-            node.style.display = "none";
-        }
-    }
-
-    setBasePosition(node) {
-        node.style.position = "absolute";
-        if (this.props.hand && this.props.parent == this.props.hand.source) {
-            const x = this.props.hand.position.element.x,
-                y = this.props.hand.position.element.y;
-            console.log('render as', x, y)
-            node.style.top = y + "px";
-            node.style.left = x + "px";
-            node.style.display = "block";
-        } else {
-            node.style.display = "none";
         }
     }
 
@@ -65,15 +60,21 @@ export default class MouseHand extends Component {
     }
 
     render() {
-        const node = { style: {} };
-        this.setBasePosition(node);
+        const getOffsetTop = (index) => {
+            if (this.state.positionFixed) {
+                return this.props.offsetTop + index * 24;
+            }
+            return index * 24;
+        };
+        if (!this.props.hand || this.props.parent !== this.props.hand.source) {
+            return null;
+        }
         return (
-            <div ref={this.myRef} style={node.style}>
+            <div ref={this.myRef} style={{}}>
                 {this.props.hand &&
-                    this.props.parent == this.props.hand.source &&
                     this.props.hand.stack &&
                     this.props.hand.stack.map((card, index) => (
-                        <Card model={card} key={index} offsetTop={index * 24} zIndex={1000 + index * 20} isSelected={true} />
+                        <Card model={card} key={index} offsetTop={getOffsetTop(index)} zIndex={1000 + index * 20} isSelected={true} />
                     ))}
             </div>
         );

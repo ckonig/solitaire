@@ -9,7 +9,7 @@ export default class Waste extends Service {
         this.blink(state);
 
     _dispatchPickup = (card, position, state) =>
-        (card && state.hand.pickUp([state.waste.popTop(card)], "waste", position) && state.game.registerPickup()) || this.blink(card, state);
+        (card && state.hand.pickUp([state.waste.popTop(card)], "waste", position) && state.game.registerPickup()) || this.blink(state);
 
     blink = (state) => this._blink((s) => s.waste, state);
 }

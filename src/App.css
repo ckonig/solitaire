@@ -81,6 +81,7 @@ body {
 
 .board-3d {
     transform: rotateX(7.5deg);
+    position: relative;
 }
 
 .card-grid-container > div {

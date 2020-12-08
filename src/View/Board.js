@@ -13,7 +13,7 @@ const Board = (props) => {
         boardClassname += " board-3d";
     }
     return (
-        <div onDoubleClick={props.handlers.beat}>
+        <div>
             <div className="layout-grid-container">
                 <div className={viewClassname}>
                     <div className={boardClassname}>
