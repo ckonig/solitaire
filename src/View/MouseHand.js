@@ -28,13 +28,18 @@ export default class MouseHand extends TouchAwareComponent {
     }
 
     onMouseMove(e) {
-        if (!this.isTouch && this.props.hand && this.props.parent == this.props.hand.source) {
+        if (!this.isTouch) {
             const node = this.myRef.current;
-            const x = e.clientX,
-                y = e.clientY;
-            node.style.top = y + 25 + "px";
-            node.style.left = x + 25 + "px";
-            node.style.position = "absolute";
+            if (this.props.hand && this.props.parent == this.props.hand.source) {
+                const x = e.clientX,
+                    y = e.clientY;
+                node.style.top = y + 25 + "px";
+                node.style.left = x + 25 + "px";
+                node.style.position = "absolute";
+                node.style.display = "block";
+            } else {
+                node.style.display = "none";
+            }
         }
     }
 
