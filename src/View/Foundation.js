@@ -1,31 +1,35 @@
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
-import MouseHand from "./MouseHand";
+import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
-import TouchHand from "./TouchHand";
 
 export default class Foundation extends BlinkingComponent {
     render() {
         const props = this.props;
         return (
             <div>
-                <StackBase blink={props.model.blinkFor} onClick={() => props.onClick()} visible={!props.model.stack.length} >
+                <StackBase blink={props.model.blinkFor} onClick={() => props.onClick()} visible={!props.model.stack.length}>
                     <div className={"align-center foundation-base suit-" + props.model.icon}>{props.model.icon}</div>
                 </StackBase>
                 {props.model.stack.map((card, index) => (
-                    <Card model={card} key={index} shadowOffsetX={(props.index)*2} shadowOffsetY={-3} blink={props.model.blinkFor} entropy={6} onClick={props.onClick} />
+                    <Card
+                        model={card}
+                        key={index}
+                        shadowOffsetX={props.index * 2}
+                        shadowOffsetY={-3}
+                        blink={props.model.blinkFor}
+                        onClick={props.onClick}
+                    />
                 ))}
-                <TouchHand
+                <Hand
+                    settings={props.settings}
                     parent={"foundation-" + props.index}
-                    hand={props.hand}
+                    shadowOffsetX={props.index * 2}
+                    shadowOffsetY={-3}
                     onClick={() => props.onClick(props.model.stack[props.model.stack.length - 1])}
-                />
-                <MouseHand
-                    parent={"foundation-" + props.index}
-                    hand={props.hand}
-                    stack={props.hand.stack}
-                    putBack={() => props.onClick(props.model.stack[props.model.stack.length - 1], props.model.stack.length - 1)}
+                    model={props.hand}
+                    stack={props.model.stack}
                 />
             </div>
         );

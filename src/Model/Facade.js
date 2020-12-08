@@ -29,7 +29,7 @@ export default class Facade {
             tableau: Tableau.copy(state.tableau),
             hand: Hand.copy(state.hand),
             game: Game.copy(state.game),
-            settings: state.settings,
+            settings: Settings.copy(state.settings),
         };
     };
 

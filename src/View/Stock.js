@@ -17,8 +17,6 @@ export default class Stock extends BlinkingComponent {
                         blink={props.model.blinkFor}
                         shadowOffsetX={-6}
                         shadowOffsetY={-3}
-                        source="main"
-                        entropy={6}
                         onClick={props.onClick}
                     />
                 ))}

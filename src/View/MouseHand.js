@@ -1,8 +1,8 @@
 import Card from "./Card";
+import { Component } from "react";
 import React from "react";
-import TouchAwareComponent from "./TouchAwareComponent";
 
-export default class MouseHand extends TouchAwareComponent {
+export default class MouseHand extends Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
@@ -11,58 +11,50 @@ export default class MouseHand extends TouchAwareComponent {
     }
 
     componentDidMount() {
-        if (!this.isTouch) {
-            document.addEventListener("mousemove", this.onMouseMove, false);
-
-            if (this.props.putBack) {
-                document.addEventListener("keydown", this.onKeyDown, false);
-            }
-        }
-    }
-
-    componentWillUnmount() {
-        if (!this.isTouch) {
-            document.removeEventListener("mousemove", this.onMouseMove, false);
+        document.addEventListener("mousemove", this.onMouseMove, false);
+        if (this.props.putBack) {
             document.addEventListener("keydown", this.onKeyDown, false);
         }
     }
 
+    componentWillUnmount() {
+        document.removeEventListener("mousemove", this.onMouseMove, false);
+        document.addEventListener("keydown", this.onKeyDown, false);
+    }
+
     onMouseMove(e) {
-        if (!this.isTouch) {
-            const node = this.myRef.current;
-            if (this.props.hand && this.props.parent == this.props.hand.source) {
-                const x = e.clientX,
-                    y = e.clientY;
-                node.style.top = y + 25 + "px";
-                node.style.left = x + 25 + "px";
-                node.style.position = "absolute";
-                node.style.display = "block";
-            } else {
-                node.style.display = "none";
-            }
+        const node = this.myRef.current;
+        if (this.props.hand && this.props.parent == this.props.hand.source) {
+            const x = e.clientX,
+                y = e.clientY;
+            node.style.top = y + 25 + "px";
+            node.style.left = x + 25 + "px";
+            node.style.position = "absolute";
+            node.style.display = "block";
+        } else {
+            node.style.display = "none";
         }
     }
 
     onKeyDown(e) {
         const evtobj = window.event ? event : e;
-        if (evtobj.keyCode == 27 && !this.isTouch && this.props.hand && this.props.parent == this.props.hand.source) this.props.putBack();
+        if (evtobj.keyCode == 27 && this.props.hand && this.props.parent == this.props.hand.source) this.props.putBack();
     }
 
     render() {
         return (
             <div ref={this.myRef}>
-                {!this.isTouch &&
-                    this.props.hand &&
+                {this.props.hand &&
                     this.props.parent == this.props.hand.source &&
-                    this.props.stack &&
-                    this.props.stack.map((card, index) => (
+                    this.props.hand.stack &&
+                    this.props.hand.stack.map((card, index) => (
                         <Card
                             model={card}
                             key={index}
                             onClick={() => {
                                 console.error("clicked card in mouse hand");
                             }}
-                            offsetTop={index * 20}
+                            offsetTop={index * 24}
                             zIndex={1000 + index * 20}
                             isSelected={true}
                         />

@@ -1,10 +1,10 @@
 import Card from "./Card";
+import { Component } from "react";
 import React from "react";
-import TouchAwareComponent from "./TouchAwareComponent";
 
-export default class TouchHand extends TouchAwareComponent {
+export default class TouchHand extends Component {
     render() {
-        if (!this.isTouch || !this.props.hand || this.props.parent !== this.props.hand.source) {
+        if (!this.props.hand || this.props.parent !== this.props.hand.source) {
             return null;
         }
         return (
@@ -15,7 +15,9 @@ export default class TouchHand extends TouchAwareComponent {
                         <Card
                             model={card}
                             key={index}
-                            offsetTop={this.props.offset + index * 20}
+                            shadowOffsetX={this.props.shadowOffsetX}
+                            shadowOffsetY={this.props.shadowOffsetY}
+                            offsetTop={this.props.offsetTop + (index * 24)}
                             zIndex={1000 + index * 20}
                             isSelected={true}
                             onClick={(c) => this.props.onClick(c)}

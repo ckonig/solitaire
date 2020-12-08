@@ -1,9 +1,8 @@
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
-import MouseHand from "./MouseHand";
+import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
-import TouchHand from "./TouchHand";
 
 export default class Waste extends BlinkingComponent {
     render() {
@@ -16,19 +15,21 @@ export default class Waste extends BlinkingComponent {
                         model={card}
                         shadowOffsetX={-4}
                         shadowOffsetY={-3}
-                        offsetTop={index/2*-1}
+                        offsetTop={(index / 2) * -1}
                         key={index}
                         blink={props.model.blinkFor}
                         onClick={(c) => props.onClick(c)}
-                        entropy={6}
                     />
                 ))}
-                <TouchHand parent="waste" hand={props.hand} onClick={(c) => props.onClick(c, "waste")} />
-                <MouseHand
-                    parent={"waste"}
-                    hand={props.hand}
-                    stack={props.hand.stack}
-                    putBack={() => props.onClick(props.model.stack[props.model.stack.length - 1], props.model.stack.length - 1)}
+                <Hand
+                    settings={props.model.settings}
+                    shadowOffsetX={-4}
+                    shadowOffsetY={-3}
+                    offsetTop={(props.model.stack.length / 2) * -1}
+                    parent="waste"
+                    onClick={props.onClick}
+                    model={props.hand}
+                    stack={props.model.stack}
                 />
             </div>
         );

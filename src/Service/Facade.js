@@ -29,6 +29,8 @@ export default class Facade {
             beat: () => this.beat(stateholder),
             setBaseEntropy: (lvl) => this.setBaseEntropy(stateholder, lvl),
             setInteractionEntropy: (lvl) => this.setInteractionEntropy(stateholder, lvl),
+            setMouseMode: (mm) => this.setMouseMode(stateholder, mm),
+            toggle3d: () => this.toggle3d(stateholder, state.settings.is3D),
             undoLabel: () => Math.pow(2, stateholder.state.game.multiplicator),
         };
     }
@@ -53,6 +55,24 @@ export default class Facade {
     setInteractionEntropy = (stateholder, lvl) => {
         stateholder.setState((state) => {
             state.settings.interactionEntropy = lvl;
+            return state;
+        });
+    };
+
+    setMouseMode = (stateholder, mm) => {
+        stateholder.setState((state) => {
+            state.settings.mouseMode = mm;
+            return state;
+        });
+    };
+
+    toggle3d = (stateholder, was3D) => {
+        stateholder.setState((state) => {
+            console.debug("set 3d mode", state.settings.is3D);
+            if (state.settings.is3D == was3D) {
+                state.settings.is3D = !state.settings.is3D;
+            }
+            console.debug("set 3d mode", state.settings.is3D);
             return state;
         });
     };

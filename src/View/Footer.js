@@ -36,6 +36,20 @@ const Footer = (props) => {
                         ))}
                     </select>
                 </div>
+                <div>
+                    Selected Card Behavior
+                    <select onChange={(e) => props.setMouseMode(e.target.value)} value={props.settings.mouseMode}>
+                        {props.settings.mouseModes.map((mouseMode) => (
+                            <option key={mouseMode} value={mouseMode}>
+                                {mouseMode}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div>
+                    <button onClick={props.toggle3d}>Toggle 3D</button>
+                </div>
                 <span className="report">
                     Report Issues <a href="https://github.com/ckonig/solitaire/issues">here</a>.
                 </span>

@@ -1,9 +1,8 @@
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
-import MouseHand from "./MouseHand";
+import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
-import TouchHand from "./TouchHand";
 
 export default class Tableau extends BlinkingComponent {
     render() {
@@ -22,29 +21,29 @@ export default class Tableau extends BlinkingComponent {
 
         return (
             <div>
-                <StackBase blink={props.model.blinkFor} onClick={() => props.onClick(null, "tableau-" + props.index)} visible={!props.model.stack.length}  />
+                <StackBase
+                    blink={props.model.blinkFor}
+                    onClick={() => props.onClick(null, "tableau-" + props.index)}
+                    visible={!props.model.stack.length}
+                />
                 {props.model.stack.map((card, index) => (
                     <Card
                         model={card}
                         key={index}
                         blink={props.model.blinkFor}
-                        entropy={4}
-                        shadowOffsetX={(4 - 7 + props.index)*2}
+                        shadowOffsetX={(4 - 7 + props.index) * 2}
                         offsetTop={getOffset(index)}
                         onClick={props.onClick}
                     />
                 ))}
-                <TouchHand
+                <Hand
+                    settings={props.settings}
                     parent={"tableau-" + props.index}
-                    hand={props.hand}
-                    offset={getOffset(props.model.stack.length)}
-                    onClick={() => props.onClick(props.model.stack[props.model.stack.length - 1])}
-                />
-                <MouseHand
-                    parent={"tableau-" + props.index}
-                    hand={props.hand}
-                    stack={props.hand.stack}
-                    putBack={() => props.onClick(props.model.stack[props.model.stack.length - 1], props.model.stack.length - 1)}
+                    onClick={props.onClick}
+                    model={props.hand}
+                    stack={props.model.stack}
+                    shadowOffsetX={(4 - 7 + props.index) * 2}
+                    offsetTop={getOffset(props.model.stack.length)}
                 />
             </div>
         );
