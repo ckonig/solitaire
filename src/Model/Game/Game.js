@@ -11,6 +11,7 @@ export default class Game {
     }
 
     registerMove(target, source) {
+        console.log('registered move')
         this.memorable = true;
         this.modified = true;
         const currentMove = {

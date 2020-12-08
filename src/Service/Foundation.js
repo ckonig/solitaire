@@ -1,7 +1,7 @@
 import Service from "./BaseService";
 
 export default class Foundation extends Service {
-    _dispatchPutDown = (_card, state, index) => {
+    _dispatchPutDown = (_card, position, state, index) => {
         if (!state.hand.hasMoreThanOneCard() && state.foundation.accepts(index, state.hand.currentCard())) {
             const src = state.hand.source;
             state.foundation.add(index, state.hand.putDown()) && state.game.registerMove("foundation-" + index, src);
@@ -11,10 +11,10 @@ export default class Foundation extends Service {
         }
     };
 
-    _dispatchPickup = (_card, state, index) => {
+    _dispatchPickup = (_card, position, state, index) => {
         const card = state.foundation.getTop(index);
         if (card && state.foundation.getPreviousUsed(index) === card.face) {
-            state.hand.pickUp([state.foundation.remove(index, card)], card.source) && state.game.registerPickup();
+            state.hand.pickUp([state.foundation.remove(index, card)], card.source, position) && state.game.registerPickup();
         } else {
             this.blink(index, state);
         }

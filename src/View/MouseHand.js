@@ -23,13 +23,36 @@ export default class MouseHand extends Component {
     }
 
     onMouseMove(e) {
+        this.updateDisplay(e);
+    }
+
+    updateDisplay(e) {
         const node = this.myRef.current;
         if (this.props.hand && this.props.parent == this.props.hand.source) {
-            const x = e.clientX,
-                y = e.clientY;
-            node.style.top = y + 25 + "px";
-            node.style.left = x + 25 + "px";
+            if (e) {
+                const x = e.clientX - this.props.hand.position.click.x + this.props.hand.position.element.x,
+                    y = e.clientY - this.props.hand.position.click.y + this.props.hand.position.element.y;
+                node.style.top = y + "px";
+                node.style.left = x + "px";
+                node.style.display = "block";
+            } else {
+                this.setBasePosition(node);
+            }
+
             node.style.position = "absolute";
+        } else {
+            node.style.display = "none";
+        }
+    }
+
+    setBasePosition(node) {
+        node.style.position = "absolute";
+        if (this.props.hand && this.props.parent == this.props.hand.source) {
+            const x = this.props.hand.position.element.x,
+                y = this.props.hand.position.element.y;
+            console.log('render as', x, y)
+            node.style.top = y + "px";
+            node.style.left = x + "px";
             node.style.display = "block";
         } else {
             node.style.display = "none";
@@ -42,22 +65,15 @@ export default class MouseHand extends Component {
     }
 
     render() {
+        const node = { style: {} };
+        this.setBasePosition(node);
         return (
-            <div ref={this.myRef}>
+            <div ref={this.myRef} style={node.style}>
                 {this.props.hand &&
                     this.props.parent == this.props.hand.source &&
                     this.props.hand.stack &&
                     this.props.hand.stack.map((card, index) => (
-                        <Card
-                            model={card}
-                            key={index}
-                            onClick={() => {
-                                console.error("clicked card in mouse hand");
-                            }}
-                            offsetTop={index * 24}
-                            zIndex={1000 + index * 20}
-                            isSelected={true}
-                        />
+                        <Card model={card} key={index} offsetTop={index * 24} zIndex={1000 + index * 20} isSelected={true} />
                     ))}
             </div>
         );

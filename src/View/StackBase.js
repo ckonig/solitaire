@@ -13,7 +13,7 @@ const StackBase = (props) => {
         classname += " socket-full";
     }
     return (
-        <div className={classname} onClick={() => props.onClick()}>
+        <div className={classname} onClick={()=> props.onClick()}>
             {props.children}
         </div>
     );

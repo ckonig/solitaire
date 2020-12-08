@@ -3,7 +3,7 @@ import Card from "../Deck/Card";
 export default class Stock {
     constructor(stack, settings) {
         this.settings = settings;
-        this.stack = [...stack];
+        this.stack = stack;
     }
 
     recycle(waste) {

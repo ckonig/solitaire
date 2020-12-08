@@ -9,7 +9,10 @@ export default class Waste extends BlinkingComponent {
         const props = this.props;
         return (
             <div>
-                <StackBase blink={props.model.blinkFor} onClick={props.onClick} visible={!props.model.stack.length} />
+                <StackBase blink={props.model.blinkFor} onClick={() => {
+                    console.debug('stackbase click')
+                    props.onClick(null, null)
+                }} visible={!props.model.stack.length} />
                 {props.model.stack.map((card, index) => (
                     <Card
                         model={card}
@@ -18,7 +21,7 @@ export default class Waste extends BlinkingComponent {
                         offsetTop={(index / 2) * -1}
                         key={index}
                         blink={props.model.blinkFor}
-                        onClick={(c) => props.onClick(c)}
+                        onClick={(c, p) => props.onClick(c, p)}
                     />
                 ))}
                 <Hand

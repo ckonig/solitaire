@@ -27,7 +27,7 @@ export default class Foundation extends BlinkingComponent {
                     parent={"foundation-" + props.index}
                     shadowOffsetX={props.index * 2}
                     shadowOffsetY={-3}
-                    onClick={() => props.onClick(props.model.stack[props.model.stack.length - 1])}
+                    onClick={(c, p) => props.onClick(props.model.stack[props.model.stack.length - 1], p)}
                     model={props.hand}
                     stack={props.model.stack}
                 />

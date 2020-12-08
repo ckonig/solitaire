@@ -17,11 +17,11 @@ export default class Service {
             }, b);
     }
 
-    dispatchPutDown = (card, index) => {
+    dispatchPutDown = (card, position, index) => {
         this._setState(
             (state) => {
                 if (state.hand.isHoldingCard()) {
-                    this._dispatchPutDown(card, state, index);
+                    this._dispatchPutDown(card, position, state, index);
                 }
             },
             null,
@@ -29,10 +29,10 @@ export default class Service {
         );
     };
 
-    dispatchPickup = (card, index) => {
+    dispatchPickup = (card, position, index) => {
         this._setState((state) => {
             if (!state.hand.isHoldingCard()) {
-                this._dispatchPickup(card, state, index);
+                this._dispatchPickup(card, position, state, index);
             }
         });
     };

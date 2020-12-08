@@ -14,7 +14,7 @@ export default class Tableau {
     accepts = (index, current) => {
         const top = this.getTop(index);
         if (!top) {
-            return current && current.face == "K";
+            return current && current.face === "K";
         }
         if (top.isHidden) {
             return false;
@@ -22,7 +22,16 @@ export default class Tableau {
         const range = [...getTableauOrder()];
         const currentIndex = range.indexOf(current.face);
         const topIndex = range.indexOf(top.face);
-        return currentIndex + 1 == topIndex && current.type.color != top.type.color;
+        return currentIndex + 1 == topIndex && current.type.color !== top.type.color;
+    };
+
+    getCard = (index, card) => {
+        for (let j = 0; j < this.stacks[index].stack.length; j++) {
+            if (card && card.equals(this.stacks[index].stack[j]) && card.isHidden === this.stacks[index].stack[j].isHidden) {
+                return this.stacks[index].stack[j];
+            }
+        }
+        return false;
     };
 
     popWithFollowing = (card, i) => {
@@ -49,12 +58,10 @@ export default class Tableau {
     };
 
     stackEntropy = (index) => {
-        console.log('adding stack entropy', index, this.settings.interactionEntropy)
         let entropy = this.settings.interactionEntropy;
         let next = 1;
         let top = this.getTop(index);
         while (entropy && entropy != 0 && top) {
-            console.debug('loop');
             top.causeEntropy(entropy);
             entropy--;
             top = this.getTop(index, next);

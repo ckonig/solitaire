@@ -27,7 +27,7 @@ const Board = (props) => {
                                 index={index}
                                 model={foundation}
                                 hand={props.model.hand}
-                                onClick={(c) => props.handlers.clickFoundation(c, index)}
+                                onClick={(c, p) => props.handlers.clickFoundation(c, p, index)}
                             />
                         ))}
                         {props.model.tableau.stacks.map((stack, index) => (
@@ -37,7 +37,7 @@ const Board = (props) => {
                                 index={index}
                                 model={stack}
                                 hand={props.model.hand}
-                                onClick={(card) => props.handlers.clickTableau(card, index)}
+                                onClick={(card, p) => props.handlers.clickTableau(card, p, index)}
                             />
                         ))}
                     </div>
