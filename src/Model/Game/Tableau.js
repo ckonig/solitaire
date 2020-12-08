@@ -28,8 +28,9 @@ export default class Tableau {
     popWithFollowing = (card, i) => {
         for (let j = 0; j < this.stacks[i].stack.length; j++) {
             if (card && card.equals(this.stacks[i].stack[j])) {
-                //@todo also entropy to next card
-                return this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
+                const result = this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
+                this.stackEntropy(i);
+                return result;
             }
         }
 
@@ -40,35 +41,50 @@ export default class Tableau {
         const top = this.getTop(index);
         if (top.isHidden && card && card.equals(this.getTop(index))) {
             top.isHidden = false;
-            //@todo also entropy to next card
-            top.causeEntropy(this.settings.entropyLevel);
+            this.stackEntropy(index);
             return true;
         }
 
         return false;
     };
 
+    stackEntropy = (index) => {
+        console.log('adding stack entropy', index, this.settings.entropyLevel)
+        let entropy = this.settings.entropyLevel;
+        let next = 1;
+        let top = this.getTop(index);
+        while (entropy && entropy != 0 && top) {
+            console.debug('loop');
+            top.causeEntropy(entropy);
+            entropy--;
+            top = this.getTop(index, next);
+            next++;
+        }
+    };
+
     add = (index, cards) => {
-        this.getTop(index) && this.getTop(index).causeEntropy(this.settings.entropyLevel);
         this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
+        this.stackEntropy(index);
         return cards;
     };
 
     setCardProperties = (card, index) => {
         card.source = "tableau-" + index;
-        card.causeEntropy(this.settings.entropyLevel);
         return card;
     };
 
-    getTop(index) {
-        return this.stacks[index].stack[this.stacks[index].stack.length - 1];
+    getTop(index, offset) {
+        if (!offset) {
+            offset = 0;
+        }
+        return this.stacks[index].stack[this.stacks[index].stack.length - 1 - offset];
     }
 
     static copy = (orig) => {
         const copy = new Tableau([], orig.settings);
-        copy.stacks = orig.stacks.map(stack => ({stack: Card.copyAll(stack.stack)}));
+        copy.stacks = orig.stacks.map((stack) => ({ stack: Card.copyAll(stack.stack) }));
         return copy;
-    }
+    };
 
     setEntropy = (lvl) => {
         this.stacks.forEach((stack) => stack.stack.forEach((element) => element.causeEntropy(Math.min(lvl, 4))));
