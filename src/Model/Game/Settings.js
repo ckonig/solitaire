@@ -34,6 +34,9 @@ export default class Settings {
     static copy = (orig) => {
         const copy = new Settings();
         copy.showSuggestions = orig.showSuggestions;
+        copy.mouseMode = orig.mouseMode;
+        copy.baseEntropy = orig.baseEntropy;
+        copy.interactionEntropy = orig.interactionEntropy;
         return copy;
     }
 }
