@@ -3,7 +3,6 @@ import Game from "./Game/Game";
 import Hand from "./Game/Hand";
 import Settings from "./Game/Settings";
 import Stock from "./Game/Stock";
-import Suggestions from "./Game/Suggestions";
 import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
@@ -17,7 +16,6 @@ export default class Facade {
             tableau: new Tableau([...deck.cards.slice(0, 28)], settings),
             hand: new Hand(),
             game: new Game(),
-            suggestions: new Suggestions(),
             settings: settings,
         };
         return state;
@@ -32,7 +30,6 @@ export default class Facade {
             hand: Hand.copy(state.hand),
             game: Game.copy(state.game),
             settings: Settings.copy(state.settings),
-            suggestions: new Suggestions(),
         };
     };
 
@@ -45,7 +42,6 @@ export default class Facade {
             hand: state.hand,
             game: state.game,
             settings: state.settings,
-            suggestions: state.suggestions,
         };
     };
 }

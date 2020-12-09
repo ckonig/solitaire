@@ -25,8 +25,9 @@ export default class Settings {
     };
 
     setMouseMode = (stateholder, mm) => {
-        stateholder.setState((state) => {
+        stateholder._setState((state) => {
             state.settings.mouseMode = mm;
+            this.suggestor.evaluateOptions(state);
             return state;
         });
     };
@@ -41,13 +42,13 @@ export default class Settings {
         });
     };
 
-    getHandlers(stateholder, state) {
+    getHandlers(gamestate, state) {
         return {
-            beat: () => this.beat(stateholder),
-            setBaseEntropy: (lvl) => this.setBaseEntropy(stateholder, lvl),
-            setInteractionEntropy: (lvl) => this.setInteractionEntropy(stateholder, lvl),
-            setMouseMode: (mm) => this.setMouseMode(stateholder, mm),
-            toggleShowSuggestions: () => this.toggleShowSuggestions(stateholder, state.settings.showSuggestions),
+            beat: () => this.beat(gamestate),
+            setBaseEntropy: (lvl) => this.setBaseEntropy(gamestate, lvl),
+            setInteractionEntropy: (lvl) => this.setInteractionEntropy(gamestate, lvl),
+            setMouseMode: (mm) => this.setMouseMode(gamestate, mm),
+            toggleShowSuggestions: () => this.toggleShowSuggestions(gamestate, state.settings.showSuggestions),
         };
     }
 }

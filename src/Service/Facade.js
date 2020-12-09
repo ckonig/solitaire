@@ -21,14 +21,14 @@ export default class Facade {
         return model;
     };
 
-    getHandlers(stateholder, state) {
+    getHandlers(gamestate, state) {
         return {
-            ...new Game(this.getInitialState, this.suggestor).getHandlers(stateholder, state),
-            ...new Settings(this.suggestor).getHandlers(stateholder, state),
-            clickTableau: new Tableau(stateholder, this.suggestor).getHandler(state.hand),
-            clickFoundation: new Foundation(stateholder, this.suggestor).getHandler(state.hand),
-            clickStock: new Stock(stateholder, this.suggestor).getHandler(state.hand),
-            clickWaste: new Waste(stateholder, this.suggestor).getHandler(state.hand),
+            ...new Game(this.getInitialState, this.suggestor).getHandlers(gamestate, state),
+            ...new Settings(this.suggestor).getHandlers(gamestate, state),
+            clickTableau: new Tableau(gamestate, this.suggestor).getHandler(state.hand),
+            clickFoundation: new Foundation(gamestate, this.suggestor).getHandler(state.hand),
+            clickStock: new Stock(gamestate, this.suggestor).getHandler(state.hand),
+            clickWaste: new Waste(gamestate, this.suggestor).getHandler(state.hand),
         };
     }
 }

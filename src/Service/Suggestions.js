@@ -89,9 +89,6 @@ export default class Suggestions {
     };
 
     evaluateOptions = (state) => {
-        state.suggestions.suggestions = [];
-        state.suggestions.hasSuggestion = false;
-
         state.waste.suggestion = false;
         state.waste.stack.forEach((c) => {
             c.suggestion = false;

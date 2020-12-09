@@ -70,7 +70,7 @@ export default class MouseHand extends Component {
             return null;
         }
         return (
-            <div ref={this.myRef} style={{}}>
+            <div ref={this.myRef}>
                 {this.props.hand &&
                     this.props.hand.stack &&
                     this.props.hand.stack.map((card, index) => (

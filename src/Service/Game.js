@@ -23,7 +23,7 @@ export default class Game {
         return {
             undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
-            undoLabel: () => Math.pow(2, stateholder.state.game.multiplicator),
+            undoLabel: () => Math.pow(2, state.game.multiplicator),
         };
     }
 }
