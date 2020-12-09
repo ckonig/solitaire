@@ -60,7 +60,7 @@ const Footer = (props) => {
                         </select>
                     </div>
                     <div>
-                        <button onClick={props.toggle3d}>Toggle 3D</button>
+                        <button onClick={props.toggleShowSuggestions}>Toggle Suggestions</button>
                     </div>
                 </div>
 

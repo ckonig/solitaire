@@ -12,6 +12,9 @@ const StackBase = (props) => {
     } else {
         classname += " socket-full";
     }
+    if  (props.suggested) {
+        classname += " socket-suggested";
+    }
     return (
         <div className={classname} onClick={()=> props.onClick()}>
             {props.children}

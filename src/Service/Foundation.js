@@ -2,7 +2,7 @@ import Service from "./BaseService";
 
 export default class Foundation extends Service {
     _dispatchPutDown = (_card, position, state, index) => {
-        if (!state.hand.hasMoreThanOneCard() && state.foundation.accepts(index, state.hand.currentCard())) {
+        if (state.foundation.wouldAccept(index, state.hand)) {
             const src = state.hand.source;
             state.foundation.add(index, state.hand.putDown()) && state.game.registerMove("foundation-" + index, src);
             this.tryDetectEnd(state);

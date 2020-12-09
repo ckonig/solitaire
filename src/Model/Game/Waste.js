@@ -17,6 +17,8 @@ export default class Waste {
         return card;
     };
 
+    wouldAccept = (hand) => hand.source == "waste" && this.canAdd(hand.currentCard());
+
     canAdd = (card) => card && (!this.getTop() || !card.equals(this.getTop()));
 
     popTop = (card) => card && card.equals(this.getTop()) && this.stack.pop();
@@ -29,10 +31,10 @@ export default class Waste {
         const copy = new Waste(orig.settings);
         copy.stack = Card.copyAll(orig.stack);
         return copy;
-    }
+    };
 
     setEntropy = (lvl) => {
-        this.stack.forEach(element => element.causeEntropy(Math.min(lvl,1)));
+        this.stack.forEach((element) => element.causeEntropy(Math.min(lvl, 1)));
         return this;
-    }
+    };
 }

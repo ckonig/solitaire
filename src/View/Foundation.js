@@ -23,7 +23,12 @@ export default class Foundation extends BlinkingComponent {
         const settings = this.props.settings;
         return (
             <div key={stackindex}>
-                <StackBase blink={model.blinkFor} onClick={() => props.onClick(null, null, stackindex)} visible={!model.stack.length}>
+                <StackBase
+                    suggested={model.suggestion && !model.stack.length}
+                    blink={model.blinkFor}
+                    onClick={() => props.onClick(null, null, stackindex)}
+                    visible={!model.stack.length}
+                >
                     <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>
                 </StackBase>
                 {model.stack.map((card, index) => (
@@ -33,6 +38,7 @@ export default class Foundation extends BlinkingComponent {
                         shadowOffsetX={stackindex * 2}
                         shadowOffsetY={-3}
                         blink={model.blinkFor}
+                        isSuggested={model.suggestion && model.stack.length - 1 == index}
                         onClick={(c, p) => props.onClick(c, p, stackindex)}
                     />
                 ))}

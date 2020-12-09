@@ -2,7 +2,7 @@ import Service from "./BaseService";
 
 export default class Waste extends Service {
     _dispatchPutDown = (card, position, state) =>
-        (state.hand.source == "waste" &&
+        (state.waste.wouldAccept(state.hand) &&
             state.waste.tryPutDown(state.hand.currentCard()) &&
             state.hand.putDown() &&
             state.game.registerMove("waste", "waste")) ||

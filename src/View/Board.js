@@ -6,17 +6,11 @@ import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 const Board = (props) => {
-    let viewClassname = "game-view";
-    let boardClassname = "board-grid-container";
-    if (props.model.settings.is3D) {
-        viewClassname += " game-view-3d";
-        boardClassname += " board-3d";
-    }
     return (
         <div>
             <div className="layout-grid-container">
-                <div className={viewClassname}>
-                    <div className={boardClassname}>
+                <div className="game-view">
+                    <div className="board-grid-container">
                         <Stock model={props.model.stock} onClick={props.handlers.clickStock} />
                         <Waste model={props.model.waste} hand={props.model.hand} onClick={props.handlers.clickWaste} />
                         <div className="spacer">&nbsp;</div>
@@ -42,7 +36,7 @@ const Board = (props) => {
                     setMouseMode={props.handlers.setMouseMode}
                     setBaseEntropy={props.handlers.setBaseEntropy}
                     setInteractionEntropy={props.handlers.setInteractionEntropy}
-                    toggle3d={props.handlers.toggle3d}
+                    toggleShowSuggestions={props.handlers.toggleShowSuggestions}
                     beat={props.handlers.beat}
                     settings={props.model.settings}
                     model={props.model.game}

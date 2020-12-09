@@ -11,6 +11,13 @@ export default class Tableau {
         return this.stacks[index];
     };
 
+    wouldAccept = (index, hand) => this.canPutDown(this.getTop(index), hand, index);
+
+    canPutDown = (card, hand, index) =>
+        (card && card.isHidden && hand.isFromCurrentSource(card)) ||
+        this.accepts(index, hand.currentCard()) ||
+        (!card && hand.source == "tableau-" + index);
+
     accepts = (index, current) => {
         const top = this.getTop(index);
         if (!top) {

@@ -27,10 +27,10 @@ export default class Settings {
         });
     };
 
-    toggle3d = (stateholder, was3D) => {
+    toggleShowSuggestions = (stateholder, showSuggestions) => {
         stateholder.setState((state) => {
-            if (state.settings.is3D == was3D) {
-                state.settings.is3D = !state.settings.is3D;
+            if (state.settings.showSuggestions == showSuggestions) {
+                state.settings.showSuggestions = !state.settings.showSuggestions;
             }
             return state;
         });
@@ -42,7 +42,7 @@ export default class Settings {
             setBaseEntropy: (lvl) => this.setBaseEntropy(stateholder, lvl),
             setInteractionEntropy: (lvl) => this.setInteractionEntropy(stateholder, lvl),
             setMouseMode: (mm) => this.setMouseMode(stateholder, mm),
-            toggle3d: () => this.toggle3d(stateholder, state.settings.is3D),
+            toggleShowSuggestions: () => this.toggleShowSuggestions(stateholder, state.settings.showSuggestions),
         };
     }
 }

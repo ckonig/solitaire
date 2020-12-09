@@ -18,12 +18,17 @@ export default class Foundation {
         this.stacks = [...stacks];
     }
 
+    getStacks = () => {
+        return this.stacks;
+    }
+
     getCurrentAccepted = (index) => {
         const currentFoundation = this.stacks[index].acceptedCards;
         return currentFoundation[currentFoundation.length - 1];
     };
 
-    //@todo same (similar) in tableau
+    wouldAccept = (index, hand) => !hand.hasMoreThanOneCard() && this.accepts(index, hand.currentCard());
+
     accepts = (index, card) => {
         const currentAccepted = this.getCurrentAccepted(index);
         return this.stacks[index].icon == card.type.icon && currentAccepted == card.face;

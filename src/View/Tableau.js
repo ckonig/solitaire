@@ -34,6 +34,7 @@ export default class Tableau extends BlinkingComponent {
         return (
             <div>
                 <StackBase
+                    suggested={props.model.suggestion && !props.model.stack.length}
                     blink={props.model.blinkFor}
                     onClick={() => props.onClick(null, null, "tableau-" + props.index)}
                     visible={!props.model.stack.length}
@@ -43,6 +44,7 @@ export default class Tableau extends BlinkingComponent {
                         model={card}
                         key={index}
                         blink={props.model.blinkFor}
+                        isSuggested={props.model.suggestion && props.model.stack.length - 1 == index}
                         shadowOffsetX={(4 - 7 + props.index) * 2}
                         offsetTop={getOffset(index)}
                         onClick={props.onClick}

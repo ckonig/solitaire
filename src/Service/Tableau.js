@@ -2,7 +2,7 @@ import Service from "./BaseService";
 
 export default class Tableau extends Service {
     _dispatchPutDown = (card, position, state, index) => {
-        if (this.canPutDown(card, state, index)) {
+        if (state.tableau.wouldAccept(index, state.hand)) {
             const src = state.hand.source;
             state.tableau.add(index, state.hand.putDown()) && state.game.registerMove("tableau-" + index, src);
         } else {

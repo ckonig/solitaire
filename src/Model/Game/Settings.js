@@ -11,7 +11,7 @@ export default class Settings {
         this.drawModes = ["single"];
         this.drawMode = "single"; //@todo implement triple draw
 
-        this.is3D = false;
+        this.showSuggestions = true;
     }
 
     is_touch_device() {
@@ -33,7 +33,7 @@ export default class Settings {
 
     static copy = (orig) => {
         const copy = new Settings();
-        copy.is3D = orig.is3D;
+        copy.showSuggestions = orig.showSuggestions;
         return copy;
     }
 }
