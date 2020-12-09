@@ -23,7 +23,7 @@ export default class Facade {
 
     getHandlers(stateholder, state) {
         return {
-            ...new Game(this.getInitialState).getHandlers(stateholder, state),
+            ...new Game(this.getInitialState, this.suggestor).getHandlers(stateholder, state),
             ...new Settings(this.suggestor).getHandlers(stateholder, state),
             clickTableau: new Tableau(stateholder, this.suggestor).getHandler(state.hand),
             clickFoundation: new Foundation(stateholder, this.suggestor).getHandler(state.hand),

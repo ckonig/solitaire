@@ -16,6 +16,8 @@ export default class Suggestions {
     getPutdownSuggestions = (state, onlyUseful) => {
         //@todo rate possible moves, enable toggling between none/all/most-useful options
 
+        //@todo this already filters out self-moves, but what if we want to validate single moves?
+
         const accepted = [];
         if (
             state.settings.showSuggestions &&
