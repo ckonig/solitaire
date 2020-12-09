@@ -10,7 +10,6 @@ export default class Card {
 
     causeEntropy = (lvl) => {
         const level = lvl * 2;
-        //@todo this is awesome but move it to model
         const random = () => Math.random() < 0.5;
         const randomInt = (min, max) => Math.random() * (max - min) + min;
         //shift
@@ -19,9 +18,6 @@ export default class Card {
                 this.entropyStyle["left"] = randomInt(0, level / 2);
             } else {
                 this.entropyStyle["right"] = randomInt(0, level / 2);
-            }
-            if (random()) {
-                //this.offsetTop -= randomInt(lvl , lvl);
             }
         }
         //rotate
@@ -39,7 +35,7 @@ export default class Card {
     static copy = (orig) => {
         const copy = new Card(orig.face, orig.type, orig.isHidden);
         copy.source = orig.source;
-        copy.entropyStyle = orig.entropyStyle
+        copy.entropyStyle = { ...orig.entropyStyle };
         return copy;
     };
 

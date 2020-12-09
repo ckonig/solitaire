@@ -24,7 +24,6 @@ export default class Suggestions {
             state.hand.source !== "waste"
         ) {
             accepted.push("waste");
-            console.log("accepting hand in waste", state.hand);
             state.waste.suggestion = true;
         }
         state.foundation.stacks.forEach((stack, index) => {
@@ -136,7 +135,6 @@ export default class Suggestions {
                     state.tableau.stacks.forEach((tableau, index) => {
                         state.tableau.getStack(index).stack.forEach((card, cardIndex) => {
                             if (!card.isHidden) {
-                                console.debug("pickingf iup to tewst");
                                 const tableauState = Facade.copy(state);
                                 this.tableau._dispatchPickup(card, null, tableauState, index);
                                 if (tableauState.game.modified) {

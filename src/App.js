@@ -13,10 +13,6 @@ export default class App extends Component {
         this.state = this.game.getInitialState(this);
     }
 
-    componentDidUpdate() {
-        console.debug("updated", this.state.suggestions);
-    }
-
     render() {
         const handlers = this.game.getHandlers(this, this.state);
         return <Board subscribe={this.subscribe} model={this.state} game={this.game} handlers={handlers} />;
