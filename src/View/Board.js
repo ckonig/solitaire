@@ -20,29 +20,22 @@ const Board = (props) => {
                         <Stock model={props.model.stock} onClick={props.handlers.clickStock} />
                         <Waste model={props.model.waste} hand={props.model.hand} onClick={props.handlers.clickWaste} />
                         <div className="spacer">&nbsp;</div>
-                        {props.model.foundation.stacks.map((foundation, index) => (
-                            <Foundation
-                                settings={props.model.settings}
-                                key={index}
-                                index={index}
-                                model={foundation}
-                                hand={props.model.hand}
-                                onClick={(c, p) => props.handlers.clickFoundation(c, p, index)}
-                            />
-                        ))}
-                        {props.model.tableau.stacks.map((stack, index) => (
-                            <Tableau
-                                settings={props.model.settings}
-                                key={index}
-                                index={index}
-                                model={stack}
-                                hand={props.model.hand}
-                                onClick={(card, p) => props.handlers.clickTableau(card, p, index)}
-                            />
-                        ))}
+                        <Foundation.Stacks
+                            settings={props.model.settings}
+                            model={props.model.foundation}
+                            hand={props.model.hand}
+                            onClick={props.handlers.clickFoundation}
+                        />
+                        <Tableau.Stacks
+                            settings={props.model.settings}
+                            model={props.model.tableau}
+                            hand={props.model.hand}
+                            onClick={props.handlers.clickTableau}
+                        />
                     </div>
                 </div>
                 <Footer
+                    //@todo shrink interface
                     reset={props.handlers.reset}
                     undoLabel={props.handlers.undoLabel}
                     undo={props.handlers.undo}

@@ -6,13 +6,13 @@ const Footer = (props) => {
     return (
         <div className="footer">
             <div className="footer-grid-container">
-                <div>
+                <div className="stats">
                     Game Stats
                     <div>Points: {props.model.points}</div>
                     <Clock className="clock" started={props.model.started} end={props.model.end} />
                     <div>Is Ended: {props.model.isEnded ? "Y" : "N"}</div>
                 </div>
-                <div>
+                <div className="actions">
                     Game Actions
                     <div>
                         <button onClick={props.reset}>reset</button>
@@ -21,7 +21,7 @@ const Footer = (props) => {
                     <div></div>
                 </div>
 
-                <div>
+                <div className="entropy">
                     Entropy
                     <div>
                         <button onClick={props.beat}>beat on table</button>
@@ -47,10 +47,10 @@ const Footer = (props) => {
                         </select>
                     </div>
                 </div>
-                <div>
+                <div className="settings">
                     UI Settings
                     <div>
-                        Selected Card Behavior
+                        Card
                         <select onChange={(e) => props.setMouseMode(e.target.value)} value={props.settings.mouseMode}>
                             {props.settings.mouseModes.map((mouseMode) => (
                                 <option key={mouseMode} value={mouseMode}>
@@ -64,9 +64,13 @@ const Footer = (props) => {
                     </div>
                 </div>
 
-                <span className="report">
-                    Report Issues <a href="https://github.com/ckonig/solitaire/issues">here</a>.
-                </span>
+                <div className="report">
+                    Report Issues
+                    <a target="_blank" rel="noreferrer" href="https://github.com/ckonig/solitaire/issues">
+                        here
+                    </a>
+                    .
+                </div>
             </div>
         </div>
     );

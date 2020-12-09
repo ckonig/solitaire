@@ -16,8 +16,6 @@ export default class Tableau extends Service {
         (!card && state.hand.source == "tableau-" + index);
 
     _dispatchPickup = (card, position, state, index) => {
-        //const _card = state.tableau.getCard(index, _card);
-        console.debug("dispatch pickup", card);
         if (card && !this.tryUncover(card, index, state) && !card.isHidden) {
             state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source, position) && state.game.registerPickup();
         } else if (!card) {

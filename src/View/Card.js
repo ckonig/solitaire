@@ -6,13 +6,11 @@ export default class Card extends Component {
     }
 
     onClick = (e) => {
-        console.debug("internal click handlere", e.clientX, e.clientY);
         let ele = e.target;
         while (ele && !ele.className.includes("card-base")) {
             ele = ele.offsetParent;
         }
 
-        console.log("taking pos from card-base", ele.getBoundingClientRect());
         const rect = ele.getBoundingClientRect();
         const position = {
             click: {
@@ -42,11 +40,7 @@ export default class Card extends Component {
             zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,
             top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
             ...props.model.entropyStyle,
-        };
-        if (props.model.offsetTop) {
-            console.log("found it", props.model.offsetTop);
-            style["top"] += props.model.offsetTop;
-        }
+        };        
         if (!props.isSelected && !props.blink && (props.shadowOffsetX || (!props.shadowOffsetX && props.shadowOffsetX === 0))) {
             const offsetY = props.shadowOffsetY || "-1";
             style["boxShadow"] = props.shadowOffsetX + "px " + offsetY + "px 4px 4px rgba(0, 0, 0, 0.75)";

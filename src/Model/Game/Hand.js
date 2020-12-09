@@ -12,7 +12,6 @@ export default class Hand {
             this.stack = stack;
             this.source = source;
             this.position = position;
-            console.log('picked up', this.stack)
         }
 
         return stack;

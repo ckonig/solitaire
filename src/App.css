@@ -91,18 +91,38 @@ body {
 /* Footer Layout Grid */
 .footer-grid-container {
     display: grid;
-    grid-template-areas: 
-      "Points clock IsEnded Reset Undo"
-      "Beat BaseEntropy InteractionEntropy MouseMode Toggle"
-      "report report report report report";
+  color: white;
+    border-radius: 1vw;
+    grid-gap: 10px;
+    padding: 10px;
+    grid-template-areas:
+        "stats actions entropy settings"
+        "report report report report";
 }
 
-.clock {
-    grid-area: clock;
+.footer-grid-container > div {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 1vw;
+    padding: 1vw;
 }
 
+.stats {
+    grid-area: stats;
+}
+
+.actions {
+    grid-area: actions;
+}
+
+.entropy {
+    grid-area: entropy;
+}
+.settings {
+    grid-area: settings;
+}
 .report {
     grid-area: report;
+    text-align: center;
 }
 
 /* Card Layout Grid */

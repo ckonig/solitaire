@@ -5,6 +5,18 @@ import React from "react";
 import StackBase from "./StackBase";
 
 export default class Tableau extends BlinkingComponent {
+    static Stacks = (props) =>
+        props.model.stacks.map((tableau, index) => (
+            <Tableau
+                settings={props.settings}
+                key={index}
+                index={index}
+                model={tableau}
+                hand={props.hand}
+                onClick={(card, p) => props.onClick(card, p, index)}
+            />
+        ));
+
     render() {
         const props = this.props;
         let offset = 0;
