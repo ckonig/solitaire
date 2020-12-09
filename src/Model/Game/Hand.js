@@ -9,7 +9,10 @@ export default class Hand {
 
     pickUp(stack, source, position) {
         if (stack && stack[0]) {
-            this.stack = stack;
+            this.stack = stack.map((c) => {
+                c.suggestion = false;
+                return c;
+            });
             this.source = source;
             this.position = position;
         }
@@ -32,9 +35,9 @@ export default class Hand {
 
     static copy = (orig) => {
         const copy = new Hand();
-        copy.stack = Card.copyAll(orig.stack)
+        copy.stack = Card.copyAll(orig.stack);
         copy.source = orig.source;
         copy.position = orig.position;
         return copy;
-    }
+    };
 }

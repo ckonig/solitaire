@@ -1,6 +1,10 @@
 import Facade from "../Model/Facade";
 
 export default class Settings {
+    constructor(suggestor) {
+        this.suggestor = suggestor;
+    }
+    
     beat = (stateholder) => {
         this.setBaseEntropy(stateholder, 4);
     };
@@ -31,6 +35,7 @@ export default class Settings {
         stateholder.setState((state) => {
             if (state.settings.showSuggestions == showSuggestions) {
                 state.settings.showSuggestions = !state.settings.showSuggestions;
+                this.suggestor.evaluateOptions(state);
             }
             return state;
         });

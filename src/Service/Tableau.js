@@ -10,11 +10,6 @@ export default class Tableau extends Service {
         }
     };
 
-    canPutDown = (card, state, index) =>
-        (card && card.isHidden && state.hand.isFromCurrentSource(card)) ||
-        state.tableau.accepts(index, state.hand.currentCard()) ||
-        (!card && state.hand.source == "tableau-" + index);
-
     _dispatchPickup = (card, position, state, index) => {
         if (card && !this.tryUncover(card, index, state) && !card.isHidden) {
             state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source, position) && state.game.registerPickup();

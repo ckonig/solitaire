@@ -23,7 +23,7 @@ export default class Waste extends BlinkingComponent {
                         offsetTop={(index / 2) * -1}
                         key={index}
                         blink={props.model.blinkFor}
-                        isSuggested={props.model.suggestion}
+                        isSuggested={props.model.suggestion && index == props.model.stack.length-1}
                         onClick={(c, p) => props.onClick(c, p)}
                     />
                 ))}

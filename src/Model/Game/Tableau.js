@@ -11,6 +11,8 @@ export default class Tableau {
         return this.stacks[index];
     };
 
+    getUnhiddenCards = (index) => this.stacks[index].stack.filter(c => !c.isHidden);
+
     wouldAccept = (index, hand) => this.canPutDown(this.getTop(index), hand, index);
 
     canPutDown = (card, hand, index) =>
@@ -29,7 +31,7 @@ export default class Tableau {
         const range = [...getTableauOrder()];
         const currentIndex = range.indexOf(current.face);
         const topIndex = range.indexOf(top.face);
-        return currentIndex + 1 == topIndex && current.type.color !== top.type.color;
+        return currentIndex + 1 == topIndex && current.type.color !== top.type.color && top.face !== 'A';
     };
 
     getCard = (index, card) => {

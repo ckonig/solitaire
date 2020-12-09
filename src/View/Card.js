@@ -36,13 +36,13 @@ export default class Card extends Component {
         let className = props.className + " card card-base suit-" + model.type.icon;
         className += props.isSelected ? " card-selected" : "";
         className += props.blink ? " blink" : "";
-        className += props.isSuggested ? " card-suggested": "";
+        className += (props.isSuggested || props.model.suggestion) ? " card-suggested": "";
         const style = {
             zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,
             top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
             ...props.model.entropyStyle,
         };        
-        if (!props.isSelected && !props.isSuggested && !props.blink && (props.shadowOffsetX || (!props.shadowOffsetX && props.shadowOffsetX === 0))) {
+        if (!props.isSelected && !(props.isSuggested || props.model.suggestion) && !props.blink && (props.shadowOffsetX || (!props.shadowOffsetX && props.shadowOffsetX === 0))) {
             const offsetY = props.shadowOffsetY || "-1";
             style["boxShadow"] = props.shadowOffsetX + "px " + offsetY + "px 4px 4px rgba(0, 0, 0, 0.75)";
         }
