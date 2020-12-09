@@ -25,7 +25,7 @@ export default class Settings {
     };
 
     setMouseMode = (stateholder, mm) => {
-        stateholder._setState((state) => {
+        stateholder.setState((state) => {
             state.settings.mouseMode = mm;
             this.suggestor.evaluateOptions(state);
             return state;

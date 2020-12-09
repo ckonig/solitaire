@@ -7,17 +7,17 @@ export default class Game {
     reset = (stateholder) =>
         stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : { ...this.getInitialState() }));
 
-    undo = (id, stateholder, currentState) => stateholder.setState((state) => {
-        const previous = state.game.popPreviousState(id, currentState);
-        if (previous) {
-            this.suggestor.evaluateOptions(previous);
-            return previous;
-        }
+    // @todo enable undoing via browser back gesture/button
+    undo = (id, stateholder, currentState) =>
+        stateholder.setState((state) => {
+            const previous = state.game.popPreviousState(id, currentState);
+            if (previous) {
+                this.suggestor.evaluateOptions(previous);
+                return previous;
+            }
 
-        return null;
-    });
-
-    undoLabel = (stateholder) => Math.pow(2, stateholder.state.game.multiplicator);
+            return null;
+        });
 
     getHandlers(stateholder, state) {
         return {

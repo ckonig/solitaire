@@ -21,7 +21,6 @@ export default class GameState {
                 return { ...state };
             }
 
-            // @todo enable undoing via browser back gesture/button
             return null;
         }, b);
 }

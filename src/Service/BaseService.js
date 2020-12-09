@@ -1,8 +1,7 @@
 import Blinker from "./Blinker";
 
 export default class Service {
-    constructor(gamestate, suggestor) {
-        this.suggestor = suggestor;
+    constructor(gamestate) {
         this.gamestate = gamestate;
         this.blinker = new Blinker(gamestate);
     }
