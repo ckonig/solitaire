@@ -4,6 +4,7 @@ import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
+//@todo this works nicely, but looks too verbose to comprehend
 export default class Suggestions {
     constructor(state) {
         this.state = state;
@@ -14,10 +15,6 @@ export default class Suggestions {
     }
 
     getPutdownSuggestions = (state, onlyUseful) => {
-        //@todo rate possible moves, enable toggling between none/all/most-useful options
-
-        //@todo this already filters out self-moves, but what if we want to validate single moves?
-
         const accepted = [];
         if (state.settings.suggestionMode !== "none" && state.hand.isHoldingCard() && state.waste.wouldAccept(state.hand)) {
             if (state.settings.suggestionMode === "full" || state.hand.source !== "waste") {
@@ -35,12 +32,7 @@ export default class Suggestions {
                     if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
                         accepted.push(move);
                         state.foundation.stacks[index].suggestion = true;
-                        console.log("added to foundation possibilities");
-                    } else {
-                        console.log("skipped", state.game.rateMove(move));
                     }
-                } else {
-                    console.log("skipped from same hand");
                 }
             }
         });
@@ -48,7 +40,8 @@ export default class Suggestions {
             if (state.settings.suggestionMode != "none" && state.hand.isHoldingCard() && state.tableau.wouldAccept(index, state.hand)) {
                 if (state.settings.suggestionMode === "full" || state.hand.source !== "tableau-" + index) {
                     if (
-                        !onlyUseful || state.settings.suggestionMode === "full" ||
+                        !onlyUseful ||
+                        state.settings.suggestionMode === "full" ||
                         //filter out moves of King from empty slot to empty slot
                         (!(
                             state.hand.currentCard().face == "K" &&
@@ -155,7 +148,7 @@ export default class Suggestions {
                         });
                     });
 
-                    if (!foundAny) {
+                    if (!foundAny || state.settings.suggestionMode == "full") {
                         state.stock.suggestion = true;
                     }
                 }

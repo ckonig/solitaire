@@ -11,6 +11,7 @@ export default class Card extends Component {
             ele = ele.offsetParent;
         }
 
+        //@todo use scroll difference instead
         const rect = ele.getBoundingClientRect();
         const position = {
             click: {
@@ -36,6 +37,7 @@ export default class Card extends Component {
         let className = props.className + " card card-base suit-" + model.type.icon;
         className += props.isSelected ? " card-selected" : "";
         className += props.blink ? " blink" : "";
+        //@todo onhover, trigger highlight of suggested target card/stack
         className += (props.isSuggested || props.model.suggestion) ? " card-suggested": "";
         const style = {
             zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,

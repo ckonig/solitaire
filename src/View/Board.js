@@ -1,5 +1,6 @@
-import Footer from "./Footer";
 import Foundation from "./Foundation";
+import Header from "./Header";
+import Menu from "./Menu";
 import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
@@ -9,6 +10,16 @@ const Board = (props) => {
     return (
         <div>
             <div className="layout-grid-container">
+                <Header
+                    settings={props.model.settings}
+                    undoLabel={props.handlers.undoLabel}
+                    toggleMenu={props.handlers.toggleMenu}
+                    reset={props.handlers.reset}
+                    undo={props.handlers.undo}
+                    beat={props.handlers.beat}
+                    model={props.model.game}
+                    suggestOnce={props.handlers.suggestOnce}
+                />
                 <div className="game-view">
                     <div className="board-grid-container">
                         <Stock model={props.model.stock} onClick={props.handlers.clickStock} />
@@ -28,17 +39,13 @@ const Board = (props) => {
                         />
                     </div>
                 </div>
-                <Footer
-                    //@todo shrink interface
-                    reset={props.handlers.reset}
+                <Menu
+                    settings={props.model.settings}
                     undoLabel={props.handlers.undoLabel}
-                    undo={props.handlers.undo}
                     setMouseMode={props.handlers.setMouseMode}
                     setBaseEntropy={props.handlers.setBaseEntropy}
                     setInteractionEntropy={props.handlers.setInteractionEntropy}
                     setSuggestionMode={props.handlers.setSuggestionMode}
-                    beat={props.handlers.beat}
-                    settings={props.model.settings}
                     model={props.model.game}
                 />
             </div>

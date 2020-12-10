@@ -10,6 +10,7 @@ export default class Clock extends Component {
     }
 
     componentDidMount() {
+        const padleft = (i) => (i+"").length == 1? ("0"+i) : i;
         setInterval(() => {
             this.setState((state) => {
                 //@todo padleft or string format : 00:01
@@ -20,13 +21,13 @@ export default class Clock extends Component {
                 msec -= mm * 1000 * 60;
                 const ss = Math.floor(msec / 1000);
                 msec -= ss * 1000;
-                state.timeElapsed = hh ? hh + ":" + mm + ":" + ss : mm + ":" + ss;
+                state.timeElapsed = hh ? hh + ":" + padleft(mm) + ":" + padleft(ss) : padleft(mm) + ":" + padleft(ss);
                 return { ...state };
             });
         }, 1000);
     }
 
     render() {
-        return <span className={this.props.className}>Time Elapsed: {this.state.timeElapsed}</span>;
+        return <div className={this.props.className}><div className="icon-container">🕒</div>{this.state.timeElapsed}</div>;
     }
 }

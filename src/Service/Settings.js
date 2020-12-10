@@ -4,7 +4,7 @@ export default class Settings {
     constructor(suggestor) {
         this.suggestor = suggestor;
     }
-    
+
     beat = (stateholder) => {
         this.setBaseEntropy(stateholder, 4);
     };
@@ -42,6 +42,27 @@ export default class Settings {
         });
     };
 
+    suggestOnce = (stateholder) => {
+        stateholder.setState((state) => {
+            const previous = state.settings.suggestionMode;
+            state.settings.suggestionMode = "regular";
+            this.suggestor.evaluateOptions(state);
+            state.settings.suggestionMode = previous;
+            return state;
+        });
+    };
+
+    toggleMenu = (gamestate, menu) => {
+        gamestate.setState((state) => {
+            console.debug('toggle')
+            if (state.settings.showMenu == menu) {
+                console.debug('inverting showmenu')
+                state.settings.showMenu = !state.settings.showMenu;
+            }
+            return state;
+        });
+    };
+
     getHandlers(gamestate) {
         return {
             beat: () => this.beat(gamestate),
@@ -49,6 +70,8 @@ export default class Settings {
             setInteractionEntropy: (lvl) => this.setInteractionEntropy(gamestate, lvl),
             setMouseMode: (mm) => this.setMouseMode(gamestate, mm),
             setSuggestionMode: (sm) => this.setSuggestionMode(gamestate, sm),
+            suggestOnce: () => this.suggestOnce(gamestate),
+            toggleMenu: (menu) => this.toggleMenu(gamestate, menu),
         };
     }
 }

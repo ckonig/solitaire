@@ -4,6 +4,7 @@ export default class Game {
         this.suggestor = suggestor;
     }
 
+    //@todo ask for confirmation before resetting
     reset = (stateholder) =>
         stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : { ...this.getInitialState() }));
 

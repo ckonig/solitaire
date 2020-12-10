@@ -11,7 +11,7 @@ export default class Undo extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.props.undo}>undo (penalty:-{this.props.undoLabel()})</button>
+               <button title={"Undo (Penalty:"+this.props.undoLabel()+")"} onClick={this.props.undo}>⏪</button>
             </div>
         );
     }
