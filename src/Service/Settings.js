@@ -32,23 +32,23 @@ export default class Settings {
         });
     };
 
-    toggleShowSuggestions = (stateholder, showSuggestions) => {
+    setSuggestionMode = (stateholder, sm) => {
         stateholder.setState((state) => {
-            if (state.settings.showSuggestions == showSuggestions) {
-                state.settings.showSuggestions = !state.settings.showSuggestions;
+            if (state.settings.suggestionMode !== sm) {
+                state.settings.suggestionMode = sm;
                 this.suggestor.evaluateOptions(state);
             }
             return state;
         });
     };
 
-    getHandlers(gamestate, state) {
+    getHandlers(gamestate) {
         return {
             beat: () => this.beat(gamestate),
             setBaseEntropy: (lvl) => this.setBaseEntropy(gamestate, lvl),
             setInteractionEntropy: (lvl) => this.setInteractionEntropy(gamestate, lvl),
             setMouseMode: (mm) => this.setMouseMode(gamestate, mm),
-            toggleShowSuggestions: () => this.toggleShowSuggestions(gamestate, state.settings.showSuggestions),
+            setSuggestionMode: (sm) => this.setSuggestionMode(gamestate, sm),
         };
     }
 }

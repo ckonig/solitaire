@@ -36,7 +36,7 @@ const Board = (props) => {
                     setMouseMode={props.handlers.setMouseMode}
                     setBaseEntropy={props.handlers.setBaseEntropy}
                     setInteractionEntropy={props.handlers.setInteractionEntropy}
-                    toggleShowSuggestions={props.handlers.toggleShowSuggestions}
+                    setSuggestionMode={props.handlers.setSuggestionMode}
                     beat={props.handlers.beat}
                     settings={props.model.settings}
                     model={props.model.game}

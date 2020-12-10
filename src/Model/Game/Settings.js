@@ -11,7 +11,8 @@ export default class Settings {
         this.drawModes = ["single"];
         this.drawMode = "single"; //@todo implement triple draw
 
-        this.showSuggestions = true;
+        this.suggestionMode = 'regular';
+        this.suggestionModes = ['none', 'scored', 'regular', 'full'];
     }
 
     is_touch_device() {
@@ -33,7 +34,7 @@ export default class Settings {
 
     static copy = (orig) => {
         const copy = new Settings();
-        copy.showSuggestions = orig.showSuggestions;
+        copy.suggestionMode = orig.suggestionMode;
         copy.mouseMode = orig.mouseMode;
         copy.baseEntropy = orig.baseEntropy;
         copy.interactionEntropy = orig.interactionEntropy;

@@ -60,7 +60,14 @@ const Footer = (props) => {
                         </select>
                     </div>
                     <div>
-                        <button onClick={props.toggleShowSuggestions}>Toggle Suggestions</button>
+                        Suggestion mode
+                        <select onChange={(e) => props.setSuggestionMode(e.target.value)} value={props.settings.suggestionMode}>
+                            {props.settings.suggestionModes.map((suggestionMode) => (
+                                <option key={suggestionMode} value={suggestionMode}>
+                                    {suggestionMode}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
 

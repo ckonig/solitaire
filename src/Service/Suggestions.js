@@ -19,58 +19,66 @@ export default class Suggestions {
         //@todo this already filters out self-moves, but what if we want to validate single moves?
 
         const accepted = [];
-        if (
-            state.settings.showSuggestions &&
-            state.hand.isHoldingCard() &&
-            state.waste.wouldAccept(state.hand) &&
-            state.hand.source !== "waste"
-        ) {
-            accepted.push("waste");
-            state.waste.suggestion = true;
+        if (state.settings.suggestionMode !== "none" && state.hand.isHoldingCard() && state.waste.wouldAccept(state.hand)) {
+            if (state.settings.suggestionMode === "full" || state.hand.source !== "waste") {
+                const move = { target: "waste", source: state.hand.source };
+                if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
+                    accepted.push(move);
+                    state.waste.suggestion = true;
+                }
+            }
         }
-        state.foundation.stacks.forEach((stack, index) => {
-            if (
-                state.settings.showSuggestions &&
-                state.hand.isHoldingCard() &&
-                state.foundation.wouldAccept(index, state.hand) &&
-                state.hand.source !== "foundation-" + index
-            ) {
-                accepted.push("foundation-" + index);
-                state.foundation.stacks[index].suggestion = true;
+        state.foundation.stacks.forEach((_stack, index) => {
+            if (state.settings.suggestionMode !== "none" && state.hand.isHoldingCard() && state.foundation.wouldAccept(index, state.hand)) {
+                if (state.settings.suggestionMode === "full" || state.hand.source !== "foundation-" + index) {
+                    const move = { target: "foundation-" + index, source: state.hand.source };
+                    if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
+                        accepted.push(move);
+                        state.foundation.stacks[index].suggestion = true;
+                        console.log("added to foundation possibilities");
+                    } else {
+                        console.log("skipped", state.game.rateMove(move));
+                    }
+                } else {
+                    console.log("skipped from same hand");
+                }
             }
         });
         state.tableau.stacks.forEach((_stack, index) => {
-            if (
-                state.settings.showSuggestions &&
-                state.hand.isHoldingCard() &&
-                state.tableau.wouldAccept(index, state.hand) &&
-                state.hand.source !== "tableau-" + index &&
-                (!onlyUseful ||
-                    //filter out moves of King from empty slot to empty slot
-                    (!(
-                        state.hand.currentCard().face == "K" &&
-                        state.tableau.stacks[index].stack.length == 0 &&
-                        state.hand.source.substring(0, 8) == "tableau-" &&
-                        state.tableau.stacks[state.hand.source.substring(8)].stack.length == 0
-                    ) &&
-                        //// filter out moves between stacks if same (non-hidden) parent card
-                        !(
-                            state.tableau.stacks[index].stack.length > 0 &&
+            if (state.settings.suggestionMode != "none" && state.hand.isHoldingCard() && state.tableau.wouldAccept(index, state.hand)) {
+                if (state.settings.suggestionMode === "full" || state.hand.source !== "tableau-" + index) {
+                    if (
+                        !onlyUseful || state.settings.suggestionMode === "full" ||
+                        //filter out moves of King from empty slot to empty slot
+                        (!(
+                            state.hand.currentCard().face == "K" &&
+                            state.tableau.stacks[index].stack.length == 0 &&
                             state.hand.source.substring(0, 8) == "tableau-" &&
-                            state.tableau.stacks[state.hand.source.substring(8)].stack.length > 0 &&
-                            state.tableau.stacks[index].stack[state.tableau.stacks[index].stack.length - 1].face ==
-                                state.tableau.stacks[state.hand.source.substring(8)].stack[
-                                    state.tableau.stacks[state.hand.source.substring(8)].stack.length - 1
-                                ].face &&
-                            !state.tableau.getTop(state.hand.source.substring(8)).isHidden
-                        )))
-            ) {
-                accepted.push("tableau-" + index);
-                state.tableau.stacks[index].suggestion = true;
+                            state.tableau.stacks[state.hand.source.substring(8)].stack.length == 0
+                        ) &&
+                            //// filter out moves between stacks if same (non-hidden) parent card
+                            !(
+                                state.tableau.stacks[index].stack.length > 0 &&
+                                state.hand.source.substring(0, 8) == "tableau-" &&
+                                state.tableau.stacks[state.hand.source.substring(8)].stack.length > 0 &&
+                                state.tableau.stacks[index].stack[state.tableau.stacks[index].stack.length - 1].face ==
+                                    state.tableau.stacks[state.hand.source.substring(8)].stack[
+                                        state.tableau.stacks[state.hand.source.substring(8)].stack.length - 1
+                                    ].face &&
+                                !state.tableau.getTop(state.hand.source.substring(8)).isHidden
+                            ))
+                    ) {
+                        const move = { target: "tableau-" + index, source: state.hand.source };
+                        if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
+                            accepted.push(move);
+                            state.tableau.stacks[index].suggestion = true;
+                        }
+                    }
+                }
             }
         });
 
-        return accepted;
+        return accepted.map((a) => ({ ...a, points: state.game.rateMove(a) }));
     };
 
     getUncoverOptions = (state) => {
@@ -113,7 +121,7 @@ export default class Suggestions {
             });
         });
 
-        if (state.settings.showSuggestions) {
+        if (state.settings.suggestionMode !== "none") {
             const uncoverOptions = this.getUncoverOptions(state);
 
             if (!uncoverOptions.length) {
@@ -125,7 +133,7 @@ export default class Suggestions {
                     this.waste._dispatchPickup(wasteState.waste.getTop(), null, wasteState);
                     if (wasteState.game.modified) {
                         const wasteSuggestions = this.getPutdownSuggestions(wasteState, true);
-                        if (state.settings.showSuggestions && wasteSuggestions.length) {
+                        if (wasteSuggestions.length > (state.settings.suggestionMode == "full" ? 1 : 0)) {
                             state.waste.suggestion = true;
                             foundAny = true;
                         }
@@ -138,7 +146,7 @@ export default class Suggestions {
                                 this.tableau._dispatchPickup(card, null, tableauState, index);
                                 if (tableauState.game.modified) {
                                     const tableauSuggestions = this.getPutdownSuggestions(tableauState, true);
-                                    if (state.settings.showSuggestions && tableauSuggestions.length) {
+                                    if (tableauSuggestions.length > (state.settings.suggestionMode == "full" ? 1 : 0)) {
                                         state.tableau.stacks[index].stack[cardIndex].suggestion = true;
                                         foundAny = true;
                                     }
