@@ -12,10 +12,11 @@ export default class App extends Component {
         //@todo allow resuming earlier game.
         this.gamestate = new GameState(this);
         this.game = new Game();
-        this.state = this.game.getInitialState(this);
+        this.state = this.game.getInitialState();
     }
 
     componentDidMount = () => this.game.getDealer(this.gamestate, this.state).deal(this.state.stock.dealt);
+    componentDidUpdate = () => this.game.getDealer(this.gamestate, this.state).deal(this.state.stock.dealt);
 
     render() {
         const handlers = this.game.getHandlers(this.gamestate, this.state);

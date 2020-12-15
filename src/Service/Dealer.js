@@ -8,24 +8,33 @@ export default class Dealer {
     }
 
     deal = (dealt) => {
+        //@todo based on settings, deal all-in-one or with delays
+        this.dealWithTimeouts(dealt);
+    };
+
+    dealWithTimeouts = (dealt) => {
         setTimeout(() => {
             if (this.state && this.state.stock && !this.state.stock.isDealt) {
                 this.gamestate.setState((state) => {
                     if (dealt != state.stock.dealt) {
                         return null;
                     }
+
                     state.stock.deal(state.tableau);
                     if (state.stock.isDealt) {
+                        //@todo move to game?
                         state.game.started = Date.now();
                     }
+
                     if (state.stock.isDealt) {
                         this.suggestor.evaluateOptions(state);
                     } else {
                         this.deal(state.stock.dealt);
                     }
+
                     return state;
                 });
             }
-        }, 50);
+        }, 25);
     };
 }

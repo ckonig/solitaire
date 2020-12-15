@@ -5,7 +5,7 @@ import Suits from "./Suits";
 export default class Deck {
     constructor() {
         const keys = Object.keys(Suits);
-        this.cards = DeckSize.map((deckSize) => [...keys.map((key) => new Card(deckSize, Suits[key], true))]).flat();
+        this.cards = DeckSize.map((deckSize) => [...keys.map((key) => new Card(deckSize, Suits[key], true))]).flat().reverse();
     }
 
     shuffle() {

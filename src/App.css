@@ -92,9 +92,9 @@ body {
 }
 
 .icon-container {
-  width: 5vw;
-  float:left;
-  text-align: center;
+    width: 5vw;
+    float: left;
+    text-align: center;
 }
 
 .header-buttons > div > button {
@@ -121,24 +121,6 @@ body {
 
 .card-grid-container > div {
     position: relative;
-}
-
-/* Footer Layout Grid */
-.footer-grid-container {
-    display: grid;
-    color: white;
-    border-radius: 1vw;
-    grid-gap: 10px;
-    padding: 10px;
-    grid-template-areas:
-        "stats actions settings"
-        "report report report";
-}
-
-.footer-grid-container > div {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 1vw;
-    padding: 1vw;
 }
 
 .stats {
@@ -313,10 +295,58 @@ body {
 
 .menu {
     position: absolute;
-    top: 4vw;
+    top: 6vw;
+    border-radius: 0.5vw;
     z-index: 6000;
-    background-color: rgba(0, 0, 0, 0.6);
-
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
     right: 2vw;
-    left: 2vw;
+    padding: 2vw;
+    width: 25vw;
+}
+
+.menu > .section {
+    font-size: 1vw;
+    margin-bottom: 6vw;
+}
+
+.menu > .section:last-child {
+    margin-bottom: 0vw;
+}
+
+.menu > .section > .title {
+    font-size: 1.5vw;
+    width: 25vw;
+    float: left;
+}
+
+.menu > .section > .row > .input {
+    float: right;
+    margin-left: 2vw;
+    width: 8vw;
+    font-size: 1vw;
+}
+
+.menu > .section > .row > .label {
+    float: left;
+    width: 15vw;
+}
+
+.menu > .section > .row > .label > .description {
+    font-size: 1w;
+    color: lightgray;
+}
+
+.menu > .section > .row {
+    clear: both;
+}
+
+
+.endscreen {
+  background-color: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 2vw;
+  border-radius: 0.5vw;
+  z-index: 5000;
+  width:20vw;
 }

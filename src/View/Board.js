@@ -1,3 +1,4 @@
+import EndDisplay from "./EndDisplay";
 import Foundation from "./Foundation";
 import Header from "./Header";
 import Menu from "./Menu";
@@ -15,6 +16,7 @@ const Board = (props) => {
                     undoLabel={props.handlers.undoLabel}
                     toggleMenu={props.handlers.toggleMenu}
                     reset={props.handlers.reset}
+                    newGame={props.handlers.restart}
                     undo={props.handlers.undo}
                     beat={props.handlers.beat}
                     model={props.model.game}
@@ -48,6 +50,7 @@ const Board = (props) => {
                     setSuggestionMode={props.handlers.setSuggestionMode}
                     model={props.model.game}
                 />
+                <EndDisplay game={props.model.game} restart={props.handlers.restart} />
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ const Header = (props) => (
         <div className="header-title">
             <div className="icon-container">🏆</div> {props.model.points}
         </div>
-        <Clock className="header-clock" started={props.model.started} end={props.model.end} />
+        <Clock game={props.model} className="header-clock" started={props.model.started} end={props.model.end} />
         <div className="header-buttons">
             <div>
                 <button disabled={props.settings.suggestionMode !== "none"} title={"Hint"} onClick={() => props.suggestOnce()}>
@@ -15,14 +15,20 @@ const Header = (props) => (
                 </button>
             </div>
             <Undo undo={props.undo} undoLabel={props.undoLabel} model={props.model} />
+
             <div>
-                <button title="Punch on table" onClick={props.beat}>
-                    👊
+                <button disabled={!props.model.previousStates.length} title="Reset" onClick={props.reset}>
+                    ♻️
                 </button>
             </div>
             <div>
-                <button disabled={!props.model.previousStates.length} title="Reset" onClick={props.reset}>
-                    🔄
+                <button title="New Game" onClick={props.newGame}>
+                    🚮
+                </button>
+            </div>
+            <div>
+                <button title="Punch on table" onClick={props.beat}>
+                    👊
                 </button>
             </div>
             <div>

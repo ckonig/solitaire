@@ -13,8 +13,14 @@ export default class Facade {
     constructor() {
         this.suggestor = new Suggestions();
         this.deck = new Deck();
-        this.deck.shuffle();
+       // this.deck.shuffle();
     }
+
+    restart = () => {
+        this.deck = new Deck();
+       // this.deck.shuffle();
+        return Model.getInitialState(this.deck);
+    };
 
     getInitialState = () => Model.getInitialState(this.deck);
 
@@ -28,6 +34,7 @@ export default class Facade {
             clickFoundation: new Foundation(gamestate).getHandler(state.hand),
             clickStock: new Stock(gamestate).getHandler(state.hand),
             clickWaste: new Waste(gamestate).getHandler(state.hand),
+            restart: () => gamestate.setState(() => this.restart()),
         };
     }
 }

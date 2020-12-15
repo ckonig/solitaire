@@ -12,8 +12,7 @@ export default class Settings {
     setBaseEntropy = (stateholder, lvl) => {
         stateholder.setState((state) => {
             state.settings.baseEntropy = lvl;
-            stateholder.setState((state) => Facade.setEntropy(state, state.settings.baseEntropy));
-            return state;
+            return Facade.setEntropy(state, state.settings.baseEntropy);
         });
     };
 

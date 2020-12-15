@@ -13,7 +13,7 @@ export default class Facade {
             stock: new Stock([...deck.cards], settings),
             waste: new Waste(settings),
             foundation: new Foundation(settings),
-            tableau: new Tableau([], settings),
+            tableau: new Tableau(settings),
             hand: new Hand(),
             game: new Game(),
             settings: settings,

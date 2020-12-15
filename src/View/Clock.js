@@ -10,19 +10,10 @@ export default class Clock extends Component {
     }
 
     componentDidMount() {
-        const padleft = (i) => ((i + "").length == 1 ? "0" + i : i);
         setInterval(() => {
             if (this.props.started) {
                 this.setState((state) => {
-                    //@todo padleft or string format : 00:01
-                    let msec = (this.props.end || Date.now()) - this.props.started;
-                    const hh = Math.floor(msec / 1000 / 60 / 60);
-                    msec -= hh * 1000 * 60 * 60;
-                    const mm = Math.floor(msec / 1000 / 60);
-                    msec -= mm * 1000 * 60;
-                    const ss = Math.floor(msec / 1000);
-                    msec -= ss * 1000;
-                    state.timeElapsed = hh ? hh + ":" + padleft(mm) + ":" + padleft(ss) : padleft(mm) + ":" + padleft(ss);
+                    state.timeElapsed = this.props.game.getElapsed();
                     return { ...state };
                 });
             }
