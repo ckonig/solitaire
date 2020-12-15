@@ -15,7 +15,7 @@ export default class GameState {
             state.game.modified = false;
             const previous = Model.copy(state);
             a(state);
-            if (state.game.modified && state.deck.isDealt) {
+            if (state.game.modified && state.stock.isDealt) {
                 //@todo  use localstorage for previous state, reduce react state for performance
                 state.game.pushPreviousState(previous);
                 this.suggestor.evaluateOptions(state);

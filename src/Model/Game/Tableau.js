@@ -2,16 +2,18 @@ import Card from "../Deck/Card";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 export default class Tableau {
-    constructor(cards, settings) {
-        this.stacks = !cards ? [] : new TableauGenerator().generateStacks(cards);
+    constructor(settings) {
+        const ids = [0, 1, 2, 3, 4, 5, 6];
+        this.stacks = ids.map((id) => ({
+            stack: [],
+            id,
+        }));
         this.settings = settings;
     }
 
     getStack = (index) => {
         return this.stacks[index];
     };
-
-    getUnhiddenCards = (index) => this.stacks[index].stack.filter(c => !c.isHidden);
 
     wouldAccept = (index, hand) => this.canPutDown(this.getTop(index), hand, index);
 
@@ -31,7 +33,7 @@ export default class Tableau {
         const range = [...getTableauOrder()];
         const currentIndex = range.indexOf(current.face);
         const topIndex = range.indexOf(top.face);
-        return currentIndex + 1 == topIndex && current.type.color !== top.type.color && top.face !== 'A';
+        return currentIndex + 1 == topIndex && current.type.color !== top.type.color && top.face !== "A";
     };
 
     getCard = (index, card) => {
@@ -68,7 +70,7 @@ export default class Tableau {
 
     stackEntropy = (index) => {
         let entropy = this.settings.interactionEntropy;
-        console.log('generating stack entropy', this.settings.interactionEntropy)
+        console.log("generating stack entropy", this.settings.interactionEntropy);
         let next = 1;
         let top = this.getTop(index);
         while (entropy && entropy != 0 && top) {
@@ -106,40 +108,5 @@ export default class Tableau {
     setEntropy = (lvl) => {
         this.stacks.forEach((stack) => stack.stack.forEach((element) => element.causeEntropy(Math.min(lvl, 4))));
         return this;
-    };
-}
-
-class TableauGenerator {
-    generateStacks = (deck) => {
-        this.deck = deck;
-        this.pointer = 0;
-        this.oldpointer = this.pointer;
-        const ids = [0, 1, 2, 3, 4, 5, 6];
-        this.stacks = ids.map((id) => this.template(id));
-        ids.reverse().forEach((id) => {
-            this.generateStack(id);
-        });
-        return this.stacks;
-    };
-
-    template = (id) => ({
-        stack: [],
-        id,
-    });
-
-    generateStack = (id) => {
-        this.pointer += 6 - id + 1;
-        this.stacks[id].stack = this.deck
-            .slice(this.oldpointer, this.pointer)
-            .map((c) => ({
-                ...c,
-                isHidden: true,
-                source: "tableau-" + id,
-            }))
-            .reverse();
-        if (this.stacks[id].stack[this.stacks[id].stack.length - 1]) {
-            this.stacks[id].stack[this.stacks[id].stack.length - 1].isHidden = false;
-        }
-        this.oldpointer = this.pointer;
     };
 }

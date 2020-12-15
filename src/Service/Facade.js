@@ -18,7 +18,7 @@ export default class Facade {
 
     getInitialState = () => Model.getInitialState(this.deck);
 
-    getDealer = (gamestate, state) => new Dealer(gamestate, state, this.suggestor);
+    getDealer = (gamestate, state) => new Dealer(gamestate, state);
 
     getHandlers(gamestate, state) {
         return {
