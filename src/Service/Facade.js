@@ -15,9 +15,13 @@ export default class Facade {
         this.deck.shuffle();
     }
 
-    getInitialState = () => {
-        const model = Model.getInitialState(this.deck);
-        this.suggestor.evaluateOptions(model);
+    getInitialState = () => Model.getInitialState(this.deck);
+
+    deal = (state) => {
+        const model = Model.deal(state);
+        if (model.isDealt) {
+            this.suggestor.evaluateOptions(model);
+        }
         return model;
     };
 

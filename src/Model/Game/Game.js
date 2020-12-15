@@ -3,7 +3,7 @@ import Card from "../Deck/Card";
 export default class Game {
     constructor() {
         this.points = 0;
-        this.started = Date.now();
+        this.started = false;
         this.previousStates = [];
         this.memorable = true;
         this.modified = false;

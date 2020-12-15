@@ -10,14 +10,26 @@ export default class Facade {
     static getInitialState = (deck) => {
         const settings = new Settings();
         const state = {
-            stock: new Stock([...deck.cards.slice(28)], settings),
+            deck: deck,
+            stock: new Stock([...deck.cards], settings),
             waste: new Waste(settings),
             foundation: new Foundation(settings),
-            tableau: new Tableau([...deck.cards.slice(0, 28)], settings),
+            tableau: new Tableau([], settings),
             hand: new Hand(),
             game: new Game(),
             settings: settings,
+            isDealt: false,
+            dealt: 0,
         };
+        return state;
+    };
+
+    static deal = (state) => {
+        state.isDealt = state.deck.deal(state.stock, state.tableau);
+        state.dealt++;
+        if (state.isDealt) {
+            state.game.started = Date.now();
+        }
         return state;
     };
 
