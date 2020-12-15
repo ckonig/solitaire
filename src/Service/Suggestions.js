@@ -1,17 +1,12 @@
 import Facade from "../Model/Facade";
-import Foundation from "./Foundation";
-import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 //@todo this works nicely, but looks too verbose to comprehend
 export default class Suggestions {
-    constructor(state) {
-        this.state = state;
-        this.foundation = new Foundation(null);
+    constructor() {
         this.tableau = new Tableau(null);
         this.waste = new Waste(null);
-        this.stock = new Stock(null);
     }
 
     getPutdownSuggestions = (state, onlyUseful) => {

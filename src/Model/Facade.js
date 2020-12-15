@@ -18,16 +18,13 @@ export default class Facade {
             hand: new Hand(),
             game: new Game(),
             settings: settings,
-            isDealt: false,
-            dealt: 0,
         };
         return state;
     };
 
     static deal = (state) => {
-        state.isDealt = state.deck.deal(state.stock, state.tableau);
-        state.dealt++;
-        if (state.isDealt) {
+        state.deck.deal(state.stock, state.tableau);
+        if (state.deck.isDealt) {
             state.game.started = Date.now();
         }
         return state;

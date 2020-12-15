@@ -1,3 +1,4 @@
+import Dealer from "./Dealer";
 import Deck from "../Model/Deck/Deck";
 import Foundation from "./Foundation";
 import Game from "./Game";
@@ -17,13 +18,7 @@ export default class Facade {
 
     getInitialState = () => Model.getInitialState(this.deck);
 
-    deal = (state) => {
-        const model = Model.deal(state);
-        if (model.isDealt) {
-            this.suggestor.evaluateOptions(model);
-        }
-        return model;
-    };
+    getDealer = (gamestate, state) => new Dealer(gamestate, state, this.suggestor);
 
     getHandlers(gamestate, state) {
         return {

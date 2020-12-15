@@ -8,6 +8,7 @@ export default class Deck {
         this.cards = DeckSize.map((deckSize) => [...keys.map((key) => new Card(deckSize, Suits[key], true))]).flat();
         this.dealt = 0;
         this.dealingAt = 0;
+        this.isDealt = false;
     }
 
     shuffle() {
@@ -30,15 +31,17 @@ export default class Deck {
                 if (this.dealingAt == tableau.stacks.length) {
                     this.dealingAt = 0;
                 }
-                return false;
+                this.isDealt = false;
+                return;
             } else {
                 const isFirst = this.dealingAt == 0;
                 this.dealingAt = 0;
-                return isFirst;
+                this.isDealt = isFirst;
+                return;
             }
         }
 
-        return true;
+        this.isDealt = true;
     }
 
     // credits: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
