@@ -1,11 +1,18 @@
-import Suggestions from "./Suggestions";
+import React from "react";
+import Suggestions from "../Service/Suggestions";
 
-export default class Dealer {
-    constructor(gamestate, state) {
-        this.gamestate = gamestate;
-        this.state = state;
+export default class Dealer extends React.Component {
+    constructor(props) {
+        super(props);
         this.suggestor = new Suggestions();
+        this.timeout = null;
     }
+
+    componentDidMount = () => this.deal(this.props.state.stock.dealt);
+
+    componentWillUnmount = () => clearTimeout(this.timeout);
+
+    render = () => null;
 
     deal = (dealt) => {
         //@todo based on settings, deal all-in-one or with delays
@@ -13,10 +20,9 @@ export default class Dealer {
     };
 
     dealWithTimeouts = (dealt) => {
-        //@todo move timeout to react component, gracefully handle unmount 
-        setTimeout(() => {
-            if (this.state && this.state.stock && !this.state.stock.isDealt) {
-                this.gamestate.setState((state) => {
+        this.timeout = setTimeout(() => {
+            if (this.props.state && this.props.state.stock && !this.props.state.stock.isDealt) {
+                this.props.stateholder.setState((state) => {
                     if (dealt != state.stock.dealt) {
                         return null;
                     }

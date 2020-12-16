@@ -71,7 +71,7 @@ export default class Card extends Component {
             <div style={this.getStackbaseStyle()} className="stack-base">
                 <div style={this.getCardStyle()} className={this.getClassName()} onClick={this.onClick ? this.onClick : null}>
                     {this.props.model.isHidden ? (
-                        <div className="card-back quarot">&nbsp;</div>
+                        <div className="card-back">&nbsp;</div>
                     ) : (
                         <div className="card-grid-container">
                             <div>

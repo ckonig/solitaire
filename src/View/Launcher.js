@@ -1,4 +1,5 @@
 import Board from "./Board";
+import Dealer from "./Dealer";
 import Game from "../Service/Facade";
 import React from "react";
 
@@ -15,5 +16,10 @@ export default class Launcher extends React.Component {
         return handlers;
     };
 
-    render = () => <Board model={this.state} game={this.game} handlers={this.getHandlers()} />;
+    render = () => (
+        <>
+            <Board model={this.state} game={this.game} handlers={this.getHandlers()} />
+            <Dealer state={this.state} stateholder={this} />
+        </>
+    );
 }

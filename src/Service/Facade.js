@@ -1,7 +1,7 @@
-import Dealer from "./Dealer";
 import Deck from "../Model/Deck/Deck";
 import Foundation from "../Business/Foundation";
 import Game from "./Game";
+import GameState from "../Business/GameState";
 import Model from "../Model/Facade";
 import Settings from "./Settings";
 import Stock from "../Business/Stock";
@@ -21,14 +21,14 @@ export default class Facade {
 
     getHandlers(stateholder) {
         const state = stateholder.state;
+        const gamestate = new GameState(stateholder);
         return {
             ...new Game(this.getInitialState, this.suggestor).getHandlers(stateholder, state),
             ...new Settings(this.suggestor).getHandlers(stateholder, state),
-            deal: () => new Dealer(stateholder, state).deal(state.stock.dealt),
-            clickTableau: new Tableau(stateholder).getHandler(state.hand),
-            clickFoundation: new Foundation(stateholder).getHandler(state.hand),
-            clickStock: new Stock(stateholder).getHandler(state.hand),
-            clickWaste: new Waste(stateholder).getHandler(state.hand),
+            clickTableau: new Tableau(gamestate).getHandler(state.hand),
+            clickFoundation: new Foundation(gamestate).getHandler(state.hand),
+            clickStock: new Stock(gamestate).getHandler(state.hand),
+            clickWaste: new Waste(gamestate).getHandler(state.hand),
         };
     }
 }

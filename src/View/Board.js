@@ -8,7 +8,6 @@ import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 export default class Board extends React.Component {
-    componentDidMount = () => this.props.handlers.deal();
     render() {
         const props = this.props;
         return (
