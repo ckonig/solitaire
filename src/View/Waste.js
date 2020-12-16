@@ -25,6 +25,7 @@ export default class Waste extends BlinkingComponent {
                 additionalOffset = 0;
             }
 
+            console.debug("initial length", length, props.model.stack.length, ((index - length - 2) % 3) + additionalOffset);
             return ((index - length - 2) % 3) + additionalOffset;
         };
 
@@ -54,7 +55,7 @@ export default class Waste extends BlinkingComponent {
                     shadowOffsetX={-4}
                     shadowOffsetY={-3}
                     offsetTop={(props.model.stack.length / 2) * -1}
-                    offsetLeft={((props.model.stack.length - 1 - props.model.stack.length - 2) % 3) + 2}
+                    offsetLeft={getOffset(props.model.stack.length)}
                     parent="waste"
                     onClick={props.onClick}
                     model={props.hand}

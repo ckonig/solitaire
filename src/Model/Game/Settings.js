@@ -2,7 +2,7 @@ export default class Settings {
     constructor() {
         const isTouch = this.is_touch_device();
         this.mouseModes = ["follow-cursor", "remain-on-stack"];
-        this.mouseMode = isTouch ? "remain-on-stack" : "follow-cursor";
+        this.mouseMode = !isTouch ? "remain-on-stack" : "follow-cursor";
 
         this.entropyLevels = ["none", "low", "regular", "high", "extreme"];
         this.baseEntropy = isTouch ? 1 : 2;
