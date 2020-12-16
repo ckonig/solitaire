@@ -24,7 +24,7 @@ export default class Card extends Component {
     };
 
     getClassName = () => {
-        let className = this.props.className + " card card-base suit-" + this.props.model.type.icon;
+        let className = `card card-base suit-${this.props.model.type.icon}`;
         className += this.props.isSelected ? " card-selected" : "";
         className += this.props.blink ? " blink" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
@@ -34,10 +34,12 @@ export default class Card extends Component {
 
     getCardStyle = () => {
         const style = {
+            //Why?
             zIndex: this.props.zIndex ? this.props.zIndex : !!this.props.offsetTop + 2,
             top: this.props.offsetTop ? this.props.offsetTop / 10 + "vw" : 0,
             ...this.props.model.entropyStyle,
         };
+        //use computed shadow when not selected or blinking
         if (
             !this.props.isSelected &&
             !(this.props.isSuggested || this.props.model.suggestion) &&
@@ -45,9 +47,10 @@ export default class Card extends Component {
             (this.props.shadowOffsetX || (!this.props.shadowOffsetX && this.props.shadowOffsetX === 0))
         ) {
             const offsetY = this.props.shadowOffsetY || "-1";
-            style.boxShadow = this.props.shadowOffsetX + "px " + offsetY + "px 4px 4px rgba(0, 0, 0, 0.75)";
+            style.boxShadow = `${this.props.shadowOffsetX}px ${offsetY}px 4px 4px rgba(0, 0, 0, 0.75)`;
         }
 
+        //move to left on waste (triple draw)
         if (this.props.offsetLeft) {
             style.left = this.props.offsetLeft * 4 + "vw";
         }

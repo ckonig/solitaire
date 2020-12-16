@@ -31,8 +31,8 @@ export default class Foundation extends BlinkingComponent {
                 </StackBase>
                 {model.stack.map((card, index) => (
                     <Card
-                        model={card}
                         key={index}
+                        model={card}
                         shadowOffsetX={stackindex * 2}
                         shadowOffsetY={-3}
                         blink={model.blinkFor}

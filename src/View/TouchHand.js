@@ -13,8 +13,8 @@ export default class TouchHand extends Component {
                 this.props.hand.stack &&
                 this.props.hand.stack.map((card, index) => (
                     <Card
-                        model={card}
                         key={index}
+                        model={card}
                         shadowOffsetX={this.props.shadowOffsetX}
                         shadowOffsetY={this.props.shadowOffsetY}
                         offsetTop={this.props.offsetTop + index * 24}

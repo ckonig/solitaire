@@ -38,12 +38,12 @@ export default class Waste extends BlinkingComponent {
                 />
                 {props.model.stack.map((card, index) => (
                     <Card
+                        key={index}
                         model={card}
                         shadowOffsetX={-4}
                         shadowOffsetY={-3}
                         offsetTop={(index / 2) * -1}
                         offsetLeft={getOffset(index)}
-                        key={index}
                         blink={props.model.blinkFor}
                         isSuggested={props.model.suggestion && index == props.model.stack.length - 1}
                         onClick={(c, p) => props.onClick(c, p)}

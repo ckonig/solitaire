@@ -41,8 +41,8 @@ export default class Tableau extends BlinkingComponent {
                 />
                 {props.model.stack.map((card, index) => (
                     <Card
-                        model={card}
                         key={index}
+                        model={card}
                         blink={props.model.blinkFor}
                         isSuggested={props.model.suggestion && props.model.stack.length - 1 == index}
                         shadowOffsetX={(4 - 7 + props.index) * 2}
