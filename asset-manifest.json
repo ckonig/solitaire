@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/solitaire/static/css/main.29914425.chunk.css",
-    "main.js": "/solitaire/static/js/main.5f64c008.chunk.js",
-    "main.js.map": "/solitaire/static/js/main.5f64c008.chunk.js.map",
+    "main.css": "/solitaire/static/css/main.86084d36.chunk.css",
+    "main.js": "/solitaire/static/js/main.d6a577c1.chunk.js",
+    "main.js.map": "/solitaire/static/js/main.d6a577c1.chunk.js.map",
     "runtime-main.js": "/solitaire/static/js/runtime-main.f1d558ff.js",
     "runtime-main.js.map": "/solitaire/static/js/runtime-main.f1d558ff.js.map",
     "static/js/2.cd99e62a.chunk.js": "/solitaire/static/js/2.cd99e62a.chunk.js",
     "static/js/2.cd99e62a.chunk.js.map": "/solitaire/static/js/2.cd99e62a.chunk.js.map",
     "index.html": "/solitaire/index.html",
-    "static/css/main.29914425.chunk.css.map": "/solitaire/static/css/main.29914425.chunk.css.map",
+    "static/css/main.86084d36.chunk.css.map": "/solitaire/static/css/main.86084d36.chunk.css.map",
     "static/js/2.cd99e62a.chunk.js.LICENSE.txt": "/solitaire/static/js/2.cd99e62a.chunk.js.LICENSE.txt",
     "static/media/App.css": "/solitaire/static/media/felt.5b148bae.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f1d558ff.js",
     "static/js/2.cd99e62a.chunk.js",
-    "static/css/main.29914425.chunk.css",
-    "static/js/main.5f64c008.chunk.js"
+    "static/css/main.86084d36.chunk.css",
+    "static/js/main.d6a577c1.chunk.js"
   ]
 }
