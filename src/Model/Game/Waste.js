@@ -10,6 +10,8 @@ export default class Waste {
 
     add = (card) => card && this.stack.push(this.setCardProperties(card));
 
+    addAll = (cards) => cards && cards.length && cards.map(this.add);
+
     setCardProperties = (card) => {
         card.source = "waste";
         card.isHidden = false;

@@ -13,12 +13,12 @@ export default class Facade {
     constructor() {
         this.suggestor = new Suggestions();
         this.deck = new Deck();
-       // this.deck.shuffle();
+        this.deck.shuffle();
     }
 
     restart = () => {
         this.deck = new Deck();
-       // this.deck.shuffle();
+        this.deck.shuffle();
         return Model.getInitialState(this.deck);
     };
 

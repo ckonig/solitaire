@@ -26,6 +26,15 @@ export default class Stock {
 
     getTop = () => this.stack[this.stack.length - 1];
 
+    popTop = () => {
+        if (this.settings.drawMode == "single") {
+            return [this.stack.pop()];
+        }
+        if (this.settings.drawMode == "triple") {
+            return this.stack.splice(this.stack.length-3);
+        }
+    }
+
     static copy = (orig) => {
         const copy = new Stock([], orig.settings);
         copy.stack = Card.copyAll(orig.stack);

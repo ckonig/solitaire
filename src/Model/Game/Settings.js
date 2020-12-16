@@ -8,8 +8,8 @@ export default class Settings {
         this.baseEntropy = isTouch ? 1 : 2;
         this.interactionEntropy = isTouch ? 1 : 2;
 
-        this.drawModes = ["single"];
-        this.drawMode = "single"; //@todo implement triple draw
+        this.drawModes = ["single", "triple"];
+        this.drawMode = "triple"; //@todo implement triple draw
 
         this.suggestionMode = 'regular';
         this.suggestionModes = ['none', 'scored', 'regular', 'full'];

@@ -6,7 +6,7 @@ export default class Stock extends Service {
     _dispatchPickup = (card, position, state) => (card != null ? this.moveToWaste(card, state) : this.recycleWaste(card, state));
 
     moveToWaste = (card, state) =>
-        state.stock.isOnTop(card) && state.waste.add(state.stock.stack.pop()) && state.game.registerMove("waste", "stock");
+        state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock");
 
     //@todo if recycling three times, and no suggestions are found, abort game.
     //@todo allow limiting the max number of recyclings

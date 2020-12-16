@@ -25,7 +25,12 @@ const Board = (props) => {
                 <div className="game-view">
                     <div className="board-grid-container">
                         <Stock model={props.model.stock} onClick={props.handlers.clickStock} />
-                        <Waste model={props.model.waste} hand={props.model.hand} onClick={props.handlers.clickWaste} />
+                        <Waste
+                            model={props.model.waste}
+                            hand={props.model.hand}
+                            onClick={props.handlers.clickWaste}
+                            settings={props.model.settings}
+                        />
                         <div className="spacer">&nbsp;</div>
                         <Foundation.Stacks
                             settings={props.model.settings}

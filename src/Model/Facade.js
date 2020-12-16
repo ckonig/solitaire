@@ -15,7 +15,7 @@ export default class Facade {
             foundation: new Foundation(settings),
             tableau: new Tableau(settings),
             hand: new Hand(),
-            game: new Game(),
+            game: new Game(settings),
             settings: settings,
         };
         return state;

@@ -49,6 +49,10 @@ export default class Card extends Component {
             style["boxShadow"] = props.shadowOffsetX + "px " + offsetY + "px 4px 4px rgba(0, 0, 0, 0.75)";
         }
 
+        if (props.offsetLeft) {
+          style["left"] =  (props.offsetLeft * 4) + "vw";
+        }
+
         const _style = {};
 
         if (!this.props.onClick) {

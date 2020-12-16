@@ -18,6 +18,7 @@ const Hand = (props) => {
                 shadowOffsetX={props.shadowOffsetX}
                 shadowOffsetY={props.shadowOffsetY}
                 offsetTop={props.offsetTop}
+                offsetLeft={props.offsetLeft}
                 onClick={putBack}
             />
         );

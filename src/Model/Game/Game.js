@@ -1,7 +1,8 @@
 import Card from "../Deck/Card";
 
 export default class Game {
-    constructor() {
+    constructor(settings) {
+        this.settings = settings;
         this.points = 0;
         this.started = false;
         this.previousStates = [];
@@ -72,14 +73,16 @@ export default class Game {
     registerRecycle() {
         this.memorable = true;
         this.modified = true;
-        if (this.points > 0) {
-            if (this.points < 100) {
-                this.points = 0;
-            } else {
-                this.points -= 100;
+        if (this.settings.drawMode == "single") {
+            if (this.points > 0) {
+                if (this.points < 100) {
+                    this.points = 0;
+                } else {
+                    this.points -= 100;
+                }
             }
+            console.debug("RATING: subtract (max) 100 points for RECYCLE");
         }
-        console.debug("RATING: subtract (max) 100 points for RECYCLE");
     }
 
     registerUncover() {
