@@ -2,7 +2,7 @@ import React from "react";
 
 const EndDisplay = (props) => {
     //@todo show launch settings (draw mode, recycling mode)
-    return props.game.isEnded ? null : (
+    return !props.game.isEnded ? null : (
         <div className="endscreen">
             <div className="title">🥳</div>
             <div>Points: {props.game.points}</div>
