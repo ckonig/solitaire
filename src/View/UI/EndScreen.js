@@ -1,6 +1,6 @@
 import React from "react";
 
-const EndDisplay = (props) => {
+const EndScreen = (props) => {
     //@todo show launch settings (draw mode, recycling mode)
     return !props.game.isEnded ? null : (
         <div className="endscreen">
@@ -16,4 +16,4 @@ const EndDisplay = (props) => {
     );
 };
 
-export default EndDisplay;
+export default EndScreen;

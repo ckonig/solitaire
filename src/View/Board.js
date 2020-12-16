@@ -1,7 +1,7 @@
-import EndDisplay from "./EndDisplay";
+import EndScreen from "./UI/EndScreen";
 import Foundation from "./Foundation";
-import Header from "./Header";
-import Menu from "./Menu";
+import Header from "./UI/Header";
+import Menu from "./UI/Menu";
 import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
@@ -15,6 +15,8 @@ export default class Board extends React.Component {
             <div>
                 <div className="layout-grid-container">
                     <Header
+                        //@todo minify by passing all handlers
+                        model={props.model.game}
                         settings={props.model.settings}
                         undoLabel={props.handlers.undoLabel}
                         toggleMenu={props.handlers.toggleMenu}
@@ -22,7 +24,6 @@ export default class Board extends React.Component {
                         newGame={props.handlers.restart}
                         undo={props.handlers.undo}
                         beat={props.handlers.beat}
-                        model={props.model.game}
                         suggestOnce={props.handlers.suggestOnce}
                     />
                     <div className="game-view">
@@ -36,29 +37,30 @@ export default class Board extends React.Component {
                             />
                             <div className="spacer">&nbsp;</div>
                             <Foundation.Stacks
-                                settings={props.model.settings}
                                 model={props.model.foundation}
                                 hand={props.model.hand}
                                 onClick={props.handlers.clickFoundation}
+                                settings={props.model.settings}
                             />
                             <Tableau.Stacks
-                                settings={props.model.settings}
                                 model={props.model.tableau}
                                 hand={props.model.hand}
                                 onClick={props.handlers.clickTableau}
+                                settings={props.model.settings}
                             />
                         </div>
                     </div>
                     <Menu
+                        //@todo minify by passing all handlers
+                        model={props.model.game}
                         settings={props.model.settings}
                         undoLabel={props.handlers.undoLabel}
                         setMouseMode={props.handlers.setMouseMode}
                         setBaseEntropy={props.handlers.setBaseEntropy}
                         setInteractionEntropy={props.handlers.setInteractionEntropy}
                         setSuggestionMode={props.handlers.setSuggestionMode}
-                        model={props.model.game}
                     />
-                    <EndDisplay game={props.model.game} restart={props.handlers.restart} />
+                    <EndScreen game={props.model.game} restart={props.handlers.restart} />
                 </div>
             </div>
         );

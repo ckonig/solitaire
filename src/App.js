@@ -2,7 +2,7 @@ import "./App.scss";
 
 import Launcher from "./View/Launcher";
 import React from "react";
-import StartScreen from "./View/StartScreen";
+import StartScreen from "./View/UI/StartScreen";
 
 export default class App extends React.Component {
     constructor(props) {
