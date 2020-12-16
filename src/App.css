@@ -186,6 +186,7 @@ body {
 
 .socket-empty {
     border-style: dashed;
+    border-width: 0.3vw;
     border-color: gray;
 }
 
