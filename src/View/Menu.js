@@ -9,6 +9,7 @@ export default class Menu extends Component {
         }
         return (
             <div className="menu">
+                <div className="title">Settings</div>
                 <div className="section">
                     <div className="title">Suggestions</div>
                     <div className="row">

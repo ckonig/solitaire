@@ -7,10 +7,17 @@ export default class Stock extends Service {
 
     //@todo check if recycling heart got broken (when stock remains empty) - maintain passes instead of remaining recyclings
     moveToWaste = (card, state) =>
-        state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock");
+        state.stock.isOnTop(card) &&
+        state.waste.addAll(state.stock.popTop()) &&
+        state.game.registerMove("waste", "stock") &&
+        state.game.registerWasteMove(state.stock.stack.length == 0);
 
     recycleWaste = (_card, state) =>
-        !state.stock.getTop() && !!state.waste.getTop() && state.game.canRecycle() && state.stock.recycle(state.waste.recycle()) && state.game.registerRecycle(state);
+        !state.stock.getTop() &&
+        !!state.waste.getTop() &&
+        state.game.canRecycle() &&
+        state.stock.recycle(state.waste.recycle()) &&
+        state.game.registerRecycle(state);
 
     blink = (_card, state) => this._blink((s) => s.stock, state);
 }

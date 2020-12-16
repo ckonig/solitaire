@@ -70,7 +70,6 @@ export default class Tableau {
 
     stackEntropy = (index) => {
         let entropy = this.settings.interactionEntropy;
-        console.log("generating stack entropy", this.settings.interactionEntropy);
         let next = 1;
         let top = this.getTop(index);
         while (entropy && entropy != 0 && top) {

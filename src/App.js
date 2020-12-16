@@ -16,7 +16,7 @@ export default class App extends Component {
     }
 
     deal = () => this.game.getDealer(this.gamestate, this.state).deal(this.state.stock.dealt);
-    start = () => this.game.prepareStart(this.gamestate);
+    start = (settings) => this.game.prepareStart(this.gamestate, settings);
 
     render() {
         const handlers = this.game.getHandlers(this.gamestate, this.state);

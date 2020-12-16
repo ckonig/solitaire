@@ -22,9 +22,12 @@ export default class Facade {
         return Model.getInitialState(this.deck);
     };
 
-    prepareStart = (gamestate) => {
+    prepareStart = (gamestate, settings) => {
+        console.debug('preparing start with settings', settings)
         gamestate.setState((state) => {
             state.game.shouldStart = true;
+            state.settings.drawMode = settings.drawMode;
+            state.settings.recyclingMode = settings.recyclingMode;
             return state;
         })
     }

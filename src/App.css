@@ -98,10 +98,10 @@ body {
 }
 
 .heart-container {
-  width: 13vw;
-  float: left;
-  padding-left: 0.5vw;
-  text-align: left;
+    width: 13vw;
+    float: left;
+    padding-left: 0.5vw;
+    text-align: left;
 }
 
 .header-buttons > div > button {
@@ -312,6 +312,11 @@ body {
     width: 25vw;
 }
 
+.menu .title {
+    font-size: 2vw;
+    margin-bottom: 2vw;
+}
+
 .menu > .section {
     font-size: 1vw;
     margin-bottom: 6vw;
@@ -357,7 +362,7 @@ body {
     width: 20vw;
 }
 
-.startScreen {
+.quickstart {
     background-color: rgba(0, 0, 0, 0.95);
     color: white;
     padding: 2vw;
@@ -366,11 +371,11 @@ body {
     width: 32vw;
     position: absolute;
     top: 6vw;
-   
+
     right: 32vw;
 }
 
-.startScreen  button {
+.quickstart button {
     font-size: 4vw;
     color: white;
     border-radius: 0.5vw;
@@ -382,22 +387,22 @@ body {
     margin: 1vw;
 }
 
-.startScreen button > div {
+.quickstart button > div {
     font-size: 1vw;
     color: lightgray;
 }
 
-.startScreen .left {
+.quickstart .left {
     float: left;
     width: 16vw;
 }
 
-.startScreen .right {
+.quickstart .right {
     float: right;
     width: 16vw;
 }
 
-.startScreen .title {
-  font-size: 2vw;;
-  margin-bottom: 2vw;
+.quickstart .title {
+    font-size: 2vw;
+    margin-bottom: 2vw;
 }

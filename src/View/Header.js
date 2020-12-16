@@ -8,10 +8,21 @@ const Header = (props) => {
             return "🖤";
         }
         if (props.model.settings.recyclingMode == "1-pass") {
-            return "💔";
+            return props.model.passes > 0 ? "❤️" : "💔";
         }
 
-        return Array.from(new Array(2 - props.model.recyclings).keys()).map(() => "❤️").join("") + Array.from(new Array(props.model.recyclings).keys()).map(() => "💔").join("");
+        if (props.model.passes < 0) {
+            return null;
+        }
+
+        return (
+            Array.from(new Array(props.model.passes).keys())
+                .map(() => "❤️")
+                .join("") +
+            Array.from(new Array(3 - props.model.passes).keys())
+                .map(() => "💔")
+                .join("")
+        );
     };
     return (
         <div className="header">

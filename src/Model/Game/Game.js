@@ -11,7 +11,25 @@ export default class Game {
         this.multiplicator = 1;
         this.shouldStart = false;
         this.recyclings = 0;
+        this.passes = -1;
+        console.log("created game with ", settings.recyclingMode);
     }
+
+    //@todo this doesn't work like it should - create game model AFTER basic settings are determined
+    decrementPasses = () => {
+        console.log("decrement passes with ", this.settings.recyclingMode);
+        if (this.passes == -1) {
+            if (this.settings.recyclingMode == "1-pass") {
+                this.passes = 1;
+            }
+            if (this.settings.recyclingMode == "3-pass") {
+                this.passes = 3;
+            }
+        }
+        if (this.passes > 0) {
+            this.passes--;
+        }
+    };
 
     canRecycle() {
         return this.settings.recyclingMode == "infinite" || (this.settings.recyclingMode == "3-pass" && this.recyclings < 2);
@@ -92,6 +110,16 @@ export default class Game {
         }
     }
 
+    registerWasteMove(stockIsEmpty) {
+        if (stockIsEmpty) {
+            this.decrementPasses();
+            console.log("register waste move passing through", this.passes);
+            console.log("settings are ", this.settings.recyclingMode);
+        } else {
+            console.debug("ignore waste move");
+        }
+    }
+
     registerUncover() {
         this.memorable = true;
         this.modified = true;
@@ -143,6 +171,8 @@ export default class Game {
         copy.multiplicator = orig.multiplicator;
         copy.memorable = orig.memorable;
         copy.previousStates = [...orig.previousStates];
+        copy.passes = orig.passes;
+        copy.recyclings = orig.recyclings;
         return copy;
     };
 

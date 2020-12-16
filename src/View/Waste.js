@@ -25,7 +25,6 @@ export default class Waste extends BlinkingComponent {
                 additionalOffset = 0;
             }
 
-            console.debug("initial length", length, props.model.stack.length, ((index - length - 2) % 3) + additionalOffset);
             return ((index - length - 2) % 3) + additionalOffset;
         };
 
