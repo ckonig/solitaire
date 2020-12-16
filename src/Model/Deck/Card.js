@@ -4,7 +4,6 @@ export default class Card {
         this.type = type;
         this.isHidden = isHidden;
         this.entropyStyle = {};
-        this.offsetTop = 0;
         this.causeEntropy(1);
     }
 
