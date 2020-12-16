@@ -15,7 +15,7 @@ export default class Settings {
         this.suggestionMode = "regular";
 
         this.recyclingModes = ["infinite", "3-pass", "1-pass"];
-        this.recyclingMode = "infinite"; //@todo implement recycling limitations
+        this.recyclingMode = "3-pass";
     }
 
     is_touch_device() {

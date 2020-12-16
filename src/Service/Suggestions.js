@@ -21,6 +21,7 @@ export default class Suggestions {
                     const foundAny = this.getPickupOptions(state);
 
                     if (!foundAny || state.settings.suggestionMode == "full") {
+                        //@todo only highlight if it's not empty or there are recyclings left
                         state.stock.suggestion = true;
                     }
                 }

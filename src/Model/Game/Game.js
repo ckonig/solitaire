@@ -10,6 +10,11 @@ export default class Game {
         this.modified = false;
         this.multiplicator = 1;
         this.shouldStart = false;
+        this.recyclings = 0;
+    }
+
+    canRecycle() {
+        return this.settings.recyclingMode == "infinite" || (this.settings.recyclingMode == "3-pass" && this.recyclings < 2);
     }
 
     registerMove(target, source) {
@@ -74,7 +79,8 @@ export default class Game {
     registerRecycle() {
         this.memorable = true;
         this.modified = true;
-        if (this.settings.drawMode == "single") {
+        this.recyclings++;
+        if (this.settings.drawMode == "single" && this.settings.recyclingMode == "infinite") {
             if (this.points > 0) {
                 if (this.points < 100) {
                     this.points = 0;
