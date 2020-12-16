@@ -1,4 +1,4 @@
-import Model from "../Model/Facade";
+import Model from "../Model/Model";
 import Suggestions from "../Service/Suggestions";
 
 export default class GameState {

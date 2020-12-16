@@ -1,4 +1,4 @@
-export default class Game {
+export default class Undo {
     constructor(getInitialState, suggestor) {
         this.getInitialState = getInitialState;
         this.suggestor = suggestor;

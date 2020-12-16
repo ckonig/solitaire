@@ -1,4 +1,4 @@
-import Facade from "../Model/Facade";
+import Model from "../Model/Model";
 
 export default class Settings {
     constructor(suggestor) {
@@ -12,7 +12,7 @@ export default class Settings {
     setBaseEntropy = (stateholder, lvl) => {
         stateholder.setState((state) => {
             state.settings.baseEntropy = lvl;
-            return Facade.setEntropy(state, state.settings.baseEntropy);
+            return Model.setEntropy(state, state.settings.baseEntropy);
         });
     };
 

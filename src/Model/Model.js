@@ -6,7 +6,7 @@ import Stock from "./Game/Stock";
 import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
-export default class Facade {
+export default class Model {
     static getInitialState = (deck, launchSettings) => {
         const settings = new Settings(launchSettings);
         const state = {

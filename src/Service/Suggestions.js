@@ -1,4 +1,4 @@
-import Facade from "../Model/Facade";
+import Model from "../Model/Model";
 import Tableau from "../Business/Tableau";
 import Waste from "../Business/Waste";
 
@@ -91,7 +91,7 @@ export default class Suggestions {
 
     getPickupOptions = (state) => {
         let foundAny = false;
-        const wasteState = Facade.copy(state);
+        const wasteState = Model.copy(state);
         this.waste._dispatchPickup(wasteState.waste.getTop(), null, wasteState);
         if (wasteState.game.modified) {
             const foundWasteSuggestions = this.getPutdownSuggestions(wasteState, true);
@@ -104,7 +104,7 @@ export default class Suggestions {
         state.tableau.stacks.forEach((tableau, index) => {
             tableau.stack.forEach((card, cardIndex) => {
                 if (!card.isHidden) {
-                    const tableauState = Facade.copy(state);
+                    const tableauState = Model.copy(state);
                     this.tableau._dispatchPickup(card, null, tableauState, index);
                     if (tableauState.game.modified) {
                         const foundTableauSuggestions = this.getPutdownSuggestions(tableauState, true);
