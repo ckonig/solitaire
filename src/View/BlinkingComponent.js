@@ -1,9 +1,18 @@
 import { Component } from "react";
 
 export default class BlinkingComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.timeout = null;
+    }
+
     componentDidUpdate() {
         if (this.props.model.blinkFor) {
-            this.props.model.unblink();
+            this.timeout = setTimeout(() => this.props.model.unblink(), 100);
         }
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
     }
 }

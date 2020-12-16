@@ -6,7 +6,7 @@ export default class Blinker {
     startBlink = (selector, state) => {
         selector(state).blinkFor = 10;
         state.game.registerBlink();
-        selector(state).unblink = () => setTimeout(() => this.stopBlink(selector), 100);
+        selector(state).unblink = () => this.stopBlink(selector);
     };
 
     stopBlink = (selector) =>

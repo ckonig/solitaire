@@ -15,6 +15,7 @@ export default class GameState {
             if (state.game.modified && state.stock.isDealt) {
                 //@todo use localstorage for previous state, reduce react state for performance
                 state.game.pushPreviousState(previous);
+                //@todo there must be a better way for a pipeline-like thing like this
                 this.suggestor.evaluateOptions(state);
                 return { ...state };
             }
