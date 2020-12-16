@@ -1,24 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Undo extends Component {
-    componentDidMount() {
-        document.addEventListener("keydown", (e) => {
-            const evtobj = window.event ? event : e;
-            if (evtobj.keyCode == 90 && evtobj.ctrlKey) this.props.undo();
-        });
-    }
+const Undo = (props) => {
+    const ctrlZ = (e) => {
+        const evtobj = window.event ? event : e;
+        if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
+            props.undo();
+        }
+    };
 
-    render() {
-        return (
-            <div>
-                <button
-                    disabled={!this.props.model.previousStates.length}
-                    title={"Undo (Penalty:" + this.props.undoLabel() + ")"}
-                    onClick={this.props.undo}
-                >
-                    ⏪
-                </button>
-            </div>
-        );
-    }
-}
+    React.useEffect(() => {
+        document.addEventListener("keydown", ctrlZ);
+        return () => document.removeEventListener("keydown", ctrlZ);
+    }, []);
+
+    return (
+        <div>
+            <button disabled={!props.model.previousStates.length} title={"Undo (Penalty:" + Math.pow(2, props.model.multiplicator) + ")"} onClick={props.undo}>
+                ⏪
+            </button>
+        </div>
+    );
+};
+
+export default Undo;

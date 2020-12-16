@@ -37,7 +37,7 @@ const Header = (props) => {
                         💡
                     </button>
                 </div>
-                <Undo undo={props.undo} undoLabel={props.undoLabel} model={props.model} />
+                <Undo undo={props.undo} model={props.model} />
 
                 <div>
                     <button disabled={!props.model.previousStates.length} title="Reset" onClick={props.reset}>

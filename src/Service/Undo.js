@@ -24,7 +24,6 @@ export default class Undo {
         return {
             undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
             reset: () => this.reset(stateholder),
-            undoLabel: () => Math.pow(2, state.game.multiplicator),
         };
     }
 }
