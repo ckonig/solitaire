@@ -1,9 +1,10 @@
 import Blinker from "./Blinker";
+import GameState from "./GameState";
 
 export default class Service {
-    constructor(gamestate) {
-        this.gamestate = gamestate;
-        this.blinker = new Blinker(gamestate);
+    constructor(stateholder) {
+        this.gamestate = new GameState(stateholder);
+        this.blinker = new Blinker(this.gamestate);
     }
 
     getHandler(hand) {

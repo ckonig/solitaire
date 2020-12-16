@@ -51,26 +51,24 @@ export default class Settings {
         });
     };
 
-    toggleMenu = (gamestate, menu) => {
-        gamestate.setState((state) => {
-            console.debug('toggle')
+    toggleMenu = (stateholder, menu) => {
+        stateholder.setState((state) => {
             if (state.settings.showMenu == menu) {
-                console.debug('inverting showmenu')
                 state.settings.showMenu = !state.settings.showMenu;
             }
             return state;
         });
     };
 
-    getHandlers(gamestate) {
+    getHandlers(stateholder) {
         return {
-            beat: () => this.beat(gamestate),
-            setBaseEntropy: (lvl) => this.setBaseEntropy(gamestate, lvl),
-            setInteractionEntropy: (lvl) => this.setInteractionEntropy(gamestate, lvl),
-            setMouseMode: (mm) => this.setMouseMode(gamestate, mm),
-            setSuggestionMode: (sm) => this.setSuggestionMode(gamestate, sm),
-            suggestOnce: () => this.suggestOnce(gamestate),
-            toggleMenu: (menu) => this.toggleMenu(gamestate, menu),
+            beat: () => this.beat(stateholder),
+            setBaseEntropy: (lvl) => this.setBaseEntropy(stateholder, lvl),
+            setInteractionEntropy: (lvl) => this.setInteractionEntropy(stateholder, lvl),
+            setMouseMode: (mm) => this.setMouseMode(stateholder, mm),
+            setSuggestionMode: (sm) => this.setSuggestionMode(stateholder, sm),
+            suggestOnce: () => this.suggestOnce(stateholder),
+            toggleMenu: (menu) => this.toggleMenu(stateholder, menu),
         };
     }
 }

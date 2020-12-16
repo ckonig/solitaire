@@ -1,6 +1,6 @@
 import Facade from "../Model/Facade";
-import Tableau from "./Tableau";
-import Waste from "./Waste";
+import Tableau from "../Business/Tableau";
+import Waste from "../Business/Waste";
 
 export default class Suggestions {
     constructor() {

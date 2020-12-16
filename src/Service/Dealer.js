@@ -23,7 +23,6 @@ export default class Dealer {
 
                     state.stock.deal(state.tableau);
                     if (state.stock.isDealt) {
-                        //@todo move to game?
                         state.game.started = Date.now();
                     }
 
