@@ -1,27 +1,30 @@
 import "./App.css";
 
-import Board from "./View/Board";
-import { Component } from "react";
-import Game from "./Service/Facade";
-import GameState from "./Service/GameState";
+import Launcher from "./View/Launcher";
 import React from "react";
+import StartScreen from "./View/StartScreen";
 
-export default class App extends Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props);
-        //@todo allow resuming earlier game.
-        this.gamestate = new GameState(this);
-        this.game = new Game();
-        this.state = this.game.getInitialState();
+        this.state = { initialized: false };
     }
 
-    deal = () => this.game.getDealer(this.gamestate, this.state).deal(this.state.stock.dealt);
-    start = (settings) => this.game.prepareStart(this.gamestate, settings);
+    start = (settings) => {
+        this.setState({
+            ...settings,
+            initialized: true,
+        });
+    };
+
+    restart = () => {
+        this.setState({ initialized: false });
+    };
 
     render() {
-        const handlers = this.game.getHandlers(this.gamestate, this.state);
-        return (
-            <Board subscribe={this.subscribe} model={this.state} game={this.game} start={this.start} deal={this.deal} handlers={handlers} />
-        );
+        if (!this.state.initialized) {
+            return <StartScreen start={this.start} />;
+        }
+        return <Launcher settings={this.state} restart={this.restart} />;
     }
 }

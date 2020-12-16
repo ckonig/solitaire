@@ -1,5 +1,6 @@
 export default class Settings {
-    constructor() {
+    constructor(launchSettings) {
+        this.launchSettings = launchSettings;
         const isTouch = this.is_touch_device();
         this.mouseModes = ["follow-cursor", "remain-on-stack"];
         this.mouseMode = isTouch ? "remain-on-stack" : "follow-cursor";
@@ -8,14 +9,8 @@ export default class Settings {
         this.baseEntropy = isTouch ? 1 : 2;
         this.interactionEntropy = isTouch ? 1 : 2;
 
-        this.drawModes = ["single", "triple"];
-        this.drawMode = "single";
-
         this.suggestionModes = ["none", "scored", "regular", "full"];
         this.suggestionMode = "regular";
-
-        this.recyclingModes = ["infinite", "3-pass", "1-pass"];
-        this.recyclingMode = "3-pass";
     }
 
     is_touch_device() {
@@ -36,11 +31,9 @@ export default class Settings {
     }
 
     static copy = (orig) => {
-        const copy = new Settings();
+        const copy = new Settings(orig.launchSettings);
         copy.suggestionMode = orig.suggestionMode;
         copy.mouseMode = orig.mouseMode;
-        copy.drawMode = orig.drawMode;
-        copy.recyclingMode = orig.recyclingMode;
         copy.baseEntropy = orig.baseEntropy;
         copy.interactionEntropy = orig.interactionEntropy;
         return copy;

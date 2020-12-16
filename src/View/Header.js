@@ -4,10 +4,10 @@ import Undo from "./Undo";
 
 const Header = (props) => {
     const getHearts = () => {
-        if (props.model.settings.recyclingMode == "infinite") {
+        if (props.model.settings.launchSettings.recyclingMode == "infinite") {
             return "🖤";
         }
-        if (props.model.settings.recyclingMode == "1-pass") {
+        if (props.model.settings.launchSettings.recyclingMode == "1-pass") {
             return props.model.passes > 0 ? "❤️" : "💔";
         }
 

@@ -7,8 +7,8 @@ import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
 export default class Facade {
-    static getInitialState = (deck) => {
-        const settings = new Settings();
+    static getInitialState = (deck, launchSettings) => {
+        const settings = new Settings(launchSettings);
         const state = {
             stock: new Stock([...deck.cards], settings),
             waste: new Waste(settings),

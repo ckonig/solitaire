@@ -13,8 +13,9 @@ export default class Dealer {
     };
 
     dealWithTimeouts = (dealt) => {
+        //@todo move timeout to react component, gracefully handle unmount 
         setTimeout(() => {
-            if (this.state && this.state.stock && !this.state.stock.isDealt && this.state.game.shouldStart) {
+            if (this.state && this.state.stock && !this.state.stock.isDealt) {
                 this.gamestate.setState((state) => {
                     if (dealt != state.stock.dealt) {
                         return null;

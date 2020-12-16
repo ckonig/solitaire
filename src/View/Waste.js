@@ -9,7 +9,7 @@ export default class Waste extends BlinkingComponent {
         const props = this.props;
 
         const getOffset = (index) => {
-            if (props.settings.drawMode == "single") {
+            if (props.settings.launchSettings.drawMode == "single") {
                 return 0;
             }
             const length =

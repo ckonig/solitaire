@@ -27,10 +27,10 @@ export default class Stock {
     getTop = () => this.stack[this.stack.length - 1];
 
     popTop = () => {
-        if (this.settings.drawMode == "single") {
+        if (this.settings.launchSettings.drawMode == "single") {
             return [this.stack.pop()];
         }
-        if (this.settings.drawMode == "triple") {
+        if (this.settings.launchSettings.drawMode == "triple") {
             return this.stack.splice(this.stack.length-3);
         }
     }

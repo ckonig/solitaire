@@ -10,31 +10,14 @@ import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 export default class Facade {
-    constructor() {
+    constructor(launchSettings) {
         this.suggestor = new Suggestions();
         this.deck = new Deck();
         this.deck.shuffle();
+        this.launchSettings = launchSettings;
     }
 
-    restart = () => {
-        this.deck = new Deck();
-        this.deck.shuffle();
-        return Model.getInitialState(this.deck);
-    };
-
-    prepareStart = (gamestate, settings) => {
-        console.debug('preparing start with settings', settings)
-        gamestate.setState((state) => {
-            state.game.shouldStart = true;
-            state.settings.drawMode = settings.drawMode;
-            state.settings.recyclingMode = settings.recyclingMode;
-            return state;
-        })
-    }
-
-    getInitialState = () => Model.getInitialState(this.deck);
-
-    getDealer = (gamestate, state) => new Dealer(gamestate, state);
+    getInitialState = () => Model.getInitialState(this.deck, this.launchSettings);
 
     getHandlers(gamestate, state) {
         return {
@@ -44,7 +27,7 @@ export default class Facade {
             clickFoundation: new Foundation(gamestate).getHandler(state.hand),
             clickStock: new Stock(gamestate).getHandler(state.hand),
             clickWaste: new Waste(gamestate).getHandler(state.hand),
-            restart: () => gamestate.setState(() => this.restart()),
+            deal: () => new Dealer(gamestate, state).deal(state.stock.dealt),
         };
     }
 }

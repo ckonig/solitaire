@@ -3,14 +3,12 @@ import Foundation from "./Foundation";
 import Header from "./Header";
 import Menu from "./Menu";
 import React from "react";
-import StartScreen from "./StartScreen";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 export default class Board extends React.Component {
-    componentDidMount = () => this.props.deal();
-    componentDidUpdate = () => this.props.deal();
+    componentDidMount = () => this.props.handlers.deal();
     render() {
         const props = this.props;
         return (
@@ -60,7 +58,6 @@ export default class Board extends React.Component {
                         setSuggestionMode={props.handlers.setSuggestionMode}
                         model={props.model.game}
                     />
-                    <StartScreen start={props.start} game={props.model.game} />
                     <EndDisplay game={props.model.game} restart={props.handlers.restart} />
                 </div>
             </div>

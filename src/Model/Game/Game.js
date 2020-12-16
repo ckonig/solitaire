@@ -2,6 +2,7 @@ import Card from "../Deck/Card";
 
 export default class Game {
     constructor(settings) {
+        //@todo this class has too many responsibilities
         this.settings = settings;
         this.points = 0;
         this.started = false;
@@ -9,30 +10,22 @@ export default class Game {
         this.memorable = true;
         this.modified = false;
         this.multiplicator = 1;
-        this.shouldStart = false;
         this.recyclings = 0;
         this.passes = -1;
-        console.log("created game with ", settings.recyclingMode);
+        if (this.settings.launchSettings.recyclingMode == "1-pass") {
+            this.passes = 1;
+        }
+        if (this.settings.launchSettings.recyclingMode == "3-pass") {
+            this.passes = 3;
+        }
     }
 
-    //@todo this doesn't work like it should - create game model AFTER basic settings are determined
-    decrementPasses = () => {
-        console.log("decrement passes with ", this.settings.recyclingMode);
-        if (this.passes == -1) {
-            if (this.settings.recyclingMode == "1-pass") {
-                this.passes = 1;
-            }
-            if (this.settings.recyclingMode == "3-pass") {
-                this.passes = 3;
-            }
-        }
-        if (this.passes > 0) {
-            this.passes--;
-        }
-    };
-
+    //@todo can this be a property of stock instead?
     canRecycle() {
-        return this.settings.recyclingMode == "infinite" || (this.settings.recyclingMode == "3-pass" && this.recyclings < 2);
+        return (
+            this.settings.launchSettings.recyclingMode == "infinite" ||
+            (this.settings.launchSettings.recyclingMode == "3-pass" && this.recyclings < 2)
+        );
     }
 
     registerMove(target, source) {
@@ -98,7 +91,8 @@ export default class Game {
         this.memorable = true;
         this.modified = true;
         this.recyclings++;
-        if (this.settings.drawMode == "single" && this.settings.recyclingMode == "infinite") {
+        //@todo move point calculation to rating class
+        if (this.settings.launchSettings.drawMode == "single" && this.settings.launchSettings.recyclingMode == "infinite") {
             if (this.points > 0) {
                 if (this.points < 100) {
                     this.points = 0;
@@ -112,9 +106,9 @@ export default class Game {
 
     registerWasteMove(stockIsEmpty) {
         if (stockIsEmpty) {
-            this.decrementPasses();
-            console.log("register waste move passing through", this.passes);
-            console.log("settings are ", this.settings.recyclingMode);
+            this.passes--;
+            console.debug("register waste move passing through", this.passes);
+            console.debug("settings are ", this.settings.launchSettings.recyclingMode);
         } else {
             console.debug("ignore waste move");
         }
@@ -123,6 +117,7 @@ export default class Game {
     registerUncover() {
         this.memorable = true;
         this.modified = true;
+        //@todo move point calculation to rating class
         this.points += 5;
         console.debug("RATING: add 5 points for UNCOVER");
         return true;
@@ -135,26 +130,25 @@ export default class Game {
     }
 
     rateMove(move) {
-        const sourceIsTableau = move.source.substr(0, 7) == "tableau";
-        const targetIsTableau = move.target.substr(0, 7) == "tableau";
-        const sourceIsFoundation = move.source.substr(0, 10) == "foundation";
-        const targetIsFoundation = move.target.substr(0, 10) == "foundation";
-        if (sourceIsTableau) {
-            if (targetIsFoundation) {
+        //@todo move point calculation to rating class
+        const isTableau = (obj) => obj.substr(0, 7) == "tableau";
+        const isFoundation = (obj) => obj.substr(0, 10) == "foundation";
+        if (isTableau(move.source)) {
+            if (isFoundation(move.target)) {
                 console.debug("RATING: add 10 points for MOVE tableau -> foundation");
                 return 10;
             }
         } else if (move.source == "waste") {
-            if (targetIsFoundation) {
+            if (isFoundation(move.target)) {
                 console.debug("RATING: add 10 points for MOVE waste -> foundation");
                 return 10;
             }
-            if (targetIsTableau) {
+            if (isTableau(move.target)) {
                 console.debug("RATING: add 5 points for MOVE waste -> tableau");
                 return 5;
             }
-        } else if (sourceIsFoundation) {
-            if (targetIsTableau) {
+        } else if (isFoundation(move.source)) {
+            if (isTableau(move.target)) {
                 console.debug("RATING: subtract 15 points for MOVE foundation -> tableau");
                 return -15;
             }

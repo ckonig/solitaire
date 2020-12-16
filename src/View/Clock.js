@@ -7,10 +7,11 @@ export default class Clock extends Component {
         this.state = {
             timeElapsed: false,
         };
+        this.interval = null;
     }
 
     componentDidMount() {
-        setInterval(() => {
+        this.interval = setInterval(() => {
             if (this.props.started) {
                 this.setState((state) => {
                     state.timeElapsed = this.props.game.getElapsed();
@@ -18,6 +19,10 @@ export default class Clock extends Component {
                 });
             }
         }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     render() {
