@@ -2,17 +2,20 @@ export default class Settings {
     constructor() {
         const isTouch = this.is_touch_device();
         this.mouseModes = ["follow-cursor", "remain-on-stack"];
-        this.mouseMode = !isTouch ? "remain-on-stack" : "follow-cursor";
+        this.mouseMode = isTouch ? "remain-on-stack" : "follow-cursor";
 
         this.entropyLevels = ["none", "low", "regular", "high", "extreme"];
         this.baseEntropy = isTouch ? 1 : 2;
         this.interactionEntropy = isTouch ? 1 : 2;
 
         this.drawModes = ["single", "triple"];
-        this.drawMode = "triple"; //@todo implement triple draw
+        this.drawMode = "single";
 
-        this.suggestionMode = 'regular';
-        this.suggestionModes = ['none', 'scored', 'regular', 'full'];
+        this.suggestionModes = ["none", "scored", "regular", "full"];
+        this.suggestionMode = "regular";
+
+        this.recyclingModes = ["infinite", "3-pass", "1-pass"];
+        this.recyclingMode = "infinite"; //@todo implement recycling limitations
     }
 
     is_touch_device() {
@@ -36,9 +39,10 @@ export default class Settings {
         const copy = new Settings();
         copy.suggestionMode = orig.suggestionMode;
         copy.mouseMode = orig.mouseMode;
+        copy.drawMode = orig.drawMode;
+        copy.recyclingMode = orig.recyclingMode;
         copy.baseEntropy = orig.baseEntropy;
-        copy.drawModes = orig.drawMode;
         copy.interactionEntropy = orig.interactionEntropy;
         return copy;
-    }
+    };
 }

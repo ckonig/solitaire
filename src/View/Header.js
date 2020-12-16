@@ -3,8 +3,10 @@ import React from "react";
 import Undo from "./Undo";
 
 const Header = (props) => (
+    //@todo heart display based on remaining recyclings
     <div className="header">
         <div className="header-title">
+            <div className="heart-container">🖤 ❤️ 💔</div>
             <div className="icon-container">🏆</div> {props.model.points}
         </div>
         <Clock game={props.model} className="header-clock" started={props.model.started} end={props.model.end} />

@@ -72,14 +72,14 @@ body {
     margin-top: 0.25vw;
     float: left;
     font-size: 2vw;
-    width: 20vw;
+    width: 35vw;
 }
 
 .header-clock {
     margin-top: 0.25vw;
     float: left;
     font-size: 2vw;
-    padding-left: 20.3vw;
+    padding-left: 5.3vw;
 }
 
 .header-buttons {
@@ -95,6 +95,13 @@ body {
     width: 5vw;
     float: left;
     text-align: center;
+}
+
+.heart-container {
+  width: 13vw;
+  float: left;
+  padding-left: 0.5vw;
+  text-align: left;
 }
 
 .header-buttons > div > button {
