@@ -1,13 +1,17 @@
 import React from "react";
 
 const EndDisplay = (props) => {
-    //@todo make this an optional part of the menu
-    return !props.game.isEnded ? null : (
-        <div className="endscreen align-center">
-            <h1>🥳</h1>
+    //@todo show launch settings (draw mode, recycling mode)
+    return props.game.isEnded ? null : (
+        <div className="endscreen">
+            <div className="title">🥳</div>
             <div>Points: {props.game.points}</div>
             <div>Time: {props.game.getElapsed()}</div>
-            <button onClick={props.restart}>new game</button>
+            <div>
+                <button onClick={props.restart}>
+                    ♻️<div>new game</div>
+                </button>
+            </div>{" "}
         </div>
     );
 };
