@@ -341,12 +341,56 @@ body {
     clear: both;
 }
 
-
 .endscreen {
-  background-color: rgba(0, 0, 0, 0.95);
-  color: white;
-  padding: 2vw;
-  border-radius: 0.5vw;
-  z-index: 5000;
-  width:20vw;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 2vw;
+    border-radius: 0.5vw;
+    z-index: 5000;
+    width: 20vw;
+}
+
+.startScreen {
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 2vw;
+    border-radius: 0.5vw;
+    z-index: 5000;
+    width: 32vw;
+    position: absolute;
+    top: 6vw;
+   
+    right: 32vw;
+}
+
+.startScreen  button {
+    font-size: 4vw;
+    color: white;
+    border-radius: 0.5vw;
+    border-color: gray;
+    border-style: solid;
+    height: 10vw;
+    background-color: rgba(0, 0, 0, 0);
+    width: 14vw;
+    margin: 1vw;
+}
+
+.startScreen button > div {
+    font-size: 1vw;
+    color: lightgray;
+}
+
+.startScreen .left {
+    float: left;
+    width: 16vw;
+}
+
+.startScreen .right {
+    float: right;
+    width: 16vw;
+}
+
+.startScreen .title {
+  font-size: 2vw;;
+  margin-bottom: 2vw;
 }

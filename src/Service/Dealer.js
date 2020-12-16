@@ -14,7 +14,7 @@ export default class Dealer {
 
     dealWithTimeouts = (dealt) => {
         setTimeout(() => {
-            if (this.state && this.state.stock && !this.state.stock.isDealt) {
+            if (this.state && this.state.stock && !this.state.stock.isDealt && this.state.game.shouldStart) {
                 this.gamestate.setState((state) => {
                     if (dealt != state.stock.dealt) {
                         return null;

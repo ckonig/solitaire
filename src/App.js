@@ -15,11 +15,13 @@ export default class App extends Component {
         this.state = this.game.getInitialState();
     }
 
-    componentDidMount = () => this.game.getDealer(this.gamestate, this.state).deal(this.state.stock.dealt);
-    componentDidUpdate = () => this.game.getDealer(this.gamestate, this.state).deal(this.state.stock.dealt);
+    deal = () => this.game.getDealer(this.gamestate, this.state).deal(this.state.stock.dealt);
+    start = () => this.game.prepareStart(this.gamestate);
 
     render() {
         const handlers = this.game.getHandlers(this.gamestate, this.state);
-        return <Board subscribe={this.subscribe} model={this.state} game={this.game} handlers={handlers} />;
+        return (
+            <Board subscribe={this.subscribe} model={this.state} game={this.game} start={this.start} deal={this.deal} handlers={handlers} />
+        );
     }
 }

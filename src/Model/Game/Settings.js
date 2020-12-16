@@ -37,6 +37,7 @@ export default class Settings {
         copy.suggestionMode = orig.suggestionMode;
         copy.mouseMode = orig.mouseMode;
         copy.baseEntropy = orig.baseEntropy;
+        copy.drawModes = orig.drawMode;
         copy.interactionEntropy = orig.interactionEntropy;
         return copy;
     }

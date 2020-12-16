@@ -1,6 +1,7 @@
 import React from "react";
 
 const EndDisplay = (props) => {
+    //@todo make this an optional part of the menu
     return !props.game.isEnded ? null : (
         <div className="endscreen align-center">
             <h1>🥳</h1>

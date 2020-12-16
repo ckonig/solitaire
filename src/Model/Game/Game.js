@@ -9,6 +9,7 @@ export default class Game {
         this.memorable = true;
         this.modified = false;
         this.multiplicator = 1;
+        this.shouldStart = false;
     }
 
     registerMove(target, source) {
@@ -129,7 +130,7 @@ export default class Game {
     }
 
     static copy = (orig) => {
-        const copy = new Game();
+        const copy = new Game(orig.settings);
         copy.points = orig.points;
         copy.started = orig.started;
         copy.modified = orig.modified;
