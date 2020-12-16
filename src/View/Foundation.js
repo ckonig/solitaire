@@ -33,8 +33,6 @@ export default class Foundation extends BlinkingComponent {
                     <Card
                         key={index}
                         model={card}
-                        shadowOffsetX={stackindex * 2}
-                        shadowOffsetY={-3}
                         blink={model.blinkFor}
                         isSuggested={model.suggestion && model.stack.length - 1 == index}
                         onClick={(c, p) => this.props.onClick(c, p, stackindex)}
@@ -43,8 +41,6 @@ export default class Foundation extends BlinkingComponent {
                 <Hand
                     settings={this.props.settings}
                     parent={"foundation-" + stackindex}
-                    shadowOffsetX={stackindex * 2}
-                    shadowOffsetY={-3}
                     onClick={(c, p) => this.props.onClick(model.stack[model.stack.length - 1], p, stackindex)}
                     model={this.props.hand}
                     stack={model.stack}

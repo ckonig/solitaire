@@ -15,8 +15,6 @@ const Hand = (props) => {
             <TouchHand
                 parent={props.parent}
                 hand={props.model}
-                shadowOffsetX={props.shadowOffsetX}
-                shadowOffsetY={props.shadowOffsetY}
                 offsetTop={props.offsetTop}
                 offsetLeft={props.offsetLeft}
                 onClick={putBack}

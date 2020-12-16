@@ -300,6 +300,58 @@ body {
     font-size: 6vw;
 }
 
+.card-stack-stock {
+    box-shadow: -0.6vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-waste {
+    box-shadow: -0.4vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-foundation-0 {
+    box-shadow: 0vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-foundation-1 {
+    box-shadow: 0.2vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-foundation-2 {
+    box-shadow: 0.4vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-foundation-3 {
+    box-shadow: 0.6vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-tableau-0 {
+    box-shadow: -0.6vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-tableau-1 {
+    box-shadow: -0.4vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-tableau-2 {
+    box-shadow: -0.2vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-tableau-3 {
+    box-shadow: 0vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-tableau-4 {
+    box-shadow: 0.2vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-tableau-5 {
+    box-shadow: 0.4vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-tableau-6 {
+    box-shadow: 0.6vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
 .menu {
     position: absolute;
     top: 6vw;

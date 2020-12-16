@@ -20,6 +20,7 @@ export default class Foundation extends Service {
         }
     };
 
+    //@todo move this to a generic place, also detect failure
     tryDetectEnd(state) {
         const nrofCards = state.foundation.countCards();
         if (nrofCards === 52) {

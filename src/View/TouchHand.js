@@ -15,8 +15,6 @@ export default class TouchHand extends Component {
                     <Card
                         key={index}
                         model={card}
-                        shadowOffsetX={this.props.shadowOffsetX}
-                        shadowOffsetY={this.props.shadowOffsetY}
                         offsetTop={this.props.offsetTop + index * 24}
                         offsetLeft={this.props.offsetLeft}
                         zIndex={1000 + index * 20}

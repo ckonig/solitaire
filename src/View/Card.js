@@ -24,11 +24,14 @@ export default class Card extends Component {
     };
 
     getClassName = () => {
+        const hasSuggestion = this.props.isSuggested || this.props.model.suggestion;
         let className = `card card-base suit-${this.props.model.type.icon}`;
+        className += !this.props.isSelected && !hasSuggestion ? ` card-stack-${this.props.model.source}` : "";
         className += this.props.isSelected ? " card-selected" : "";
         className += this.props.blink ? " blink" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
-        className += this.props.isSuggested || this.props.model.suggestion ? " card-suggested" : "";
+        className += hasSuggestion ? " card-suggested" : "";
+
         return className;
     };
 
@@ -39,16 +42,6 @@ export default class Card extends Component {
             top: this.props.offsetTop ? this.props.offsetTop / 10 + "vw" : 0,
             ...this.props.model.entropyStyle,
         };
-        //use computed shadow when not selected or blinking
-        if (
-            !this.props.isSelected &&
-            !(this.props.isSuggested || this.props.model.suggestion) &&
-            !this.props.blink &&
-            (this.props.shadowOffsetX || (!this.props.shadowOffsetX && this.props.shadowOffsetX === 0))
-        ) {
-            const offsetY = this.props.shadowOffsetY || "-1";
-            style.boxShadow = `${this.props.shadowOffsetX}px ${offsetY}px 4px 4px rgba(0, 0, 0, 0.75)`;
-        }
 
         //move to left on waste (triple draw)
         if (this.props.offsetLeft) {
@@ -63,12 +56,11 @@ export default class Card extends Component {
     };
 
     getStackbaseStyle = () => {
-        const _style = {};
         if (!this.props.onClick) {
-            _style["pointerEvents"] = "none";
+            return { pointerEvents: "none" };
         }
 
-        return _style;
+        return {};
     };
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide

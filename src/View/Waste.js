@@ -40,8 +40,6 @@ export default class Waste extends BlinkingComponent {
                     <Card
                         key={index}
                         model={card}
-                        shadowOffsetX={-4}
-                        shadowOffsetY={-3}
                         offsetTop={(index / 2) * -1}
                         offsetLeft={getOffset(index)}
                         blink={props.model.blinkFor}
@@ -51,8 +49,6 @@ export default class Waste extends BlinkingComponent {
                 ))}
                 <Hand
                     settings={props.model.settings}
-                    shadowOffsetX={-4}
-                    shadowOffsetY={-3}
                     offsetTop={(props.model.stack.length / 2) * -1}
                     offsetLeft={getOffset(props.model.stack.length)}
                     parent="waste"

@@ -107,10 +107,6 @@ export default class Game {
     registerWasteMove(stockIsEmpty) {
         if (stockIsEmpty) {
             this.passes--;
-            console.debug("register waste move passing through", this.passes);
-            console.debug("settings are ", this.settings.launchSettings.recyclingMode);
-        } else {
-            console.debug("ignore waste move");
         }
     }
 

@@ -20,8 +20,6 @@ export default class Stock extends BlinkingComponent {
                         model={card}
                         offsetTop={(index / 2) * -1}
                         blink={props.model.blinkFor}
-                        shadowOffsetX={-6}
-                        shadowOffsetY={-3}
                         isSuggested={props.model.suggestion && index == props.model.stack.length - 1}
                         onClick={props.onClick}
                     />

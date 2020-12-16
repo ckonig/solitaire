@@ -3,7 +3,7 @@ import Card from "../Deck/Card";
 export default class Stock {
     constructor(stack, settings) {
         this.settings = settings;
-        this.stack = stack;
+        this.stack = stack.map(this.setCardProperties);
         this.dealt = 0;
         this.dealingAt = 0;
         this.isDealt = false;
@@ -11,16 +11,19 @@ export default class Stock {
 
     recycle(waste) {
         if (waste.length) {
-            this.stack = waste.reverse().map((element) => {
-                element.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
-                element.isHidden = true;
-                return element;
-            });
+            this.stack = waste.reverse().map(this.setCardProperties);
             return true;
         }
 
         return false;
     }
+
+    setCardProperties = (card) => {
+        card.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
+        card.isHidden = true;
+        card.source = "stock";
+        return card;
+    };
 
     isOnTop = (card) => card && card.equals(this.getTop());
 
@@ -31,9 +34,9 @@ export default class Stock {
             return [this.stack.pop()];
         }
         if (this.settings.launchSettings.drawMode == "triple") {
-            return this.stack.splice(this.stack.length-3);
+            return this.stack.splice(this.stack.length - 3);
         }
-    }
+    };
 
     static copy = (orig) => {
         const copy = new Stock([], orig.settings);
@@ -42,12 +45,12 @@ export default class Stock {
         copy.dealingAt = orig.dealingAt;
         copy.isDealt = orig.isDealt;
         return copy;
-    }
+    };
 
     setEntropy = (lvl) => {
-        this.stack.forEach(element => element.causeEntropy(Math.min(lvl,1)));
+        this.stack.forEach((element) => element.causeEntropy(Math.min(lvl, 1)));
         return this;
-    }
+    };
 
     deal(tableau) {
         for (let i = this.dealingAt; i < tableau.stacks.length; i++) {
