@@ -11,7 +11,13 @@ export default class Undo extends Component {
     render() {
         return (
             <div>
-               <button disabled={!this.props.model.previousStates.length} title={"Undo (Penalty:"+this.props.undoLabel()+")"} onClick={this.props.undo}>⏪</button>
+                <button
+                    disabled={!this.props.model.previousStates.length}
+                    title={"Undo (Penalty:" + this.props.undoLabel() + ")"}
+                    onClick={this.props.undo}
+                >
+                    ⏪
+                </button>
             </div>
         );
     }

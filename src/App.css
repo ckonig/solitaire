@@ -19,20 +19,22 @@ body {
 
 /* Alignment Helpers */
 
+.align-left,
+.align-right {
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 .align-left {
     left: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
 }
+
 .align-right {
     right: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
 }
+
 .align-center {
     position: absolute;
     top: 50%;
@@ -54,9 +56,9 @@ body {
         "header"
         "game";
     grid-template-rows: 3.3vw 53vw;
-    grid-gap: .5vw;
+    grid-gap: 0.5vw;
     background-color: "darkgreen";
-    padding: .5vw;
+    padding: 0.5vw;
 }
 
 .header {
@@ -68,17 +70,18 @@ body {
     color: white;
 }
 
+.header-clock,
 .header-title {
     margin-top: 0.25vw;
     float: left;
     font-size: 2vw;
+}
+
+.header-title {
     width: 35vw;
 }
 
 .header-clock {
-    margin-top: 0.25vw;
-    float: left;
-    font-size: 2vw;
     padding-left: 5.3vw;
 }
 
@@ -112,7 +115,7 @@ body {
     border-style: none;
     width: 5vw;
     margin-top: 0.25vw;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
 }
 
 .board-grid-container {
@@ -288,10 +291,7 @@ body {
 
 /* Foundation Stack Base Styling */
 
-.suit-♥ {
-    color: red;
-}
-
+.suit-♥,
 .suit-♦ {
     color: red;
 }
@@ -353,9 +353,10 @@ body {
     clear: both;
 }
 
-.endscreen {
+.endscreen,
+.quickstart {
     background-color: rgba(0, 0, 0, 0.95);
-    color: white;
+    color: #fff;
     padding: 2vw;
     border-radius: 0.5vw;
     z-index: 5000;
@@ -363,15 +364,9 @@ body {
 }
 
 .quickstart {
-    background-color: rgba(0, 0, 0, 0.95);
-    color: white;
-    padding: 2vw;
-    border-radius: 0.5vw;
-    z-index: 5000;
     width: 32vw;
     position: absolute;
     top: 6vw;
-
     right: 32vw;
 }
 
