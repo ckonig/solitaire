@@ -1,0 +1,81 @@
+import Card from "../Deck/Card";
+
+export default class TimeMachine {
+    constructor() {
+        this.previousStates = [];
+        this.memorable = true;
+        this.modified = false;
+    }
+
+    registerMove = (target, source) => {
+        this.memorable = true;
+        this.modified = true;
+
+        if (source == target) {
+            this.memorable = false;
+        }
+    };
+
+    pushPreviousState = (state) => {
+        const previous = this.previousStates[this.previousStates.length - 1];
+        if (!previous || !this.modelEquals(state, previous)) {
+            this.previousStates.push(state);
+        }
+    };
+
+    registerPickup = () => {
+        this.modified = true;
+        this.memorable = false;
+    };
+
+    popPreviousState = (id, current) => {
+        const isRequested = this.previousStates.length - 1 == id;
+        const popPrevious = () => isRequested && this.previousStates && this.previousStates.pop();
+        let previous = popPrevious();
+        while (previous && (!previous.game.timemachine.memorable || this.modelEquals(previous, current)) && this.previousStates.length) {
+            previous = popPrevious();
+        }
+        return previous;
+    };
+
+    registerRecycle = () => {
+        this.memorable = true;
+        this.modified = true;
+    };
+
+    registerUncover = () => {
+        this.memorable = true;
+        this.modified = true;
+        return true;
+    };
+
+    registerBlink() {
+        this.modified = true;
+        this.memorable = false;
+    }
+
+    stackEquals = (a, b) => {
+        return a.stack.every((card, i) => Card.equals(card, b.stack[i]) && card.isHidden == b.stack[i].isHidden);
+    };
+
+    stacksEqual = (a, b) => {
+        return a.stacks.every((stack, i) => this.stackEquals(stack, b.stacks[i]));
+    };
+
+    modelEquals = (a, b) => {
+        return (
+            this.stackEquals(a.stock, b.stock) &&
+            this.stackEquals(a.waste, b.waste) &&
+            this.stacksEqual(a.tableau, b.tableau) &&
+            this.stacksEqual(a.foundation, b.foundation)
+        );
+    };
+
+    static copy = (orig) => {
+        const copy = new TimeMachine();
+        copy.previousStates = [...orig.previousStates];
+        copy.memorable = orig.memorable;
+        copy.modified = orig.modified;
+        return copy;
+    };
+}

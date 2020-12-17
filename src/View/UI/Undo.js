@@ -18,8 +18,8 @@ const Undo = () => {
     return (
         <div>
             <button
-                disabled={!state.game.previousStates.length}
-                title={"Undo (Penalty:" + Math.pow(2, state.game.multiplicator) + ")"}
+                disabled={!state.game.timemachine.previousStates.length}
+                title={"Undo (Penalty:" + Math.pow(2, state.game.rating.multiplicator) + ")"}
                 onClick={handlers.undo}
             >
                 ⏪

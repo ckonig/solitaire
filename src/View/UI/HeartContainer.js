@@ -18,7 +18,7 @@ const HeartContainer = () => {
                     .map(() => icon)
                     .join("");
 
-            return createString(state.game.passes, "❤️") + createString(3 - state.game.passes, "💔");
+            return createString(state.stock.passes, "❤️") + createString(3 - state.stock.passes, "💔");
         }
         return null;
     };

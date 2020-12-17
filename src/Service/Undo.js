@@ -6,13 +6,14 @@ export default class Undo {
     }
 
     //@todo ask for confirmation before resetting
-    reset = () => this.stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : null));
+    reset = () => this.stateholder.setState((state) => (state.game.timemachine.previousStates ? state.game.timemachine.previousStates[0] : null));
 
     // @todo enable undoing via browser back gesture/button
     undo = () =>
         this.stateholder.setState((state) => {
-            const previous = state.game.popPreviousState(this.currentState.game.previousStates.length - 1, this.currentState);
+            const previous = state.game.timemachine.popPreviousState(this.currentState.game.timemachine.previousStates.length - 1, this.currentState);
             if (previous) {
+                previous.game.rating.penalize(state.game.rating);
                 this.suggestor.evaluateOptions(previous);
                 return previous;
             }

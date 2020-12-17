@@ -7,11 +7,27 @@ export default class Stock {
         this.dealt = 0;
         this.dealingAt = 0;
         this.isDealt = false;
+        this.recyclings = 0;
+        this.passes = -1;
+        if (this.settings.launchSettings.recyclingMode == "1-pass") {
+            this.passes = 1;
+        }
+        if (this.settings.launchSettings.recyclingMode == "3-pass") {
+            this.passes = 3;
+        }
+    }
+
+    canRecycle() {
+        return (
+            this.settings.launchSettings.recyclingMode == "infinite" ||
+            (this.settings.launchSettings.recyclingMode == "3-pass" && this.recyclings < 2)
+        );
     }
 
     recycle = (waste) => {
         if (waste.length) {
             this.stack = waste.reverse().map(this.setCardProperties);
+            this.recyclings++;
             return true;
         }
 
@@ -30,12 +46,18 @@ export default class Stock {
     getTop = () => this.stack[this.stack.length - 1];
 
     popTop = () => {
+        let result = [];
         if (this.settings.launchSettings.drawMode == "single") {
-            return [this.stack.pop()];
+            result = [this.stack.pop()];
         }
         if (this.settings.launchSettings.drawMode == "triple") {
-            return this.stack.splice(this.stack.length - 3);
+            result = this.stack.splice(this.stack.length - 3);
         }
+        if (this.stack.length == 0) {
+            this.passes--;
+        }
+
+        return result;
     };
 
     static copy = (orig) => {
@@ -44,6 +66,8 @@ export default class Stock {
         copy.dealt = orig.dealt;
         copy.dealingAt = orig.dealingAt;
         copy.isDealt = orig.isDealt;
+        copy.passes = orig.passes;
+        copy.recyclings = orig.recyclings;
         return copy;
     };
 

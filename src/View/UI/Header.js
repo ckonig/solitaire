@@ -13,14 +13,14 @@ const Header = () => {
         <div className="header">
             <div className="header-title">
                 <HeartContainer />
-                <div className="icon-container">🏆</div> {state.game.points}
+                <div className="icon-container">🏆</div> {state.game.rating.points}
             </div>
             <Clock />
             <div className="header-buttons">
                 <Hint />
                 <Undo />
                 <div>
-                    <button title="Restart" disabled={!state.game.previousStates.length} onClick={handlers.reset}>
+                    <button title="Restart" disabled={!state.game.timemachine.previousStates.length} onClick={handlers.reset}>
                         ♻️
                     </button>
                 </div>
