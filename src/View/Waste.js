@@ -1,21 +1,26 @@
-import BlinkingComponent from "./BlinkingComponent";
+import BlinkingContextComponent from "./BlinkingContextComponent";
 import Card from "./Card";
+import GlobalContext from "./Context";
 import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 
-export default class Waste extends BlinkingComponent {
+export default class Waste extends BlinkingContextComponent {
+    constructor() {
+        super((s) => s.waste);
+    }
+    static contextType = GlobalContext;
     render() {
-        const props = this.props;
+        const { state, business } = this.context;
 
         const getOffset = (index) => {
-            if (props.settings.launchSettings.drawMode == "single") {
+            if (state.settings.launchSettings.drawMode == "single") {
                 return 0;
             }
             const length =
-                props.model.settings.mouseMode == "remain-on-stack" && props.hand.isHoldingCard() && props.hand.isFromWaste()
-                    ? props.model.stack.length + 1
-                    : props.model.stack.length;
+                state.waste.settings.mouseMode == "remain-on-stack" && state.hand.isHoldingCard() && state.hand.isFromWaste()
+                    ? state.waste.stack.length + 1
+                    : state.waste.stack.length;
             let additionalOffset = 2;
             if (length == 2) {
                 additionalOffset = 1;
@@ -31,30 +36,30 @@ export default class Waste extends BlinkingComponent {
         return (
             <div>
                 <StackBase
-                    blink={props.model.blinkFor}
-                    onClick={() => props.onClick(null, null)}
-                    suggested={props.model.suggestion && !props.model.stack.length}
-                    visible={!props.model.stack.length}
+                    blink={state.waste.blinkFor}
+                    onClick={() => business.clickWaste(null, null)}
+                    suggested={state.waste.suggestion && !state.waste.stack.length}
+                    visible={!state.waste.stack.length}
                 />
-                {props.model.stack.map((card, index) => (
+                {state.waste.stack.map((card, index) => (
                     <Card
                         key={index}
                         model={card}
                         offsetTop={(index / 2) * -1}
                         offsetLeft={getOffset(index)}
-                        blink={props.model.blinkFor}
-                        isSuggested={props.model.suggestion && index == props.model.stack.length - 1}
-                        onClick={(c, p) => props.onClick(c, p)}
+                        blink={state.waste.blinkFor}
+                        isSuggested={state.waste.suggestion && index == state.waste.stack.length - 1}
+                        onClick={(c, p) => business.clickWaste(c, p)}
                     />
                 ))}
                 <Hand
-                    settings={props.model.settings}
-                    offsetTop={(props.model.stack.length / 2) * -1}
-                    offsetLeft={getOffset(props.model.stack.length)}
+                    settings={state.waste.settings}
+                    offsetTop={(state.waste.stack.length / 2) * -1}
+                    offsetLeft={getOffset(state.waste.stack.length)}
                     parent="waste"
-                    onClick={props.onClick}
-                    model={props.hand}
-                    stack={props.model.stack}
+                    onClick={business.clickWaste}
+                    model={state.hand}
+                    stack={state.waste.stack}
                 />
             </div>
         );

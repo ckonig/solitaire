@@ -20,7 +20,7 @@ const Board = () => {
                 <div className="game-view">
                     <div className="board-grid-container">
                         <Stock />
-                        <Waste model={state.waste} hand={state.hand} onClick={business.clickWaste} settings={state.settings} />
+                        <Waste />
                         <div className="spacer">&nbsp;</div>
                         <Foundation.Stacks
                             model={state.foundation}

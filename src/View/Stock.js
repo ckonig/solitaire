@@ -12,7 +12,6 @@ export default class Stock extends BlinkingContextComponent {
     static contextType = GlobalContext;
     render() {
         const { state, business } = this.context;
-        console.log(this.context);
         return (
             <div>
                 <StackBase
