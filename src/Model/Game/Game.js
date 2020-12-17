@@ -5,7 +5,9 @@ export default class Game {
     constructor(settings) {
         this.rating = new Rating(settings);
         this.timemachine = new TimeMachine();
-        this.started = false;
+        this.started = 0;
+        this.isEnded = false;
+        this.end = 0;
     }
 
     registerMove = (target, source) => {

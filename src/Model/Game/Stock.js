@@ -6,6 +6,10 @@ export default class Stock {
         this.stack = stack.map(this.setCardProperties);
         this.recyclings = 0;
         this.passes = -1;
+        // eslint-disable-next-line no-unused-vars
+        this.onClick = (a, b, c) => {};
+        this.blinkFor = 0;
+        this.unblink = () => {};
         if (this.settings.launchSettings.recyclingMode == "1-pass") {
             this.passes = 1;
         }
@@ -29,7 +33,7 @@ export default class Stock {
         }
 
         return false;
-    }
+    };
 
     setCardProperties = (card) => {
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 1));

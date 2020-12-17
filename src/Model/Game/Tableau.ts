@@ -1,28 +1,39 @@
 import Card from "../Deck/Card";
+import Hand from "./Hand";
+import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 export default class Tableau {
-    constructor(settings) {
+    stacks: { stack: Card[]; id: number }[];
+    settings: Settings;
+    onClick: (a: any, b: any, c: any) => void;
+    blinkFor: number;
+    unblink: () => void;
+    
+    constructor(settings: Settings) {
         const ids = [0, 1, 2, 3, 4, 5, 6];
         this.stacks = ids.map((id) => ({
             stack: [],
             id,
         }));
         this.settings = settings;
+        this.onClick = () => {};
+        this.blinkFor = 0;
+        this.unblink = () => {};
     }
 
-    getStack = (index) => {
+    getStack = (index: number) => {
         return this.stacks[index];
     };
 
-    wouldAccept = (index, hand) => this.canPutDown(this.getTop(index), hand, index);
+    wouldAccept = (index: number, hand: Hand) => this.canPutDown(this.getTop(index), hand, index);
 
-    canPutDown = (card, hand, index) =>
+    canPutDown = (card: Card, hand: Hand, index: number) =>
         (card && card.isHidden && hand.isFromCurrentSource(card)) ||
         this.accepts(index, hand.currentCard()) ||
         (!card && hand.isFromTableau(index));
 
-    accepts = (index, current) => {
+    accepts = (index: number, current: Card) => {
         const top = this.getTop(index);
         if (!top) {
             return current && current.face === "K";
@@ -36,7 +47,7 @@ export default class Tableau {
         return currentIndex + 1 == topIndex && current.type.color !== top.type.color && top.face !== "A";
     };
 
-    getCard = (index, card) => {
+    getCard = (index: number, card: Card) => {
         for (let j = 0; j < this.stacks[index].stack.length; j++) {
             if (card && card.equals(this.stacks[index].stack[j]) && card.isHidden === this.stacks[index].stack[j].isHidden) {
                 return this.stacks[index].stack[j];
@@ -45,7 +56,7 @@ export default class Tableau {
         return false;
     };
 
-    popWithFollowing = (card, i) => {
+    popWithFollowing = (card: Card, i: number) => {
         for (let j = 0; j < this.stacks[i].stack.length; j++) {
             if (card && card.equals(this.stacks[i].stack[j])) {
                 const result = this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
@@ -57,7 +68,7 @@ export default class Tableau {
         return [];
     };
 
-    uncover = (index, card) => {
+    uncover = (index: number, card: Card) => {
         const top = this.getTop(index);
         if (top.isHidden && card && card.equals(this.getTop(index))) {
             top.isHidden = false;
@@ -68,7 +79,7 @@ export default class Tableau {
         return false;
     };
 
-    stackEntropy = (index) => {
+    stackEntropy = (index: number) => {
         let entropy = this.settings.interactionEntropy;
         let next = 1;
         let top = this.getTop(index);
@@ -80,31 +91,31 @@ export default class Tableau {
         }
     };
 
-    add = (index, cards) => {
+    add = (index: number, cards: Card[]) => {
         this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
         this.stackEntropy(index);
         return cards;
     };
 
-    setCardProperties = (card, index) => {
+    setCardProperties = (card: Card, index: number) => {
         card.source = "tableau-" + index;
         return card;
     };
 
-    getTop = (index, offset) => {
+    getTop = (index: number, offset?: number) => {
         if (!offset) {
             offset = 0;
         }
         return this.stacks[index].stack[this.stacks[index].stack.length - 1 - offset];
-    }
+    };
 
-    static copy = (orig) => {
-        const copy = new Tableau([], orig.settings);
-        copy.stacks = orig.stacks.map((stack) => ({ stack: Card.copyAll(stack.stack) }));
+    static copy = (orig: Tableau) => {
+        const copy = new Tableau(orig.settings);
+        copy.stacks = orig.stacks.map((stack, index) => ({ id: index, stack: Card.copyAll(stack.stack) }));
         return copy;
     };
 
-    setEntropy = (lvl) => {
+    setEntropy = (lvl: number) => {
         this.stacks.forEach((stack) => stack.stack.forEach((element) => element.causeEntropy(Math.min(lvl, 4))));
         return this;
     };
