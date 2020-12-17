@@ -1,0 +1,48 @@
+.header-clock,
+.header-title {
+    margin-top: 0.25vw;
+    float: left;
+    font-size: 2vw;
+}
+
+.header-title {
+    width: 35vw;
+}
+
+.header-clock {
+    padding-left: 5.3vw;
+}
+
+.header-buttons {
+    float: right;
+    padding-right: 1vw;
+}
+
+.header-buttons > div {
+    float: left;
+    padding-left: 0.5vw;
+}
+
+.icon-container {
+    width: 5vw;
+    float: left;
+    text-align: center;
+}
+
+.heart-container {
+    width: 13vw;
+    float: left;
+    padding-left: 0.5vw;
+    text-align: left;
+}
+
+.header-buttons > div > button {
+    font-size: 2vw;
+    padding-top: 0vw;
+    border-radius: 0.5vw;
+    border-color: gray;
+    border-style: none;
+    width: 5vw;
+    margin-top: 0.25vw;
+    background-color: transparent;
+}

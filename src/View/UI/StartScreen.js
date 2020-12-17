@@ -1,3 +1,5 @@
+import "../../Style/Screens.css";
+
 import React from "react";
 
 const StartScreen = (props) => {

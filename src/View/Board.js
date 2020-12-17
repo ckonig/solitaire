@@ -1,45 +1,71 @@
+import "../Style/Board.scss";
+
+import Business from "../Business/Business";
+import Dealer from "./Dealer";
+import Deck from "../Model/Deck/Deck";
 import EndScreen from "./UI/EndScreen";
 import Foundation from "./Foundation";
+import GameState from "../Business/GameState";
 import Header from "./UI/Header";
 import Menu from "./UI/Menu";
+import Model from "../Model/Model";
 import React from "react";
+import Settings from "../Service/Settings";
 import Stock from "./Stock";
+import Suggestions from "../Service/Suggestions";
 import Tableau from "./Tableau";
+import Undo from "../Service/Undo";
 import Waste from "./Waste";
 
-const Board = (props) => {
-    return (
-        <div>
-            <div className="layout-grid-container">
-                <Header model={props.model.game} settings={props.model.settings} handlers={props.handlers} />
-                <div className="game-view">
-                    <div className="board-grid-container">
-                        <Stock model={props.model.stock} onClick={props.handlers.clickStock} />
-                        <Waste
-                            model={props.model.waste}
-                            hand={props.model.hand}
-                            onClick={props.handlers.clickWaste}
-                            settings={props.model.settings}
-                        />
-                        <div className="spacer">&nbsp;</div>
-                        <Foundation.Stacks
-                            model={props.model.foundation}
-                            hand={props.model.hand}
-                            onClick={props.handlers.clickFoundation}
-                            settings={props.model.settings}
-                        />
-                        <Tableau.Stacks
-                            model={props.model.tableau}
-                            hand={props.model.hand}
-                            onClick={props.handlers.clickTableau}
-                            settings={props.model.settings}
-                        />
+export default class Board extends React.Component {
+    constructor(props) {
+        super(props);
+        this.suggestor = new Suggestions();
+        this.deck = new Deck();
+        this.deck.shuffle();
+        this.state = Model.getInitialState(this.deck, props.settings);
+    }
+
+    render = () => {
+        const handlers = {
+            ...Undo.getHandlers(this.suggestor, this, this.state),
+            ...Settings.getHandlers(this.suggestor, this, this.state),
+            ...Business.getHandlers(new GameState(this), this.state),
+            restart: this.props.restart,
+        };
+        return (
+            <div>
+                <div className="layout-grid-container">
+                    <Header model={this.state.game} settings={this.state.settings} handlers={handlers} />
+                    <div className="game-view">
+                        <div className="board-grid-container">
+                            <Stock model={this.state.stock} onClick={handlers.clickStock} />
+                            <Waste
+                                model={this.state.waste}
+                                hand={this.state.hand}
+                                onClick={handlers.clickWaste}
+                                settings={this.state.settings}
+                            />
+                            <div className="spacer">&nbsp;</div>
+                            <Foundation.Stacks
+                                model={this.state.foundation}
+                                hand={this.state.hand}
+                                onClick={handlers.clickFoundation}
+                                settings={this.state.settings}
+                            />
+                            <Tableau.Stacks
+                                model={this.state.tableau}
+                                hand={this.state.hand}
+                                onClick={handlers.clickTableau}
+                                settings={this.state.settings}
+                            />
+                        </div>
                     </div>
+                    <Menu model={this.state.game} settings={this.state.settings} handlers={handlers} />
+                    <EndScreen game={this.state.game} restart={handlers.restart} />
+                    <Dealer state={this.state} stateholder={this} />
                 </div>
-                <Menu model={props.model.game} settings={props.model.settings} handlers={props.handlers} />
-                <EndScreen game={props.model.game} restart={props.handlers.restart} />
             </div>
-        </div>
-    );
-};
-export default Board;
+        );
+    };
+}

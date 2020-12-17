@@ -1,6 +1,6 @@
-import "./App.scss";
+import "./Style/App.css";
 
-import Launcher from "./View/Launcher";
+import Board from "./View/Board";
 import React from "react";
 import StartScreen from "./View/UI/StartScreen";
 
@@ -12,7 +12,7 @@ const App = () => {
             initialized: true,
         });
     const restart = () => setAppState({ initialized: false });
-    return !appState.initialized ? <StartScreen start={start} /> : <Launcher settings={appState} restart={restart} />;
+    return !appState.initialized ? <StartScreen start={start} /> : <Board settings={appState} restart={restart} />;
 };
 
 export default App;

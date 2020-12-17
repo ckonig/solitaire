@@ -1,3 +1,5 @@
+import "../../Style/Menu.css";
+
 import React from "react";
 
 const Menu = (props) => {
@@ -34,7 +36,11 @@ const Menu = (props) => {
                         <div className="description">Should the selected card follow the cursor or remain on the stack?</div>
                     </div>
 
-                    <select className="input" onChange={(e) => props.handlers.setMouseMode(e.target.value)} value={props.settings.mouseMode}>
+                    <select
+                        className="input"
+                        onChange={(e) => props.handlers.setMouseMode(e.target.value)}
+                        value={props.settings.mouseMode}
+                    >
                         {props.settings.mouseModes.map((mouseMode) => (
                             <option key={mouseMode} value={mouseMode}>
                                 {mouseMode}
@@ -49,7 +55,11 @@ const Menu = (props) => {
                     <div className="label">
                         <div className="description">How much chaos will the stacks on the board contain by themselves?</div>
                     </div>
-                    <select className="input" onChange={(e) => props.handlers.setBaseEntropy(e.target.value)} value={props.settings.baseEntropy}>
+                    <select
+                        className="input"
+                        onChange={(e) => props.handlers.setBaseEntropy(e.target.value)}
+                        value={props.settings.baseEntropy}
+                    >
                         {props.settings.entropyLevels.map((entropyLevel, index) => (
                             <option key={entropyLevel} value={index}>
                                 {entropyLevel}

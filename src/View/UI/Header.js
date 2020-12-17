@@ -1,3 +1,5 @@
+import "../../Style/Header.css";
+
 import Clock from "./Clock";
 import HeartContainer from "./HeartContainer";
 import Hint from "./Hint";

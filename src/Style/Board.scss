@@ -1,0 +1,203 @@
+
+.layout-grid-container {
+    margin-left: 1vw;
+    display: grid;
+    grid-template-areas:
+        "header"
+        "game";
+    grid-template-rows: 3.3vw 53vw;
+    grid-gap: 0.5vw;
+    background-color: "darkgreen";
+    padding: 0.5vw;
+}
+
+.game-view {
+    grid-area: game;
+    margin-top: 2vw;
+}
+
+.header {
+    grid-area: header;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 0.5vw;
+    padding-left: 1vw;
+    font-size: 2vw;
+    color: white;
+}
+
+.board-grid-container {
+    display: grid;
+    grid-template-areas:
+        "stock waste spacer foundation foundation foundation foundation"
+        "tableau tableau tableau tableau tableau tableau tableau";
+    grid-template-rows: 14vw 38vw;
+    grid-gap: 1vw;
+    background-color: "darkgreen";
+    padding: 1vw;
+}
+
+.mainface {
+    grid-area: mainface;
+    text-align: center;
+    font-size: 5vw;
+}
+
+.card-grid-container {
+    display: grid;
+    font-size: 2vw;
+    grid-template-rows: 2.1vw 8.3vw 2.1vw;
+    grid-template-areas:
+        "suite-tl face-tl spacer-t suite-tr"
+        "mainface mainface mainface mainface"
+        "suite-bl spacer-b face-br suite-br";
+    grid-gap: 0.2vw;
+    height: 90%;
+    width: 100%;
+}
+
+.card-grid-container > div {
+    position: relative;
+}
+
+.stack-base {
+    position: absolute;
+}
+
+.card-base {
+    width: 9.45vw;
+    height: 13.2vw;
+    border-radius: 0.5vw;
+    float: left;
+    position: relative;
+}
+
+.socket-empty {
+    border-style: dashed;
+    border-width: 0.3vw;
+    border-color: gray;
+}
+
+.socket-full {
+    margin: 0.3vw;
+}
+
+.socket-suggested {
+    border-style: solid;
+    border-color: blue;
+}
+
+.card {
+    border-style: solid;
+    border-width: 0.1vw;
+    border-color: black;
+    background-color: white;
+}
+
+.card-selected {
+    box-shadow: 0vw 0vw 0.4vw 0.4vw yellow;
+}
+
+.card-suggested {
+    box-shadow: 0vw 0vw 0.4vw 0.4vw blue;
+}
+
+.socket-blink {
+    border-style: dashed;
+    border-color: red;
+}
+
+.blink {
+    border-color: red;
+    box-shadow: 0vw 0vw 0.4vw 0.4vw red;
+}
+
+.card-back {
+    background-color: hsl(34, 53%, 82%);
+    background-image: repeating-linear-gradient(
+            45deg,
+            transparent 5vw,
+            hsla(197, 62%, 11%, 0.5) 0.5vw,
+            hsla(197, 62%, 11%, 0.5) 1vw,
+            hsla(5, 53%, 63%, 0) 1vw,
+            hsla(5, 53%, 63%, 0) 3.5vw,
+            hsla(5, 53%, 63%, 0.5) 3.5vw,
+            hsla(5, 53%, 63%, 0.5) 4vw,
+            hsla(197, 62%, 11%, 0.5) 4vw,
+            hsla(197, 62%, 11%, 0.5) 5vw,
+            hsla(197, 62%, 11%, 0) 5vw,
+            hsla(197, 62%, 11%, 0) 6vw,
+            hsla(5, 53%, 63%, 0.5) 6vw,
+            hsla(5, 53%, 63%, 0.5) 7vw,
+            hsla(35, 91%, 65%, 0.5) 7vw,
+            hsla(35, 91%, 65%, 0.5) 8vw,
+            hsla(35, 91%, 65%, 0) 8vw,
+            hsla(35, 91%, 65%, 0) 9vw,
+            hsla(5, 53%, 63%, 0.5) 9vw,
+            hsla(5, 53%, 63%, 0.5) 11vw,
+            hsla(5, 53%, 63%, 0) 11vw,
+            hsla(5, 53%, 63%, 0) 12vw,
+            hsla(197, 62%, 11%, 0.5) 12vw,
+            hsla(197, 62%, 11%, 0.5) 1.4vw
+        ),
+        repeating-linear-gradient(
+            135deg,
+            transparent 5vw,
+            hsla(197, 62%, 11%, 0.5) 0.5vw,
+            hsla(197, 62%, 11%, 0.5) 1vw,
+            hsla(5, 53%, 63%, 0) 1vw,
+            hsla(5, 53%, 63%, 0) 3.5vw,
+            hsla(5, 53%, 63%, 0.5) 3.5vw,
+            hsla(5, 53%, 63%, 0.5) 4vw,
+            hsla(197, 62%, 11%, 0.5) 4vw,
+            hsla(197, 62%, 11%, 0.5) 5vw,
+            hsla(197, 62%, 11%, 0) 5vw,
+            hsla(197, 62%, 11%, 0) 6vw,
+            hsla(5, 53%, 63%, 0.5) 6vw,
+            hsla(5, 53%, 63%, 0.5) 7vw,
+            hsla(35, 91%, 65%, 0.5) 7vw,
+            hsla(35, 91%, 65%, 0.5) 8vw,
+            hsla(35, 91%, 65%, 0) 8vw,
+            hsla(35, 91%, 65%, 0) 9vw,
+            hsla(5, 53%, 63%, 0.5) 9vw,
+            hsla(5, 53%, 63%, 0.5) 11vw,
+            hsla(5, 53%, 63%, 0) 11vw,
+            hsla(5, 53%, 63%, 0) 14vw,
+            hsla(197, 62%, 11%, 0.5) 14vw,
+            hsla(197, 62%, 11%, 0.5) 1.6vw
+        );
+    margin: 5%;
+    border-radius: 0.5vw;
+    height: 92%;
+    border-color: black;
+    border-style: solid;
+    border-width: 0.1vw;
+}
+
+.suit-♥,
+.suit-♦ {
+    color: red;
+}
+
+.foundation-base {
+    font-size: 6vw;
+}
+
+.card-stack-stock {
+    box-shadow: -0.6vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+.card-stack-waste {
+    box-shadow: -0.4vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+}
+
+@for $i from 0 through 3 {
+    .card-stack-foundation-#{$i} {
+        box-shadow: #{$i * 0.2}vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+    }
+}
+
+@for $i from -3 through 3 {
+    .card-stack-tableau-#{$i + 3} {
+        box-shadow: #{$i * 0.2}vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+    }
+}
