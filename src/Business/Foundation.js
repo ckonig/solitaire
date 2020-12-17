@@ -1,7 +1,9 @@
-import Service from "./BaseService";
+export default class Foundation {
+    constructor(blinker) {
+        this.blink = (index, state) => blinker.startBlink((s) => s.foundation.stacks[index], state);
+    }
 
-export default class Foundation extends Service {
-    _dispatchPutDown = (_card, position, state, index) => {
+    dispatchPutDown = (_card, position, state, index) => {
         if (state.foundation.wouldAccept(index, state.hand)) {
             const src = state.hand.source;
             state.foundation.add(index, state.hand.putDown()) && state.game.registerMove("foundation-" + index, src);
@@ -11,7 +13,7 @@ export default class Foundation extends Service {
         }
     };
 
-    _dispatchPickup = (_card, position, state, index) => {
+    dispatchPickup = (_card, position, state, index) => {
         const card = state.foundation.getTop(index);
         if (card && state.foundation.getPreviousUsed(index) === card.face) {
             state.hand.pickUp([state.foundation.remove(index, card)], card.source, position) && state.game.registerPickup();
@@ -28,6 +30,4 @@ export default class Foundation extends Service {
             state.game.end = Date.now();
         }
     }
-
-    blink = (index, state) => this._blink((s) => s.foundation.stacks[index], state);
 }

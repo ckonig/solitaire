@@ -13,7 +13,7 @@ const EndScreen = (props) => {
                 <button onClick={props.restart}>
                     ♻️<div>new game</div>
                 </button>
-            </div>{" "}
+            </div>
         </div>
     );
 };

@@ -1,15 +1,18 @@
+import Blinker from "./Blinker";
+import Dispatcher from "./Dispatcher";
 import Foundation from "./Foundation";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 export default class Business {
-    static getHandlers(gamestate, state) {
+    static getHandlers(gamestate, hand) {
+        const blinker = new Blinker(gamestate);
         return {
-            clickTableau: new Tableau(gamestate).getHandler(state.hand),
-            clickFoundation: new Foundation(gamestate).getHandler(state.hand),
-            clickStock: new Stock(gamestate).getHandler(state.hand),
-            clickWaste: new Waste(gamestate).getHandler(state.hand),
+            clickTableau: new Dispatcher(new Tableau(blinker), gamestate).getHandler(hand),
+            clickFoundation: new Dispatcher(new Foundation(blinker), gamestate).getHandler(hand),
+            clickStock: new Dispatcher(new Stock(blinker), gamestate).getHandler(hand),
+            clickWaste: new Dispatcher(new Waste(blinker), gamestate).getHandler(hand),
         };
     }
 }

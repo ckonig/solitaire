@@ -1,7 +1,9 @@
-import Service from "./BaseService";
+export default class Tableau {
+    constructor(blinker) {
+        this.blink = (index, state) => blinker.startBlink((s) => s.tableau.stacks[index], state);
+    }
 
-export default class Tableau extends Service {
-    _dispatchPutDown = (card, position, state, index) => {
+    dispatchPutDown = (card, position, state, index) => {
         if (state.tableau.wouldAccept(index, state.hand)) {
             const src = state.hand.source;
             state.tableau.add(index, state.hand.putDown()) && state.game.registerMove("tableau-" + index, src);
@@ -10,7 +12,7 @@ export default class Tableau extends Service {
         }
     };
 
-    _dispatchPickup = (card, position, state, index) => {
+    dispatchPickup = (card, position, state, index) => {
         if (card && !this.tryUncover(card, index, state) && !card.isHidden) {
             state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source, position) && state.game.registerPickup();
         } else if (!card) {
@@ -20,6 +22,4 @@ export default class Tableau extends Service {
 
     tryUncover = (card, index, state) =>
         !state.hand.isHoldingCard() && card.isHidden && state.tableau.uncover(index, card) && state.game.registerUncover();
-
-    blink = (index, state) => this._blink((s) => s.tableau.stacks[index], state);
 }

@@ -4,8 +4,9 @@ import Waste from "../Business/Waste";
 
 export default class Suggestions {
     constructor() {
-        this.tableau = new Tableau();
-        this.waste = new Waste();
+        const nullBlinker = { startBlink: () => {} };
+        this.tableau = new Tableau(nullBlinker);
+        this.waste = new Waste(nullBlinker);
     }
 
     evaluateOptions = (state) => {
@@ -92,7 +93,7 @@ export default class Suggestions {
     getPickupOptions = (state) => {
         let foundAny = false;
         const wasteState = Model.copy(state);
-        this.waste._dispatchPickup(wasteState.waste.getTop(), null, wasteState);
+        this.waste.dispatchPickup(wasteState.waste.getTop(), null, wasteState);
         if (wasteState.game.modified) {
             const foundWasteSuggestions = this.getPutdownSuggestions(wasteState, true);
             if (foundWasteSuggestions > (state.settings.suggestionMode == "full" ? 1 : 0)) {
@@ -105,7 +106,7 @@ export default class Suggestions {
             tableau.stack.forEach((card, cardIndex) => {
                 if (!card.isHidden) {
                     const tableauState = Model.copy(state);
-                    this.tableau._dispatchPickup(card, null, tableauState, index);
+                    this.tableau.dispatchPickup(card, null, tableauState, index);
                     if (tableauState.game.modified) {
                         const foundTableauSuggestions = this.getPutdownSuggestions(tableauState, true);
                         if (foundTableauSuggestions > (state.settings.suggestionMode == "full" ? 1 : 0)) {

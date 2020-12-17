@@ -27,10 +27,10 @@ export default class Board extends React.Component {
     }
 
     render = () => {
+        const business = Business.getHandlers(new GameState(this, this.suggestor), this.state.hand);
         const handlers = {
-            ...Undo.getHandlers(this.suggestor, this, this.state),
-            ...Settings.getHandlers(this.suggestor, this, this.state),
-            ...Business.getHandlers(new GameState(this, this.suggestor), this.state),
+            ...new Undo(this.suggestor, this, this.state),
+            ...new Settings(this.suggestor, this, this.state),
             restart: this.props.restart,
         };
         return (
@@ -39,24 +39,24 @@ export default class Board extends React.Component {
                     <Header model={this.state.game} settings={this.state.settings} handlers={handlers} />
                     <div className="game-view">
                         <div className="board-grid-container">
-                            <Stock model={this.state.stock} onClick={handlers.clickStock} />
+                            <Stock model={this.state.stock} onClick={business.clickStock} />
                             <Waste
                                 model={this.state.waste}
                                 hand={this.state.hand}
-                                onClick={handlers.clickWaste}
+                                onClick={business.clickWaste}
                                 settings={this.state.settings}
                             />
                             <div className="spacer">&nbsp;</div>
                             <Foundation.Stacks
                                 model={this.state.foundation}
                                 hand={this.state.hand}
-                                onClick={handlers.clickFoundation}
+                                onClick={business.clickFoundation}
                                 settings={this.state.settings}
                             />
                             <Tableau.Stacks
                                 model={this.state.tableau}
                                 hand={this.state.hand}
-                                onClick={handlers.clickTableau}
+                                onClick={business.clickTableau}
                                 settings={this.state.settings}
                             />
                         </div>

@@ -56,16 +56,4 @@ export default class Settings {
             return state;
         });
     };
-
-    static getHandlers(suggestor, stateholder) {
-        const settings = new Settings(suggestor, stateholder);
-        return {
-            setBaseEntropy: (lvl) => settings.setBaseEntropy(lvl),
-            setInteractionEntropy: (lvl) => settings.setInteractionEntropy(lvl),
-            setMouseMode: (mm) => settings.setMouseMode(mm),
-            setSuggestionMode: (sm) => settings.setSuggestionMode(sm),
-            suggestOnce: () => settings.suggestOnce(),
-            toggleMenu: (menu) => settings.toggleMenu(menu),
-        };
-    }
 }

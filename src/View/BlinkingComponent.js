@@ -8,7 +8,7 @@ export default class BlinkingComponent extends Component {
 
     componentDidUpdate() {
         if (this.props.model.blinkFor) {
-            this.timeout = setTimeout(() => this.props.model.unblink(), 100);
+            this.timeout = setTimeout(() => this.props.model.unblink(), 200);
         }
     }
 

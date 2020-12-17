@@ -11,7 +11,7 @@ const Undo = (props) => {
     React.useEffect(() => {
         document.addEventListener("keydown", ctrlZ);
         return () => document.removeEventListener("keydown", ctrlZ);
-    }, []);
+    });
 
     return (
         <div>
