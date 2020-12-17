@@ -12,7 +12,7 @@ import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 const Board = () => {
-    const { state, business, handlers, suggestor, stateholder } = React.useContext(GlobalContext);
+    const { state, handlers, suggestor, stateholder } = React.useContext(GlobalContext);
     return (
         <div>
             <div className="layout-grid-container">
@@ -22,13 +22,8 @@ const Board = () => {
                         <Stock />
                         <Waste />
                         <div className="spacer">&nbsp;</div>
-                        <Foundation.Stacks
-                            model={state.foundation}
-                            hand={state.hand}
-                            onClick={business.clickFoundation}
-                            settings={state.settings}
-                        />
-                        <Tableau.Stacks model={state.tableau} hand={state.hand} onClick={business.clickTableau} settings={state.settings} />
+                        <Foundation.Stacks />
+                        <Tableau.Stacks />
                     </div>
                 </div>
                 <Menu model={state.game} settings={state.settings} handlers={handlers} />

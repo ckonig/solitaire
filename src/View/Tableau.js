@@ -1,21 +1,24 @@
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
+import GlobalContext from "./Context";
 import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 
 export default class Tableau extends BlinkingComponent {
-    static Stacks = (props) =>
-        props.model.stacks.map((tableau, index) => (
+    static Stacks = () => {
+        const {state, business} = React.useContext(GlobalContext);
+        return state.tableau.stacks.map((tableau, index) => (
             <Tableau
-                settings={props.settings}
+                settings={state.settings}
                 key={index}
                 index={index}
                 model={tableau}
-                hand={props.hand}
-                onClick={(card, p) => props.onClick(card, p, index)}
+                hand={state.hand}
+                onClick={(card, p) => business.clickTableau(card, p, index)}
             />
         ));
+    };
 
     render() {
         const props = this.props;

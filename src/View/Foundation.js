@@ -1,21 +1,24 @@
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
+import GlobalContext from "./Context";
 import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 
 export default class Foundation extends BlinkingComponent {
-    static Stacks = (props) =>
-        props.model.stacks.map((foundation, index) => (
+    static Stacks = () => {
+        const {state, business} = React.useContext(GlobalContext);
+        return state.foundation.stacks.map((foundation, index) => (
             <Foundation
-                hand={props.hand}
+                hand={state.hand}
                 key={index}
                 model={foundation}
                 stackindex={index}
-                settings={props.settings}
-                onClick={(c, p) => props.onClick(c, p, index)}
+                settings={state.settings}
+                onClick={(c, p) => business.clickFoundation(c, p, index)}
             />
         ));
+    };
     render() {
         const model = this.props.model;
         const stackindex = this.props.stackindex;
