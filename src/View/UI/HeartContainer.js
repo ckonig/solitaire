@@ -1,7 +1,8 @@
-import GlobalState from "../Context";
+import GlobalContext from "../Context";
 import React from "react";
 
-const HeartContainer = (props, context) => {
+const HeartContainer = (props) => {
+    const context = React.useContext(GlobalContext);
     const getHearts = () => {
         if (context.state.settings.launchSettings.recyclingMode == "infinite") {
             return "🖤";
@@ -23,5 +24,4 @@ const HeartContainer = (props, context) => {
     };
     return <div className="heart-container">{getHearts()}</div>;
 };
-HeartContainer.contextTypes = GlobalState;
 export default HeartContainer;

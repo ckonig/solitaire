@@ -3,7 +3,7 @@ import "../Style/Board.scss";
 import Dealer from "./Dealer";
 import EndScreen from "./UI/EndScreen";
 import Foundation from "./Foundation";
-import GlobalState from "./Context";
+import GlobalContext from "./Context";
 import Header from "./UI/Header";
 import Menu from "./UI/Menu";
 import React from "react";
@@ -11,15 +11,15 @@ import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
-const Board = (props, context) => {
-    const { state, business, handlers, suggestor, stateholder } = context;
+const Board = () => {
+    const { state, business, handlers, suggestor, stateholder } = React.useContext(GlobalContext);
     return (
         <div>
             <div className="layout-grid-container">
-                <Header game={state.game} settings={state.settings} handlers={handlers} />
+                <Header />
                 <div className="game-view">
                     <div className="board-grid-container">
-                        <Stock model={state.stock} onClick={business.clickStock} />
+                        <Stock />
                         <Waste model={state.waste} hand={state.hand} onClick={business.clickWaste} settings={state.settings} />
                         <div className="spacer">&nbsp;</div>
                         <Foundation.Stacks
@@ -38,6 +38,5 @@ const Board = (props, context) => {
         </div>
     );
 };
-Board.contextTypes = GlobalState;
 
 export default Board;

@@ -1,8 +1,8 @@
 import Business from "../Business/Business";
 import Deck from "../Model/Deck/Deck";
 import GameState from "../Business/GameState";
-import GlobalState from "./Context";
 import Model from "../Model/Model";
+import { Provider } from "./Context";
 import React from "react";
 import Settings from "../Service/Settings";
 import Suggestions from "../Service/Suggestions";
@@ -16,10 +16,8 @@ export default class BoardWrap extends React.Component {
         this.deck.shuffle();
         this.state = Model.getInitialState(this.deck, props.settings);
     }
-    
-    static childContextTypes = GlobalState;
 
-    getChildContext() {
+    getContext() {
         const business = Business.getHandlers(new GameState(this, this.suggestor), this.state.hand);
         const handlers = {
             ...new Undo(this.suggestor, this, this.state),
@@ -36,6 +34,6 @@ export default class BoardWrap extends React.Component {
     }
 
     render() {
-        return <>{this.props.children}</>;
+        return <Provider value={this.getContext()}>{this.props.children}</Provider>;
     }
 }

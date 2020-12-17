@@ -1,7 +1,8 @@
-import GlobalState from "../Context";
+import GlobalContext from "../Context";
 import React from "react";
 
-const Hint = (props, context) => {
+const Hint = () => {
+    const context = React.useContext(GlobalContext);
     const listenForH = (e) => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 72) {
@@ -22,5 +23,4 @@ const Hint = (props, context) => {
         </div>
     );
 };
-Hint.contextTypes = GlobalState;
 export default Hint;

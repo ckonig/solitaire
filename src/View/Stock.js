@@ -1,27 +1,34 @@
-import BlinkingComponent from "./BlinkingComponent";
+import BlinkingContextComponent from "./BlinkingContextComponent";
 import Card from "./Card";
+import GlobalContext from "./Context";
 import React from "react";
 import StackBase from "./StackBase";
 
-export default class Stock extends BlinkingComponent {
+export default class Stock extends BlinkingContextComponent {
+    constructor() {
+        super((s) => s.stock);
+    }
+    
+    static contextType = GlobalContext;
     render() {
-        const props = this.props;
+        const { state, business } = this.context;
+        console.log(this.context);
         return (
             <div>
                 <StackBase
-                    blink={props.model.blinkFor}
-                    onClick={props.onClick}
-                    suggested={props.model.suggestion && !props.model.stack.length}
-                    visible={!props.model.stack.length}
+                    blink={state.stock.blinkFor}
+                    onClick={business.clickStock}
+                    suggested={state.stock.suggestion && !state.stock.stack.length}
+                    visible={!state.stock.stack.length}
                 />
-                {props.model.stack.map((card, index) => (
+                {state.stock.stack.map((card, index) => (
                     <Card
                         key={index}
                         model={card}
                         offsetTop={(index / 2) * -1}
-                        blink={props.model.blinkFor}
-                        isSuggested={props.model.suggestion && index == props.model.stack.length - 1}
-                        onClick={props.onClick}
+                        blink={state.stock.blinkFor}
+                        isSuggested={state.stock.suggestion && index == state.stock.stack.length - 1}
+                        onClick={business.clickStock}
                     />
                 ))}
             </div>

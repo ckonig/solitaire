@@ -1,35 +1,36 @@
 import "../../Style/Header.css";
 
 import Clock from "./Clock";
-import GlobalState from "../Context";
+import GlobalContext from "../Context";
 import HeartContainer from "./HeartContainer";
 import Hint from "./Hint";
 import React from "react";
 import Undo from "./Undo";
 
-const Header = (props, context) => {
+const Header = () => {
+    const {state, handlers} = React.useContext(GlobalContext);
     return (
         <div className="header">
             <div className="header-title">
                 <HeartContainer />
-                <div className="icon-container">🏆</div> {context.state.game.points}
+                <div className="icon-container">🏆</div> {state.game.points}
             </div>
             <Clock />
             <div className="header-buttons">
-                <Hint suggestOnce={props.handlers.suggestOnce} suggestionMode={props.settings.suggestionMode} />
-                <Undo undo={props.handlers.undo} game={props.game} />
+                <Hint suggestOnce={handlers.suggestOnce} suggestionMode={state.settings.suggestionMode} />
+                <Undo undo={handlers.undo} game={state.game} />
                 <div>
-                    <button title="Restart" disabled={!props.game.previousStates.length} onClick={props.handlers.reset}>
+                    <button title="Restart" disabled={!state.game.previousStates.length} onClick={handlers.reset}>
                         ♻️
                     </button>
                 </div>
                 <div>
-                    <button title="End Game" onClick={props.handlers.restart}>
+                    <button title="End Game" onClick={handlers.restart}>
                         🗑️
                     </button>
                 </div>
                 <div>
-                    <button title="Settings" onClick={() => props.handlers.toggleMenu(props.settings.showMenu)}>
+                    <button title="Settings" onClick={() => handlers.toggleMenu(state.settings.showMenu)}>
                         ⚙️
                     </button>
                 </div>
@@ -37,5 +38,4 @@ const Header = (props, context) => {
         </div>
     );
 };
-Header.contextTypes = GlobalState;
 export default Header;

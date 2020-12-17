@@ -1,7 +1,8 @@
-import GlobalState from "../Context";
+import GlobalContext from "../Context";
 import React from "react";
 
-const Clock = (props, context) => {
+const Clock = () => {
+    const context = React.useContext(GlobalContext);
     const [elapsed, setElapsed] = React.useState(0);
     React.useEffect(() => {
         const interval = setInterval(() => {
@@ -21,5 +22,4 @@ const Clock = (props, context) => {
     );
 };
 
-Clock.contextTypes = GlobalState;
 export default Clock;

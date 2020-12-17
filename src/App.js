@@ -16,8 +16,8 @@ const App = () => {
     return !appState.initialized ? (
         <StartScreen start={start} />
     ) : (
-        <BoardWrap settings={appState}>
-            <Board settings={appState} restart={restart} />
+        <BoardWrap settings={appState} restart={restart}>
+            <Board />
         </BoardWrap>
     );
 };

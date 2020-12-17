@@ -1,10 +1,7 @@
-import PropTypes from "prop-types";
+import React from "react";
 
-const GlobalState = {
-    state: PropTypes.any,
-    handlers: PropTypes.any,
-    business: PropTypes.any,
-    suggestor: PropTypes.any,
-    stateholder: PropTypes.any,
-};
-export default GlobalState;
+const GlobalContext = React.createContext({});
+
+export const Provider = GlobalContext.Provider;
+
+export default GlobalContext;
