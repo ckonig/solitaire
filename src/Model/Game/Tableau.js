@@ -20,7 +20,7 @@ export default class Tableau {
     canPutDown = (card, hand, index) =>
         (card && card.isHidden && hand.isFromCurrentSource(card)) ||
         this.accepts(index, hand.currentCard()) ||
-        (!card && hand.source == "tableau-" + index);
+        (!card && hand.isFromTableau(index));
 
     accepts = (index, current) => {
         const top = this.getTop(index);
@@ -91,7 +91,7 @@ export default class Tableau {
         return card;
     };
 
-    getTop(index, offset) {
+    getTop = (index, offset) => {
         if (!offset) {
             offset = 0;
         }

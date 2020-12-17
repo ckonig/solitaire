@@ -4,6 +4,7 @@ export default class Card {
         this.type = type;
         this.isHidden = isHidden;
         this.entropyStyle = {};
+        //@todo why here? move to stacks
         this.causeEntropy(1);
     }
 

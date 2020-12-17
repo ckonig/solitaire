@@ -7,7 +7,7 @@ export default class Hand {
         this.position = null;
     }
 
-    pickUp(stack, source, position) {
+    pickUp = (stack, source, position) => {
         if (stack && stack[0]) {
             this.stack = stack.map((c) => {
                 c.suggestion = false;
@@ -18,20 +18,32 @@ export default class Hand {
         }
 
         return stack;
-    }
+    };
 
-    putDown() {
+    putDown = () => {
         this.source = null;
         return this.stack.splice(0, this.stack.length);
-    }
+    };
 
     isHoldingCard = () => !!this.stack.length;
+
+    isHoldingKing = () => this.isHoldingCard() && this.currentCard().face == 'K';
 
     currentCard = () => this.isHoldingCard() && this.stack[0];
 
     hasMoreThanOneCard = () => this.stack.length > 1;
 
     isFromCurrentSource = (card) => this.source && card.source == this.source;
+
+    isFromWaste = () => this.source && this.source == "waste";
+
+    isFromFoundation = (index) => this.source && this.source == `foundation-${index}`
+
+    isFromTableau = (index) => this.source && this.source == `tableau-${index}`
+
+    isFromAnyTableau = () => this.source && this.source.substring(0,8) == "tableau-";
+
+    getTableauIndex = () => this.source && this.source.substring(8);
 
     static copy = (orig) => {
         const copy = new Hand();

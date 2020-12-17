@@ -9,7 +9,7 @@ export default class Stock {
         this.isDealt = false;
     }
 
-    recycle(waste) {
+    recycle = (waste) => {
         if (waste.length) {
             this.stack = waste.reverse().map(this.setCardProperties);
             return true;
@@ -52,7 +52,7 @@ export default class Stock {
         return this;
     };
 
-    deal(tableau) {
+    deal = (tableau) => {
         for (let i = this.dealingAt; i < tableau.stacks.length; i++) {
             const stack = tableau.stacks[i].stack;
             if (stack.length <= tableau.stacks.length - i - 1) {

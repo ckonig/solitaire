@@ -1,9 +1,9 @@
 # Solitaire React App
 
-An implementation of the classic Solitaire (Klondike) game using React.js.
+An implementation of the classic Solitaire (Klondike) game.\
+Serves as general playground for learning React and CSS.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
 Rules of the game were implemented according to [this](https://en.wikipedia.org/wiki/Klondike_(solitaire)) Wikipedia page
 
 ## Available Scripts

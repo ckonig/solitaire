@@ -32,7 +32,7 @@ export default class Suggestions {
     getPutdownSuggestions = (state, onlyUseful) => {
         const accepted = [];
         if (state.settings.suggestionMode !== "none" && state.hand.isHoldingCard() && state.waste.wouldAccept(state.hand)) {
-            if (state.settings.suggestionMode === "full" || state.hand.source !== "waste") {
+            if (state.settings.suggestionMode === "full" || !state.hand.isFromWaste()) {
                 const move = { target: "waste", source: state.hand.source };
                 if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
                     accepted.push(move);
@@ -42,7 +42,7 @@ export default class Suggestions {
         }
         state.foundation.stacks.forEach((stack, index) => {
             if (state.settings.suggestionMode !== "none" && state.hand.isHoldingCard() && state.foundation.wouldAccept(index, state.hand)) {
-                if (state.settings.suggestionMode === "full" || state.hand.source !== "foundation-" + index) {
+                if (state.settings.suggestionMode === "full" || !state.hand.isFromFoundation(index)) {
                     const move = { target: "foundation-" + index, source: state.hand.source };
                     if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
                         accepted.push(move);
@@ -53,27 +53,27 @@ export default class Suggestions {
         });
         state.tableau.stacks.forEach((stack, index) => {
             if (state.settings.suggestionMode != "none" && state.hand.isHoldingCard() && state.tableau.wouldAccept(index, state.hand)) {
-                if (state.settings.suggestionMode === "full" || state.hand.source !== "tableau-" + index) {
+                if (state.settings.suggestionMode === "full" || !state.hand.isFromTableau(index)) {
                     if (
                         !onlyUseful ||
                         state.settings.suggestionMode === "full" ||
                         // filter out moves of King from empty slot to empty slot
                         (!(
-                            state.hand.currentCard().face == "K" &&
+                            state.hand.isHoldingKing() &&
                             stack.stack.length == 0 &&
-                            state.hand.source.substring(0, 8) == "tableau-" &&
-                            state.tableau.stacks[state.hand.source.substring(8)].stack.length == 0
+                            state.hand.isFromAnyTableau() &&
+                            state.tableau.stacks[state.hand.getTableauIndex()].stack.length == 0
                         ) &&
                             // filter out moves between stacks if same (non-hidden) parent card
                             !(
                                 stack.stack.length > 0 &&
-                                state.hand.source.substring(0, 8) == "tableau-" &&
-                                state.tableau.stacks[state.hand.source.substring(8)].stack.length > 0 &&
+                                state.hand.isFromAnyTableau() &&
+                                state.tableau.stacks[state.hand.getTableauIndex()].stack.length > 0 &&
                                 stack.stack[stack.stack.length - 1].face ==
-                                    state.tableau.stacks[state.hand.source.substring(8)].stack[
-                                        state.tableau.stacks[state.hand.source.substring(8)].stack.length - 1
+                                    state.tableau.stacks[state.hand.getTableauIndex()].stack[
+                                        state.tableau.stacks[state.hand.getTableauIndex()].stack.length - 1
                                     ].face &&
-                                !state.tableau.getTop(state.hand.source.substring(8)).isHidden
+                                !state.tableau.getTop(state.hand.getTableauIndex()).isHidden
                             ))
                     ) {
                         const move = { target: "tableau-" + index, source: state.hand.source };

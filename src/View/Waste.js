@@ -13,7 +13,7 @@ export default class Waste extends BlinkingComponent {
                 return 0;
             }
             const length =
-                props.model.settings.mouseMode == "remain-on-stack" && props.hand.isHoldingCard() && props.hand.source == "waste"
+                props.model.settings.mouseMode == "remain-on-stack" && props.hand.isHoldingCard() && props.hand.isFromWaste()
                     ? props.model.stack.length + 1
                     : props.model.stack.length;
             let additionalOffset = 2;

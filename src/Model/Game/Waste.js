@@ -19,7 +19,7 @@ export default class Waste {
         return card;
     };
 
-    wouldAccept = (hand) => hand.source == "waste" && this.canAdd(hand.currentCard());
+    wouldAccept = (hand) => hand.isFromWaste() && this.canAdd(hand.currentCard());
 
     canAdd = (card) => card && (!this.getTop() || !card.equals(this.getTop()));
 
