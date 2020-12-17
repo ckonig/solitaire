@@ -1,23 +1,30 @@
+import { AppState, StateReplacer, StateUpdater } from "../../Common";
+
 import Board from "./Board";
 import BusinessModel from "../../Business/BusinessModel";
 import { Provider } from "../Context";
 import React from "react";
 
-export default class BoardWrap extends React.Component {
-    constructor(props) {
+interface BoardWrapProps {
+    settings: AppState;
+    restart: () => void;
+}
+
+export default class BoardWrap extends React.Component<BoardWrapProps, BusinessModel> {
+    constructor(props: BoardWrapProps) {
         super(props);
         this.state = BusinessModel.getInitialState(props.settings);
     }
 
-    replaceContext = (a, b) => this.setState(a, b);
+    replaceContext = (a: StateReplacer, b?: any) => this.setState(a, b);
 
-    updateContext = (modifier) =>
+    updateContext = (modifier: StateUpdater) =>
         this.replaceContext((state) => {
             modifier(state);
             return state;
         });
 
-    updateGameContext = (modifier, callback) =>
+    updateGameContext = (modifier: StateUpdater, callback?: any) =>
         this.replaceContext((state) => {
             state.game.timemachine.modified = false;
             const previous = BusinessModel.copy(state);

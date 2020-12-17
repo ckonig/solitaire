@@ -16,6 +16,10 @@ export default class Foundation {
             .map((key) => Suits[key])
             .map((suit) => ({ ...template(), ...suit }));
         this.stacks = [...stacks];
+        // eslint-disable-next-line no-unused-vars
+        this.onClick = (a,b,c) => {}
+        this.blinkFor = 0;
+        this.unblink = () => {};
     }
 
     getStacks = () => {

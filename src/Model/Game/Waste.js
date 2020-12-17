@@ -4,6 +4,10 @@ export default class Waste {
     constructor(settings) {
         this.settings = settings;
         this.stack = [];
+        // eslint-disable-next-line no-unused-vars
+        this.onClick = (_a, _b, _c) => {};
+        this.blinkFor = 0;
+        this.unblink = () => {};
     }
 
     tryPutDown = (card) => this.canAdd(card) && (this.add(card) || true);

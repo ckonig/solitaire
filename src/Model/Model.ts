@@ -1,3 +1,4 @@
+import { AppState } from "../Common";
 import Deck from "./Deck/Deck";
 import Foundation from "./Game/Foundation";
 import Game from "./Game/Game";
@@ -8,7 +9,25 @@ import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
 export default class Model {
-    static getInitialState = (launchSettings) => {
+    stock: Stock;
+    waste: Waste;
+    foundation: Foundation;
+    tableau: Tableau;
+    hand: Hand;
+    game: Game;
+    settings: Settings;
+
+    constructor(obj: any) {
+        this.stock = obj.stock;
+        this.waste = obj.waste;
+        this.foundation = obj.foundation;
+        this.tableau = obj.tableau;
+        this.hand = obj.hand;
+        this.game = obj.game;
+        this.settings = obj.settings;
+    }
+
+    static getInitialState = (launchSettings: AppState) => {
         const deck = new Deck().shuffle();
         const settings = new Settings(launchSettings);
         const state = {
@@ -23,7 +42,7 @@ export default class Model {
         return state;
     };
 
-    static copy = (state) => {
+    static copy = (state: Model) => {
         return {
             stock: Stock.copy(state.stock),
             waste: Waste.copy(state.waste),

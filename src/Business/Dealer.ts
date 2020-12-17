@@ -1,11 +1,19 @@
+import BusinessModel from "./BusinessModel";
+import Stock from "../Model/Game/Stock";
+import Tableau from "../Model/Game/Tableau";
+
 export default class Dealer {
+    dealt: number;
+    dealingAt: number;
+    isDealt: boolean;
+
     constructor() {
         this.dealt = 0;
         this.dealingAt = 0;
         this.isDealt = false;
     }
 
-    dealOne = (dealt, callback) => (state) => {
+    dealOne = (dealt: number, callback: any) => (state: BusinessModel) => {
         if (dealt != state.dealer.dealt) {
             return null;
         }
@@ -24,7 +32,7 @@ export default class Dealer {
         return state;
     };
 
-    dealAll = () => (state) => {
+    dealAll = () => (state: BusinessModel) => {
         if (this.dealt != state.dealer.dealt) {
             return null;
         }
@@ -36,7 +44,7 @@ export default class Dealer {
         return state;
     };
 
-    deal = (stock, tableau) => {
+    deal = (stock: Stock, tableau: Tableau) => {
         for (let i = this.dealingAt; i < tableau.stacks.length; i++) {
             const stack = tableau.stacks[i].stack;
             if (stack.length <= tableau.stacks.length - i - 1) {
