@@ -1,12 +1,14 @@
+import GlobalContext from "./Context";
 import React from "react";
 
-const Dealer = (props) => {
+const Dealer = () => {
+    const { state, suggestor, stateholder } = React.useContext(GlobalContext);
     const timeouts = [];
     //@todo implement launch setting UI for quick dealing
-    if (props.state.settings.launchSettings.quickDeal) {
-        if (props.state && props.state.stock && !props.state.stock.isDealt) {
-            props.stateholder.setState((state) => {
-                if (props.state.stock.dealt != state.stock.dealt) {
+    if (state.settings.launchSettings.quickDeal) {
+        if (state && state.stock && !state.stock.isDealt) {
+            stateholder.setState((state) => {
+                if (state.stock.dealt != state.stock.dealt) {
                     return null;
                 }
                 while (!state.stock.isDealt) {
@@ -22,8 +24,8 @@ const Dealer = (props) => {
             //@todo based on settings, deal all-in-one or with delays
             timeouts.push(
                 setTimeout(() => {
-                    if (props.state && props.state.stock && !props.state.stock.isDealt) {
-                        props.stateholder.setState((state) => {
+                    if (state && state.stock && !state.stock.isDealt) {
+                        stateholder.setState((state) => {
                             if (dealt != state.stock.dealt) {
                                 return null;
                             }
@@ -34,7 +36,7 @@ const Dealer = (props) => {
                             }
 
                             if (state.stock.isDealt) {
-                                props.suggestor.evaluateOptions(state);
+                                suggestor.evaluateOptions(state);
                             } else {
                                 deal(state.stock.dealt);
                             }
@@ -47,7 +49,7 @@ const Dealer = (props) => {
         };
 
         React.useEffect(() => {
-            deal(props.state.stock.dealt);
+            deal(state.stock.dealt);
             return () => timeouts.forEach((timeout) => clearTimeout(timeout));
         }, []);
     }

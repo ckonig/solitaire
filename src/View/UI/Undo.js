@@ -1,10 +1,12 @@
+import GlobalContext from "../Context";
 import React from "react";
 
-const Undo = (props) => {
+const Undo = () => {
+    const { state, handlers } = React.useContext(GlobalContext);
     const ctrlZ = (e) => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
-            props.undo();
+            handlers.undo();
         }
     };
 
@@ -16,9 +18,9 @@ const Undo = (props) => {
     return (
         <div>
             <button
-                disabled={!props.game.previousStates.length}
-                title={"Undo (Penalty:" + Math.pow(2, props.game.multiplicator) + ")"}
-                onClick={props.undo}
+                disabled={!state.game.previousStates.length}
+                title={"Undo (Penalty:" + Math.pow(2, state.game.multiplicator) + ")"}
+                onClick={handlers.undo}
             >
                 ⏪
             </button>

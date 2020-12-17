@@ -1,10 +1,12 @@
 import "../../Style/Menu.css";
 
+import GlobalContext from "../Context";
 import React from "react";
 
-const Menu = (props) => {
+const Menu = () => {
+    const {state, handlers} = React.useContext(GlobalContext);
     //@todo if game not yet started, allow configuration of dealing behavior (preselect enable on desktop, disable on mobile)
-    if (!props.settings.showMenu) {
+    if (!state.settings.showMenu) {
         return null;
     }
     return (
@@ -18,10 +20,10 @@ const Menu = (props) => {
                     </span>
                     <select
                         className="input"
-                        onChange={(e) => props.handlers.setSuggestionMode(e.target.value)}
-                        value={props.settings.suggestionMode}
+                        onChange={(e) => handlers.setSuggestionMode(e.target.value)}
+                        value={state.settings.suggestionMode}
                     >
-                        {props.settings.suggestionModes.map((suggestionMode) => (
+                        {state.settings.suggestionModes.map((suggestionMode) => (
                             <option key={suggestionMode} value={suggestionMode}>
                                 {suggestionMode}
                             </option>
@@ -38,10 +40,10 @@ const Menu = (props) => {
 
                     <select
                         className="input"
-                        onChange={(e) => props.handlers.setMouseMode(e.target.value)}
-                        value={props.settings.mouseMode}
+                        onChange={(e) => handlers.setMouseMode(e.target.value)}
+                        value={state.settings.mouseMode}
                     >
-                        {props.settings.mouseModes.map((mouseMode) => (
+                        {state.settings.mouseModes.map((mouseMode) => (
                             <option key={mouseMode} value={mouseMode}>
                                 {mouseMode}
                             </option>
@@ -57,10 +59,10 @@ const Menu = (props) => {
                     </div>
                     <select
                         className="input"
-                        onChange={(e) => props.handlers.setBaseEntropy(e.target.value)}
-                        value={props.settings.baseEntropy}
+                        onChange={(e) => handlers.setBaseEntropy(e.target.value)}
+                        value={state.settings.baseEntropy}
                     >
-                        {props.settings.entropyLevels.map((entropyLevel, index) => (
+                        {state.settings.entropyLevels.map((entropyLevel, index) => (
                             <option key={entropyLevel} value={index}>
                                 {entropyLevel}
                             </option>
@@ -77,10 +79,10 @@ const Menu = (props) => {
 
                     <select
                         className="input"
-                        onChange={(e) => props.handlers.setInteractionEntropy(e.target.value)}
-                        value={props.settings.interactionEntropy}
+                        onChange={(e) => handlers.setInteractionEntropy(e.target.value)}
+                        value={state.settings.interactionEntropy}
                     >
-                        {props.settings.entropyLevels.map((entropyLevel, index) => (
+                        {state.settings.entropyLevels.map((entropyLevel, index) => (
                             <option key={entropyLevel} value={index}>
                                 {entropyLevel}
                             </option>

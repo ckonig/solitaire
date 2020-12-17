@@ -1,16 +1,18 @@
 import "../../Style/Screens.css";
 
+import GlobalContext from "../Context";
 import React from "react";
 
-const EndScreen = (props) => {
+const EndScreen = () => {
+    const {state, handlers} = React.useContext(GlobalContext);
     //@todo show launch settings (draw mode, recycling mode)
-    return !props.game.isEnded ? null : (
+    return !state.game.isEnded ? null : (
         <div className="endscreen">
             <div className="title">🥳</div>
-            <div>Points: {props.game.points}</div>
-            <div>Time: {props.game.getElapsed()}</div>
+            <div>Points: {state.game.points}</div>
+            <div>Time: {state.game.getElapsed()}</div>
             <div>
-                <button onClick={props.restart}>
+                <button onClick={handlers.restart}>
                     ♻️<div>new game</div>
                 </button>
             </div>

@@ -8,7 +8,7 @@ import React from "react";
 import Undo from "./Undo";
 
 const Header = () => {
-    const {state, handlers} = React.useContext(GlobalContext);
+    const { state, handlers } = React.useContext(GlobalContext);
     return (
         <div className="header">
             <div className="header-title">
@@ -17,8 +17,8 @@ const Header = () => {
             </div>
             <Clock />
             <div className="header-buttons">
-                <Hint suggestOnce={handlers.suggestOnce} suggestionMode={state.settings.suggestionMode} />
-                <Undo undo={handlers.undo} game={state.game} />
+                <Hint />
+                <Undo />
                 <div>
                     <button title="Restart" disabled={!state.game.previousStates.length} onClick={handlers.reset}>
                         ♻️

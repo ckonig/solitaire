@@ -11,11 +11,6 @@
     padding: 0.5vw;
 }
 
-.game-view {
-    grid-area: game;
-    margin-top: 2vw;
-}
-
 .header {
     grid-area: header;
     background-color: rgba(0, 0, 0, 0.4);
@@ -26,6 +21,8 @@
 }
 
 .board-grid-container {
+    grid-area: game;
+    margin-top: 2vw;
     display: grid;
     grid-template-areas:
         "stock waste spacer foundation foundation foundation foundation"

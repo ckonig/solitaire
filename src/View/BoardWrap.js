@@ -1,3 +1,4 @@
+import Board from "./Board";
 import Business from "../Business/Business";
 import Deck from "../Model/Deck/Deck";
 import GameState from "../Business/GameState";
@@ -17,7 +18,7 @@ export default class BoardWrap extends React.Component {
         this.state = Model.getInitialState(this.deck, props.settings);
     }
 
-    getContext() {
+    getContext = () => {
         const business = Business.getHandlers(new GameState(this, this.suggestor), this.state.hand);
         const handlers = {
             ...new Undo(this.suggestor, this, this.state),
@@ -31,9 +32,11 @@ export default class BoardWrap extends React.Component {
             suggestor: this.suggestor,
             stateholder: this,
         };
-    }
+    };
 
-    render() {
-        return <Provider value={this.getContext()}>{this.props.children}</Provider>;
-    }
+    render = () => (
+        <Provider value={this.getContext()}>
+            <Board />
+        </Provider>
+    );
 }
