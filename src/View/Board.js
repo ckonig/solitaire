@@ -11,17 +11,7 @@ const Board = (props) => {
     return (
         <div>
             <div className="layout-grid-container">
-                <Header
-                    //@todo minify by passing all handlers
-                    model={props.model.game}
-                    settings={props.model.settings}
-                    toggleMenu={props.handlers.toggleMenu}
-                    reset={props.handlers.reset}
-                    newGame={props.handlers.restart}
-                    undo={props.handlers.undo}
-                    beat={props.handlers.beat}
-                    suggestOnce={props.handlers.suggestOnce}
-                />
+                <Header model={props.model.game} settings={props.model.settings} handlers={props.handlers} />
                 <div className="game-view">
                     <div className="board-grid-container">
                         <Stock model={props.model.stock} onClick={props.handlers.clickStock} />
@@ -46,15 +36,7 @@ const Board = (props) => {
                         />
                     </div>
                 </div>
-                <Menu
-                    //@todo minify by passing all handlers
-                    model={props.model.game}
-                    settings={props.model.settings}
-                    setMouseMode={props.handlers.setMouseMode}
-                    setBaseEntropy={props.handlers.setBaseEntropy}
-                    setInteractionEntropy={props.handlers.setInteractionEntropy}
-                    setSuggestionMode={props.handlers.setSuggestionMode}
-                />
+                <Menu model={props.model.game} settings={props.model.settings} handlers={props.handlers} />
                 <EndScreen game={props.model.game} restart={props.handlers.restart} />
             </div>
         </div>

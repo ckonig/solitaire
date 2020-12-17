@@ -1,38 +1,35 @@
 import Model from "../Model/Model";
 
 export default class Settings {
-    constructor(suggestor) {
+    constructor(suggestor, stateholder) {
         this.suggestor = suggestor;
+        this.stateholder = stateholder;
     }
 
-    beat = (stateholder) => {
-        this.setBaseEntropy(stateholder, 4);
-    };
-
-    setBaseEntropy = (stateholder, lvl) => {
-        stateholder.setState((state) => {
+    setBaseEntropy = (lvl) => {
+        this.stateholder.setState((state) => {
             state.settings.baseEntropy = lvl;
             return Model.setEntropy(state, state.settings.baseEntropy);
         });
     };
 
-    setInteractionEntropy = (stateholder, lvl) => {
-        stateholder.setState((state) => {
+    setInteractionEntropy = (lvl) => {
+        this.stateholder.setState((state) => {
             state.settings.interactionEntropy = lvl;
             return state;
         });
     };
 
-    setMouseMode = (stateholder, mm) => {
-        stateholder.setState((state) => {
+    setMouseMode = (mm) => {
+        this.stateholder.setState((state) => {
             state.settings.mouseMode = mm;
             this.suggestor.evaluateOptions(state);
             return state;
         });
     };
 
-    setSuggestionMode = (stateholder, sm) => {
-        stateholder.setState((state) => {
+    setSuggestionMode = (sm) => {
+        this.stateholder.setState((state) => {
             if (state.settings.suggestionMode !== sm) {
                 state.settings.suggestionMode = sm;
                 this.suggestor.evaluateOptions(state);
@@ -41,8 +38,8 @@ export default class Settings {
         });
     };
 
-    suggestOnce = (stateholder) => {
-        stateholder.setState((state) => {
+    suggestOnce = () => {
+        this.stateholder.setState((state) => {
             const previous = state.settings.suggestionMode;
             state.settings.suggestionMode = "regular";
             this.suggestor.evaluateOptions(state);
@@ -51,8 +48,8 @@ export default class Settings {
         });
     };
 
-    toggleMenu = (stateholder, menu) => {
-        stateholder.setState((state) => {
+    toggleMenu = (menu) => {
+        this.stateholder.setState((state) => {
             if (state.settings.showMenu == menu) {
                 state.settings.showMenu = !state.settings.showMenu;
             }
@@ -60,15 +57,15 @@ export default class Settings {
         });
     };
 
-    getHandlers(stateholder) {
+    static getHandlers(suggestor, stateholder) {
+        const settings = new Settings(suggestor, stateholder);
         return {
-            beat: () => this.beat(stateholder),
-            setBaseEntropy: (lvl) => this.setBaseEntropy(stateholder, lvl),
-            setInteractionEntropy: (lvl) => this.setInteractionEntropy(stateholder, lvl),
-            setMouseMode: (mm) => this.setMouseMode(stateholder, mm),
-            setSuggestionMode: (sm) => this.setSuggestionMode(stateholder, sm),
-            suggestOnce: () => this.suggestOnce(stateholder),
-            toggleMenu: (menu) => this.toggleMenu(stateholder, menu),
+            setBaseEntropy: (lvl) => settings.setBaseEntropy(lvl),
+            setInteractionEntropy: (lvl) => settings.setInteractionEntropy(lvl),
+            setMouseMode: (mm) => settings.setMouseMode(mm),
+            setSuggestionMode: (sm) => settings.setSuggestionMode(sm),
+            suggestOnce: () => settings.suggestOnce(),
+            toggleMenu: (menu) => settings.toggleMenu(menu),
         };
     }
 }

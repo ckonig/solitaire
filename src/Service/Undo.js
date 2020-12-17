@@ -1,16 +1,15 @@
 export default class Undo {
-    constructor(getInitialState, suggestor) {
-        this.getInitialState = getInitialState;
+    constructor(suggestor, stateholder) {
         this.suggestor = suggestor;
+        this.stateholder = stateholder;
     }
 
     //@todo ask for confirmation before resetting
-    reset = (stateholder) =>
-        stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : { ...this.getInitialState() }));
+    reset = () => this.stateholder.setState((state) => (state.game.previousStates ? state.game.previousStates[0] : null));
 
     // @todo enable undoing via browser back gesture/button
-    undo = (id, stateholder, currentState) =>
-        stateholder.setState((state) => {
+    undo = (id, currentState) =>
+        this.stateholder.setState((state) => {
             const previous = state.game.popPreviousState(id, currentState);
             if (previous) {
                 this.suggestor.evaluateOptions(previous);
@@ -20,10 +19,11 @@ export default class Undo {
             return null;
         });
 
-    getHandlers(stateholder, state) {
+    static getHandlers(suggestor, stateholder, state) {
+        const undo = new Undo(suggestor, stateholder);
         return {
-            undo: () => this.undo(state.game.previousStates.length - 1, stateholder, state),
-            reset: () => this.reset(stateholder),
+            undo: () => undo.undo(state.game.previousStates.length - 1, state),
+            reset: () => undo.reset(),
         };
     }
 }

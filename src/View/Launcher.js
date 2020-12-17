@@ -15,26 +15,21 @@ export default class Launcher extends React.Component {
         this.suggestor = new Suggestions();
         this.deck = new Deck();
         this.deck.shuffle();
-        this.launchSettings = props.settings;
-        this.state = Model.getInitialState(this.deck, this.launchSettings);
+        this.state = Model.getInitialState(this.deck, props.settings);
     }
 
-    getInitialState = () => Model.getInitialState(this.deck, this.launchSettings);
-
-    getHandlers() {
-        const gamestate = new GameState(this);
-        return {
-            ...new Undo(this.getInitialState, this.suggestor).getHandlers(this, this.state),
-            ...new Settings(this.suggestor).getHandlers(this, this.state),
-            ...Business.getHandlers(gamestate, this.state),
+    render = () => {
+        const handlers = {
+            ...Undo.getHandlers(this.suggestor, this, this.state),
+            ...Settings.getHandlers(this.suggestor, this, this.state),
+            ...Business.getHandlers(new GameState(this), this.state),
             restart: this.props.restart,
         };
-    }
-
-    render = () => (
-        <>
-            <Board model={this.state} handlers={this.getHandlers()} />
-            <Dealer state={this.state} stateholder={this} />
-        </>
-    );
+        return (
+            <>
+                <Board model={this.state} handlers={handlers} />
+                <Dealer state={this.state} stateholder={this} />
+            </>
+        );
+    };
 }

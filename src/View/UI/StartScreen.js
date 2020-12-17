@@ -1,10 +1,9 @@
 import React from "react";
 
 const StartScreen = (props) => {
-    //@todo make this an optional part of the menu
-    //@todo add selectors for draw mode & recycling options
     //@todo add selector for timed game
-    //@todo add and implement custom start button
+    //@todo add selectors for different rating strategies
+    //@todo add and implement custom start button + selectors for draw mode & recycling options
     return !props || !props.start ? null : (
         <div>
             <div className="quickstart">

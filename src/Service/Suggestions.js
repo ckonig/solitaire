@@ -21,7 +21,7 @@ export default class Suggestions {
                     const foundAny = this.getPickupOptions(state);
 
                     if (!foundAny || state.settings.suggestionMode == "full") {
-                        //@todo only highlight if it's not empty or there are recyclings left
+                        // @todo only highlight if it's not empty or there are recyclings left
                         state.stock.suggestion = true;
                     }
                 }
@@ -57,14 +57,14 @@ export default class Suggestions {
                     if (
                         !onlyUseful ||
                         state.settings.suggestionMode === "full" ||
-                        //filter out moves of King from empty slot to empty slot
+                        // filter out moves of King from empty slot to empty slot
                         (!(
                             state.hand.currentCard().face == "K" &&
                             stack.stack.length == 0 &&
                             state.hand.source.substring(0, 8) == "tableau-" &&
                             state.tableau.stacks[state.hand.source.substring(8)].stack.length == 0
                         ) &&
-                            //// filter out moves between stacks if same (non-hidden) parent card
+                            // filter out moves between stacks if same (non-hidden) parent card
                             !(
                                 stack.stack.length > 0 &&
                                 state.hand.source.substring(0, 8) == "tableau-" &&

@@ -13,7 +13,7 @@ const Clock = (props) => {
     }, []);
 
     return !props.started || !elapsed ? null : (
-        <div className={props.className}>
+        <div className="header-clock">
             <div className="icon-container">🕒</div>
             {elapsed}
         </div>

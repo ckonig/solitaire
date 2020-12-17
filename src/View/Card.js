@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Card extends Component {
-    onClick = (e) => {
+const Card = (props) => {
+    const onClick = (e) => {
         let ele = e.target;
         while (ele && !ele.className.includes("card-base")) {
             ele = ele.offsetParent;
@@ -20,43 +20,42 @@ export default class Card extends Component {
             },
         };
 
-        this.props.onClick({ ...this.props.model }, position);
+        props.onClick({ ...props.model }, position);
     };
 
-    getClassName = () => {
-        const hasSuggestion = this.props.isSuggested || this.props.model.suggestion;
-        let className = `card card-base suit-${this.props.model.type.icon}`;
-        className += !this.props.isSelected && !hasSuggestion ? ` card-stack-${this.props.model.source}` : "";
-        className += this.props.isSelected ? " card-selected" : "";
-        className += this.props.blink ? " blink" : "";
+    const getClassName = () => {
+        const hasSuggestion = props.isSuggested || props.model.suggestion;
+        let className = `card card-base suit-${props.model.type.icon}`;
+        className += !props.isSelected && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
+        className += props.isSelected ? " card-selected" : "";
+        className += props.blink ? " blink" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion ? " card-suggested" : "";
 
         return className;
     };
 
-    getCardStyle = () => {
+    const getCardStyle = () => {
         const style = {
-            //Why?
-            zIndex: this.props.zIndex ? this.props.zIndex : !!this.props.offsetTop + 2,
-            top: this.props.offsetTop ? this.props.offsetTop / 10 + "vw" : 0,
-            ...this.props.model.entropyStyle,
+            zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,
+            top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
+            ...props.model.entropyStyle,
         };
 
         //move to left on waste (triple draw)
-        if (this.props.offsetLeft) {
-            style.left = this.props.offsetLeft * 4 + "vw";
+        if (props.offsetLeft) {
+            style.left = props.offsetLeft * 4 + "vw";
         }
 
-        if (!this.props.onClick) {
+        if (!props.onClick) {
             style.pointerEvents = "none";
         }
 
         return style;
     };
 
-    getStackbaseStyle = () => {
-        if (!this.props.onClick) {
+    const getStackbaseStyle = () => {
+        if (!props.onClick) {
             return { pointerEvents: "none" };
         }
 
@@ -66,41 +65,41 @@ export default class Card extends Component {
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
 
-    render() {
-        return (
-            <div style={this.getStackbaseStyle()} className="stack-base">
-                <div style={this.getCardStyle()} className={this.getClassName()} onClick={this.onClick ? this.onClick : null}>
-                    {this.props.model.isHidden ? (
-                        <div className="card-back">&nbsp;</div>
-                    ) : (
-                        <div className="card-grid-container">
-                            <div>
-                                <div className="align-center">{this.props.model.type.icon}</div>
-                            </div>
-                            <div>
-                                <div className="align-left">{this.props.model.face}</div>
-                            </div>
-                            <div>&nbsp;</div>
-                            <div>
-                                <div className="align-center">{this.props.model.type.icon}</div>
-                            </div>
-                            <div className="mainface">
-                                <div className="align-center">{this.props.model.face}</div>
-                            </div>
-                            <div>
-                                <div className="align-center">{this.props.model.type.icon}</div>
-                            </div>
-                            <div>&nbsp;</div>
-                            <div>
-                                <div className="align-right">{this.props.model.face}</div>
-                            </div>
-                            <div>
-                                <div className="align-center">{this.props.model.type.icon}</div>
-                            </div>
+    return (
+        <div style={getStackbaseStyle()} className="stack-base">
+            <div style={getCardStyle()} className={getClassName()} onClick={onClick ? onClick : null}>
+                {props.model.isHidden ? (
+                    <div className="card-back">&nbsp;</div>
+                ) : (
+                    <div className="card-grid-container">
+                        <div>
+                            <div className="align-center">{props.model.type.icon}</div>
                         </div>
-                    )}
-                </div>
+                        <div>
+                            <div className="align-left">{props.model.face}</div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <div>
+                            <div className="align-center">{props.model.type.icon}</div>
+                        </div>
+                        <div className="mainface">
+                            <div className="align-center">{props.model.face}</div>
+                        </div>
+                        <div>
+                            <div className="align-center">{props.model.type.icon}</div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <div>
+                            <div className="align-right">{props.model.face}</div>
+                        </div>
+                        <div>
+                            <div className="align-center">{props.model.type.icon}</div>
+                        </div>
+                    </div>
+                )}
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
+
+export default Card;
