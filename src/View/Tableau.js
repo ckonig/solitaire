@@ -10,8 +10,6 @@ export default class Tableau extends BlinkingComponent {
         super((s) => s.tableau.stacks[props.index]);
     }
 
-    static contextType = GlobalContext;
-
     static Stacks = () => {
         const { state } = React.useContext(GlobalContext);
         return state.tableau.stacks.map((tableau, index) => <Tableau key={index} index={index} model={tableau} />);

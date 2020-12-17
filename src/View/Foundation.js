@@ -10,8 +10,6 @@ export default class Foundation extends BlinkingComponent {
         super((s) => s.foundation.stacks[props.index]);
     }
 
-    static contextType = GlobalContext;
-
     static Stacks = () => {
         const { state } = React.useContext(GlobalContext);
         return state.foundation.stacks.map((foundation, index) => <Foundation key={index} model={foundation} index={index} />);

@@ -1,4 +1,5 @@
 import { Component } from "react";
+import GlobalContext from "./Context";
 
 export default class BlinkingComponent extends Component {
     constructor(selector) {
@@ -6,6 +7,8 @@ export default class BlinkingComponent extends Component {
         this.timeout = null;
         this.selector = selector;
     }
+
+    static contextType = GlobalContext;
 
     componentDidUpdate() {
         if (this.selector(this.context.state).blinkFor) {
