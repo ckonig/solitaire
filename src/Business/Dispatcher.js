@@ -1,7 +1,7 @@
 export default class Dispatcher {
-    constructor(clickHandler, gamestate) {
+    constructor(clickHandler, updateGameContext) {
         this.clickHandler = clickHandler;
-        this.gamestate = gamestate;
+        this.updateGameContext = updateGameContext;
     }
 
     getHandler = (hand) => {
@@ -13,7 +13,7 @@ export default class Dispatcher {
     };
 
     dispatchPutDown = (card, position, index) => {
-        this.gamestate._setState((state) => {
+        this.updateGameContext((state) => {
             if (state.hand.isHoldingCard()) {
                 this.clickHandler.dispatchPutDown(card, position, state, index);
             }
@@ -21,7 +21,7 @@ export default class Dispatcher {
     };
 
     dispatchPickup = (card, position, index) => {
-        this.gamestate._setState((state) => {
+        this.updateGameContext((state) => {
             if (!state.hand.isHoldingCard()) {
                 this.clickHandler.dispatchPickup(card, position, state, index);
             }

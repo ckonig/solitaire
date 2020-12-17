@@ -1,42 +1,48 @@
 import Board from "./Board";
-import Business from "../Business/Business";
-import Deck from "../Model/Deck/Deck";
-import GameState from "../Business/GameState";
-import Model from "../Model/Model";
+import BusinessModel from "../Business/BusinessModel";
 import { Provider } from "./Context";
 import React from "react";
-import Settings from "../Service/Settings";
-import Suggestions from "../Service/Suggestions";
-import Undo from "../Service/Undo";
 
 export default class BoardWrap extends React.Component {
     constructor(props) {
         super(props);
-        this.suggestor = new Suggestions();
-        this.deck = new Deck();
-        this.deck.shuffle();
-        this.state = Model.getInitialState(this.deck, props.settings);
+        this.state = BusinessModel.getInitialState(props.settings);
     }
 
-    getContext = () => {
-        const business = Business.getHandlers(new GameState(this, this.suggestor), this.state.hand);
-        const handlers = {
-            ...new Undo(this.suggestor, this, this.state),
-            ...new Settings(this.suggestor, this, this.state),
+    replaceContext = (a, b) => this.setState(a, b);
+
+    updateContext = (modifier) =>
+        this.replaceContext((state) => {
+            modifier(state);
+            return state;
+        });
+
+    updateGameContext = (modifier, callback) =>
+        this.replaceContext((state) => {
+            state.game.timemachine.modified = false;
+            const previous = BusinessModel.copy(state);
+            modifier(state);
+            if (state.game.timemachine.modified) {
+                state.game.timemachine.pushPreviousState(previous);
+                state.suggest();
+                return state;
+            }
+
+            return null;
+        }, callback);
+
+    render = () => {
+        this.state.assignHandlers(this.updateGameContext);
+        const context = {
+            state: this.state,
+            replaceContext: this.replaceContext,
+            updateContext: this.updateContext,
             restart: this.props.restart,
         };
-        return {
-            state: this.state,
-            handlers: handlers,
-            business: business,
-            suggestor: this.suggestor,
-            stateholder: this,
-        };
+        return (
+            <Provider value={context}>
+                <Board />
+            </Provider>
+        );
     };
-
-    render = () => (
-        <Provider value={this.getContext()}>
-            <Board />
-        </Provider>
-    );
 }

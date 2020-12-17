@@ -2,12 +2,12 @@ import GlobalContext from "./Context";
 import React from "react";
 
 const Dealer = () => {
-    const { state, suggestor, stateholder } = React.useContext(GlobalContext);
+    const { state, replaceContext } = React.useContext(GlobalContext);
     const timeouts = [];
     //@todo implement launch setting UI for quick dealing
     if (state.settings.launchSettings.quickDeal) {
         if (state && state.stock && !state.stock.isDealt) {
-            stateholder.setState((state) => {
+            replaceContext((state) => {
                 if (state.stock.dealt != state.stock.dealt) {
                     return null;
                 }
@@ -15,7 +15,7 @@ const Dealer = () => {
                     state.stock.deal(state.tableau);
                 }
                 state.game.started = Date.now();
-                state.evaluateOptions(state);
+                state.suggest();
                 return state;
             });
         }
@@ -25,7 +25,7 @@ const Dealer = () => {
             timeouts.push(
                 setTimeout(() => {
                     if (state && state.stock && !state.stock.isDealt) {
-                        stateholder.setState((state) => {
+                        replaceContext((state) => {
                             if (dealt != state.stock.dealt) {
                                 return null;
                             }
@@ -36,7 +36,7 @@ const Dealer = () => {
                             }
 
                             if (state.stock.isDealt) {
-                                suggestor.evaluateOptions(state);
+                                state.suggest();
                             } else {
                                 deal(state.stock.dealt);
                             }

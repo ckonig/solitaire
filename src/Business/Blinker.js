@@ -1,6 +1,6 @@
 export default class Blinker {
-    constructor(gamestate) {
-        this.gamestate = gamestate;
+    constructor(updateGameContext) {
+        this.updateGameContext = updateGameContext;
     }
 
     startBlink = (selector, state) => {
@@ -10,7 +10,7 @@ export default class Blinker {
     };
 
     stopBlink = (selector) =>
-        this.gamestate._setState((state) => {
+        this.updateGameContext((state) => {
             selector(state).blinkFor = 0;
             state.game.registerBlink();
         });

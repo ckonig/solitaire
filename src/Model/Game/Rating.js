@@ -36,7 +36,9 @@ export default class Rating {
     }
 
     penalize = (other) => {
-        this.points = Math.min(this.points, other.points) - Math.pow(2, other.multiplicator);
+        const penalty = Math.pow(2, other.multiplicator);
+        console.debug(`RATING: applying penalty of ${penalty} points for UNDO`);
+        this.points = Math.min(this.points, other.points) - penalty;
         this.multiplicator = other.multiplicator + 1;
     };
 

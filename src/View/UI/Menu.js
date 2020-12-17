@@ -4,7 +4,31 @@ import GlobalContext from "../Context";
 import React from "react";
 
 const Menu = () => {
-    const {state, handlers} = React.useContext(GlobalContext);
+    const { state, updateContext } = React.useContext(GlobalContext);
+    const setSuggestionMode = (sm) => {
+        updateContext((state) => {
+            if (state.settings.suggestionMode !== sm) {
+                state.settings.suggestionMode = sm;
+                state.suggest();
+            }
+        });
+    };
+    const setBaseEntropy = (lvl) =>
+        updateContext((state) => {
+            state.setEntropy(lvl);
+        });
+
+    const setInteractionEntropy = (lvl) =>
+        updateContext((state) => {
+            state.settings.interactionEntropy = lvl;
+        });
+
+    const setMouseMode = (mm) =>
+        updateContext((state) => {
+            state.settings.mouseMode = mm;
+            state.suggest();
+        });
+
     //@todo if game not yet started, allow configuration of dealing behavior (preselect enable on desktop, disable on mobile)
     if (!state.settings.showMenu) {
         return null;
@@ -18,11 +42,7 @@ const Menu = () => {
                     <span className="label">
                         <div className="description">How much help - if any - should the game offer by displaying suggestions?</div>
                     </span>
-                    <select
-                        className="input"
-                        onChange={(e) => handlers.setSuggestionMode(e.target.value)}
-                        value={state.settings.suggestionMode}
-                    >
+                    <select className="input" onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode}>
                         {state.settings.suggestionModes.map((suggestionMode) => (
                             <option key={suggestionMode} value={suggestionMode}>
                                 {suggestionMode}
@@ -38,11 +58,7 @@ const Menu = () => {
                         <div className="description">Should the selected card follow the cursor or remain on the stack?</div>
                     </div>
 
-                    <select
-                        className="input"
-                        onChange={(e) => handlers.setMouseMode(e.target.value)}
-                        value={state.settings.mouseMode}
-                    >
+                    <select className="input" onChange={(e) => setMouseMode(e.target.value)} value={state.settings.mouseMode}>
                         {state.settings.mouseModes.map((mouseMode) => (
                             <option key={mouseMode} value={mouseMode}>
                                 {mouseMode}
@@ -57,11 +73,7 @@ const Menu = () => {
                     <div className="label">
                         <div className="description">How much chaos will the stacks on the board contain by themselves?</div>
                     </div>
-                    <select
-                        className="input"
-                        onChange={(e) => handlers.setBaseEntropy(e.target.value)}
-                        value={state.settings.baseEntropy}
-                    >
+                    <select className="input" onChange={(e) => setBaseEntropy(e.target.value)} value={state.settings.baseEntropy}>
                         {state.settings.entropyLevels.map((entropyLevel, index) => (
                             <option key={entropyLevel} value={index}>
                                 {entropyLevel}
@@ -79,7 +91,7 @@ const Menu = () => {
 
                     <select
                         className="input"
-                        onChange={(e) => handlers.setInteractionEntropy(e.target.value)}
+                        onChange={(e) => setInteractionEntropy(e.target.value)}
                         value={state.settings.interactionEntropy}
                     >
                         {state.settings.entropyLevels.map((entropyLevel, index) => (

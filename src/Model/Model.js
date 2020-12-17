@@ -1,3 +1,4 @@
+import Deck from "./Deck/Deck";
 import Foundation from "./Game/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
@@ -7,7 +8,8 @@ import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
 export default class Model {
-    static getInitialState = (deck, launchSettings) => {
+    static getInitialState = (launchSettings) => {
+        const deck = new Deck().shuffle();
         const settings = new Settings(launchSettings);
         const state = {
             stock: new Stock([...deck.cards], settings),
@@ -30,18 +32,6 @@ export default class Model {
             hand: Hand.copy(state.hand),
             game: Game.copy(state.game),
             settings: Settings.copy(state.settings),
-        };
-    };
-
-    static setEntropy = (state, lvl) => {
-        return {
-            stock: state.stock.setEntropy(lvl),
-            waste: state.waste.setEntropy(lvl),
-            foundation: state.foundation.setEntropy(lvl),
-            tableau: state.tableau.setEntropy(lvl),
-            hand: state.hand,
-            game: state.game,
-            settings: state.settings,
         };
     };
 }

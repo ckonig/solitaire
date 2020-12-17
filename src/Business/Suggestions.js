@@ -1,6 +1,6 @@
-import Model from "../Model/Model";
-import Tableau from "../Business/Tableau";
-import Waste from "../Business/Waste";
+import BusinessModel from "./BusinessModel";
+import Tableau from "./Tableau";
+import Waste from "./Waste";
 
 export default class Suggestions {
     constructor() {
@@ -92,9 +92,9 @@ export default class Suggestions {
 
     getPickupOptions = (state) => {
         let foundAny = false;
-        const wasteState = Model.copy(state);
+        const wasteState = BusinessModel.copy(state);
         this.waste.dispatchPickup(wasteState.waste.getTop(), null, wasteState);
-        if (wasteState.game.modified) {
+        if (wasteState.game.timemachine.modified) {
             const foundWasteSuggestions = this.getPutdownSuggestions(wasteState, true);
             if (foundWasteSuggestions > (state.settings.suggestionMode == "full" ? 1 : 0)) {
                 state.waste.suggestion = true;
@@ -105,9 +105,9 @@ export default class Suggestions {
         state.tableau.stacks.forEach((tableau, index) => {
             tableau.stack.forEach((card, cardIndex) => {
                 if (!card.isHidden) {
-                    const tableauState = Model.copy(state);
+                    const tableauState = BusinessModel.copy(state);
                     this.tableau.dispatchPickup(card, null, tableauState, index);
-                    if (tableauState.game.modified) {
+                    if (tableauState.game.timemachine.modified) {
                         const foundTableauSuggestions = this.getPutdownSuggestions(tableauState, true);
                         if (foundTableauSuggestions > (state.settings.suggestionMode == "full" ? 1 : 0)) {
                             tableau.stack[cardIndex].suggestion = true;
