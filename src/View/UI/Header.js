@@ -1,4 +1,4 @@
-import "../../Style/Header.css";
+import "../Style/Header.css";
 
 import Clock from "./Clock";
 import EndGame from "./EndGame";

@@ -6,6 +6,10 @@ const Hint = () => {
     const suggestOnce = () => {
         updateContext((state) => {
             const previous = state.settings.suggestionMode;
+            //@todo : keep hint active for a whole move
+            //only change suggestionMode, then change afterwards 
+            //let central render function trigger suggest() 
+            //@todo penalize hint based on settings
             state.settings.suggestionMode = "regular";
             state.suggest();
             state.settings.suggestionMode = previous;

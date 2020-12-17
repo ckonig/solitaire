@@ -1,5 +1,5 @@
 import { Component } from "react";
-import GlobalContext from "./Context";
+import GlobalContext from "../Context";
 
 export default class BlinkingComponent extends Component {
     constructor(selector) {

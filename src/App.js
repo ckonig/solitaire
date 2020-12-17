@@ -1,6 +1,6 @@
-import "./Style/App.css";
+import "./View/Style/App.css";
 
-import BoardWrap from "./View/BoardWrap";
+import BoardWrap from "./View/Game/BoardWrap";
 import React from "react";
 import StartScreen from "./View/UI/StartScreen";
 

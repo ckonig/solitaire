@@ -1,11 +1,12 @@
-import "../../Style/Screens.css";
+import "../Style/Screens.css";
 
 import React from "react";
 
 const StartScreen = (props) => {
     //@todo add selector for timed game
-    //@todo add selectors for different rating strategies
+    //@todo add selectors for different rating strategies (undo, hint, blink)
     //@todo add and implement custom start button + selectors for draw mode & recycling options
+    //@todo add selector for quick dealing
     return !props || !props.start ? null : (
         <div>
             <div className="quickstart">

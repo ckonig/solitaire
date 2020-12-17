@@ -1,10 +1,10 @@
 import "../Style/Board.scss";
 
 import Dealer from "./Dealer";
-import EndScreen from "./UI/EndScreen";
+import EndScreen from "../UI/EndScreen";
 import Foundation from "./Foundation";
-import Header from "./UI/Header";
-import Menu from "./UI/Menu";
+import Header from "../UI/Header";
+import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";

@@ -1,6 +1,6 @@
 import Board from "./Board";
-import BusinessModel from "../Business/BusinessModel";
-import { Provider } from "./Context";
+import BusinessModel from "../../Business/BusinessModel";
+import { Provider } from "../Context";
 import React from "react";
 
 export default class BoardWrap extends React.Component {
@@ -33,6 +33,7 @@ export default class BoardWrap extends React.Component {
 
     render = () => {
         this.state.assignHandlers(this.updateGameContext);
+        //this.state.suggest(); @todo this will work once hints are implemented differently
         const context = {
             state: this.state,
             replaceContext: this.replaceContext,

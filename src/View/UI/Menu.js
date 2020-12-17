@@ -1,9 +1,10 @@
-import "../../Style/Menu.css";
+import "../Style/Menu.css";
 
 import GlobalContext from "../Context";
 import React from "react";
 
 const Menu = () => {
+    //@todo persist game settings in local storage
     const { state, updateContext } = React.useContext(GlobalContext);
     const setSuggestionMode = (sm) => {
         updateContext((state) => {
@@ -29,7 +30,6 @@ const Menu = () => {
             state.suggest();
         });
 
-    //@todo if game not yet started, allow configuration of dealing behavior (preselect enable on desktop, disable on mobile)
     if (!state.settings.showMenu) {
         return null;
     }

@@ -1,4 +1,4 @@
-import GlobalContext from "./Context";
+import GlobalContext from "../Context";
 import MouseHand from "./MouseHand";
 import React from "react";
 import TouchHand from "./TouchHand";

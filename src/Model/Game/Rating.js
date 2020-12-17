@@ -43,7 +43,6 @@ export default class Rating {
     };
 
     rateMove(move) {
-        //@todo move point calculation to rating class
         const isTableau = (obj) => obj.substr(0, 7) == "tableau";
         const isFoundation = (obj) => obj.substr(0, 10) == "foundation";
         if (isTableau(move.source)) {

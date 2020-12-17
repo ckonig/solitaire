@@ -1,6 +1,6 @@
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
-import GlobalContext from "./Context";
+import GlobalContext from "../Context";
 import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";

@@ -1,4 +1,4 @@
-import "../../Style/Screens.css";
+import "../Style/Screens.css";
 
 import GlobalContext from "../Context";
 import React from "react";
