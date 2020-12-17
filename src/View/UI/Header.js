@@ -1,19 +1,20 @@
 import "../../Style/Header.css";
 
 import Clock from "./Clock";
+import GlobalState from "../Context";
 import HeartContainer from "./HeartContainer";
 import Hint from "./Hint";
 import React from "react";
 import Undo from "./Undo";
 
-const Header = (props) => {
+const Header = (props, context) => {
     return (
         <div className="header">
             <div className="header-title">
-                <HeartContainer recyclingMode={props.settings.launchSettings.recyclingMode} passes={props.game.passes} />
-                <div className="icon-container">🏆</div> {props.game.points}
+                <HeartContainer />
+                <div className="icon-container">🏆</div> {context.state.game.points}
             </div>
-            <Clock game={props.game} started={props.game.started} end={props.game.end} />
+            <Clock />
             <div className="header-buttons">
                 <Hint suggestOnce={props.handlers.suggestOnce} suggestionMode={props.settings.suggestionMode} />
                 <Undo undo={props.handlers.undo} game={props.game} />
@@ -36,5 +37,5 @@ const Header = (props) => {
         </div>
     );
 };
-
+Header.contextTypes = GlobalState;
 export default Header;

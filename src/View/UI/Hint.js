@@ -1,10 +1,11 @@
+import GlobalState from "../Context";
 import React from "react";
 
-const Hint = (props) => {
+const Hint = (props, context) => {
     const listenForH = (e) => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 72) {
-            props.suggestOnce();
+            context.handlers.suggestOnce();
         }
     };
 
@@ -13,13 +14,13 @@ const Hint = (props) => {
         return () => document.removeEventListener("keydown", listenForH);
     }, []);
 
-    return props.suggestionMode !== "none" ? null : (
+    return context.state.settings.suggestionMode !== "none" ? null : (
         <div>
-            <button title="Hint" onClick={() => props.suggestOnce()}>
+            <button title="Hint" onClick={() => context.handlers.suggestOnce()}>
                 💡
             </button>
         </div>
     );
 };
-
+Hint.contextTypes = GlobalState;
 export default Hint;
