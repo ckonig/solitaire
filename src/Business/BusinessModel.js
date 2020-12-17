@@ -1,4 +1,5 @@
 import Blinker from "./Blinker";
+import Dealer from "./Dealer";
 import Dispatcher from "./Dispatcher";
 import Foundation from "./Foundation";
 import Model from "../Model/Model";
@@ -17,6 +18,7 @@ export default class BusinessModel {
         this.game = obj.game;
         this.settings = obj.settings;
         this.suggestor = new Suggestions();
+        this.dealer = new Dealer();
     }
 
     suggest = () => this.suggestor.evaluateOptions(this);

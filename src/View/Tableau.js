@@ -36,7 +36,7 @@ export default class Tableau extends BlinkingComponent {
                 <StackBase
                     suggested={props.model.suggestion && !props.model.stack.length}
                     blink={props.model.blinkFor}
-                    onClick={() => props.onClick(null, null, "tableau-" + props.index)}
+                    onClick={() => props.onClick(null, null, props.index)}
                     visible={!props.model.stack.length}
                 />
                 {props.model.stack.map((card, index) => (
