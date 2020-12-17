@@ -9,10 +9,11 @@ export default class Waste extends BlinkingComponent {
     constructor() {
         super((s) => s.waste);
     }
+
     static contextType = GlobalContext;
+
     render() {
         const { state, business } = this.context;
-
         const getOffset = (index) => {
             if (state.settings.launchSettings.drawMode == "single") {
                 return 0;
@@ -53,12 +54,10 @@ export default class Waste extends BlinkingComponent {
                     />
                 ))}
                 <Hand
-                    settings={state.waste.settings}
                     offsetTop={(state.waste.stack.length / 2) * -1}
                     offsetLeft={getOffset(state.waste.stack.length)}
                     parent="waste"
                     onClick={business.clickWaste}
-                    model={state.hand}
                     stack={state.waste.stack}
                 />
             </div>

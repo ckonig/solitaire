@@ -1,8 +1,7 @@
 import Card from "./Card";
-import { Component } from "react";
 import React from "react";
 
-export default class MouseHand extends Component {
+export default class MouseHand extends React.Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();

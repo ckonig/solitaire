@@ -19,7 +19,7 @@ export default class Tableau extends BlinkingComponent {
 
     render() {
         const props = this.props;
-        const { state, business } = this.context;
+        const { business } = this.context;
         let offset = 0;
         const getOffset = (index) => {
             for (let i = 0; i <= index; i++) {
@@ -51,10 +51,8 @@ export default class Tableau extends BlinkingComponent {
                     />
                 ))}
                 <Hand
-                    settings={state.settings}
                     parent={"tableau-" + props.index}
                     onClick={(card, p) => business.clickTableau(card, p, props.index)}
-                    model={state.hand}
                     stack={props.model.stack}
                     offsetTop={getOffset(props.model.stack.length)}
                 />

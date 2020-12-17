@@ -1,20 +1,22 @@
+import GlobalContext from "./Context";
 import MouseHand from "./MouseHand";
 import React from "react";
 import TouchHand from "./TouchHand";
 
 const Hand = (props) => {
-    if (!props.model || props.parent !== props.model.source) {
+    const { state } = React.useContext(GlobalContext);
+    if (!state.hand || props.parent !== state.hand.source) {
         return null;
     }
     const putBack = (c, p) => props.onClick(props.stack[props.stack.length - 1], p, props.stack.length - 1);
-    if (props.settings.mouseMode == "follow-cursor") {
+    if (state.settings.mouseMode == "follow-cursor") {
         return <MouseHand parent={props.parent} hand={props.model} offsetTop={props.offsetTop} putBack={putBack} />;
     }
-    if (props.settings.mouseMode == "remain-on-stack") {
+    if (state.settings.mouseMode == "remain-on-stack") {
         return (
             <TouchHand
                 parent={props.parent}
-                hand={props.model}
+                hand={state.hand}
                 offsetTop={props.offsetTop}
                 offsetLeft={props.offsetLeft}
                 onClick={putBack}

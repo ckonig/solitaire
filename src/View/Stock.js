@@ -8,8 +8,9 @@ export default class Stock extends BlinkingComponent {
     constructor() {
         super((s) => s.stock);
     }
-    
+
     static contextType = GlobalContext;
+
     render() {
         const { state, business } = this.context;
         return (

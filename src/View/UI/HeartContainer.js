@@ -1,24 +1,24 @@
 import GlobalContext from "../Context";
 import React from "react";
 
-const HeartContainer = (props) => {
-    const context = React.useContext(GlobalContext);
+const HeartContainer = () => {
+    const { state } = React.useContext(GlobalContext);
     const getHearts = () => {
-        if (context.state.settings.launchSettings.recyclingMode == "infinite") {
+        if (state.settings.launchSettings.recyclingMode == "infinite") {
             return "🖤";
         }
 
-        if (context.state.settings.launchSettings.recyclingMode == "1-pass") {
-            return props.passes > 0 ? "❤️" : "💔";
+        if (state.settings.launchSettings.recyclingMode == "1-pass") {
+            return state.game.passes > 0 ? "❤️" : "💔";
         }
 
-        if (context.state.settings.launchSettings.recyclingMode == "3-pass") {
+        if (state.settings.launchSettings.recyclingMode == "3-pass") {
             const createString = (length, icon) =>
                 Array.from(new Array(length).keys())
                     .map(() => icon)
                     .join("");
 
-            return createString(context.state.game.passes, "❤️") + createString(3 - context.state.game.passes, "💔");
+            return createString(state.game.passes, "❤️") + createString(3 - state.game.passes, "💔");
         }
         return null;
     };

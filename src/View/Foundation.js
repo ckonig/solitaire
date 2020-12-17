@@ -16,9 +16,10 @@ export default class Foundation extends BlinkingComponent {
         const { state } = React.useContext(GlobalContext);
         return state.foundation.stacks.map((foundation, index) => <Foundation key={index} model={foundation} index={index} />);
     };
+    
     render() {
         const model = this.props.model;
-        const { state, business } = this.context;
+        const { business } = this.context;
         return (
             <div key={this.props.index}>
                 <StackBase
@@ -39,10 +40,8 @@ export default class Foundation extends BlinkingComponent {
                     />
                 ))}
                 <Hand
-                    settings={state.settings}
                     parent={"foundation-" + this.props.index}
                     onClick={(c, p) => business.clickFoundation(model.stack[model.stack.length - 1], p, this.props.index)}
-                    model={state.hand}
                     stack={model.stack}
                 />
             </div>
