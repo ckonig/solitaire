@@ -6,28 +6,25 @@ import React from "react";
 import StackBase from "./StackBase";
 
 export default class Foundation extends BlinkingComponent {
+    constructor(props) {
+        super((s) => s.foundation.stacks[props.index]);
+    }
+
+    static contextType = GlobalContext;
+
     static Stacks = () => {
-        const {state, business} = React.useContext(GlobalContext);
-        return state.foundation.stacks.map((foundation, index) => (
-            <Foundation
-                hand={state.hand}
-                key={index}
-                model={foundation}
-                stackindex={index}
-                settings={state.settings}
-                onClick={(c, p) => business.clickFoundation(c, p, index)}
-            />
-        ));
+        const { state } = React.useContext(GlobalContext);
+        return state.foundation.stacks.map((foundation, index) => <Foundation key={index} model={foundation} index={index} />);
     };
     render() {
         const model = this.props.model;
-        const stackindex = this.props.stackindex;
+        const { state, business } = this.context;
         return (
-            <div key={stackindex}>
+            <div key={this.props.index}>
                 <StackBase
                     suggested={model.suggestion && !model.stack.length}
                     blink={model.blinkFor}
-                    onClick={() => this.props.onClick(null, null, stackindex)}
+                    onClick={() => business.clickFoundation(null, null, this.props.index)}
                     visible={!model.stack.length}
                 >
                     <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>
@@ -38,14 +35,14 @@ export default class Foundation extends BlinkingComponent {
                         model={card}
                         blink={model.blinkFor}
                         isSuggested={model.suggestion && model.stack.length - 1 == index}
-                        onClick={(c, p) => this.props.onClick(c, p, stackindex)}
+                        onClick={(c, p) => business.clickFoundation(c, p, this.props.index)}
                     />
                 ))}
                 <Hand
-                    settings={this.props.settings}
-                    parent={"foundation-" + stackindex}
-                    onClick={(c, p) => this.props.onClick(model.stack[model.stack.length - 1], p, stackindex)}
-                    model={this.props.hand}
+                    settings={state.settings}
+                    parent={"foundation-" + this.props.index}
+                    onClick={(c, p) => business.clickFoundation(model.stack[model.stack.length - 1], p, this.props.index)}
+                    model={state.hand}
                     stack={model.stack}
                 />
             </div>

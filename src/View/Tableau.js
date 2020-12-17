@@ -6,22 +6,20 @@ import React from "react";
 import StackBase from "./StackBase";
 
 export default class Tableau extends BlinkingComponent {
+    constructor(props) {
+        super((s) => s.tableau.stacks[props.index]);
+    }
+
+    static contextType = GlobalContext;
+
     static Stacks = () => {
-        const {state, business} = React.useContext(GlobalContext);
-        return state.tableau.stacks.map((tableau, index) => (
-            <Tableau
-                settings={state.settings}
-                key={index}
-                index={index}
-                model={tableau}
-                hand={state.hand}
-                onClick={(card, p) => business.clickTableau(card, p, index)}
-            />
-        ));
+        const { state } = React.useContext(GlobalContext);
+        return state.tableau.stacks.map((tableau, index) => <Tableau key={index} index={index} model={tableau} />);
     };
 
     render() {
         const props = this.props;
+        const { state, business } = this.context;
         let offset = 0;
         const getOffset = (index) => {
             for (let i = 0; i <= index; i++) {
@@ -39,7 +37,7 @@ export default class Tableau extends BlinkingComponent {
                 <StackBase
                     suggested={props.model.suggestion && !props.model.stack.length}
                     blink={props.model.blinkFor}
-                    onClick={() => props.onClick(null, null, "tableau-" + props.index)}
+                    onClick={() => business.clickTableau(null, null, "tableau-" + props.index)}
                     visible={!props.model.stack.length}
                 />
                 {props.model.stack.map((card, index) => (
@@ -49,14 +47,14 @@ export default class Tableau extends BlinkingComponent {
                         blink={props.model.blinkFor}
                         isSuggested={props.model.suggestion && props.model.stack.length - 1 == index}
                         offsetTop={getOffset(index)}
-                        onClick={props.onClick}
+                        onClick={(card, p) => business.clickTableau(card, p, props.index)}
                     />
                 ))}
                 <Hand
-                    settings={props.settings}
+                    settings={state.settings}
                     parent={"tableau-" + props.index}
-                    onClick={props.onClick}
-                    model={props.hand}
+                    onClick={(card, p) => business.clickTableau(card, p, props.index)}
+                    model={state.hand}
                     stack={props.model.stack}
                     offsetTop={getOffset(props.model.stack.length)}
                 />

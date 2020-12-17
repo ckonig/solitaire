@@ -1,10 +1,10 @@
-import BlinkingContextComponent from "./BlinkingContextComponent";
+import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
 import GlobalContext from "./Context";
 import React from "react";
 import StackBase from "./StackBase";
 
-export default class Stock extends BlinkingContextComponent {
+export default class Stock extends BlinkingComponent {
     constructor() {
         super((s) => s.stock);
     }

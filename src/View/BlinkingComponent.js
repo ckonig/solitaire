@@ -1,14 +1,15 @@
 import { Component } from "react";
 
 export default class BlinkingComponent extends Component {
-    constructor(props) {
-        super(props);
+    constructor(selector) {
+        super();
         this.timeout = null;
+        this.selector = selector;
     }
 
     componentDidUpdate() {
-        if (this.props.model.blinkFor) {
-            this.timeout = setTimeout(() => this.props.model.unblink(), 200);
+        if (this.selector(this.context.state).blinkFor) {
+            this.timeout = setTimeout(() => this.selector(this.context.state).unblink(), 200);
         }
     }
 
