@@ -5,7 +5,9 @@ import React from "react";
 
 const Menu = () => {
     //@todo persist game settings in local storage
+
     const { state, updateContext } = React.useContext(GlobalContext);
+
     const setSuggestionMode = (sm) => {
         updateContext((state) => {
             if (state.settings.suggestionMode !== sm) {
@@ -14,6 +16,7 @@ const Menu = () => {
             }
         });
     };
+
     const setBaseEntropy = (lvl) =>
         updateContext((state) => {
             state.setEntropy(lvl);
@@ -33,16 +36,15 @@ const Menu = () => {
     if (!state.settings.showMenu) {
         return null;
     }
+
     return (
         <div className="menu">
             <div className="title">Settings</div>
             <div className="section">
                 <div className="title">Suggestions</div>
                 <div className="row">
-                    <span className="label">
-                        <div className="description">How much help - if any - should the game offer by displaying suggestions?</div>
-                    </span>
-                    <select className="input" onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode}>
+                    <div className="label">How much help - if any - should the game offer by displaying suggestions?</div>
+                    <select onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode}>
                         {state.settings.suggestionModes.map((suggestionMode) => (
                             <option key={suggestionMode} value={suggestionMode}>
                                 {suggestionMode}
@@ -54,11 +56,8 @@ const Menu = () => {
             <div className="section">
                 <div className="title">Active Card</div>
                 <div className="row">
-                    <div className="label">
-                        <div className="description">Should the selected card follow the cursor or remain on the stack?</div>
-                    </div>
-
-                    <select className="input" onChange={(e) => setMouseMode(e.target.value)} value={state.settings.mouseMode}>
+                    <div className="label">Should the selected card follow the cursor or remain on the stack?</div>
+                    <select onChange={(e) => setMouseMode(e.target.value)} value={state.settings.mouseMode}>
                         {state.settings.mouseModes.map((mouseMode) => (
                             <option key={mouseMode} value={mouseMode}>
                                 {mouseMode}
@@ -70,10 +69,8 @@ const Menu = () => {
             <div className="section">
                 <div className="title">Base Entropy</div>
                 <div className="row">
-                    <div className="label">
-                        <div className="description">How much chaos will the stacks on the board contain by themselves?</div>
-                    </div>
-                    <select className="input" onChange={(e) => setBaseEntropy(e.target.value)} value={state.settings.baseEntropy}>
+                    <div className="label">How much chaos will the stacks on the board contain by themselves?</div>
+                    <select onChange={(e) => setBaseEntropy(e.target.value)} value={state.settings.baseEntropy}>
                         {state.settings.entropyLevels.map((entropyLevel, index) => (
                             <option key={entropyLevel} value={index}>
                                 {entropyLevel}
@@ -85,15 +82,8 @@ const Menu = () => {
             <div className="section">
                 <div className="title">Interaction Entropy</div>
                 <div className="row">
-                    <div className="label">
-                        <div className="description">How much chaos will each interaction add to a stack on the board?</div>
-                    </div>
-
-                    <select
-                        className="input"
-                        onChange={(e) => setInteractionEntropy(e.target.value)}
-                        value={state.settings.interactionEntropy}
-                    >
+                    <div className="label">How much chaos will each interaction add to a stack on the board?</div>
+                    <select onChange={(e) => setInteractionEntropy(e.target.value)} value={state.settings.interactionEntropy}>
                         {state.settings.entropyLevels.map((entropyLevel, index) => (
                             <option key={entropyLevel} value={index}>
                                 {entropyLevel}

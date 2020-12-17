@@ -30,7 +30,7 @@
     float: left;
 }
 
-.menu > .section > .row > .input {
+.menu > .section > .row > select {
     float: right;
     margin-left: 2vw;
     width: 8vw;
@@ -40,9 +40,6 @@
 .menu > .section > .row > .label {
     float: left;
     width: 15vw;
-}
-
-.menu > .section > .row > .label > .description {
     font-size: 1w;
     color: lightgray;
 }

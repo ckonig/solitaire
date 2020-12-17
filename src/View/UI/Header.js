@@ -10,23 +10,21 @@ import RestartGame from "./RestartGame";
 import ToggleMenu from "./ToggleMenu";
 import Undo from "./Undo";
 
-const Header = () => {
-    return (
-        <div className="header">
-            <div className="header-title">
-                <Hearts />
-                <Points />
-            </div>
-            <Clock />
-            <div className="header-buttons">
-                <Hint />
-                <Undo />
-                <RestartGame />
-                <EndGame />
-                <ToggleMenu />
-            </div>
+const Header = () => (
+    <div className="header">
+        <div className="header-title">
+            <Hearts />
+            <Points />
         </div>
-    );
-};
+        <Clock />
+        <div className="header-buttons">
+            <Hint />
+            <Undo />
+            <RestartGame />
+            <EndGame />
+            <ToggleMenu />
+        </div>
+    </div>
+);
 
 export default Header;

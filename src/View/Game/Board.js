@@ -10,24 +10,22 @@ import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
-const Board = () => {
-    return (
-        <div>
-            <div className="layout-grid-container">
-                <Header />
-                <div className="board-grid-container">
-                    <Stock />
-                    <Waste />
-                    <div className="spacer">&nbsp;</div>
-                    <Foundation.Stacks />
-                    <Tableau.Stacks />
-                </div>
+const Board = () => (
+    <>
+        <div className="layout-grid-container">
+            <Header />
+            <div className="board-grid-container">
+                <Stock />
+                <Waste />
+                <div className="spacer">&nbsp;</div>
+                <Foundation.Stacks />
+                <Tableau.Stacks />
             </div>
-            <Menu />
-            <EndScreen />
-            <Dealer />
         </div>
-    );
-};
+        <Menu />
+        <EndScreen />
+        <Dealer />
+    </>
+);
 
 export default Board;
