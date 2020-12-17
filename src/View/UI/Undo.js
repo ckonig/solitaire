@@ -16,8 +16,8 @@ const Undo = (props) => {
     return (
         <div>
             <button
-                disabled={!props.model.previousStates.length}
-                title={"Undo (Penalty:" + Math.pow(2, props.model.multiplicator) + ")"}
+                disabled={!props.game.previousStates.length}
+                title={"Undo (Penalty:" + Math.pow(2, props.game.multiplicator) + ")"}
                 onClick={props.undo}
             >
                 ⏪

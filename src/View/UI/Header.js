@@ -10,15 +10,15 @@ const Header = (props) => {
     return (
         <div className="header">
             <div className="header-title">
-                <HeartContainer recyclingMode={props.settings.launchSettings.recyclingMode} passes={props.model.passes} />
-                <div className="icon-container">🏆</div> {props.model.points}
+                <HeartContainer recyclingMode={props.settings.launchSettings.recyclingMode} passes={props.game.passes} />
+                <div className="icon-container">🏆</div> {props.game.points}
             </div>
-            <Clock game={props.model} started={props.model.started} end={props.model.end} />
+            <Clock game={props.game} started={props.game.started} end={props.game.end} />
             <div className="header-buttons">
                 <Hint suggestOnce={props.handlers.suggestOnce} suggestionMode={props.settings.suggestionMode} />
-                <Undo undo={props.handlers.undo} model={props.model} />
+                <Undo undo={props.handlers.undo} game={props.game} />
                 <div>
-                    <button title="Restart" disabled={!props.model.previousStates.length} onClick={props.handlers.reset}>
+                    <button title="Restart" disabled={!props.game.previousStates.length} onClick={props.handlers.reset}>
                         ♻️
                     </button>
                 </div>

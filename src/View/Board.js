@@ -36,7 +36,7 @@ export default class Board extends React.Component {
         return (
             <div>
                 <div className="layout-grid-container">
-                    <Header model={this.state.game} settings={this.state.settings} handlers={handlers} />
+                    <Header game={this.state.game} settings={this.state.settings} handlers={handlers} />
                     <div className="game-view">
                         <div className="board-grid-container">
                             <Stock model={this.state.stock} onClick={business.clickStock} />
