@@ -5,7 +5,6 @@ export default class Stock extends Service {
 
     _dispatchPickup = (card, position, state) => (card != null ? this.moveToWaste(card, state) : this.recycleWaste(card, state));
 
-    //@todo check if recycling heart got broken (when stock remains empty) - maintain passes instead of remaining recyclings
     moveToWaste = (card, state) =>
         state.stock.isOnTop(card) &&
         state.waste.addAll(state.stock.popTop()) &&

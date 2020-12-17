@@ -30,7 +30,7 @@ export default class Board extends React.Component {
         const handlers = {
             ...Undo.getHandlers(this.suggestor, this, this.state),
             ...Settings.getHandlers(this.suggestor, this, this.state),
-            ...Business.getHandlers(new GameState(this), this.state),
+            ...Business.getHandlers(new GameState(this, this.suggestor), this.state),
             restart: this.props.restart,
         };
         return (
@@ -63,7 +63,7 @@ export default class Board extends React.Component {
                     </div>
                     <Menu model={this.state.game} settings={this.state.settings} handlers={handlers} />
                     <EndScreen game={this.state.game} restart={handlers.restart} />
-                    <Dealer state={this.state} stateholder={this} />
+                    <Dealer state={this.state} stateholder={this} suggestor={this.suggestor} />
                 </div>
             </div>
         );

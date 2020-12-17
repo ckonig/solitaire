@@ -4,8 +4,8 @@ import Waste from "../Business/Waste";
 
 export default class Suggestions {
     constructor() {
-        this.tableau = new Tableau(null);
-        this.waste = new Waste(null);
+        this.tableau = new Tableau();
+        this.waste = new Waste();
     }
 
     evaluateOptions = (state) => {

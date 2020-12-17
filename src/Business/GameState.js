@@ -1,10 +1,9 @@
 import Model from "../Model/Model";
-import Suggestions from "../Service/Suggestions";
 
 export default class GameState {
-    constructor(stateholder) {
+    constructor(stateholder, suggestor) {
         this.stateholder = stateholder;
-        this.suggestor = new Suggestions();
+        this.suggestor = suggestor;
     }
 
     _setState = (a, b) =>
