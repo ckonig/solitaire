@@ -7,9 +7,8 @@ export default class Suggestions {
     waste: Waste;
 
     constructor() {
-        const nullBlinker = { startBlink: () => {} };
-        this.tableau = new Tableau(nullBlinker);
-        this.waste = new Waste(nullBlinker);
+        this.tableau = new Tableau();
+        this.waste = new Waste();
     }
 
     evaluateOptions = (state: BusinessModel) => {

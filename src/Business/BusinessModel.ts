@@ -1,6 +1,4 @@
-import { AppState, StateUpdateFunction } from "../Common";
-
-import Blinker from "./Blinker";
+import { AppState } from "../Common";
 import { ClickHandler } from "../Common";
 import Dealer from "./Dealer";
 import Dispatcher from "./Dispatcher";
@@ -31,13 +29,13 @@ export default class BusinessModel extends Model {
         this.tableau.setEntropy(lvl);
     };
 
-    assignHandlers = (updateGameContext: StateUpdateFunction) => {
-        const blinker = new Blinker(updateGameContext);
-        const getHandler = (clickHandler: ClickHandler) => new Dispatcher(clickHandler, updateGameContext).getHandler(this.hand);
-        this.stock.onClick = getHandler(new Stock(blinker));
-        this.waste.onClick = getHandler(new Waste(blinker));
-        this.foundation.onClick = getHandler(new Foundation(blinker));
-        this.tableau.onClick = getHandler(new Tableau(blinker));
+    withHandlers = () => {
+        const getHandler = (clickHandler: ClickHandler) => new Dispatcher(clickHandler).getHandler(this.hand);
+        this.stock.onClick = getHandler(new Stock());
+        this.waste.onClick = getHandler(new Waste());
+        this.foundation.onClick = getHandler(new Foundation());
+        this.tableau.onClick = getHandler(new Tableau());
+        return this;
     };
 
     static getInitialState = (launchSettings: AppState) => {

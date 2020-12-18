@@ -1,19 +1,15 @@
 import { BlinkFunction, ClickHandler } from "../Common";
 
+import Blinker from "./Blinker";
 import BusinessModel from "./BusinessModel";
 import Card from "../Model/Deck/Card";
-import { IBlinker } from "./Blinker";
 
 export default class Stock implements ClickHandler {
-    blink: BlinkFunction;
+    blink: BlinkFunction = (state: BusinessModel) => new Blinker().startBlink((s: BusinessModel) => s.stock, state);
 
-    constructor(blinker: IBlinker) {
-        this.blink = (state: BusinessModel) => blinker.startBlink((s: BusinessModel) => s.stock, state);
-    }
+    dispatchPutDown = (_card: Card, _position: any, state: BusinessModel) => this.blink(state, 0);
 
-    dispatchPutDown = (card: Card, position: any, state: BusinessModel) => this.blink(state, 0);
-
-    dispatchPickup = (card: Card, position: any, state: BusinessModel) =>
+    dispatchPickup = (card: Card, _position: any, state: BusinessModel) =>
         card != null ? this.moveToWaste(card, state) : this.recycleWaste(card, state);
 
     moveToWaste = (card: Card, state: BusinessModel) =>

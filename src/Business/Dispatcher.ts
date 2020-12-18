@@ -1,15 +1,14 @@
 import { ClickHandler, StateUpdateFunction } from "../Common";
 
+import BusinessModel from "./BusinessModel";
 import Card from "../Model/Deck/Card";
 import Hand from "../Model/Game/Hand";
 
 export default class Dispatcher {
     clickHandler: ClickHandler;
-    updateGameContext: StateUpdateFunction;
 
-    constructor(clickHandler: ClickHandler, updateGameContext: StateUpdateFunction) {
+    constructor(clickHandler: ClickHandler) {
         this.clickHandler = clickHandler;
-        this.updateGameContext = updateGameContext;
     }
 
     getHandler = (hand: Hand) => {
@@ -20,19 +19,15 @@ export default class Dispatcher {
         }
     };
 
-    dispatchPutDown = (card: Card, position: any, index: number) => {
-        this.updateGameContext((state) => {
-            if (state.hand.isHoldingCard()) {
-                this.clickHandler.dispatchPutDown(card, position, state, index);
-            }
-        });
+    dispatchPutDown = (card: Card, position: any, index: number) => (state: BusinessModel) => {
+        if (state.hand.isHoldingCard()) {
+            this.clickHandler.dispatchPutDown(card, position, state, index);
+        }
     };
 
-    dispatchPickup = (card: Card, position: any, index: number) => {
-        this.updateGameContext((state) => {
-            if (!state.hand.isHoldingCard()) {
-                this.clickHandler.dispatchPickup(card, position, state, index);
-            }
-        });
+    dispatchPickup = (card: Card, position: any, index: number) => (state: BusinessModel) => {
+        if (!state.hand.isHoldingCard()) {
+            this.clickHandler.dispatchPickup(card, position, state, index);
+        }
     };
 }

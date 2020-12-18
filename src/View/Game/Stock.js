@@ -9,12 +9,13 @@ export default class Stock extends BlinkingComponent {
     }
 
     render() {
-        const { state } = this.context;
+        const { state, updateGameContext } = this.context;
+        const onClick = (c, p, i) => updateGameContext(state.stock.onClick(c, p, i));
         return (
             <div>
                 <StackBase
                     blink={state.stock.blinkFor}
-                    onClick={state.stock.onClick}
+                    onClick={onClick}
                     suggested={state.stock.suggestion && !state.stock.stack.length}
                     visible={!state.stock.stack.length}
                 />
@@ -25,7 +26,7 @@ export default class Stock extends BlinkingComponent {
                         offsetTop={(index / 2) * -1}
                         blink={state.stock.blinkFor}
                         isSuggested={state.stock.suggestion && index == state.stock.stack.length - 1}
-                        onClick={state.stock.onClick}
+                        onClick={onClick}
                     />
                 ))}
             </div>

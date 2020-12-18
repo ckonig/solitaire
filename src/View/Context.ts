@@ -7,6 +7,7 @@ interface IGlobalContext {
     state: BusinessModel | null;
     replaceContext: StateReplaceFunction;
     updateContext: StateUpdateFunction;
+    updateGameContext: StateUpdateFunction;
     restart: () => void;
 }
 
@@ -14,6 +15,7 @@ const defaultValue = {
     state: null,
     replaceContext: () => {},
     updateContext: () => {},
+    updateGameContext: () => {},
     restart: () => {},
 };
 

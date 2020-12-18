@@ -1,15 +1,11 @@
 import { BlinkFunction, ClickHandler } from "../Common";
 
+import Blinker from "./Blinker";
 import BusinessModel from "./BusinessModel";
 import Card from "../Model/Deck/Card";
-import { IBlinker } from "./Blinker";
 
 export default class Foundation implements ClickHandler {
-    blink: BlinkFunction;
-
-    constructor(blinker: IBlinker) {
-        this.blink = (state, index) => blinker.startBlink((s: BusinessModel) => s.foundation.stacks[index], state);
-    }
+    blink: BlinkFunction = (state, index) => new Blinker().startBlink((s: BusinessModel) => s.foundation.stacks[index], state);
 
     dispatchPutDown = (card: Card, position: any, state: BusinessModel, index: number) => {
         if (state.foundation.wouldAccept(index, state.hand)) {

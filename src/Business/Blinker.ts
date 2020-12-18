@@ -1,5 +1,4 @@
 import BusinessModel from "./BusinessModel";
-import { StateUpdateFunction } from "../Common";
 import Stock from "../Model/Game/Stock";
 import Waste from "../Model/Game/Waste";
 
@@ -12,21 +11,14 @@ export interface IBlinker {
 }
 
 export default class Blinker implements IBlinker {
-    updateGameContext: StateUpdateFunction;
-
-    constructor(updateGameContext: StateUpdateFunction) {
-        this.updateGameContext = updateGameContext;
-    }
-
     startBlink = (selector: BlinkSelector, state: BusinessModel) => {
         selector(state).blinkFor = 10;
         state.game.registerBlink();
-        selector(state).unblink = () => this.stopBlink(selector);
+        selector(state).unblink = (s: BusinessModel) => this.stopBlink(selector, s);
     };
 
-    stopBlink = (selector: BlinkSelector) =>
-        this.updateGameContext((state) => {
-            selector(state).blinkFor = 0;
-            state.game.registerBlink();
-        });
+    stopBlink = (selector: BlinkSelector, state: BusinessModel) => {
+        selector(state).blinkFor = 0;
+        state.game.registerBlink();
+    };
 }

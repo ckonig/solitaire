@@ -11,9 +11,10 @@ export default class Foundation extends BlinkingComponent {
     }
 
     static Stacks = () => {
-        const { state } = React.useContext(GlobalContext);
+        const { state, updateGameContext } = React.useContext(GlobalContext);
+        const onClick = (c, p, i) => updateGameContext(state.foundation.onClick(c, p, i));
         return state.foundation.stacks.map((foundation, index) => (
-            <Foundation key={index} model={foundation} index={index} onClick={state.foundation.onClick} />
+            <Foundation key={index} model={foundation} index={index} onClick={onClick} />
         ));
     };
 

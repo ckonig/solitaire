@@ -39,12 +39,12 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
         }, callback);
 
     render = () => {
-        this.state.assignHandlers(this.updateGameContext);
-        //this.state.suggest(); @todo this will work once hints are implemented differently
+        //this.state.withSuggestions(); @todo this will work once hints are implemented differently
         const context = {
-            state: this.state,
+            state: this.state.withHandlers(),
             replaceContext: this.replaceContext,
             updateContext: this.updateContext,
+            updateGameContext: this.updateGameContext,
             restart: this.props.restart,
         };
         return (
