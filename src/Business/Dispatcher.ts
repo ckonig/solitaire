@@ -1,7 +1,6 @@
-import { ClickHandler, StateUpdateFunction } from "../Common";
-
 import BusinessModel from "./BusinessModel";
 import Card from "../Model/Deck/Card";
+import { ClickHandler } from "../Common";
 import Hand from "../Model/Game/Hand";
 
 export default class Dispatcher {
