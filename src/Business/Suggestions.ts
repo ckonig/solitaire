@@ -3,13 +3,16 @@ import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 export default class Suggestions {
+    tableau: Tableau;
+    waste: Waste;
+
     constructor() {
         const nullBlinker = { startBlink: () => {} };
         this.tableau = new Tableau(nullBlinker);
         this.waste = new Waste(nullBlinker);
     }
 
-    evaluateOptions = (state) => {
+    evaluateOptions = (state: BusinessModel) => {
         this.disableAllSuggestions(state);
         if (
             state.settings.suggestionMode !== "none" &&
@@ -23,7 +26,7 @@ export default class Suggestions {
         }
     };
 
-    getPutdownSuggestions = (state, onlyUseful) => {
+    getPutdownSuggestions = (state: BusinessModel, onlyUseful?: boolean) => {
         if (!state.hand.isHoldingCard() || state.settings.suggestionMode == "none") {
             return 0;
         }
@@ -32,7 +35,7 @@ export default class Suggestions {
         if (state.waste.wouldAccept(state.hand)) {
             if (state.settings.suggestionMode === "full" || !state.hand.isFromWaste()) {
                 const move = { target: "waste", source: state.hand.source };
-                if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
+                if (state.settings.suggestionMode !== "scored" || state.game.rating.rateMove(move) > 0) {
                     accepted.push(move);
                     state.waste.suggestion = true;
                 }
@@ -43,7 +46,7 @@ export default class Suggestions {
             if (state.foundation.wouldAccept(index, state.hand)) {
                 if (state.settings.suggestionMode === "full" || !state.hand.isFromFoundation(index)) {
                     const move = { target: "foundation-" + index, source: state.hand.source };
-                    if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
+                    if (state.settings.suggestionMode !== "scored" || state.game.rating.rateMove(move) > 0) {
                         accepted.push(move);
                         stack.suggestion = true;
                     }
@@ -74,7 +77,7 @@ export default class Suggestions {
 
                     if (!onlyUseful || state.settings.suggestionMode === "full" || isNotLoop) {
                         const move = { target: "tableau-" + index, source: state.hand.source };
-                        if (state.settings.suggestionMode !== "scored" || state.game.rateMove(move) > 0) {
+                        if (state.settings.suggestionMode !== "scored" || state.game.rating.rateMove(move) > 0) {
                             accepted.push(move);
                             stack.suggestion = true;
                         }
@@ -86,7 +89,7 @@ export default class Suggestions {
         return accepted.length;
     };
 
-    getPickupOptions = (state) => {
+    getPickupOptions = (state: BusinessModel) => {
         let foundAny = false;
         const wasteState = BusinessModel.copy(state);
         this.waste.dispatchPickup(wasteState.waste.getTop(), null, wasteState);
@@ -115,7 +118,7 @@ export default class Suggestions {
         return foundAny;
     };
 
-    getUncoverOptions = (state) => {
+    getUncoverOptions = (state: BusinessModel) => {
         if (!state.hand.isHoldingCard()) {
             const filtered = state.tableau.stacks
                 .map((_stack, index) => index)
@@ -129,8 +132,8 @@ export default class Suggestions {
         return 0;
     };
 
-    disableAllSuggestions = (state) => {
-        const disableSuggestion = (obj) => {
+    disableAllSuggestions = (state: BusinessModel) => {
+        const disableSuggestion = (obj: any) => {
             obj.suggestion = false;
             obj.stack && obj.stack.forEach(disableSuggestion);
             obj.stacks && obj.stacks.forEach(disableSuggestion);

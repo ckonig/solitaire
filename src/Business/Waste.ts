@@ -1,13 +1,13 @@
 import { BlinkFunction, ClickHandler } from "../Common";
 
-import Blinker from "./Blinker";
 import BusinessModel from "./BusinessModel";
 import Card from "../Model/Deck/Card";
+import { IBlinker } from "./Blinker";
 
 export default class Waste implements ClickHandler {
     blink: BlinkFunction;
 
-    constructor(blinker: Blinker) {
+    constructor(blinker: IBlinker) {
         this.blink = (state: BusinessModel) => blinker.startBlink((s: BusinessModel) => s.waste, state);
     }
 

@@ -5,8 +5,7 @@ export default class Card {
         this.isHidden = isHidden;
         this.entropyStyle = {};
         this.source = "";
-        //@todo why here? move to stacks
-        this.causeEntropy(1);
+        this.suggestion = false;
     }
 
     causeEntropy = (lvl) => {

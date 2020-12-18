@@ -17,13 +17,10 @@ export default class Foundation {
             .map((suit) => ({ ...template(), ...suit }));
         this.stacks = [...stacks];
         // eslint-disable-next-line no-unused-vars
-        this.onClick = (a,b,c) => {}
+        this.onClick = (a, b, c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
-    }
-
-    getStacks = () => {
-        return this.stacks;
+        this.suggestion = false;
     }
 
     getCurrentAccepted = (index) => {
@@ -52,17 +49,11 @@ export default class Foundation {
         return card && card.equals(this.getTop(index)) && this.stacks[index].stack.pop();
     };
 
-    getPreviousUsed = (index) => {
-        return [...this.stacks[index].usedCards].pop();
-    };
+    getPreviousUsed = (index) => [...this.stacks[index].usedCards].pop();
 
-    countCards = () => {
-        return this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
-    };
+    countCards = () => this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
 
-    getTop(index) {
-        return this.stacks[index].stack[this.stacks[index].stack.length - 1];
-    }
+    getTop = (index) => this.stacks[index].stack[this.stacks[index].stack.length - 1];
 
     static copy = (orig) => {
         const copy = new Foundation(orig.settings);

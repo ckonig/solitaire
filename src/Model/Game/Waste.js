@@ -8,6 +8,7 @@ export default class Waste {
         this.onClick = (_a, _b, _c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
+        this.suggestion = false;
     }
 
     tryPutDown = (card) => this.canAdd(card) && (this.add(card) || true);

@@ -4,12 +4,10 @@ import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 export default class Tableau {
-    stacks: { stack: Card[]; id: number }[];
+    stacks: { stack: Card[]; id: number; suggestion?: boolean }[];
     settings: Settings;
     onClick: (a: any, b: any, c: any) => void;
-    blinkFor: number;
-    unblink: () => void;
-    
+
     constructor(settings: Settings) {
         const ids = [0, 1, 2, 3, 4, 5, 6];
         this.stacks = ids.map((id) => ({
@@ -18,13 +16,9 @@ export default class Tableau {
         }));
         this.settings = settings;
         this.onClick = () => {};
-        this.blinkFor = 0;
-        this.unblink = () => {};
     }
 
-    getStack = (index: number) => {
-        return this.stacks[index];
-    };
+    getStack = (index: number) => this.stacks[index];
 
     wouldAccept = (index: number, hand: Hand) => this.canPutDown(this.getTop(index), hand, index);
 
@@ -102,12 +96,7 @@ export default class Tableau {
         return card;
     };
 
-    getTop = (index: number, offset?: number) => {
-        if (!offset) {
-            offset = 0;
-        }
-        return this.stacks[index].stack[this.stacks[index].stack.length - 1 - offset];
-    };
+    getTop = (index: number, offset?: number) => this.stacks[index].stack[this.stacks[index].stack.length - 1 - (offset || 0)];
 
     static copy = (orig: Tableau) => {
         const copy = new Tableau(orig.settings);

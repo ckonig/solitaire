@@ -7,7 +7,11 @@ import Waste from "../Model/Game/Waste";
 
 export type BlinkSelector = (state: BusinessModel) => Waste | Stock | any;
 
-export default class Blinker {
+export interface IBlinker {
+    startBlink: (selector: BlinkSelector, state: BusinessModel) => void;
+}
+
+export default class Blinker implements IBlinker {
     updateGameContext: StateUpdateFunction;
 
     constructor(updateGameContext: StateUpdateFunction) {

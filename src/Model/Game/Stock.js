@@ -10,6 +10,7 @@ export default class Stock {
         this.onClick = (a, b, c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
+        this.suggestion = false;
         if (this.settings.launchSettings.recyclingMode == "1-pass") {
             this.passes = 1;
         }
