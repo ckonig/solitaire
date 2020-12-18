@@ -3,7 +3,7 @@ import Card from "./Model/Deck/Card";
 
 export type StateReplacer = (state: BusinessModel) => BusinessModel | null;
 export type StateUpdater = (state: BusinessModel) => void;
-export type StateReplaceFunction = (modifier: StateReplacer, callback?: any) => void;
+export type StateReplaceFunction = (modifier: StateReplacer) => void;
 export type StateUpdateFunction = (modifier: StateUpdater) => void;
 
 export interface AppState {

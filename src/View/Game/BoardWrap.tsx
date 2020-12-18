@@ -16,7 +16,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
         this.state = BusinessModel.getInitialState(props.settings);
     }
 
-    replaceContext = (a: StateReplacer, b?: any) => this.setState(a, b);
+    replaceContext = (modifier: StateReplacer) => this.setState(modifier);
 
     updateContext = (modifier: StateUpdater) =>
         this.replaceContext((state) => {
@@ -24,7 +24,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
             return state;
         });
 
-    updateGameContext = (modifier: StateUpdater, callback?: any) =>
+    updateGameContext = (modifier: StateUpdater) =>
         this.replaceContext((state) => {
             state.game.timemachine.modified = false;
             const previous = BusinessModel.copy(state);
@@ -36,7 +36,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
             }
 
             return null;
-        }, callback);
+        });
 
     render = () => {
         //this.state.withSuggestions(); @todo this will work once hints are implemented differently
