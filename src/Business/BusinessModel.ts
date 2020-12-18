@@ -19,7 +19,10 @@ export default class BusinessModel extends Model {
         this.dealer = new Dealer();
     }
 
-    suggest = () => this.suggestor.evaluateOptions(this);
+    withSuggestions = () => {
+        this.suggestor.evaluateOptions(this)
+        return this;
+    }
 
     setEntropy = (lvl: number) => {
         this.settings.baseEntropy = lvl;
@@ -30,7 +33,7 @@ export default class BusinessModel extends Model {
     };
 
     withHandlers = () => {
-        const getHandler = (clickHandler: ClickHandler) => new Dispatcher(clickHandler).getHandler(this.hand);
+        const getHandler = (clickHandler: ClickHandler) => new Dispatcher(clickHandler, this.suggestor).getHandler(this.hand);
         this.stock.onClick = getHandler(new Stock());
         this.waste.onClick = getHandler(new Waste());
         this.foundation.onClick = getHandler(new Foundation());

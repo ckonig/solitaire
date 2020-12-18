@@ -10,7 +10,10 @@ export default class Settings {
         this.interactionEntropy = isTouch ? 1 : 2;
 
         this.suggestionModes = ["none", "scored", "regular", "full"];
-        this.suggestionMode = "regular";
+        this.suggestionMode = "none";
+        
+        this.hintModes = ["twice", "once"];
+        this.hintMode = "once";
     }
 
     is_touch_device() {
@@ -36,6 +39,7 @@ export default class Settings {
         copy.mouseMode = orig.mouseMode;
         copy.baseEntropy = orig.baseEntropy;
         copy.interactionEntropy = orig.interactionEntropy;
+        copy.hintMode = orig.hintMode;
         return copy;
     };
 }

@@ -8,7 +8,6 @@ const Undo = () => {
             const previous = _state.game.timemachine.popPreviousState(state.game.timemachine.previousStates.length - 1, state);
             if (previous) {
                 previous.game.rating.penalize(_state.game.rating);
-                previous.suggest();
                 return previous;
             }
             return null;

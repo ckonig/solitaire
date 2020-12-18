@@ -23,9 +23,7 @@ export default class Dealer {
             state.game.started = Date.now();
         }
 
-        if (state.dealer.isDealt) {
-            state.suggest();
-        } else {
+        if (!state.dealer.isDealt) {
             callback(state.dealer.dealt);
         }
 
@@ -40,7 +38,6 @@ export default class Dealer {
             state.dealer.deal(state.stock, state.tableau);
         }
         state.game.started = Date.now();
-        state.suggest();
         return state;
     };
 

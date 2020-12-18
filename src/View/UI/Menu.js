@@ -5,6 +5,7 @@ import React from "react";
 
 const Menu = () => {
     //@todo persist game settings in local storage
+    //@todo add selector for one-time hinting behavior: hint whole moves or single actions?
 
     const { state, updateContext } = React.useContext(GlobalContext);
 
@@ -12,7 +13,14 @@ const Menu = () => {
         updateContext((state) => {
             if (state.settings.suggestionMode !== sm) {
                 state.settings.suggestionMode = sm;
-                state.suggest();
+            }
+        });
+    };
+
+    const setHintMode = (hm) => {
+        updateContext((state) => {
+            if (state.settings.hintMode !== hm) {
+                state.settings.hintMode = hm;
             }
         });
     };
@@ -30,12 +38,13 @@ const Menu = () => {
     const setMouseMode = (mm) =>
         updateContext((state) => {
             state.settings.mouseMode = mm;
-            state.suggest();
         });
 
     if (!state.settings.showMenu) {
         return null;
     }
+
+    const showHintModeSelector = ["none", "once", "twice"].indexOf(state.settings.suggestionMode) == -1;
 
     return (
         <div className="menu">
@@ -53,6 +62,21 @@ const Menu = () => {
                     </select>
                 </div>
             </div>
+            {showHintModeSelector ? null : (
+                <div className="section">
+                    <div className="title">Hints</div>
+                    <div className="row">
+                        <div className="label">Should hints hightlight a single action or a complete move?</div>
+                        <select onChange={(e) => setHintMode(e.target.value)} value={state.settings.hintMode}>
+                            {state.settings.hintModes.map((hintMode) => (
+                                <option key={hintMode} value={hintMode}>
+                                    {hintMode}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+            )}
             <div className="section">
                 <div className="title">Active Card</div>
                 <div className="row">

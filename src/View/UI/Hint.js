@@ -3,18 +3,17 @@ import React from "react";
 
 const Hint = () => {
     const { state, updateContext } = React.useContext(GlobalContext);
+    const isVisible = (state) => ["none", "twice", "once"].indexOf(state.settings.suggestionMode) !== -1;
+    const isDisabled = (state) => ["twice", "once"].indexOf(state.settings.suggestionMode) !== -1;
+
     const suggestOnce = () => {
         updateContext((state) => {
-            const previous = state.settings.suggestionMode;
-            //@todo : keep hint active for a whole move
-            //only change suggestionMode, then change afterwards 
-            //let central render function trigger suggest() 
-            //@todo penalize hint based on settings
-            state.settings.suggestionMode = "regular";
-            state.suggest();
-            state.settings.suggestionMode = previous;
+            if (isVisible(state) && !isDisabled(state)) {
+                state.settings.suggestionMode = state.settings.hintMode;
+            }
         });
     };
+
     const listenForH = (e) => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 72) {
@@ -22,14 +21,16 @@ const Hint = () => {
         }
     };
 
-    React.useEffect(() => {
-        document.addEventListener("keydown", listenForH);
-        return () => document.removeEventListener("keydown", listenForH);
-    }, []);
+    if (isVisible(state) && !isDisabled(state)) {
+        React.useEffect(() => {
+            document.addEventListener("keydown", listenForH);
+            return () => document.removeEventListener("keydown", listenForH);
+        }, []);
+    }
 
-    return state.settings.suggestionMode !== "none" ? null : (
+    return !isVisible(state) ? null : (
         <div>
-            <button title="Hint" onClick={() => suggestOnce()}>
+            <button title="Hint" onClick={() => suggestOnce()} disabled={isDisabled(state)}>
                 💡
             </button>
         </div>

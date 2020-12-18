@@ -31,7 +31,6 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
             modifier(state);
             if (state.game.timemachine.modified) {
                 state.game.timemachine.pushPreviousState(previous);
-                state.suggest();
                 return state;
             }
 
@@ -39,9 +38,8 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
         });
 
     render = () => {
-        //this.state.withSuggestions(); @todo this will work once hints are implemented differently
         const context = {
-            state: this.state.withHandlers(),
+            state: this.state.withHandlers().withSuggestions(),
             replaceContext: this.replaceContext,
             updateContext: this.updateContext,
             updateGameContext: this.updateGameContext,

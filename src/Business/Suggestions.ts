@@ -19,9 +19,18 @@ export default class Suggestions {
             !this.getPutdownSuggestions(state) &&
             !state.hand.isHoldingCard() &&
             (!this.getPickupOptions(state) || state.settings.suggestionMode == "full") &&
-            (state.stock.getTop() || state.stock.canRecycle())
+            (state.stock.getTop() || state.stock.canRecycle()) &&
+            state.settings.suggestionMode !== "scored"
         ) {
             state.stock.suggestion = true;
+        }
+    };
+
+    clearSuggestionsIfNecessary = (state: BusinessModel) => {
+        if (state.settings.suggestionMode == "twice") {
+            state.settings.suggestionMode = "once";
+        } else if (state.settings.suggestionMode == "once") {
+            state.settings.suggestionMode = "none";
         }
     };
 
