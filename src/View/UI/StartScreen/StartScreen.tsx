@@ -8,6 +8,7 @@ import DifficultyOptions from "./DifficultyOptions";
 import { Provider } from "./Context";
 import QuickStart from "./QuickStart";
 import Rating from "./Rating";
+import RatingPresets from "./RatingOptions";
 import React from "react";
 
 interface StartScreenProps {
@@ -23,9 +24,9 @@ const StartScreen = (props: StartScreenProps) => {
         props.start(settings);
     };
     const [state, setState] = React.useState<StartScreenState>({
-        ratingSettings: {},
-        difficultySettings: 0,
-        ratingPreset: 0,
+        ratingSettings: { ...RatingPresets.all[1].settings },
+        difficultySettings: 1,
+        ratingPreset: 1,
     });
     return !props || !props.start ? null : (
         <Provider value={{ state, setState }}>

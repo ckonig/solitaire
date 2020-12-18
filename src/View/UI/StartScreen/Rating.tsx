@@ -1,63 +1,23 @@
+import RatingPresets from "./RatingOptions";
 import { RatingSettings } from "../../../Common";
 import React from "react";
 import StartScreenContext from "./Context";
 
 const Rating = () => {
     const ctx = React.useContext(StartScreenContext);
-    const [toggle, setToggle] = React.useState<boolean>(false);
     const context = ctx.state;
-    const setState = ctx.setState;
-    const presets = [
-        {
-            id: 0,
-            icon: "🌴",
-            label: "Chill",
-            settings: {
-                timedMode: false,
-                missPenalty: false,
-                undoPenalty: false,
-                hintPenalty: false,
-            },
-        },
-        {
-            id: 1,
-            icon: "⚖️",
-            label: "Regular",
-            settings: {
-                timedMode: true,
-                missPenalty: false,
-                undoPenalty: true,
-                hintPenalty: false,
-            },
-        },
-        {
-            id: 2,
-            icon: "🏆",
-            label: "Competitive",
-            settings: {
-                timedMode: true,
-                missPenalty: true,
-                undoPenalty: true,
-                hintPenalty: true,
-            },
-        },
-    ];
-
-    const applyPreset = (id: number) => {
-        const newState = { ...context, ratingSettings: presets[id].settings, ratingPreset: id };
-        setState(newState);
-        console.log("applied preset", newState);
-    };
-
+    const setContext = ctx.setState;
+    const [toggle, setToggle] = React.useState<boolean>(false);
+    
+    const applyPreset = (id: number) => setContext({ ...context, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
     const getButtonClass = (index: number) => (context.ratingPreset == index ? `active active-${index}` : "");
 
     const customizeRating = (modifier: (context: RatingSettings) => void) => {
         const next = { ...context };
         modifier(next.ratingSettings);
-        next.ratingPreset = -1;
-        setState(next);
+        next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
+        setContext(next);
     };
-
     const setMissPenalty = (value: string) => customizeRating((r) => (r.missPenalty = value == "true"));
     const setTimeRating = (value: string) => customizeRating((r) => (r.timedMode = value == "true"));
     const setUndoPenalty = (value: string) => customizeRating((r) => (r.undoPenalty = value == "true"));
@@ -69,7 +29,6 @@ const Rating = () => {
                 <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
             </div>
             <div className="title">{toggle ? "Customize Rating" : "Rating"}</div>
-
             {toggle ? (
                 <div className="content">
                     <div className="section">
@@ -124,7 +83,7 @@ const Rating = () => {
             ) : (
                 <div className="content center">
                     <div>
-                        {presets.map((preset) => (
+                        {RatingPresets.all.map((preset) => (
                             <button className={getButtonClass(preset.id)} key={preset.id} onClick={() => applyPreset(preset.id)}>
                                 {preset.icon}
                                 <div>{preset.label}</div>
