@@ -1,3 +1,5 @@
+import SuggestionModes from "./Settings/SuggestionModes";
+
 export default class Settings {
     constructor(launchSettings) {
         this.launchSettings = launchSettings;
@@ -9,12 +11,25 @@ export default class Settings {
         this.baseEntropy = isTouch ? 1 : 2;
         this.interactionEntropy = isTouch ? 1 : 2;
 
-        this.suggestionModes = ["none", "scored", "regular", "full"];
-        this.suggestionMode = "none";
-        
-        this.hintModes = ["twice", "once"];
-        this.hintMode = "once";
+        this.suggestionModes = SuggestionModes.allSuggestionModes();
+        this.suggestionMode = SuggestionModes.default();
     }
+
+    setSuggestionMode = (sm) => {
+        if (this.suggestionMode.key !== sm) {
+            this.suggestionMode = SuggestionModes.get(sm);
+        }
+    };
+
+    enableHint = () => {
+        this.suggestionMode = SuggestionModes.getHintMode();
+    };
+
+    disableHint = () => {
+        if (this.suggestionMode.isTemporary && this.suggestionMode.next) {
+            this.suggestionMode = SuggestionModes.get(this.suggestionMode.next);
+        }
+    };
 
     is_touch_device() {
         try {

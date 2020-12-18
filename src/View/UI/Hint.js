@@ -3,13 +3,16 @@ import React from "react";
 
 const Hint = () => {
     const { state, updateContext } = React.useContext(GlobalContext);
-    const isVisible = (state) => ["none", "twice", "once"].indexOf(state.settings.suggestionMode) !== -1;
-    const isDisabled = (state) => ["twice", "once"].indexOf(state.settings.suggestionMode) !== -1;
+    
+    //@todo update
+    
+    const isVisible = (state) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
+    const isDisabled = (state) => state.settings.suggestionMode.isTemporary;
 
     const suggestOnce = () => {
         updateContext((state) => {
             if (isVisible(state) && !isDisabled(state)) {
-                state.settings.suggestionMode = state.settings.hintMode;
+                state.settings.enableHint();
             }
         });
     };

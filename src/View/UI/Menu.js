@@ -4,47 +4,17 @@ import GlobalContext from "../Context";
 import React from "react";
 
 const Menu = () => {
-    //@todo persist game settings in local storage
-    //@todo add selector for one-time hinting behavior: hint whole moves or single actions?
-
     const { state, updateContext } = React.useContext(GlobalContext);
 
-    const setSuggestionMode = (sm) => {
-        updateContext((state) => {
-            if (state.settings.suggestionMode !== sm) {
-                state.settings.suggestionMode = sm;
-            }
-        });
-    };
-
-    const setHintMode = (hm) => {
-        updateContext((state) => {
-            if (state.settings.hintMode !== hm) {
-                state.settings.hintMode = hm;
-            }
-        });
-    };
-
-    const setBaseEntropy = (lvl) =>
-        updateContext((state) => {
-            state.setEntropy(lvl);
-        });
-
-    const setInteractionEntropy = (lvl) =>
-        updateContext((state) => {
-            state.settings.interactionEntropy = lvl;
-        });
-
-    const setMouseMode = (mm) =>
-        updateContext((state) => {
-            state.settings.mouseMode = mm;
-        });
+    //@todo persist game settings in local storage too and use for initialization
+    const setSuggestionMode = (sm) => updateContext((state) => state.settings.setSuggestionMode(sm));
+    const setBaseEntropy = (lvl) => updateContext((state) => state.setEntropy(lvl));
+    const setInteractionEntropy = (lvl) => updateContext((state) => (state.settings.interactionEntropy = lvl));
+    const setMouseMode = (mm) => updateContext((state) => (state.settings.mouseMode = mm));
 
     if (!state.settings.showMenu) {
         return null;
     }
-
-    const showHintModeSelector = ["none", "once", "twice"].indexOf(state.settings.suggestionMode) == -1;
 
     return (
         <div className="menu">
@@ -53,30 +23,15 @@ const Menu = () => {
                 <div className="title">Suggestions</div>
                 <div className="row">
                     <div className="label">How much help - if any - should the game offer by displaying suggestions?</div>
-                    <select onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode}>
+                    <select onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode.key}>
                         {state.settings.suggestionModes.map((suggestionMode) => (
-                            <option key={suggestionMode} value={suggestionMode}>
-                                {suggestionMode}
+                            <option key={suggestionMode.key} value={suggestionMode.key}>
+                                {suggestionMode.label}
                             </option>
                         ))}
                     </select>
                 </div>
             </div>
-            {showHintModeSelector ? null : (
-                <div className="section">
-                    <div className="title">Hints</div>
-                    <div className="row">
-                        <div className="label">Should hints hightlight a single action or a complete move?</div>
-                        <select onChange={(e) => setHintMode(e.target.value)} value={state.settings.hintMode}>
-                            {state.settings.hintModes.map((hintMode) => (
-                                <option key={hintMode} value={hintMode}>
-                                    {hintMode}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
-            )}
             <div className="section">
                 <div className="title">Active Card</div>
                 <div className="row">

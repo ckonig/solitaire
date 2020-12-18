@@ -1,4 +1,5 @@
 import BusinessModel from "./BusinessModel";
+import SuggestionModes from "../Model/Game/Settings/SuggestionModes";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
@@ -14,36 +15,28 @@ export default class Suggestions {
     evaluateOptions = (state: BusinessModel) => {
         this.disableAllSuggestions(state);
         if (
-            state.settings.suggestionMode !== "none" &&
+            state.settings.suggestionMode.key !== SuggestionModes.NONE &&
             !this.getUncoverOptions(state) &&
             !this.getPutdownSuggestions(state) &&
             !state.hand.isHoldingCard() &&
-            (!this.getPickupOptions(state) || state.settings.suggestionMode == "full") &&
+            (!this.getPickupOptions(state) || state.settings.suggestionMode.key == SuggestionModes.FULL) &&
             (state.stock.getTop() || state.stock.canRecycle()) &&
-            state.settings.suggestionMode !== "scored"
+            state.settings.suggestionMode.key !== SuggestionModes.SCORED
         ) {
             state.stock.suggestion = true;
         }
     };
 
-    clearSuggestionsIfNecessary = (state: BusinessModel) => {
-        if (state.settings.suggestionMode == "twice") {
-            state.settings.suggestionMode = "once";
-        } else if (state.settings.suggestionMode == "once") {
-            state.settings.suggestionMode = "none";
-        }
-    };
-
     getPutdownSuggestions = (state: BusinessModel, onlyUseful?: boolean) => {
-        if (!state.hand.isHoldingCard() || state.settings.suggestionMode == "none") {
+        if (!state.hand.isHoldingCard() || state.settings.suggestionMode.key == SuggestionModes.NONE) {
             return 0;
         }
 
         const accepted = [];
         if (state.waste.wouldAccept(state.hand)) {
-            if (state.settings.suggestionMode === "full" || !state.hand.isFromWaste()) {
+            if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromWaste()) {
                 const move = { target: "waste", source: state.hand.source };
-                if (state.settings.suggestionMode !== "scored" || state.game.rating.rateMove(move) > 0) {
+                if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
                     accepted.push(move);
                     state.waste.suggestion = true;
                 }
@@ -52,9 +45,9 @@ export default class Suggestions {
 
         state.foundation.stacks.forEach((stack, index) => {
             if (state.foundation.wouldAccept(index, state.hand)) {
-                if (state.settings.suggestionMode === "full" || !state.hand.isFromFoundation(index)) {
+                if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromFoundation(index)) {
                     const move = { target: "foundation-" + index, source: state.hand.source };
-                    if (state.settings.suggestionMode !== "scored" || state.game.rating.rateMove(move) > 0) {
+                    if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
                         accepted.push(move);
                         stack.suggestion = true;
                     }
@@ -64,7 +57,7 @@ export default class Suggestions {
 
         state.tableau.stacks.forEach((stack, index) => {
             if (state.tableau.wouldAccept(index, state.hand)) {
-                if (state.settings.suggestionMode === "full" || !state.hand.isFromTableau(index)) {
+                if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromTableau(index)) {
                     const isMoveOfKingBetweenEmptySlots =
                         state.hand.isHoldingKing() &&
                         stack.stack.length == 0 &&
@@ -83,9 +76,9 @@ export default class Suggestions {
 
                     const isNotLoop = !isMoveOfKingBetweenEmptySlots && !isMoveBetweenSimilarParentCards;
 
-                    if (!onlyUseful || state.settings.suggestionMode === "full" || isNotLoop) {
+                    if (!onlyUseful || state.settings.suggestionMode.key === SuggestionModes.FULL || isNotLoop) {
                         const move = { target: "tableau-" + index, source: state.hand.source };
-                        if (state.settings.suggestionMode !== "scored" || state.game.rating.rateMove(move) > 0) {
+                        if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
                             accepted.push(move);
                             stack.suggestion = true;
                         }
@@ -102,7 +95,7 @@ export default class Suggestions {
         const wasteState = BusinessModel.copy(state);
         this.waste.dispatchPickup(wasteState.waste.getTop(), null, wasteState);
         if (wasteState.game.timemachine.modified) {
-            if (this.getPutdownSuggestions(wasteState, true) > (state.settings.suggestionMode == "full" ? 1 : 0)) {
+            if (this.getPutdownSuggestions(wasteState, true) > (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)) {
                 state.waste.suggestion = true;
                 foundAny = true;
             }
@@ -116,7 +109,7 @@ export default class Suggestions {
                     const tableauState = BusinessModel.copy(state);
                     this.tableau.dispatchPickup(card, null, tableauState, index);
                     if (tableauState.game.timemachine.modified) {
-                        if (this.getPutdownSuggestions(tableauState, true) > (state.settings.suggestionMode == "full" ? 1 : 0)) {
+                        if (this.getPutdownSuggestions(tableauState, true) > (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)) {
                             tableau.stack[cardIndex].suggestion = true;
                             foundAny = true;
                         }
