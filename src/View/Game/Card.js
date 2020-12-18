@@ -7,12 +7,11 @@ const Card = (props) => {
             ele = ele.offsetParent;
         }
 
-        //@todo use scroll difference instead
         const rect = ele.getBoundingClientRect();
         const position = {
             click: {
-                x: e.clientX,
-                y: e.clientY,
+                x: e.clientX - ele.ownerDocument.defaultView.pageXOffset,
+                y: e.clientY - ele.ownerDocument.defaultView.pageYOffset,
             },
             element: {
                 x: rect.x,

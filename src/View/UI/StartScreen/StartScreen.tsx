@@ -10,6 +10,7 @@ import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import RatingPresets from "./RatingOptions";
 import React from "react";
+import TouchDetector from "./TouchDetector";
 
 interface StartScreenProps {
     start: (settings: AppState) => void;
@@ -20,6 +21,7 @@ const StartScreen = (props: StartScreenProps) => {
         const settings = {
             ...DifficultyOptions[state.difficultySettings].settings,
             ...state.ratingSettings,
+            isTouch: state.isTouch,
         };
         props.start(settings);
     };
@@ -27,6 +29,7 @@ const StartScreen = (props: StartScreenProps) => {
         ratingSettings: { ...RatingPresets.all[1].settings },
         difficultySettings: 1,
         ratingPreset: 1,
+        isTouch: TouchDetector(),
     });
     return !props || !props.start ? null : (
         <Provider value={{ state, setState }}>

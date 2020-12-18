@@ -8,7 +8,7 @@ const Rating = () => {
     const context = ctx.state;
     const setContext = ctx.setState;
     const [toggle, setToggle] = React.useState<boolean>(false);
-    
+
     const applyPreset = (id: number) => setContext({ ...context, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
     const getButtonClass = (index: number) => (context.ratingPreset == index ? `active active-${index}` : "");
 
@@ -44,16 +44,6 @@ const Rating = () => {
                         </div>
                     </div>
                     <div className="section">
-                        <div className="title">Hint Penalty</div>
-                        <div className="row">
-                            <div className="label">Should there be a penalty for the HINT operation? This penalty does not increase.</div>
-                            <select onChange={(e) => setHintPenalty(e.target.value)} value={String(!!context.ratingSettings.hintPenalty)}>
-                                <option value={"true"}>yes</option>
-                                <option value={"false"}>no</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="section">
                         <div className="title">Time Rating</div>
                         <div className="row">
                             <div className="label">
@@ -64,6 +54,16 @@ const Rating = () => {
                                 ?
                             </div>
                             <select onChange={(e) => setTimeRating(e.target.value)} value={String(!!context.ratingSettings.timedMode)}>
+                                <option value={"true"}>yes</option>
+                                <option value={"false"}>no</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="section">
+                        <div className="title">Hint Penalty</div>
+                        <div className="row">
+                            <div className="label">Should there be a penalty for the HINT operation? This penalty does not increase.</div>
+                            <select onChange={(e) => setHintPenalty(e.target.value)} value={String(!!context.ratingSettings.hintPenalty)}>
                                 <option value={"true"}>yes</option>
                                 <option value={"false"}>no</option>
                             </select>

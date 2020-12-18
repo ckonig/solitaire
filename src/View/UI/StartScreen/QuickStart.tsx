@@ -1,22 +1,21 @@
 import React from "react";
-
-//import StartScreenContext from "./Context";
+import StartScreenContext from "./Context";
 
 const QuickStart = (props: { start: () => void }) => {
-    //const { state, setState } = React.useContext(StartScreenContext);
+    const { state, setState } = React.useContext(StartScreenContext);
     return (
         <div className="ui right quickstart">
             <div className="title">Quickstart</div>
             <div className="content center">
                 <div>
-                    <button className="active active-0">
+                    <button disabled={!state.isTouch} className={!state.isTouch ? "active active-0" : ""} onClick={() => setState({...state, isTouch: false})}>
                         🖥️
-                        <div>Optimized for Desktop</div>
+                        <div>{!state.isTouch ? "Optimized": "Optimize"} for Desktop</div>
                         <div>with Mouse Support</div>
                     </button>
-                    <button disabled={true}>
+                    <button disabled={state.isTouch} className={state.isTouch ? "active active-0" : ""} onClick={() => setState({...state, isTouch: true})}>
                         📱
-                        <div>Optimize for Mobile</div>
+                        <div>{state.isTouch ? "Optimized": "Optimize"} for Mobile</div>
                         <div>with Touch Support</div>
                     </button>
                     <button className="blinking" onClick={props.start}>

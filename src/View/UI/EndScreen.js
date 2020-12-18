@@ -8,13 +8,13 @@ const EndScreen = () => {
     //@todo show launch settings (draw mode, recycling mode)
     return !state.game.isEnded ? null : (
         <div className="ui center endscreen">
+            <div className="title">🥳</div>
             <div className="content">
-                <div className="title">🥳</div>
                 <div>Points: {state.game.points}</div>
                 <div>Time: {state.game.getElapsed()}</div>
                 <div>
                     <button onClick={restart}>
-                        ♻️<div>new game</div>
+                        🗑️<div>New Game</div>
                     </button>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import SuggestionModes from "./Settings/SuggestionModes";
 export default class Settings {
     constructor(launchSettings) {
         this.launchSettings = launchSettings;
-        const isTouch = this.is_touch_device();
+        const isTouch = launchSettings.isTouch;
         this.mouseModes = ["follow-cursor", "remain-on-stack"];
         this.mouseMode = isTouch ? "remain-on-stack" : "follow-cursor";
 
@@ -30,23 +30,6 @@ export default class Settings {
             this.suggestionMode = SuggestionModes.get(this.suggestionMode.next);
         }
     };
-
-    is_touch_device() {
-        try {
-            const prefixes = " -webkit- -moz- -o- -ms- ".split(" ");
-
-            const mq = (query) => window.matchMedia(query).matches;
-
-            if ("ontouchstart" in window || (typeof window.DocumentTouch !== "undefined" && document instanceof window.DocumentTouch)) {
-                return true;
-            }
-
-            return mq(["(", prefixes.join("touch-enabled),("), "heartz", ")"].join(""));
-        } catch (e) {
-            console.error("(Touch detect failed)", e);
-            return false;
-        }
-    }
 
     static copy = (orig) => {
         const copy = new Settings(orig.launchSettings);

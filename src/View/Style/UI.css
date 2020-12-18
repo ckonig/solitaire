@@ -2,7 +2,7 @@
     z-index: 2000;
 }
 
-.ui .title {
+.ui > .title {
     font-size: 2vw;
     margin-bottom: 2vw;
 }
@@ -52,7 +52,7 @@
 
 .ui > .content > .section {
     font-size: 1vw;
-    margin-bottom: 6vw;
+    margin-bottom: 8vw;
 }
 
 .ui > .content > .section:last-child {

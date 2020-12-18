@@ -3,7 +3,7 @@
 }
 
 .endscreen {
-    top: 6vw;
+    top: 4vw;
 }
 
 .endscreen > div {
@@ -21,7 +21,6 @@
     font-size: 4vw;
     color: white;
     border-radius: 0.5vw;
-    border-color: gray;
     border-style: solid;
     height: 10vw;
     background-color: rgba(0, 0, 0, 0);
@@ -77,6 +76,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 
 .blinking {
     animation: blinker 2s linear infinite;
+    border-color:  #339900;
   }
   
   @keyframes blinker {

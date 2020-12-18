@@ -30,5 +30,6 @@ export interface StartScreenState {
     ratingSettings: RatingSettings;
     difficultySettings: number;
     ratingPreset: number;
+    isTouch: boolean;
 }
 

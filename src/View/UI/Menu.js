@@ -84,10 +84,6 @@ const Menu = () => {
                         </select>
                     </div>
                 </div>
-
-                <a target="_blank" rel="noreferrer" href="https://github.com/ckonig/solitaire/issues">
-                    Report Issues here
-                </a>
             </div>
         </div>
     );
