@@ -37,9 +37,9 @@ export default class Game {
         return true;
     };
 
-    registerBlink() {
-        this.rating.registerBlink();
-        this.timemachine.registerBlink();
+    registerBlink(on) {
+        this.rating.registerBlink(on);
+        this.timemachine.registerBlink(on);
         return true;
     }
 

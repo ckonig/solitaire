@@ -11,6 +11,7 @@ export default class Foundation {
             usedCards: [],
             icon: null,
             color: null,
+            blinkFor: 0,
         });
         const stacks = Object.keys(Suits)
             .map((key) => Suits[key])

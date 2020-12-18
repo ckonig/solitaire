@@ -31,7 +31,11 @@ export default class Rating {
         console.debug("RATING: add 5 points for UNCOVER");
     };
 
-    registerBlink() {
+    registerBlink(on) {
+        if (on && this.settings.launchSettings.missPenalty) {
+            this.points -= 10;
+            console.debug("RATING: subtract 10 points for invalid action");
+        }
         //@todo support optionally penalizing invalid moves
     }
 
@@ -43,7 +47,7 @@ export default class Rating {
     };
 
     rateMove(move) {
-        console.debug('RATING  A MOVEW', this.settings.launchSettings);
+        console.debug("RATING  A MOVEW", this.settings.launchSettings);
         const isTableau = (obj) => obj.substr(0, 7) == "tableau";
         const isFoundation = (obj) => obj.substr(0, 10) == "foundation";
         if (isTableau(move.source)) {

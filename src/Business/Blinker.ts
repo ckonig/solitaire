@@ -2,8 +2,6 @@ import BusinessModel from "./BusinessModel";
 import Stock from "../Model/Game/Stock";
 import Waste from "../Model/Game/Waste";
 
-//@todo specify types of single tableau and foundation to avoid any
-
 export type BlinkSelector = (state: BusinessModel) => Waste | Stock | any;
 
 export interface IBlinker {
@@ -12,13 +10,15 @@ export interface IBlinker {
 
 export default class Blinker implements IBlinker {
     startBlink = (selector: BlinkSelector, state: BusinessModel) => {
-        selector(state).blinkFor = 10;
-        state.game.registerBlink();
-        selector(state).unblink = (s: BusinessModel) => this.stopBlink(selector, s);
+        if (selector(state).blinkFor < 10) {
+            selector(state).blinkFor = 10;
+            state.game.registerBlink(true);
+            selector(state).unblink = (s: BusinessModel) => this.stopBlink(selector, s);
+        }
     };
 
     stopBlink = (selector: BlinkSelector, state: BusinessModel) => {
         selector(state).blinkFor = 0;
-        state.game.registerBlink();
+        state.game.registerBlink(false);
     };
 }

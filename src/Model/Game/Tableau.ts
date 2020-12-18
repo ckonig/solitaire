@@ -12,6 +12,7 @@ export default class Tableau {
         const ids = [0, 1, 2, 3, 4, 5, 6];
         this.stacks = ids.map((id) => ({
             stack: [],
+            blinkFor: 0,
             id,
         }));
         this.settings = settings;
