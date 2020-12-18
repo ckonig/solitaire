@@ -1,0 +1,95 @@
+.ui {
+    z-index: 2000;
+}
+
+.ui .title {
+    font-size: 2vw;
+    margin-bottom: 2vw;
+}
+
+.ui .closer {
+    position: absolute;
+    right: 0.3vw;
+    top: 0.1vw;
+}
+
+.ui .closer button {
+    font-size: 2vw;
+    padding-top: 0vw;
+    border-color: transparent;
+    border-style: none;
+    width: 3vw;
+    margin-top: 0vw;
+    color: white;
+    background-color: transparent;
+}
+
+.ui .closer button:focus {
+    outline: none;
+}
+
+.ui.left {
+    position: absolute;
+    border-radius: 0.5vw;
+    z-index: 6000;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    left: 2vw;
+    padding: 2vw;
+    width: 25vw;
+}
+
+.ui.right {
+    position: absolute;
+    border-radius: 0.5vw;
+    z-index: 6000;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    right: 2vw;
+    padding: 2vw;
+    width: 25vw;
+}
+
+.ui > .content > .section {
+    font-size: 1vw;
+    margin-bottom: 6vw;
+}
+
+.ui > .content > .section:last-child {
+    margin-bottom: 0vw;
+}
+
+.ui > .content > .section > .title {
+    font-size: 1.5vw;
+    width: 25vw;
+    float: left;
+}
+
+.ui > .content > .section > .row > select {
+    float: right;
+    margin-left: 2vw;
+    width: 8vw;
+    font-size: 1vw;
+}
+
+.ui > .content > .section > .row > .label {
+    float: left;
+    width: 15vw;
+    font-size: 1w;
+    color: lightgray;
+}
+
+.ui > .content > .section > .row {
+    clear: both;
+}
+
+.ui.center {
+    background-color: rgba(0, 0, 0, 0.95);
+    color: #fff;
+    padding: 2vw;
+    border-radius: 0.5vw;
+    z-index: 5000;
+    width: 32vw;
+    position: absolute;
+    right: 32vw;
+}

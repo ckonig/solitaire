@@ -1,19 +1,19 @@
 import "./View/Style/App.css";
+import "./View/Style/UI.css";
 
-import {AppState} from "./Common";
+import { AppState } from "./Common";
 import BoardWrap from "./View/Game/BoardWrap";
 import React from "react";
 import StartScreen from "./View/UI/StartScreen";
 
 const App = () => {
-    const defaultState = { initialized: false, drawMode: "", recyclingMode: "" };
-    const [appState, setAppState] = React.useState(defaultState);
+    const [appState, setAppState] = React.useState<AppState>({});
     const start = (settings: AppState) =>
         setAppState({
             ...settings,
             initialized: true,
         });
-    const restart = () => setAppState(defaultState);
+    const restart = () => setAppState({});
     return !appState.initialized ? <StartScreen start={start} /> : <BoardWrap settings={appState} restart={restart} />;
 };
 

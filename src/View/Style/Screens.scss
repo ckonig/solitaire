@@ -1,0 +1,88 @@
+.quickstart {
+    top: 2vw;
+}
+
+.endscreen {
+    top: 6vw;
+}
+
+.endscreen > div {
+    font-size: 2vw;
+    text-align: center;
+}
+
+.endscreen > .title {
+    font-size: 15vw;
+}
+
+.rating .content button,
+.quickstart .content button,
+.endscreen .content button {
+    font-size: 4vw;
+    color: white;
+    border-radius: 0.5vw;
+    border-color: gray;
+    border-style: solid;
+    height: 10vw;
+    background-color: rgba(0, 0, 0, 0);
+    width: 14vw;
+    margin: 1vw;
+}
+
+.quickstart button {
+    outline:none,
+}
+
+$colors: #339900, #ffcc00, red, #99cc33, orange, brown;
+
+@for $i from 1 through length($colors) {
+    $j: $i - 1;
+    .quickstart button.active-#{$j},
+    .quickstart button.active-#{$j}:active ,
+    .quickstart button.active-#{$j}:focus {
+        border-color: nth($colors, $i);
+    }
+}
+
+.rating button > div,
+.quickstart button > div,
+.endscreen button > div {
+    font-size: 1vw;
+    color: lightgray;
+}
+
+.quickstart button.active > div,
+.endscreen button.active > div {
+    color: white;
+}
+
+.quickstart .left {
+    float: left;
+    width: 16vw;
+}
+
+.quickstart .right {
+    float: right;
+    width: 16vw;
+}
+
+.rating {
+    top: 2vw;
+}
+
+.rating > .content > div,
+.quickstart > .content > div {
+    text-align: center;
+}
+
+
+.blinking {
+    animation: blinker 2s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      background-color: #013b0e;
+      border-color: #013b0e;
+    }
+  }

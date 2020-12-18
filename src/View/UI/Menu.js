@@ -12,69 +12,83 @@ const Menu = () => {
     const setInteractionEntropy = (lvl) => updateContext((state) => (state.settings.interactionEntropy = lvl));
     const setMouseMode = (mm) => updateContext((state) => (state.settings.mouseMode = mm));
 
+    //@todo review duplication with ToggleMenu Component from Header
+    const toggleMenu = (menu) => {
+        updateContext((state) => {
+            if (state.settings.showMenu == menu) {
+                state.settings.showMenu = !state.settings.showMenu;
+            }
+        });
+    };
+
     if (!state.settings.showMenu) {
         return null;
     }
 
     return (
-        <div className="menu">
+        <div className="ui right menu">
+            <div className="closer">
+                <button onClick={() => toggleMenu(state.settings.showMenu)}>🗙</button>
+            </div>
             <div className="title">Settings</div>
-            <div className="section">
-                <div className="title">Suggestions</div>
-                <div className="row">
-                    <div className="label">How much help - if any - should the game offer by displaying suggestions?</div>
-                    <select onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode.key}>
-                        {state.settings.suggestionModes.map((suggestionMode) => (
-                            <option key={suggestionMode.key} value={suggestionMode.key}>
-                                {suggestionMode.label}
-                            </option>
-                        ))}
-                    </select>
+            <div className="content">
+                <div className="section">
+                    <div className="title">Suggestions</div>
+                    <div className="row">
+                        <div className="label">How much help - if any - should the game offer by displaying suggestions?</div>
+                        <select onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode.key}>
+                            {state.settings.suggestionModes.map((suggestionMode) => (
+                                <option key={suggestionMode.key} value={suggestionMode.key}>
+                                    {suggestionMode.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div className="section">
-                <div className="title">Active Card</div>
-                <div className="row">
-                    <div className="label">Should the selected card follow the cursor or remain on the stack?</div>
-                    <select onChange={(e) => setMouseMode(e.target.value)} value={state.settings.mouseMode}>
-                        {state.settings.mouseModes.map((mouseMode) => (
-                            <option key={mouseMode} value={mouseMode}>
-                                {mouseMode}
-                            </option>
-                        ))}
-                    </select>
+                <div className="section">
+                    <div className="title">Active Card</div>
+                    <div className="row">
+                        <div className="label">Should the selected card follow the cursor or remain on the stack?</div>
+                        <select onChange={(e) => setMouseMode(e.target.value)} value={state.settings.mouseMode}>
+                            {state.settings.mouseModes.map((mouseMode) => (
+                                <option key={mouseMode} value={mouseMode}>
+                                    {mouseMode}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div className="section">
-                <div className="title">Base Entropy</div>
-                <div className="row">
-                    <div className="label">How much chaos will the stacks on the board contain by themselves?</div>
-                    <select onChange={(e) => setBaseEntropy(e.target.value)} value={state.settings.baseEntropy}>
-                        {state.settings.entropyLevels.map((entropyLevel, index) => (
-                            <option key={entropyLevel} value={index}>
-                                {entropyLevel}
-                            </option>
-                        ))}
-                    </select>
+                <div className="section">
+                    <div className="title">Base Entropy</div>
+                    <div className="row">
+                        <div className="label">How much chaos will the stacks on the board contain by themselves?</div>
+                        <select onChange={(e) => setBaseEntropy(e.target.value)} value={state.settings.baseEntropy}>
+                            {state.settings.entropyLevels.map((entropyLevel, index) => (
+                                <option key={entropyLevel} value={index}>
+                                    {entropyLevel}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div className="section">
-                <div className="title">Interaction Entropy</div>
-                <div className="row">
-                    <div className="label">How much chaos will each interaction add to a stack on the board?</div>
-                    <select onChange={(e) => setInteractionEntropy(e.target.value)} value={state.settings.interactionEntropy}>
-                        {state.settings.entropyLevels.map((entropyLevel, index) => (
-                            <option key={entropyLevel} value={index}>
-                                {entropyLevel}
-                            </option>
-                        ))}
-                    </select>
+                <div className="section">
+                    <div className="title">Interaction Entropy</div>
+                    <div className="row">
+                        <div className="label">How much chaos will each interaction add to a stack on the board?</div>
+                        <select onChange={(e) => setInteractionEntropy(e.target.value)} value={state.settings.interactionEntropy}>
+                            {state.settings.entropyLevels.map((entropyLevel, index) => (
+                                <option key={entropyLevel} value={index}>
+                                    {entropyLevel}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <a target="_blank" rel="noreferrer" href="https://github.com/ckonig/solitaire/issues">
-                Report Issues here
-            </a>
+                <a target="_blank" rel="noreferrer" href="https://github.com/ckonig/solitaire/issues">
+                    Report Issues here
+                </a>
+            </div>
         </div>
     );
 };

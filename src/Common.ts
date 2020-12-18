@@ -6,10 +6,10 @@ export type StateUpdater = (state: BusinessModel) => void;
 export type StateReplaceFunction = (modifier: StateReplacer) => void;
 export type StateUpdateFunction = (modifier: StateUpdater) => void;
 
-export interface AppState {
-    initialized: boolean;
-    drawMode: string;
-    recyclingMode: string;
+export interface AppState extends RatingSettings {
+    initialized?: boolean;
+    drawMode?: string;
+    recyclingMode?: string;
 }
 
 export interface ClickHandler {
@@ -18,3 +18,10 @@ export interface ClickHandler {
 }
 
 export type BlinkFunction = (state: BusinessModel, index: number) => void;
+
+export interface RatingSettings {
+    undoPenalty?: boolean;
+    hintPenalty?: boolean;
+    timedMode?: boolean;
+    missPenalty?: boolean;
+}
