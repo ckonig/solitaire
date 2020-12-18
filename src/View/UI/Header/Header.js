@@ -1,4 +1,4 @@
-import "../Style/Header.css";
+import "../../Style/Header.css";
 
 import Clock from "./Clock";
 import EndGame from "./EndGame";
@@ -6,7 +6,7 @@ import Hearts from "./Hearts";
 import Hint from "./Hint";
 import Points from "./Points";
 import React from "react";
-import RestartGame from "./RestartGame";
+import RestartGame from "../RestartGame";
 import ToggleMenu from "./ToggleMenu";
 import Undo from "./Undo";
 

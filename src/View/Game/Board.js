@@ -3,7 +3,7 @@ import "../Style/Board.scss";
 import Dealer from "./Dealer";
 import EndScreen from "../UI/EndScreen";
 import Foundation from "./Foundation";
-import Header from "../UI/Header";
+import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";

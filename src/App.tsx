@@ -4,7 +4,7 @@ import "./View/Style/UI.css";
 import { AppState } from "./Common";
 import BoardWrap from "./View/Game/BoardWrap";
 import React from "react";
-import StartScreen from "./View/UI/StartScreen";
+import StartScreen from "./View/UI/StartScreen/StartScreen";
 
 const App = () => {
     const [appState, setAppState] = React.useState<AppState>({});

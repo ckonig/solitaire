@@ -43,6 +43,7 @@ export default class Rating {
     };
 
     rateMove(move) {
+        console.debug('RATING  A MOVEW', this.settings.launchSettings);
         const isTableau = (obj) => obj.substr(0, 7) == "tableau";
         const isFoundation = (obj) => obj.substr(0, 10) == "foundation";
         if (isTableau(move.source)) {

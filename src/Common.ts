@@ -25,3 +25,10 @@ export interface RatingSettings {
     timedMode?: boolean;
     missPenalty?: boolean;
 }
+
+export interface StartScreenState {
+    ratingSettings: RatingSettings;
+    difficultySettings: number;
+    ratingPreset: number;
+}
+
