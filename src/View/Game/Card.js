@@ -2,7 +2,7 @@ import GlobalContext from "../Context";
 import React from "react";
 
 const Card = (props) => {
-    const { state } = React.useContext(GlobalContext);
+    const { state, updateContext } = React.useContext(GlobalContext);
     const inputEl = React.useRef(null);
     React.useEffect(() => {
         if (state.focus.hasCard(props.model)) {
@@ -34,6 +34,7 @@ const Card = (props) => {
 
     const getClassName = () => {
         const hasSuggestion = props.isSuggested || props.model.suggestion;
+        const hasFocus = state.focus.hasCard(props.model);
         let className = `card card-base suit-${props.model.type.icon}`;
         className += !props.isSelected && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
         className += props.isSelected ? " card-selected" : "";
@@ -41,6 +42,7 @@ const Card = (props) => {
         className += props.canClick ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion ? " card-suggested" : "";
+        className += hasFocus ? " card-focused" : "";
 
         return className;
     };
@@ -80,6 +82,14 @@ const Card = (props) => {
     return (
         <div style={getStackbaseStyle()} className="stack-base">
             <button
+                onFocus={() => {
+                    updateContext((ctx) => {
+                        ctx.navigator.update(props.model.source)
+                    });
+                }}
+                onBlur={() => {
+                    updateContext((ctx) => ctx.focus.unsetCard(props.model));
+                }}
                 style={getCardStyle()}
                 ref={inputEl}
                 className={getClassName()}

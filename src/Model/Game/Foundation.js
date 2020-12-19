@@ -10,13 +10,13 @@ export default class Foundation {
         this.settings = settings;
         const template = (index) => {
             const s = new BasicStack();
+            s.source = "foundation-" + index;
             s.stack = [];
             s.acceptedCards = [...getFoundationOrder()];
             s.usedCards = [];
             s.icon = null;
             s.color = null;
             s.blinkFor = 0;
-            s.source = "foundation-" + index;
             return s;
         };
         const stacks = Object.keys(Suits)

@@ -1,7 +1,7 @@
 import Rating from "./Rating";
 import TimeMachine from "./TimeMachine";
 
-export default class Game {
+export default class Game{
     constructor(settings) {
         this.settings = settings;
         this.rating = new Rating(settings);

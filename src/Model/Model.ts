@@ -31,9 +31,9 @@ export default class Model {
     }
 
     static getInitialState = (launchSettings: AppState) => {
-        const focus = new Focus();
         const deck = new Deck().shuffle();
         const settings = new Settings(launchSettings);
+        const focus = new Focus(settings);
         const state = {
             stock: new Stock([...deck.cards], settings, focus),
             waste: new Waste(settings),

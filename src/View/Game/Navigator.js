@@ -7,21 +7,31 @@ const Navigator = () => {
     const navListener = (e) => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 37) {
-            updateContext((ctx) => ctx.navigator.moveLeft(before));
+            updateContext((ctx) => {
+                ctx.settings.mouseMode = "remain-on-stack";
+                ctx.navigator.moveLeft(before);
+            });
             e.preventDefault();
         }
         if (evtobj.keyCode == 39) {
             updateContext((ctx) => {
-                return ctx.navigator.moveRight(before);
+                ctx.settings.mouseMode = "remain-on-stack";
+                ctx.navigator.moveRight(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 38) {
-            updateContext((ctx) => ctx.navigator.moveUp(before));
+            updateContext((ctx) => {
+                ctx.settings.mouseMode = "remain-on-stack";
+                ctx.navigator.moveUp(before);
+            });
             e.preventDefault();
         }
         if (evtobj.keyCode == 40) {
-            updateContext((ctx) => ctx.navigator.moveDown(before));
+            updateContext((ctx) => {
+                ctx.settings.mouseMode = "remain-on-stack";
+                ctx.navigator.moveDown(before);
+            });
             e.preventDefault();
         }
     };

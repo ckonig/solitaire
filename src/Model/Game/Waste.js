@@ -2,6 +2,7 @@ import Card from "../Deck/Card";
 
 export default class Waste {
     constructor(settings) {
+        this.source = "waste";
         this.settings = settings;
         this.stack = [];
         // eslint-disable-next-line no-unused-vars
@@ -9,7 +10,6 @@ export default class Waste {
         this.blinkFor = 0;
         this.unblink = () => {};
         this.suggestion = false;
-        this.source = "waste";
     }
 
     tryPutDown = (card) => this.canAdd(card) && (this.add(card) || true);

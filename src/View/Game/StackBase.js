@@ -4,12 +4,11 @@ import React from "react";
 const StackBase = (props) => {
     let classname = "card-base socket";
     const inputEl = React.useRef(null);
-    const { state } = React.useContext(GlobalContext);
+    const { state, updateContext } = React.useContext(GlobalContext);
     React.useEffect(() => {
         if (state.focus.hasStack(props.parent)) {
             inputEl && inputEl.current && inputEl.current.focus();
-            console.debug('focused', props.model)
-        } 
+        }
     });
     if (props.visible) {
         if (props.blink) {
@@ -26,7 +25,20 @@ const StackBase = (props) => {
     }
 
     return (
-        <button ref={inputEl} className={classname} onClick={() => props.onClick()} disabled={!props.visible}>
+        <button
+            onFocus={() => {
+                updateContext((ctx) => {
+                    ctx.navigator.update(props.parent);
+                });
+            }}
+            onBlur={() => {
+                updateContext((ctx) => ctx.focus.unsetStack(props.parent));
+            }}
+            ref={inputEl}
+            className={classname}
+            onClick={() => props.onClick()}
+            disabled={!props.visible}
+        >
             {props.children}
         </button>
     );

@@ -2,6 +2,7 @@ import Card from "../Deck/Card";
 
 export default class Stock {
     constructor(stack, settings, focus) {
+        this.source = "stock";
         this.settings = settings;
         this.focus = focus;
         this.stack = stack.map(this.setCardProperties);
@@ -18,7 +19,6 @@ export default class Stock {
         if (this.settings.launchSettings.recyclingMode == "3-pass") {
             this.passes = 3;
         }
-        this.source = "stock";
     }
 
     canRecycle() {

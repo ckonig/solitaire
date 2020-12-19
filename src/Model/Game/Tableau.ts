@@ -20,10 +20,10 @@ export default class Tableau {
         const ids = [0, 1, 2, 3, 4, 5, 6];
         this.stacks = ids.map((id) => {
             const s = new TableauStack();
+            s.source = "tableau-" + id;
             s.stack = [];
             s.blinkFor = 0;
             s.id = id;
-            s.source = "tableau-" + id;
             return s;
         });
         this.settings = settings;
