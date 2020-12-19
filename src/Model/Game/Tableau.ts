@@ -63,9 +63,14 @@ export default class Tableau {
         return [];
     };
 
+    canUncover = (index: number, card: Card) => {
+        const top = this.getTop(index);
+        return top.isHidden && card && card.equals(this.getTop(index));
+    };
+
     uncover = (index: number, card: Card) => {
         const top = this.getTop(index);
-        if (top.isHidden && card && card.equals(this.getTop(index))) {
+        if (this.canUncover(index, card)) {
             top.isHidden = false;
             this.stackEntropy(index);
             return true;

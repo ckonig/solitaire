@@ -73,7 +73,7 @@ export default class MouseHand extends React.Component {
                 {this.props.hand &&
                     this.props.hand.stack &&
                     this.props.hand.stack.map((card, index) => (
-                        <Card key={index} model={card} offsetTop={getOffsetTop(index)} zIndex={1000 + index * 20} isSelected={true} />
+                        <Card canClick={true} key={index} model={card} offsetTop={getOffsetTop(index)} zIndex={1000 + index * 20} isSelected={true} />
                     ))}
             </div>
         );

@@ -23,6 +23,7 @@ export default class Stock extends BlinkingComponent {
                     <Card
                         key={index}
                         model={card}
+                        canClick={index == state.stock.stack.length-1}
                         offsetTop={(index / 2) * -1}
                         blink={state.stock.blinkFor}
                         isSuggested={state.stock.suggestion && index == state.stock.stack.length - 1}

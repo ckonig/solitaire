@@ -5,7 +5,7 @@ import StartScreenContext from "./Context";
 const Difficulty = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     const updateDifficulty = (settings: number) => setState({ ...state, difficultySettings: settings });
-    const getButtonClass = (index: number) => (state.difficultySettings == index ? `active active-${index}` : "");
+    const getButtonClass = (index: number) => (state.difficultySettings == index ? `active active-${index}` : `inactive-${index}`);
     return (
         <div className="ui center quickstart">
             <div className="title">Difficulty</div>

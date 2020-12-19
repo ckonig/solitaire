@@ -34,6 +34,7 @@ export default class Foundation extends BlinkingComponent {
                     <Card
                         key={index}
                         model={card}
+                        canClick={model.stack.length - 1 == index}
                         blink={model.blinkFor}
                         isSuggested={model.suggestion && model.stack.length - 1 == index}
                         onClick={(c, p) => this.props.onClick(c, p, this.props.index)}

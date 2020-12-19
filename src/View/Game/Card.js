@@ -1,6 +1,8 @@
 import React from "react";
 
 const Card = (props) => {
+    //@todo assign isclickable in stack models, to enable better highlights and keyboard nav
+
     const onClick = (e) => {
         let ele = e.target;
         while (ele && !ele.className.includes("card-base")) {
@@ -61,12 +63,21 @@ const Card = (props) => {
         return {};
     };
 
+    const label = props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face + " card"
+
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
 
     return (
         <div style={getStackbaseStyle()} className="stack-base">
-            <div style={getCardStyle()} className={getClassName()} onClick={onClick ? onClick : null}>
+            <button
+                style={getCardStyle()}
+                className={getClassName()}
+                onClick={onClick ? onClick : null}
+                disabled={!props.canClick}
+                tabIndex={0}
+                aria-label={label}
+            >
                 {props.model.isHidden ? (
                     <div className="card-back">&nbsp;</div>
                 ) : (
@@ -96,7 +107,7 @@ const Card = (props) => {
                         </div>
                     </div>
                 )}
-            </div>
+            </button>
         </div>
     );
 };

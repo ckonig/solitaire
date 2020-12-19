@@ -1,7 +1,7 @@
 import React from "react";
 
 const StackBase = (props) => {
-    let classname = "card-base";
+    let classname = "card-base socket";
 
     if (props.visible) {
         if (props.blink) {
@@ -18,9 +18,9 @@ const StackBase = (props) => {
     }
 
     return (
-        <div className={classname} onClick={() => props.onClick()}>
+        <button className={classname} onClick={() => props.onClick()} disabled={!props.visible}>
             {props.children}
-        </div>
+        </button>
     );
 };
 export default StackBase;

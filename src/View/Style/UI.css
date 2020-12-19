@@ -25,7 +25,8 @@
 }
 
 .ui .closer button:focus {
-    outline: none;
+    outline-color: gray;
+    outline-width: 0.05vw;
 }
 
 .ui.left {

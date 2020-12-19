@@ -10,7 +10,7 @@ const Rating = () => {
     const [toggle, setToggle] = React.useState<boolean>(false);
 
     const applyPreset = (id: number) => setContext({ ...context, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
-    const getButtonClass = (index: number) => (context.ratingPreset == index ? `active active-${index}` : "");
+    const getButtonClass = (index: number) => (context.ratingPreset == index ? `active active-${index}` : `inactive-${index}`);
 
     const customizeRating = (modifier: (context: RatingSettings) => void) => {
         const next = { ...context };

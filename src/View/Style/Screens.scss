@@ -28,18 +28,28 @@
     margin: 1vw;
 }
 
-.quickstart button {
-    outline:none,
-}
-
 $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 
 @for $i from 1 through length($colors) {
     $j: $i - 1;
-    .quickstart button.active-#{$j},
-    .quickstart button.active-#{$j}:active ,
-    .quickstart button.active-#{$j}:focus {
+    .quickstart button.active-#{$j} {
         border-color: nth($colors, $i);
+        outline-color: nth($colors, $i);
+        outline-width: 0.25vw;
+        outline-offset: -0.25vw;
+        box-shadow: 0 0 0.1vw 0.1vw nth($colors, $i);
+    }
+    .quickstart button.inactive-#{$j}:hover {
+        border-color: nth($colors, $i);
+    }
+    .quickstart button.inactive-#{$j}:focus {
+        outline-color: nth($colors, $i);
+        outline-width: 0.25vw;
+        outline-offset: -0.25vw;
+        outline-style: solid;
+    }
+    .quickstart button.inactive-#{$j}:hover > div {
+        color: white;
     }
 }
 
@@ -73,15 +83,17 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     text-align: center;
 }
 
-
-.blinking {
+.quickstart button.blinking {
     animation: blinker 3s linear infinite;
-    border-color:  #339900;
-  }
-  
-  @keyframes blinker {
+    border-color: #339900;
+}
+.quickstart button.blinking > div {
+    font-size: 2.5vw;
+}
+
+@keyframes blinker {
     50% {
-      background-color: #013b0e;
-      border-color: #013b0e;
+        background-color: #013b0e;
+        border-color: #013b0e;
     }
-  }
+}

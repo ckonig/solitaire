@@ -47,7 +47,7 @@
         "mainface mainface mainface mainface"
         "suite-bl spacer-b face-br suite-br";
     grid-gap: 0.2vw;
-    height: 90%;
+    height: 100%;
     width: 100%;
 }
 
@@ -90,10 +90,30 @@
 }
 
 .card {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     border-style: solid;
     border-width: 0.1vw;
     border-color: black;
     background-color: white;
+    padding:  0;
+    overflow: hidden;
+}
+.socket {
+    background-color: transparent;
+}
+.socket:focus {
+    background-color: transparent;
+    outline-style: dashed;
+    outline-color: white;
+    outline-width: .3vw;
+    outline-offset: -0.3vw;;
+}
+.card:focus {
+    outline-color: blue;
+    outline-offset: -0.2vw;
+    outline-width: 0.3vw;
+    outline-style: solid;
 }
 
 .card-selected {

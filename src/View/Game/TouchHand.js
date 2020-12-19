@@ -14,6 +14,7 @@ export default class TouchHand extends React.Component {
                     <Card
                         key={index}
                         model={card}
+                        canClick={true}
                         offsetTop={this.props.offsetTop + index * 24}
                         offsetLeft={this.props.offsetLeft}
                         zIndex={1000 + index * 20}
