@@ -3,14 +3,11 @@ import Card from "../Deck/Card";
 import Suits from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
-const getTop = (obj) => () => obj.stack.length && obj.stack[obj.stack.length - 1];
-
 export default class Foundation {
     constructor(settings) {
         this.settings = settings;
         const template = (index) => {
-            const s = new BasicStack();
-            s.source = "foundation-" + index;
+            const s = new BasicStack("foundation-" + index);
             s.stack = [];
             s.acceptedCards = [...getFoundationOrder()];
             s.usedCards = [];
@@ -21,8 +18,7 @@ export default class Foundation {
         };
         const stacks = Object.keys(Suits)
             .map((key) => Suits[key])
-            .map((suit, index) => ({ ...template(index), ...suit }))
-            .map((obj) => ({ ...obj, getTop: getTop(obj) }));
+            .map((suit, index) => ({ ...template(index), ...suit }));
         this.stacks = [...stacks];
         // eslint-disable-next-line no-unused-vars
         this.onClick = (a, b, c) => {};
@@ -46,7 +42,7 @@ export default class Foundation {
     add = (index, cards) => {
         const card = cards[0];
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 3));
-        card.source = "foundation-" + index;
+        card.source = this.stacks[index].source;
         card.suggestion = false;
         this.stacks[index].stack.push(card);
         return this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
@@ -66,13 +62,12 @@ export default class Foundation {
     static copy = (orig) => {
         const copy = new Foundation(orig.settings);
         copy.stacks = orig.stacks.map((origStack) => {
-            const s = new BasicStack();
+            const s = new BasicStack(origStack.source);
             s.stack = Card.copyAll(origStack.stack);
             s.acceptedCards = [...origStack.acceptedCards];
             s.usedCards = [...origStack.usedCards];
             s.icon = origStack.icon;
             s.color = origStack.color;
-            s.source = origStack.source;
             return s;
         });
         return copy;

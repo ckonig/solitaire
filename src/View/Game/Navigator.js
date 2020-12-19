@@ -9,6 +9,7 @@ const Navigator = () => {
         if (evtobj.keyCode == 37) {
             updateContext((ctx) => {
                 ctx.settings.mouseMode = "remain-on-stack";
+                ctx.focus.isKeyBoard(true);
                 ctx.navigator.moveLeft(before);
             });
             e.preventDefault();
@@ -16,6 +17,7 @@ const Navigator = () => {
         if (evtobj.keyCode == 39) {
             updateContext((ctx) => {
                 ctx.settings.mouseMode = "remain-on-stack";
+                ctx.focus.isKeyBoard(true);
                 ctx.navigator.moveRight(before);
             });
             e.preventDefault();
@@ -23,6 +25,7 @@ const Navigator = () => {
         if (evtobj.keyCode == 38) {
             updateContext((ctx) => {
                 ctx.settings.mouseMode = "remain-on-stack";
+                ctx.focus.isKeyBoard(true);
                 ctx.navigator.moveUp(before);
             });
             e.preventDefault();
@@ -30,6 +33,7 @@ const Navigator = () => {
         if (evtobj.keyCode == 40) {
             updateContext((ctx) => {
                 ctx.settings.mouseMode = "remain-on-stack";
+                ctx.focus.isKeyBoard(true);
                 ctx.navigator.moveDown(before);
             });
             e.preventDefault();

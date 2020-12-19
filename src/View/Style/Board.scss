@@ -104,17 +104,17 @@ $focused: #3c99dc;
 }
 
 .socket:focus {
-    background-color: transparent;
-    outline-style: dashed;
-    outline-color: $focused;
-    outline-width: 0.3vw;
-    outline-offset: -0.3vw;
+    outline: none;
 }
+
+.socket-focused {
+    border-style: solid;
+    border-width: 0.3vw;
+    border-color: $focused;
+}
+
 .card:focus {
-    outline-color: $focused;
-    outline-offset: -0.2vw;
-    outline-width: 0.3vw;
-    outline-style: solid;
+    outline: none;
 }
 
 .card-selected {

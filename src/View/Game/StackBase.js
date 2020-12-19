@@ -13,6 +13,8 @@ const StackBase = (props) => {
     if (props.visible) {
         if (props.blink) {
             classname += " socket-blink";
+        } else if (state.focus.hasStack(props.parent)) {
+            classname += " socket-focused";
         } else {
             classname += " socket-empty";
         }
@@ -23,6 +25,12 @@ const StackBase = (props) => {
     if (props.suggested) {
         classname += " socket-suggested";
     }
+
+    const onClick = (e) => {
+        e.preventDefault();
+        const isKeyBoard = e.clientX == 0 && e.clientY == 0;
+        props.onClick(null, { isKeyBoard });
+    };
 
     return (
         <button
@@ -36,7 +44,7 @@ const StackBase = (props) => {
             }}
             ref={inputEl}
             className={classname}
-            onClick={() => props.onClick()}
+            onClick={onClick}
             disabled={!props.visible}
         >
             {props.children}

@@ -5,9 +5,14 @@ export default class Focus {
         this.settings = settings;
         this.card = null;
         this.stack = null;
+        this.keyboard = false;
     }
 
     validSettings = () => this.settings.mouseMode !== "follow-cursor";
+
+    isKeyBoard = (isKeyboard) => {
+        this.keyboard = isKeyboard;
+    }
 
     setCard = (card) => {
         this.card = card;
@@ -31,7 +36,7 @@ export default class Focus {
         this.stack = stack;
     };
 
-    hasCard = (card) => this.validSettings() && this.card && card && Card.equals(this.card, card);
+    hasCard = (card) => this.keyboard && this.validSettings() && this.card && card && Card.equals(this.card, card);
 
-    hasStack = (stack) => this.validSettings() && this.stack && stack && this.stack == stack;
+    hasStack = (stack) => this.keyboard && this.validSettings() && this.stack && stack && this.stack == stack;
 }

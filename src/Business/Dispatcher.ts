@@ -20,12 +20,14 @@ export default class Dispatcher {
 
     dispatchPutDown = (card: Card, position: any, index: number) => (state: BusinessModel) => {
         if (state.hand.isHoldingCard()) {
+            state.focus.isKeyBoard(position.isKeyBoard);
             this.clickHandler.dispatchPutDown(card, position, state, index);
         }
     };
 
     dispatchPickup = (card: Card, position: any, index: number) => (state: BusinessModel) => {
         if (!state.hand.isHoldingCard()) {
+            state.focus.isKeyBoard(position.isKeyBoard);
             this.clickHandler.dispatchPickup(card, position, state, index);
         }
     };

@@ -1,8 +1,9 @@
+import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
 
-export default class Stock {
+export default class Stock extends BasicStack {
     constructor(stack, settings, focus) {
-        this.source = "stock";
+        super("stock");
         this.settings = settings;
         this.focus = focus;
         this.stack = stack.map(this.setCardProperties);
@@ -12,7 +13,6 @@ export default class Stock {
         this.onClick = (a, b, c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
-        this.suggestion = false;
         if (this.settings.launchSettings.recyclingMode == "1-pass") {
             this.passes = 1;
         }
@@ -32,6 +32,7 @@ export default class Stock {
         if (waste.length) {
             this.stack = waste.reverse().map(this.setCardProperties);
             this.recyclings++;
+            this.focus.setCard(this.getTop());
             return true;
         }
 
@@ -46,8 +47,6 @@ export default class Stock {
     };
 
     isOnTop = (card) => card && card.equals(this.getTop());
-
-    getTop = () => this.stack[this.stack.length - 1];
 
     popTop = () => {
         let result = [];

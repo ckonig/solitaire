@@ -10,7 +10,7 @@ class TableauStack extends BasicStack {
     id = 0;
 }
 export default class Tableau {
-    stacks: { stack: Card[]; id: number; suggestion?: boolean }[];
+    stacks: TableauStack[];
     settings: Settings;
     onClick: (a: any, b: any, c: any) => void;
     focus: Focus;
@@ -19,8 +19,7 @@ export default class Tableau {
         this.focus = focus;
         const ids = [0, 1, 2, 3, 4, 5, 6];
         this.stacks = ids.map((id) => {
-            const s = new TableauStack();
-            s.source = "tableau-" + id;
+            const s = new TableauStack("tableau-" + id);
             s.stack = [];
             s.blinkFor = 0;
             s.id = id;
@@ -119,7 +118,7 @@ export default class Tableau {
     static copy = (orig: Tableau) => {
         const copy = new Tableau(orig.settings, orig.focus);
         copy.stacks = orig.stacks.map((stack, index) => {
-            const s = new TableauStack();
+            const s = new TableauStack(stack.source);
             s.id = index;
             s.stack = Card.copyAll(stack.stack);
             return s;

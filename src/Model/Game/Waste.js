@@ -1,15 +1,14 @@
+import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
 
-export default class Waste {
+export default class Waste extends BasicStack {
     constructor(settings) {
-        this.source = "waste";
+        super("waste");
         this.settings = settings;
-        this.stack = [];
         // eslint-disable-next-line no-unused-vars
         this.onClick = (_a, _b, _c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
-        this.suggestion = false;
     }
 
     tryPutDown = (card) => this.canAdd(card) && (this.add(card) || true);
@@ -32,8 +31,6 @@ export default class Waste {
     popTop = (card) => card && card.equals(this.getTop()) && this.stack.pop();
 
     recycle = () => this.stack.splice(0, this.stack.length);
-
-    getTop = () => this.stack[this.stack.length - 1];
 
     static copy = (orig) => {
         const copy = new Waste(orig.settings);

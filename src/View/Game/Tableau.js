@@ -13,7 +13,9 @@ export default class Tableau extends BlinkingComponent {
     static Stacks = () => {
         const { state, updateGameContext } = React.useContext(GlobalContext);
         const onClick = (c, p, i) => updateGameContext(state.tableau.onClick(c, p, i));
-        return state.tableau.stacks.map((tableau, index) => <Tableau key={index} index={index} model={tableau} parent={state.tableau} onClick={onClick} />);
+        return state.tableau.stacks.map((tableau, index) => (
+            <Tableau key={index} index={index} model={tableau} parent={state.tableau} onClick={onClick} />
+        ));
     };
 
     render() {
@@ -36,7 +38,7 @@ export default class Tableau extends BlinkingComponent {
                     parent={props.model.source}
                     suggested={props.model.suggestion && !props.model.stack.length}
                     blink={props.model.blinkFor}
-                    onClick={() => props.onClick(null, null, props.index)}
+                    onClick={(c,p) => props.onClick(null, p, props.index)}
                     visible={!props.model.stack.length}
                 />
                 {props.model.stack.map((card, index) => (

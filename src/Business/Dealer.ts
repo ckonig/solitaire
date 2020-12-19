@@ -46,7 +46,7 @@ export default class Dealer {
             const stack = tableau.stacks[i].stack;
             if (stack.length <= tableau.stacks.length - i - 1) {
                 const newCard = stock.stack.pop();
-                newCard.source = "tableau-" + i;
+                newCard.source = tableau.stacks[i].source;
                 if (stack.length == tableau.stacks.length - 1 - i) {
                     newCard.isHidden = false;
                 }

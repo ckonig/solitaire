@@ -55,7 +55,7 @@ export default class MouseHand extends React.Component {
 
     onKeyDown(e) {
         const evtobj = window.event ? event : e;
-        if (evtobj.keyCode == 27 && this.props.hand && this.props.parent == this.props.hand.source) this.props.putBack();
+        if (evtobj.keyCode == 27 && this.props.hand && this.props.parent == this.props.hand.source) this.props.putBack(null, {isKeyboard: false});
     }
 
     render() {

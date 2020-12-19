@@ -10,8 +10,9 @@ const Card = (props) => {
         }
     });
     const onClick = (e) => {
-        let ele = e.target;
         e.preventDefault();
+        const isKeyBoard = e.clientX == 0 && e.clientY == 0;
+        let ele = e.target;
 
         while (ele && !ele.className.includes("card-base")) {
             ele = ele.offsetParent;
@@ -19,6 +20,7 @@ const Card = (props) => {
 
         const rect = ele.getBoundingClientRect();
         const position = {
+            isKeyBoard,
             click: {
                 x: e.clientX - ele.ownerDocument.defaultView.pageXOffset,
                 y: e.clientY - ele.ownerDocument.defaultView.pageYOffset,

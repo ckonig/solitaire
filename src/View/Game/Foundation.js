@@ -26,7 +26,7 @@ export default class Foundation extends BlinkingComponent {
                     parent={model.source}
                     suggested={model.suggestion && !model.stack.length}
                     blink={model.blinkFor}
-                    onClick={() => this.props.onClick(null, null, this.props.index)}
+                    onClick={(c,p) => this.props.onClick(null, p, this.props.index)}
                     visible={!model.stack.length}
                 >
                     <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>
@@ -42,7 +42,7 @@ export default class Foundation extends BlinkingComponent {
                     />
                 ))}
                 <Hand
-                    parent={"foundation-" + this.props.index}
+                    parent={model.source}
                     onClick={(c, p) => this.props.onClick(model.stack[model.stack.length - 1], p, this.props.index)}
                     stack={model.stack}
                 />

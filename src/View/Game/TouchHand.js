@@ -19,7 +19,7 @@ export default class TouchHand extends React.Component {
                         offsetLeft={this.props.offsetLeft}
                         zIndex={1000 + index * 20}
                         isSelected={true}
-                        onClick={(c) => this.props.onClick(c)}
+                        onClick={(c,p) => this.props.onClick(c,p)}
                     />
                 )),
         ];

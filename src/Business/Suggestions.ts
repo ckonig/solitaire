@@ -46,7 +46,7 @@ export default class Suggestions {
         state.foundation.stacks.forEach((stack, index) => {
             if (state.foundation.wouldAccept(index, state.hand)) {
                 if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromFoundation(index)) {
-                    const move = { target: "foundation-" + index, source: state.hand.source };
+                    const move = { target: stack.source, source: state.hand.source };
                     if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
                         accepted.push(move);
                         stack.suggestion = true;
@@ -77,7 +77,7 @@ export default class Suggestions {
                     const isNotLoop = !isMoveOfKingBetweenEmptySlots && !isMoveBetweenSimilarParentCards;
 
                     if (!onlyUseful || state.settings.suggestionMode.key === SuggestionModes.FULL || isNotLoop) {
-                        const move = { target: "tableau-" + index, source: state.hand.source };
+                        const move = { target: stack.source, source: state.hand.source };
                         if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
                             accepted.push(move);
                             stack.suggestion = true;
