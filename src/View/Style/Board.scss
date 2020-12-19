@@ -123,15 +123,17 @@
 .card-suggested {
     box-shadow: 0vw 0vw 0.4vw 0.4vw yellow;
     animation: cardBlinker 2s linear infinite;
+    transition: all 0.94s ease-in-out;
 }
 
 .card-suggested:hover {
-    box-shadow: 0vw 0vw 0.6vw 0.6vw yellow;
+    box-shadow: 0vw 0vw 0.4vw 0.4vw yellow;
+    animation: none;
 }
 
 @keyframes cardBlinker {
     50% {
-        box-shadow: 0vw 0vw 0.6vw 0.6vw yellow;
+        box-shadow: 0vw 0vw 0.2vw 0.2vw yellow;
     }
 }
 
@@ -218,24 +220,27 @@
 
 .card-stack-stock {
     box-shadow: -0.6vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+    transition: all 0.24s ease-in-out;
 }
-.card-stack-stock:hover {
+.card-stack-stock.clickable:hover {
     box-shadow: -0.6vw -0.4vw 0.4vw 0.4vw black;
 }
 
 .card-stack-waste {
     box-shadow: -0.4vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+    transition: all 0.24s ease-in-out;
 }
 
-.card-stack-waste:hover {
+.card-stack-waste.clickable:hover {
     box-shadow: -0.4vw -0.4vw 0.4vw 0.4vw black;
 }
 
 @for $i from 0 through 3 {
     .card-stack-foundation-#{$i} {
         box-shadow: #{$i * 0.1}vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+        transition: all 0.24s ease-in-out;
     }
-    .card-stack-foundation-#{$i}:hover {
+    .card-stack-foundation-#{$i}.clickable:hover {
         box-shadow: #{$i * 0.1}vw -0.4vw 0.4vw 0.4vw black;
     }
 }
@@ -243,8 +248,9 @@
 @for $i from -3 through 3 {
     .card-stack-tableau-#{$i + 3} {
         box-shadow: #{$i * 0.1}vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+        transition: all 0.24s ease-in-out;
     }
-    .card-stack-tableau-#{$i + 3}:hover {
+    .card-stack-tableau-#{$i + 3}.clickable:hover {
         box-shadow: #{$i * 0.1}vw -0.2vw 0.4vw 0.4vw black;
     }
 }

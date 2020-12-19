@@ -87,6 +87,11 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     animation: blinker 3s linear infinite;
     border-color: #339900;
 }
+.quickstart button.blinking:hover {
+    background-color: #013b0e;
+    border-color: #013b0e;
+    animation: none;
+}
 .quickstart button.blinking > div {
     font-size: 2.5vw;
 }
