@@ -9,6 +9,7 @@ export default class Waste {
         this.blinkFor = 0;
         this.unblink = () => {};
         this.suggestion = false;
+        this.source = "waste";
     }
 
     tryPutDown = (card) => this.canAdd(card) && (this.add(card) || true);
@@ -18,7 +19,7 @@ export default class Waste {
     addAll = (cards) => cards && cards.length && cards.map(this.add);
 
     setCardProperties = (card) => {
-        card.source = "waste";
+        card.source = this.source;
         card.isHidden = false;
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
         return card;

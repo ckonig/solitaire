@@ -1,21 +1,28 @@
+import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
 import Suits from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
+const getTop = (obj) => () => obj.stack.length && obj.stack[obj.stack.length - 1];
+
 export default class Foundation {
     constructor(settings) {
         this.settings = settings;
-        const template = () => ({
-            stack: [],
-            acceptedCards: [...getFoundationOrder()],
-            usedCards: [],
-            icon: null,
-            color: null,
-            blinkFor: 0,
-        });
+        const template = (index) => {
+            const s = new BasicStack();
+            s.stack = [];
+            s.acceptedCards = [...getFoundationOrder()];
+            s.usedCards = [];
+            s.icon = null;
+            s.color = null;
+            s.blinkFor = 0;
+            s.source = "foundation-" + index;
+            return s;
+        };
         const stacks = Object.keys(Suits)
             .map((key) => Suits[key])
-            .map((suit) => ({ ...template(), ...suit }));
+            .map((suit, index) => ({ ...template(index), ...suit }))
+            .map((obj) => ({ ...obj, getTop: getTop(obj) }));
         this.stacks = [...stacks];
         // eslint-disable-next-line no-unused-vars
         this.onClick = (a, b, c) => {};
@@ -58,13 +65,16 @@ export default class Foundation {
 
     static copy = (orig) => {
         const copy = new Foundation(orig.settings);
-        copy.stacks = orig.stacks.map((origStack) => ({
-            stack: Card.copyAll(origStack.stack),
-            acceptedCards: [...origStack.acceptedCards],
-            usedCards: [...origStack.usedCards],
-            icon: origStack.icon,
-            color: origStack.color,
-        }));
+        copy.stacks = orig.stacks.map((origStack) => {
+            const s = new BasicStack();
+            s.stack = Card.copyAll(origStack.stack);
+            s.acceptedCards = [...origStack.acceptedCards];
+            s.usedCards = [...origStack.usedCards];
+            s.icon = origStack.icon;
+            s.color = origStack.color;
+            s.source = origStack.source;
+            return s;
+        });
         return copy;
     };
 

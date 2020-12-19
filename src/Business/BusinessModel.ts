@@ -4,6 +4,7 @@ import Dealer from "./Dealer";
 import Dispatcher from "./Dispatcher";
 import Foundation from "./Foundation";
 import Model from "../Model/Model";
+import Navigator from "./Navigator";
 import Stock from "./Stock";
 import Suggestions from "./Suggestions";
 import Tableau from "./Tableau";
@@ -12,11 +13,13 @@ import Waste from "./Waste";
 export default class BusinessModel extends Model {
     suggestor: Suggestions;
     dealer: Dealer;
+    navigator: Navigator | undefined;
 
     constructor(obj: any) {
         super(obj);
         this.suggestor = new Suggestions();
         this.dealer = new Dealer();
+        this.navigator = new Navigator(this);
     }
 
     withSuggestions = () => {

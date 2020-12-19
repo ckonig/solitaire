@@ -3,13 +3,11 @@ import React from "react";
 
 const Card = (props) => {
     const { state } = React.useContext(GlobalContext);
-    //@todo assign isclickable in stack models, to enable better highlights and keyboard nav
     const inputEl = React.useRef(null);
     React.useEffect(() => {
-        if (state.focus.has(props.model)) {
+        if (state.focus.hasCard(props.model)) {
             inputEl && inputEl.current && inputEl.current.focus();
-            console.debug('focused', props.model)
-        } 
+        }
     });
     const onClick = (e) => {
         let ele = e.target;
@@ -31,7 +29,7 @@ const Card = (props) => {
             },
         };
 
-        props.onClick({ ...props.model }, position);
+        props.onClick && props.onClick({ ...props.model }, position);
     };
 
     const getClassName = () => {

@@ -1,8 +1,16 @@
+import GlobalContext from "../Context";
 import React from "react";
 
 const StackBase = (props) => {
     let classname = "card-base socket";
-
+    const inputEl = React.useRef(null);
+    const { state } = React.useContext(GlobalContext);
+    React.useEffect(() => {
+        if (state.focus.hasStack(props.parent)) {
+            inputEl && inputEl.current && inputEl.current.focus();
+            console.debug('focused', props.model)
+        } 
+    });
     if (props.visible) {
         if (props.blink) {
             classname += " socket-blink";
@@ -18,7 +26,7 @@ const StackBase = (props) => {
     }
 
     return (
-        <button className={classname} onClick={() => props.onClick()} disabled={!props.visible}>
+        <button ref={inputEl} className={classname} onClick={() => props.onClick()} disabled={!props.visible}>
             {props.children}
         </button>
     );

@@ -35,6 +35,7 @@ export default class Waste extends BlinkingComponent {
         return (
             <div>
                 <StackBase
+                    parent={state.waste.source}
                     blink={state.waste.blinkFor}
                     onClick={() => onClick(null, null)}
                     suggested={state.waste.suggestion && !state.waste.stack.length}

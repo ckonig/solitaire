@@ -2,15 +2,25 @@ import Card from "../Deck/Card";
 
 export default class Focus {
     constructor() {
-        this.element = null;
+        this.card = null;
+        this.stack = null;
     }
 
-    set = (card) => {
-        console.debug('SETTING FOCUS', card);
-        this.element = card;
+    setCard = (card) => {
+        this.card = card;
+        this.stack = null;
     };
 
-    has = (card) => {
-        return this.element && card && Card.equals(this.element, card);
+    setStack = (stack) => {
+        this.card = null;
+        this.stack = stack;
+    }
+
+    hasCard = (card) => {
+        return this.card && card && Card.equals(this.card, card);
     };
+
+    hasStack = (stack) => {
+        return this.stack && stack && this.stack == stack;
+    }
 }

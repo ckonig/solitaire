@@ -33,6 +33,7 @@ export default class Tableau extends BlinkingComponent {
         return (
             <div>
                 <StackBase
+                    parent={props.model.source}
                     suggested={props.model.suggestion && !props.model.stack.length}
                     blink={props.model.blinkFor}
                     onClick={() => props.onClick(null, null, props.index)}

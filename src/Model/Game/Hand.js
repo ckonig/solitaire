@@ -25,7 +25,7 @@ export default class Hand {
         this.source = null;
         const result = this.stack.splice(0, this.stack.length);
         if (result.length) {
-            this.focus.set(result[result.length-1]);
+            this.focus.setCard(result[result.length-1]);
         }
         return result;
     };

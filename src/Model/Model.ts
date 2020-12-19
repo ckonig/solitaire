@@ -56,6 +56,7 @@ export default class Model {
             hand: Hand.copy(state.hand),
             game: Game.copy(state.game),
             settings: Settings.copy(state.settings),
+            focus: state.focus,
         };
     };
 }

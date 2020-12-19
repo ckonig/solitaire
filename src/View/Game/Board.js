@@ -5,6 +5,7 @@ import EndScreen from "../UI/EndScreen";
 import Foundation from "./Foundation";
 import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu";
+import Navigator from "./Navigator";
 import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
@@ -25,6 +26,7 @@ const Board = () => (
         <Menu />
         <EndScreen />
         <Dealer />
+        <Navigator />
     </>
 );
 

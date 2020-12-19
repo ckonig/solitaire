@@ -14,6 +14,7 @@ export default class Stock extends BlinkingComponent {
         return (
             <div>
                 <StackBase
+                    parent={state.stock.source}
                     blink={state.stock.blinkFor}
                     onClick={onClick}
                     suggested={state.stock.suggestion && !state.stock.stack.length}
@@ -23,7 +24,7 @@ export default class Stock extends BlinkingComponent {
                     <Card
                         key={index}
                         model={card}
-                        canClick={index == state.stock.stack.length-1}
+                        canClick={index == state.stock.stack.length - 1}
                         offsetTop={(index / 2) * -1}
                         blink={state.stock.blinkFor}
                         isSuggested={state.stock.suggestion && index == state.stock.stack.length - 1}

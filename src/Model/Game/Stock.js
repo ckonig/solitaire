@@ -18,6 +18,7 @@ export default class Stock {
         if (this.settings.launchSettings.recyclingMode == "3-pass") {
             this.passes = 3;
         }
+        this.source = "stock";
     }
 
     canRecycle() {
@@ -40,7 +41,7 @@ export default class Stock {
     setCardProperties = (card) => {
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
         card.isHidden = true;
-        card.source = "stock";
+        card.source = this.source;
         return card;
     };
 
@@ -60,9 +61,9 @@ export default class Stock {
             this.passes--;
         }
         if (this.stack.length) {
-            this.focus.set(this.getTop());
+            this.focus.setCard(this.getTop());
         } else {
-            //@todo set focus on empty stack?
+            this.focus.setStack("stock");
         }
 
         return result;

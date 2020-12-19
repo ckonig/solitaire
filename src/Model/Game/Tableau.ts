@@ -1,23 +1,31 @@
+import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
 import Focus from "./Focus";
 import Hand from "./Hand";
 import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
 
+class TableauStack extends BasicStack {
+    blinkFor = 0;
+    id = 0;
+}
 export default class Tableau {
     stacks: { stack: Card[]; id: number; suggestion?: boolean }[];
     settings: Settings;
     onClick: (a: any, b: any, c: any) => void;
     focus: Focus;
 
-    constructor(settings: Settings,focus: Focus) {
+    constructor(settings: Settings, focus: Focus) {
         this.focus = focus;
         const ids = [0, 1, 2, 3, 4, 5, 6];
-        this.stacks = ids.map((id) => ({
-            stack: [],
-            blinkFor: 0,
-            id,
-        }));
+        this.stacks = ids.map((id) => {
+            const s = new TableauStack();
+            s.stack = [];
+            s.blinkFor = 0;
+            s.id = id;
+            s.source = "tableau-" + id;
+            return s;
+        });
         this.settings = settings;
         this.onClick = () => {};
     }
@@ -75,7 +83,7 @@ export default class Tableau {
         const top = this.getTop(index);
         if (this.canUncover(index, card)) {
             top.isHidden = false;
-            this.focus.set(top);
+            this.focus.setCard(top);
             this.stackEntropy(index);
             return true;
         }
@@ -110,7 +118,12 @@ export default class Tableau {
 
     static copy = (orig: Tableau) => {
         const copy = new Tableau(orig.settings, orig.focus);
-        copy.stacks = orig.stacks.map((stack, index) => ({ id: index, stack: Card.copyAll(stack.stack) }));
+        copy.stacks = orig.stacks.map((stack, index) => {
+            const s = new TableauStack();
+            s.id = index;
+            s.stack = Card.copyAll(stack.stack);
+            return s;
+        });
         return copy;
     };
 

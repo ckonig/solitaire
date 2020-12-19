@@ -23,6 +23,7 @@ export default class Foundation extends BlinkingComponent {
         return (
             <div key={this.props.index}>
                 <StackBase
+                    parent={model.source}
                     suggested={model.suggestion && !model.stack.length}
                     blink={model.blinkFor}
                     onClick={() => this.props.onClick(null, null, this.props.index)}
