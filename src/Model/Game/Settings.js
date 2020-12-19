@@ -28,7 +28,9 @@ export default class Settings {
     disableHint = () => {
         if (this.suggestionMode.isTemporary && this.suggestionMode.next) {
             this.suggestionMode = SuggestionModes.get(this.suggestionMode.next);
+            return true;
         }
+        return false;
     };
 
     static copy = (orig) => {

@@ -12,7 +12,7 @@ export default class Game {
     }
 
     registerMove = (target, source) => {
-        this.settings.disableHint();
+        this.rating.registerHint(this.settings.disableHint());
         this.rating.registerMove(target, source);
         this.timemachine.registerMove(target, source);
         return true;
@@ -24,14 +24,14 @@ export default class Game {
     };
 
     registerRecycle = () => {
-        this.settings.disableHint();
+        this.rating.registerHint(this.settings.disableHint());
         this.rating.registerRecycle();
         this.timemachine.registerRecycle();
         return true;
     };
 
     registerUncover = () => {
-        this.settings.disableHint();
+        this.rating.registerHint(this.settings.disableHint());
         this.rating.registerUncover();
         this.timemachine.registerUncover();
         return true;

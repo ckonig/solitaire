@@ -36,7 +36,11 @@ const Menu = () => {
                     <div className="title">Suggestions</div>
                     <div className="row">
                         <div className="label">How much help - if any - should the game offer by displaying suggestions?</div>
-                        <select onChange={(e) => setSuggestionMode(e.target.value)} value={state.settings.suggestionMode.key}>
+                        <select
+                            onChange={(e) => setSuggestionMode(e.target.value)}
+                            value={state.settings.suggestionMode.key}
+                            disabled={state.settings.launchSettings.hintPenalty}
+                        >
                             {state.settings.suggestionModes.map((suggestionMode) => (
                                 <option key={suggestionMode.key} value={suggestionMode.key}>
                                     {suggestionMode.label}

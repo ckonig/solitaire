@@ -10,8 +10,11 @@ const EndScreen = () => {
         <div className="ui center endscreen">
             <div className="title">🥳</div>
             <div className="content">
-                <div>Points: {state.game.points}</div>
                 <div>Time: {state.game.getElapsed()}</div>
+                <div>Points: {state.game.rating.points}</div>
+                <div>Time Penalty: {state.game.rating.getTimePenalty(state.game.started, state.game.end || Date.now())}</div>
+                <div>Bonus Points: {state.game.rating.getBonusPoints(state.game.started, state.game.end || Date.now())}</div>
+                <div>Total Points: {state.game.rating.getTotal(state.game.started, state.game.end || Date.now())}</div>
                 <div>
                     <button onClick={restart}>
                         🗑️<div>New Game</div>

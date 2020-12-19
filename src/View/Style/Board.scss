@@ -1,4 +1,3 @@
-
 .layout-grid-container {
     margin-left: 1vw;
     display: grid;
@@ -80,7 +79,14 @@
 
 .socket-suggested {
     border-style: solid;
-    border-color: blue;
+    border-color: yellow;
+    animation: socketBlinker 2s linear infinite;
+}
+
+@keyframes socketBlinker {
+    50% {
+        border-color: orange;
+    }
 }
 
 .card {
@@ -91,11 +97,22 @@
 }
 
 .card-selected {
-    box-shadow: 0vw 0vw 0.4vw 0.4vw yellow;
+    box-shadow: 0vw 0vw 0.4vw 0.4vw blue;
 }
 
 .card-suggested {
-    box-shadow: 0vw 0vw 0.4vw 0.4vw blue;
+    box-shadow: 0vw 0vw 0.4vw 0.4vw yellow;
+    animation: cardBlinker 2s linear infinite;
+}
+
+.card-suggested:hover {
+    box-shadow: 0vw 0vw 0.6vw 0.6vw yellow;
+}
+
+@keyframes cardBlinker {
+    50% {
+        box-shadow: 0vw 0vw 0.6vw 0.6vw yellow;
+    }
 }
 
 .socket-blink {
@@ -182,19 +199,32 @@
 .card-stack-stock {
     box-shadow: -0.6vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
 }
+.card-stack-stock:hover {
+    box-shadow: -0.6vw -0.4vw 0.4vw 0.4vw black;
+}
 
 .card-stack-waste {
     box-shadow: -0.4vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
 }
 
+.card-stack-waste:hover {
+    box-shadow: -0.4vw -0.4vw 0.4vw 0.4vw black;
+}
+
 @for $i from 0 through 3 {
     .card-stack-foundation-#{$i} {
-        box-shadow: #{$i * 0.2}vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+        box-shadow: #{$i * 0.1}vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+    }
+    .card-stack-foundation-#{$i}:hover {
+        box-shadow: #{$i * 0.1}vw -0.4vw 0.4vw 0.4vw black;
     }
 }
 
 @for $i from -3 through 3 {
     .card-stack-tableau-#{$i + 3} {
-        box-shadow: #{$i * 0.2}vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+        box-shadow: #{$i * 0.1}vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
+    }
+    .card-stack-tableau-#{$i + 3}:hover {
+        box-shadow: #{$i * 0.1}vw -0.2vw 0.4vw 0.4vw black;
     }
 }

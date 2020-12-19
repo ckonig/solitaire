@@ -15,11 +15,15 @@ export default class Stock implements ClickHandler {
     moveToWaste = (card: Card, state: BusinessModel) =>
         state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock");
 
-    recycleWaste = (_card: Card, state: BusinessModel) =>
-        (!state.stock.getTop() &&
-            !!state.waste.getTop() &&
-            state.stock.canRecycle() &&
-            state.stock.recycle(state.waste.recycle()) &&
-            state.game.registerRecycle()) ||
-        this.blink(state, 0);
+    recycleWaste = (_card: Card, state: BusinessModel) => {
+        if (!state.stock.getTop()) {
+            return (
+                (!!state.waste.getTop() &&
+                    state.stock.canRecycle() &&
+                    state.stock.recycle(state.waste.recycle()) &&
+                    state.game.registerRecycle()) ||
+                this.blink(state, 0)
+            );
+        }
+    };
 }

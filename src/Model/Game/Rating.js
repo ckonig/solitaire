@@ -36,18 +36,25 @@ export default class Rating {
             this.points -= 10;
             console.debug("RATING: subtract 10 points for invalid action");
         }
-        //@todo support optionally penalizing invalid moves
     }
 
     penalize = (other) => {
-        const penalty = Math.pow(2, other.multiplicator);
-        console.debug(`RATING: applying penalty of ${penalty} points for UNDO`);
-        this.points = Math.min(this.points, other.points) - penalty;
-        this.multiplicator = other.multiplicator + 1;
+        if (this.settings.launchSettings.undoPenalty) {
+            const penalty = Math.pow(2, other.multiplicator);
+            console.debug(`RATING: applying penalty of ${penalty} points for UNDO`);
+            this.points = Math.min(this.points, other.points) - penalty;
+            this.multiplicator = other.multiplicator + 1;
+        }
+    };
+
+    registerHint = (done) => {
+        if (done && this.settings.launchSettings.hintPenalty) {
+            this.points -= 10;
+            console.debug(`RATING: applying penalty of 10 points for HINT`);
+        }
     };
 
     rateMove(move) {
-        console.debug("RATING  A MOVEW", this.settings.launchSettings);
         const isTableau = (obj) => obj.substr(0, 7) == "tableau";
         const isFoundation = (obj) => obj.substr(0, 10) == "foundation";
         if (isTableau(move.source)) {
@@ -72,6 +79,23 @@ export default class Rating {
         }
 
         return 0;
+    }
+
+    getTimePenalty = (start, end) => {
+        const secondsToFinish = (end - start) / 1000;
+        return Math.trunc(secondsToFinish / 5) * -2;
+    };
+
+    getBonusPoints = (start, end) => {
+        const secondsToFinish = (end - start) / 1000;
+        if (secondsToFinish < 30) {
+            return 0;
+        }
+        return Math.round((20000 / secondsToFinish) * 35);
+    };
+
+    getTotal = (start, end) => {
+        return this.points + this.getBonusPoints(start, end) - this.getTimePenalty(start, end);
     }
 
     static copy = (orig) => {
