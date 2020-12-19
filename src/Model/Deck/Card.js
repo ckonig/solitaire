@@ -15,9 +15,9 @@ export default class Card {
         //shift
         if (random()) {
             if (random()) {
-                this.entropyStyle["left"] = randomInt(0, level / 2);
+                this.entropyStyle["left"] = randomInt(0, level / 20) + "vw";
             } else {
-                this.entropyStyle["right"] = randomInt(0, level / 2);
+                this.entropyStyle["right"] = randomInt(0, level / 20) + "vw";
             }
         }
         //rotate

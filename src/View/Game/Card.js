@@ -1,10 +1,20 @@
+import GlobalContext from "../Context";
 import React from "react";
 
 const Card = (props) => {
+    const { state } = React.useContext(GlobalContext);
     //@todo assign isclickable in stack models, to enable better highlights and keyboard nav
-
+    const inputEl = React.useRef(null);
+    React.useEffect(() => {
+        if (state.focus.has(props.model)) {
+            inputEl && inputEl.current && inputEl.current.focus();
+            console.debug('focused', props.model)
+        } 
+    });
     const onClick = (e) => {
         let ele = e.target;
+        e.preventDefault();
+
         while (ele && !ele.className.includes("card-base")) {
             ele = ele.offsetParent;
         }
@@ -30,6 +40,7 @@ const Card = (props) => {
         className += !props.isSelected && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
         className += props.isSelected ? " card-selected" : "";
         className += props.blink ? " blink" : "";
+        className += props.canClick ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion ? " card-suggested" : "";
 
@@ -63,7 +74,7 @@ const Card = (props) => {
         return {};
     };
 
-    const label = props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face + " card"
+    const label = props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face + " card";
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
@@ -72,6 +83,7 @@ const Card = (props) => {
         <div style={getStackbaseStyle()} className="stack-base">
             <button
                 style={getCardStyle()}
+                ref={inputEl}
                 className={getClassName()}
                 onClick={onClick ? onClick : null}
                 disabled={!props.canClick}

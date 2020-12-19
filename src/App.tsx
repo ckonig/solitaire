@@ -8,6 +8,7 @@ import StartScreen from "./View/UI/StartScreen/StartScreen";
 
 const App = () => {
     const [appState, setAppState] = React.useState<AppState>({});
+    //@todo add parent for keyboard navigation
     const start = (settings: AppState) =>
         setAppState({
             ...settings,

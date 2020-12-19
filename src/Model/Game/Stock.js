@@ -1,8 +1,9 @@
 import Card from "../Deck/Card";
 
 export default class Stock {
-    constructor(stack, settings) {
+    constructor(stack, settings, focus) {
         this.settings = settings;
+        this.focus = focus;
         this.stack = stack.map(this.setCardProperties);
         this.recyclings = 0;
         this.passes = -1;
@@ -58,12 +59,17 @@ export default class Stock {
         if (this.stack.length == 0) {
             this.passes--;
         }
+        if (this.stack.length) {
+            this.focus.set(this.getTop());
+        } else {
+            //@todo set focus on empty stack?
+        }
 
         return result;
     };
 
     static copy = (orig) => {
-        const copy = new Stock([], orig.settings);
+        const copy = new Stock([], orig.settings, orig.focus);
         copy.stack = Card.copyAll(orig.stack);
         copy.dealt = orig.dealt;
         copy.dealingAt = orig.dealingAt;

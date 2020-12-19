@@ -1,5 +1,6 @@
 import { AppState } from "../Common";
 import Deck from "./Deck/Deck";
+import Focus from "./Game/Focus";
 import Foundation from "./Game/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
@@ -16,6 +17,7 @@ export default class Model {
     hand: Hand;
     game: Game;
     settings: Settings;
+    focus: Focus;
 
     constructor(obj: any) {
         this.stock = obj.stock;
@@ -25,19 +27,22 @@ export default class Model {
         this.hand = obj.hand;
         this.game = obj.game;
         this.settings = obj.settings;
+        this.focus = obj.focus;
     }
 
     static getInitialState = (launchSettings: AppState) => {
+        const focus = new Focus();
         const deck = new Deck().shuffle();
         const settings = new Settings(launchSettings);
         const state = {
-            stock: new Stock([...deck.cards], settings),
+            stock: new Stock([...deck.cards], settings, focus),
             waste: new Waste(settings),
             foundation: new Foundation(settings),
-            tableau: new Tableau(settings),
-            hand: new Hand(),
+            tableau: new Tableau(settings, focus),
+            hand: new Hand(focus),
             game: new Game(settings),
             settings: settings,
+            focus: focus,
         };
         return state;
     };

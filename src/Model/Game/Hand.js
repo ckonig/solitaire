@@ -1,7 +1,8 @@
 import Card from "../Deck/Card";
 
 export default class Hand {
-    constructor() {
+    constructor(focus) {
+        this.focus = focus;
         this.stack = [];
         this.source = null;
         this.position = null;
@@ -22,7 +23,11 @@ export default class Hand {
 
     putDown = () => {
         this.source = null;
-        return this.stack.splice(0, this.stack.length);
+        const result = this.stack.splice(0, this.stack.length);
+        if (result.length) {
+            this.focus.set(result[result.length-1]);
+        }
+        return result;
     };
 
     isHoldingCard = () => !!this.stack.length;
@@ -46,7 +51,7 @@ export default class Hand {
     getTableauIndex = () => this.source && this.source.substring(8);
 
     static copy = (orig) => {
-        const copy = new Hand();
+        const copy = new Hand(orig.focus);
         copy.stack = Card.copyAll(orig.stack);
         copy.source = orig.source;
         copy.position = orig.position;
