@@ -45,7 +45,7 @@ $focused: #3c99dc;
 .card-grid-container {
     display: grid;
     font-size: 2vw;
-    grid-template-rows: 2.1vw 8.3vw 2.1vw;
+    grid-template-rows: 2.0vw 8.3vw 2.0vw;
     grid-template-areas:
         "suite-tl face-tl spacer-t suite-tr"
         "mainface mainface mainface mainface"

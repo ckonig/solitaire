@@ -3,7 +3,7 @@ import React from "react";
 
 const Navigator = () => {
     const { state, updateContext } = React.useContext(GlobalContext);
-    const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y };
+    const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };
     const navListener = (e) => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 37) {

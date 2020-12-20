@@ -4,11 +4,12 @@ import React from "react";
 const Card = (props) => {
     const { state, updateContext } = React.useContext(GlobalContext);
     const inputEl = React.useRef(null);
+    const isFocused = state.focus.hasCard(props.model);
     React.useEffect(() => {
-        if (state.focus.hasCard(props.model)) {
+        if (isFocused) {
             inputEl && inputEl.current && inputEl.current.focus();
         }
-    });
+    }, [isFocused]);
     const onClick = (e) => {
         e.preventDefault();
         const isKeyBoard = e.clientX == 0 && e.clientY == 0;
@@ -36,7 +37,6 @@ const Card = (props) => {
 
     const getClassName = () => {
         const hasSuggestion = props.isSuggested || props.model.suggestion;
-        const hasFocus = state.focus.hasCard(props.model);
         let className = `card card-base suit-${props.model.type.icon}`;
         className += !props.isSelected && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
         className += props.isSelected ? " card-selected" : "";
@@ -44,7 +44,7 @@ const Card = (props) => {
         className += props.canClick ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion ? " card-suggested" : "";
-        className += hasFocus ? " card-focused" : "";
+        className += isFocused ? " card-focused" : "";
 
         return className;
     };
@@ -86,7 +86,7 @@ const Card = (props) => {
             <button
                 onFocus={() => {
                     updateContext((ctx) => {
-                        ctx.navigator.update(props.model.source, props.index)
+                        ctx.navigator.update(props.model.source, props.model);
                     });
                 }}
                 onBlur={() => {
@@ -97,7 +97,7 @@ const Card = (props) => {
                 className={getClassName()}
                 onClick={onClick ? onClick : null}
                 disabled={!props.model.canClick}
-                tabIndex={props.model.canClick?0:-1}
+                tabIndex={props.model.canClick ? 0 : -1}
                 aria-label={label}
             >
                 {props.model.isHidden ? (

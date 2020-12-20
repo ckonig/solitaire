@@ -43,7 +43,7 @@ export default class Navigator {
         }
     };
 
-    valid = (pos: NavIndex) => pos.x === this.currentIndex.x && pos.y === this.currentIndex.y;
+    valid = (pos: NavIndex) => pos.x === this.currentIndex.x && pos.y === this.currentIndex.y && pos.z === this.currentIndex.z;
 
     moveLeft = (pos: NavIndex) =>
         this.move(pos, () => {
@@ -69,27 +69,45 @@ export default class Navigator {
         if (this.current() == undefined) {
             this.move(this.currentIndex, direction);
         } else {
+            this.currentIndex.z = this.current().getClickable().length-1;
             this.finishNav();
         }
     };
 
     moveUp = (pos: NavIndex) => {
-        this.toggleRow(pos);
-    };
-
-    moveDown = (pos: NavIndex) => {
-        this.toggleRow(pos);
-    };
-
-    toggleRow = (pos: NavIndex) => {
         if (!this.valid(pos)) {
             return;
         }
+        const clickable = this.current().getClickable();
+        if (clickable.length && this.currentIndex.z > 0) {
+            this.currentIndex.z--;
+            this.finishNav();
+        } else {
+            this.toggleRow(true);
+        }
+    };
+
+    moveDown = (pos: NavIndex) => {
+        if (!this.valid(pos)) {
+            return;
+        }
+        const clickable = this.current().getClickable();
+        if (clickable.length && this.currentIndex.z < clickable.length - 1) {
+            this.currentIndex.z++;
+            this.finishNav();
+        } else {
+            this.toggleRow(false);
+        }
+    };
+
+    toggleRow = (pickLast : boolean) => {
         if (this.currentIndex.y == 0) {
             this.currentIndex.y = 1;
         } else {
             this.currentIndex.y = 0;
         }
+        const last = this.current() ? this.current().getClickable().length - 1 : 0;
+        this.currentIndex.z = pickLast ? last : 0;
         if (this.current() == undefined) {
             this.moveLeft(this.currentIndex);
         } else {
@@ -98,8 +116,9 @@ export default class Navigator {
     };
 
     finishNav = () => {
-        if (this.current().getTop()) {
-            this.model.focus.setCard(this.current().getTop());
+        const clickable = this.current().getClickable();
+        if (clickable && clickable[this.currentIndex.z]) {
+            this.model.focus.setCard(clickable[this.currentIndex.z]);
         } else {
             this.model.focus.setStack(this.current().source);
         }

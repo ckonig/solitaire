@@ -50,6 +50,6 @@ export default class SuggestionModes {
     static get = (key: string) => new SuggestionMode(key, SuggestionModes.raw[key]);
     static all = () => Object.keys(SuggestionModes.raw).map(SuggestionModes.get);
     static allSuggestionModes = () => SuggestionModes.all().filter((mode) => !mode.isTemporary);
-    static default = () => SuggestionModes.get(SuggestionModes.NONE);
+    static default = () => SuggestionModes.get(SuggestionModes.REGULAR);
     static getHintMode = () => SuggestionModes.get(SuggestionModes.ONCE);
 }
