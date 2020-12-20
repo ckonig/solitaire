@@ -16,6 +16,7 @@ export default class Waste extends BasicStack {
     add = (card) => card && this.stack.push(this.setCardProperties(card));
 
     setClickability = (passthrough) => {
+        this.stack.forEach(card => { card.canClick = false;})
         this.getTop() && (this.getTop().canClick = true);
         return passthrough;
     };
