@@ -1,5 +1,4 @@
 import GlobalContext from "../Context";
-import PS4 from "./layouts/PS4";
 import React from "react";
 import ReactGamePad from "react-gamepad";
 
@@ -51,26 +50,9 @@ const GamePad = () => {
     //allow switching PS4 and XBOX layouts
     //also support splitscreen battle mode
     return (
-        <>
-            <ReactGamePad
-                layout={PS4}
-                gamepadIndex={0}
-                onButtonDown={buttonHandler}
-                onConnect={connectHandler}
-                onDisconnect={disconnectHandler}
-            >
-                <span></span>
-            </ReactGamePad>
-            <ReactGamePad
-                layout={PS4}
-                gamepadIndex={1}
-                onButtonDown={buttonHandler}
-                onConnect={connectHandler}
-                onDisconnect={disconnectHandler}
-            >
-                <span></span>
-            </ReactGamePad>
-        </>
+        <ReactGamePad gamepadIndex={0} onButtonDown={buttonHandler} onConnect={connectHandler} onDisconnect={disconnectHandler}>
+            <span></span>
+        </ReactGamePad>
     );
 };
 
