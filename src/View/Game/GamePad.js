@@ -59,7 +59,7 @@ const GamePad = () => {
                 onConnect={connectHandler}
                 onDisconnect={disconnectHandler}
             >
-                <span>gamepad</span>
+                <span></span>
             </ReactGamePad>
             <ReactGamePad
                 layout={PS4}
@@ -68,7 +68,7 @@ const GamePad = () => {
                 onConnect={connectHandler}
                 onDisconnect={disconnectHandler}
             >
-                <span>gamepad</span>
+                <span></span>
             </ReactGamePad>
         </>
     );
