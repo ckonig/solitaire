@@ -1,9 +1,11 @@
+import Card from "../Model/Deck/Card";
 import { IStack } from "../Model/Game/IStack";
 import Model from "../Model/Model";
 
 interface NavIndex {
     x: number;
     y: number;
+    z: number;
 }
 
 export default class Navigator {
@@ -12,17 +14,28 @@ export default class Navigator {
     rows: IStack[][];
     constructor(model: Model) {
         this.model = model;
-        this.currentIndex = { x: 0, y: 0 };
+        this.currentIndex = { x: 0, y: 0, z: 0 };
         this.rows = [[this.model.stock, this.model.waste, undefined, ...this.model.foundation.stacks], [...this.model.tableau.stacks]];
     }
 
-    update = (pos: string) => {
+    getZindex = (elem: IStack, card: Card) => {
+        const targets = elem.getClickable();
+        for (let i = 0; i < targets.length; i++) {
+            if (Card.equals(card, targets[i])) {
+                return i;
+            }
+        }
+        return 0;
+    };
+
+    update = (pos: string, card: Card) => {
         for (let i = 0; i < this.rows.length; i++) {
             const row = this.rows[i];
             for (let j = 0; j < row.length; j++) {
                 const elem = row[j];
                 if (elem && elem.source == pos) {
-                    this.currentIndex = { x: j, y: i };
+                    const zIndex = this.getZindex(elem, card);
+                    this.currentIndex = { x: j, y: i, z: zIndex };
                     this.finishNav();
                     return;
                 }

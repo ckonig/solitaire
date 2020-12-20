@@ -86,7 +86,7 @@ const Card = (props) => {
             <button
                 onFocus={() => {
                     updateContext((ctx) => {
-                        ctx.navigator.update(props.model.source)
+                        ctx.navigator.update(props.model.source, props.index)
                     });
                 }}
                 onBlur={() => {
@@ -96,8 +96,8 @@ const Card = (props) => {
                 ref={inputEl}
                 className={getClassName()}
                 onClick={onClick ? onClick : null}
-                disabled={!props.canClick}
-                tabIndex={0}
+                disabled={!props.model.canClick}
+                tabIndex={props.model.canClick?0:-1}
                 aria-label={label}
             >
                 {props.model.isHidden ? (

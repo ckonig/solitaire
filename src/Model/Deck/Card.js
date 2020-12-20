@@ -36,6 +36,7 @@ export default class Card {
         const copy = new Card(orig.face, orig.type, orig.isHidden);
         copy.source = orig.source;
         copy.entropyStyle = { ...orig.entropyStyle };
+        copy.canClick = orig.canClick;
         return copy;
     };
 

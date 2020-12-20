@@ -45,12 +45,12 @@ export default class Dealer {
         for (let i = this.dealingAt; i < tableau.stacks.length; i++) {
             const stack = tableau.stacks[i].stack;
             if (stack.length <= tableau.stacks.length - i - 1) {
-                const newCard = stock.stack.pop();
+                const newCard = stock.popOne();
                 newCard.source = tableau.stacks[i].source;
                 if (stack.length == tableau.stacks.length - 1 - i) {
                     newCard.isHidden = false;
                 }
-                stack.push(newCard);
+                tableau.deal(newCard, i);
                 this.dealt++;
                 this.dealingAt++;
                 if (this.dealingAt == tableau.stacks.length) {

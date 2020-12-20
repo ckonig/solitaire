@@ -66,12 +66,18 @@ export default class Tableau {
             if (card && card.equals(this.stacks[i].stack[j])) {
                 const result = this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
                 this.stackEntropy(i);
+                this.setClickability(i);
                 return result;
             }
         }
 
         return [];
     };
+
+    deal = (card: Card, index: number) => {
+        this.stacks[index].stack.push(card);
+        this.setClickability(index);
+    }
 
     canUncover = (index: number, card: Card) => {
         const top = this.getTop(index);
@@ -84,6 +90,7 @@ export default class Tableau {
             top.isHidden = false;
             this.focus.setCard(top);
             this.stackEntropy(index);
+            this.setClickability(index);
             return true;
         }
 
@@ -102,14 +109,22 @@ export default class Tableau {
         }
     };
 
+    setClickability = (index: number) => {
+        const stack = this.stacks[index];
+        stack.stack.forEach((card) => {
+            card.canClick = !card.isHidden || this.canUncover(index, card);
+        });
+    };
+
     add = (index: number, cards: Card[]) => {
         this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
         this.stackEntropy(index);
+        this.setClickability(index);
         return cards;
     };
 
     setCardProperties = (card: Card, index: number) => {
-        card.source = "tableau-" + index;
+        card.source = this.stacks[index].source;
         return card;
     };
 

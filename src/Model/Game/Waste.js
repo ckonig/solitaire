@@ -15,12 +15,18 @@ export default class Waste extends BasicStack {
 
     add = (card) => card && this.stack.push(this.setCardProperties(card));
 
-    addAll = (cards) => cards && cards.length && cards.map(this.add);
+    setClickability = (passthrough) => {
+        this.getTop() && (this.getTop().canClick = true);
+        return passthrough;
+    };
+
+    addAll = (cards) => cards && cards.length && cards.map(this.add) && this.setClickability(1);
 
     setCardProperties = (card) => {
         card.source = this.source;
         card.isHidden = false;
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
+        card.canClick = false;
         return card;
     };
 
@@ -28,7 +34,7 @@ export default class Waste extends BasicStack {
 
     canAdd = (card) => card && (!this.getTop() || !card.equals(this.getTop()));
 
-    popTop = (card) => card && card.equals(this.getTop()) && this.stack.pop();
+    popTop = (card) => card && card.equals(this.getTop()) && this.setClickability(this.stack.pop());
 
     recycle = () => this.stack.splice(0, this.stack.length);
 

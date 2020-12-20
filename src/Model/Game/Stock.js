@@ -7,6 +7,7 @@ export default class Stock extends BasicStack {
         this.settings = settings;
         this.focus = focus;
         this.stack = stack.map(this.setCardProperties);
+        this.setClickability();
         this.recyclings = 0;
         this.passes = -1;
         // eslint-disable-next-line no-unused-vars
@@ -21,6 +22,19 @@ export default class Stock extends BasicStack {
         }
     }
 
+    setClickability = () => {
+        if (this.getTop()) {
+            this.getTop().canClick = true;
+        }
+        return true;
+    };
+
+    popOne = () => {
+        const result = this.stack.pop();
+        this.setClickability();
+        return result;
+    }
+
     canRecycle() {
         return (
             this.settings.launchSettings.recyclingMode == "infinite" ||
@@ -31,6 +45,7 @@ export default class Stock extends BasicStack {
     recycle = (waste) => {
         if (waste.length) {
             this.stack = waste.reverse().map(this.setCardProperties);
+            this.setClickability();
             this.recyclings++;
             this.focus.setCard(this.getTop());
             return true;
@@ -43,6 +58,7 @@ export default class Stock extends BasicStack {
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 1));
         card.isHidden = true;
         card.source = this.source;
+        card.canClick = false;
         return card;
     };
 
@@ -64,6 +80,8 @@ export default class Stock extends BasicStack {
         } else {
             this.focus.setStack("stock");
         }
+
+        this.setClickability();
 
         return result;
     };

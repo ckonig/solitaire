@@ -46,6 +46,7 @@ const StackBase = (props) => {
             className={classname}
             onClick={onClick}
             disabled={!props.visible}
+            tabIndex={props.visible ? 0 : -1}
         >
             {props.children}
         </button>

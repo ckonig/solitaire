@@ -45,7 +45,6 @@ export default class Tableau extends BlinkingComponent {
                     <Card
                         key={index}
                         model={card}
-                        canClick={!card.isHidden || props.parent.canUncover(props.index, card)}
                         blink={props.model.blinkFor}
                         isSuggested={props.model.suggestion && props.model.stack.length - 1 == index}
                         offsetTop={getOffset(index)}

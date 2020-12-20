@@ -47,7 +47,6 @@ export default class Waste extends BlinkingComponent {
                         model={card}
                         offsetTop={(index / 2) * -1}
                         offsetLeft={getOffset(index)}
-                        canClick={index == state.waste.stack.length-1}
                         blink={state.waste.blinkFor}
                         isSuggested={state.waste.suggestion && index == state.waste.stack.length - 1}
                         onClick={(c, p) => onClick(c, p)}
