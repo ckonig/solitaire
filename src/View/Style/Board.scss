@@ -124,7 +124,7 @@ $focused: #3c99dc;
 .card-suggested {
     box-shadow: 0vw 0vw 0.4vw 0.4vw $suggested;
     animation: cardBlinker 2s linear infinite;
-    transition: all 0.94s ease-in-out;
+    
 }
 
 .card-suggested:hover {
@@ -221,7 +221,7 @@ $focused: #3c99dc;
 
 .card-stack-stock {
     box-shadow: -0.3vw -0.3vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
-    transition: all 0.24s ease-in-out;
+    
 }
 
 .card-stack-stock.card-focused {
@@ -238,7 +238,7 @@ $focused: #3c99dc;
 
 .card-stack-waste {
     box-shadow: -0.2vw -0.3vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
-    transition: all 0.24s ease-in-out;
+    
 }
 .card-stack-waste.card-focused {
     box-shadow: 0vw 0vw 0.4vw 0.4vw $focused;
@@ -251,11 +251,11 @@ $focused: #3c99dc;
 @for $i from 0 through 3 {
     .card-stack-foundation-#{$i} {
         box-shadow: #{$i * 0.1}vw -0.4vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
-        transition: all 0.24s ease-in-out;
+        
     }
     .card-stack-foundation-#{$i}.blink {
         box-shadow: #{$i * 0.1}vw -0.4vw 0.2vw 0.2vw red;
-        transition: all 0.24s ease-in-out;
+        
     }
     .card-stack-foundation-#{$i}.card-focused {
         box-shadow: 0vw 0vw 0.4vw 0.4vw $focused;
@@ -268,11 +268,11 @@ $focused: #3c99dc;
 @for $i from -3 through 3 {
     .card-stack-tableau-#{$i + 3} {
         box-shadow: #{$i * 0.1}vw -0.2vw 0.2vw 0.2vw rgba(0, 0, 0, 075);
-        transition: all 0.24s ease-in-out;
+        
     }
     .card-stack-tableau-#{$i + 3}.blink {
         box-shadow: #{$i * 0.1}vw -0.2vw 0.2vw 0.2vw red;
-        transition: all 0.24s ease-in-out;
+       
     }
     .card-stack-tableau-#{$i + 3}.card-focused {
         box-shadow: 0vw 0vw 0.4vw 0.4vw $focused;
