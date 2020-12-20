@@ -12,7 +12,7 @@ export default class Stock extends BlinkingComponent {
         const { state, updateGameContext } = this.context;
         const onClick = (c, p, i) => updateGameContext(state.stock.onClick(c, p, i));
         return (
-            <div>
+            <div className="board-field stock">
                 <StackBase
                     parent={state.stock.source}
                     blink={state.stock.blinkFor}

@@ -100,35 +100,37 @@ const Card = (props) => {
                 tabIndex={props.model.canClick ? 0 : -1}
                 aria-label={label}
             >
-                {props.model.isHidden ? (
-                    <div className="card-back">&nbsp;</div>
-                ) : (
-                    <div className="card-grid-container">
-                        <div>
-                            <div className="align-center">{props.model.type.icon}</div>
+                <div className="card-content">
+                    {props.model.isHidden ? (
+                        <div className="card-back">&nbsp;</div>
+                    ) : (
+                        <div className="card-grid-container">
+                            <div>
+                                <div className="align-center">{props.model.type.icon}</div>
+                            </div>
+                            <div>
+                                <div className="align-left">{props.model.face}</div>
+                            </div>
+                            <div>&nbsp;</div>
+                            <div>
+                                <div className="align-center">{props.model.type.icon}</div>
+                            </div>
+                            <div className="mainface">
+                                <div className="align-center">{props.model.face}</div>
+                            </div>
+                            <div>
+                                <div className="align-center">{props.model.type.icon}</div>
+                            </div>
+                            <div>&nbsp;</div>
+                            <div>
+                                <div className="align-right">{props.model.face}</div>
+                            </div>
+                            <div>
+                                <div className="align-center">{props.model.type.icon}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div className="align-left">{props.model.face}</div>
-                        </div>
-                        <div>&nbsp;</div>
-                        <div>
-                            <div className="align-center">{props.model.type.icon}</div>
-                        </div>
-                        <div className="mainface">
-                            <div className="align-center">{props.model.face}</div>
-                        </div>
-                        <div>
-                            <div className="align-center">{props.model.type.icon}</div>
-                        </div>
-                        <div>&nbsp;</div>
-                        <div>
-                            <div className="align-right">{props.model.face}</div>
-                        </div>
-                        <div>
-                            <div className="align-center">{props.model.type.icon}</div>
-                        </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </button>
         </div>
     );

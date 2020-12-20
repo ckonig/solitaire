@@ -21,12 +21,12 @@ export default class Foundation extends BlinkingComponent {
     render() {
         const model = this.props.model;
         return (
-            <div key={this.props.index}>
+            <div className="board-field" key={this.props.index}>
                 <StackBase
                     parent={model.source}
                     suggested={model.suggestion && !model.stack.length}
                     blink={model.blinkFor}
-                    onClick={(c,p) => this.props.onClick(null, p, this.props.index)}
+                    onClick={(c, p) => this.props.onClick(null, p, this.props.index)}
                     visible={!model.stack.length}
                 >
                     <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>

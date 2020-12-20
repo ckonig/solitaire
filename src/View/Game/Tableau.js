@@ -33,7 +33,7 @@ export default class Tableau extends BlinkingComponent {
         };
 
         return (
-            <div>
+            <div className="board-field">
                 <StackBase
                     parent={props.model.source}
                     suggested={props.model.suggestion && !props.model.stack.length}

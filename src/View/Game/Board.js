@@ -14,7 +14,7 @@ import Waste from "./Waste";
 
 const Board = () => (
     <>
-        <div className="layout-grid-container">
+        <div className="layout-grid-container singleplayer">
             <Header />
             <div className="board-grid-container">
                 <Stock />

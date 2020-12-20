@@ -2,57 +2,75 @@ $suggested: orange;
 $selected: yellow;
 $focused: #3c99dc;
 
-.layout-grid-container {
-    margin-left: 1vw;
+button {
+    font-size:1em;
+}
+
+.layout-grid-container.singleplayer {
+    width:90vw;
     display: grid;
     grid-template-areas:
         "header"
         "game";
-    grid-template-rows: 3.3vw 53vw;
+    grid-template-rows: 3.3vw 50vw;
     grid-gap: 0.5vw;
     background-color: "darkgreen";
-    padding: 0.5vw;
+    font-size: 2vw;
+}
+
+.layout-grid-container.splitscreen {
+    width:45vw;
+    display: grid;
+    grid-template-areas:
+        "header"
+        "game";
+    grid-template-rows: 3.3vw 50vw;
+    grid-gap: 0.5vw;
+    background-color: "darkgreen";
+    font-size: 1vw;
 }
 
 .header {
     grid-area: header;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 0.5vw;
-    padding-left: 1vw;
-    font-size: 2vw;
     color: white;
 }
 
 .board-grid-container {
+    margin:1vw;
     grid-area: game;
-    margin-top: 2vw;
     display: grid;
+    grid-gap: 1.5vw;
+    align-content: start;
     grid-template-areas:
         "stock waste spacer foundation foundation foundation foundation"
         "tableau tableau tableau tableau tableau tableau tableau";
-    grid-template-rows: 14vw 38vw;
-    grid-gap: 1vw;
     background-color: "darkgreen";
-    padding: 1vw;
 }
+
+.board-field {
+    position: relative;
+}
+
+.board-field.stock { grid-area: stock;}
 
 .mainface {
     grid-area: mainface;
     text-align: center;
-    font-size: 5vw;
+    font-size: 2.5em;
 }
 
 .card-grid-container {
     display: grid;
-    font-size: 2vw;
-    grid-template-rows: 2.0vw 8.3vw 2.0vw;
+    grid-template-rows: 10% 75% 15%;
     grid-template-areas:
         "suite-tl face-tl spacer-t suite-tr"
         "mainface mainface mainface mainface"
         "suite-bl spacer-b face-br suite-br";
-    grid-gap: 0.2vw;
     height: 100%;
     width: 100%;
+   
 }
 
 .card-grid-container > div {
@@ -61,11 +79,12 @@ $focused: #3c99dc;
 
 .stack-base {
     position: absolute;
+    width:100%;
 }
 
 .card-base {
-    width: 9.45vw;
-    height: 13.2vw;
+    width: 100%;
+    padding-top: 150%;
     border-radius: 0.5vw;
     float: left;
     position: relative;
@@ -97,7 +116,9 @@ $focused: #3c99dc;
     border-color: black;
     background-color: white;
     padding: 0;
+    padding-top: 150%;
     overflow: hidden;
+    position: relative;
 }
 .socket {
     background-color: transparent;
@@ -148,7 +169,16 @@ $focused: #3c99dc;
     box-shadow: 0vw 0vw 0.4vw 0.4vw red;
 }
 
+.card-content {
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;  
+    bottom:0;    
+}
+
 .card-back {
+     
     background-color: hsl(34, 53%, 82%);
     background-image: repeating-linear-gradient(
             45deg,
@@ -216,7 +246,7 @@ $focused: #3c99dc;
 }
 
 .foundation-base {
-    font-size: 6vw;
+    font-size: 3em  ;
 }
 
 .card-stack-stock {

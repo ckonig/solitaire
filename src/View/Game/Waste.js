@@ -33,7 +33,7 @@ export default class Waste extends BlinkingComponent {
         };
 
         return (
-            <div>
+            <div className="board-field">
                 <StackBase
                     parent={state.waste.source}
                     blink={state.waste.blinkFor}
