@@ -31,8 +31,14 @@ const Card = (props) => {
                 y: rect.y,
             },
         };
-        if (props.model.onClick) {
-            updateGameContext(props.model.onClick(position));
+        const isSinglePlayer = state.settings.launchSettings.mode === "singleplayer";
+        if (props.model.onClick && !position.isKeyBoard) {
+            updateGameContext((context) => {
+                props.model.onClick(position)(context);
+                if (isSinglePlayer) {
+                    context.settings.launchSettings.inputMode = "mouse";
+                }
+            });
         }
     };
 

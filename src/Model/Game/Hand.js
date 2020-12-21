@@ -1,8 +1,7 @@
 import Card from "../Deck/Card";
 
 export default class Hand {
-    constructor(focus) {
-        this.focus = focus;
+    constructor() {
         this.stack = [];
         this.source = null;
         this.position = null;
@@ -24,9 +23,6 @@ export default class Hand {
     putDown = () => {
         this.source = null;
         const result = this.stack.splice(0, this.stack.length);
-        if (result.length) {
-            this.focus.setCard(result[result.length - 1]);
-        }
         return result;
     };
 

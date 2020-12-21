@@ -50,17 +50,16 @@ const GamePad = () => {
             });
         }
         if (e == "A") {
-            updateGameContext(
-                state.navigator.pressCurrent((ctx) => {
-                    //@hack: we need updateGameContext for UNDO but if there is not focus yet, this is not a business action
-                    ctx.game.timemachine.modified = true; 
-                    ctx.focus.isKeyBoard(true);
+            updateGameContext((context) => {
+                state.navigator.pressCurrent()(context);
+                context.focus.isKeyBoard(true);
                     if (isSinglePlayer) {
-                        ctx.settings.mouseMode = "remain-on-stack";
-                        ctx.settings.launchSettings.inputMode = "gamepad";
+                        context.settings.mouseMode = "remain-on-stack";
+                        context.settings.launchSettings.inputMode = "gamepad";
                     }
-                })
-            );
+                //@hack: we need updateGameContext for UNDO but if there is not focus yet, this is not a business action
+                context.game.timemachine.modified = true;
+            });
         }
         if (e == "B") {
             //putdown
@@ -68,6 +67,14 @@ const GamePad = () => {
         }
         if (e == "X") {
             //hint
+            const isVisible = (state) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
+            const isDisabled = (state) => state.settings.suggestionMode.isTemporary;
+
+            updateContext((state) => {
+                if (isVisible(state) && !isDisabled(state)) {
+                    state.settings.enableHint();
+                }
+            });
             console.debug("pressed X", e);
         }
         if (e == "Y") {

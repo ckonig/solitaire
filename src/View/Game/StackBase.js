@@ -4,7 +4,7 @@ import React from "react";
 const StackBase = (props) => {
     let classname = "card-base socket";
     const inputEl = React.useRef(null);
-    const { state, updateContext, updateGameContext } = React.useContext(GlobalContext);
+    const { state, updateGameContext } = React.useContext(GlobalContext);
     React.useEffect(() => {
         if (state.focus.hasStack(props.model.parent) && state.settings.launchSettings.mode == "singleplayer") {
             inputEl && inputEl.current && inputEl.current.focus();
@@ -29,18 +29,20 @@ const StackBase = (props) => {
     const onClick = (e) => {
         e.preventDefault();
         const isKeyBoard = e.clientX == 0 && e.clientY == 0;
-        return updateGameContext(props.model.clickEmpty({ isKeyBoard }));
+        if (!isKeyBoard) {
+            updateGameContext(props.model.clickEmpty({ isKeyBoard }));
+        }
     };
 
     return (
         <button
             onFocus={() => {
-                updateContext((ctx) => {
-                    ctx.navigator.update(props.model.parent);
-                });
+                // updateContext((ctx) => {
+                //     ctx.navigator.update(props.model.parent);
+                // });
             }}
             onBlur={() => {
-                updateContext((ctx) => ctx.focus.unsetStack(props.model.parent));
+                // updateContext((ctx) => ctx.focus.unsetStack(props.model.parent));
             }}
             ref={inputEl}
             className={classname}

@@ -32,16 +32,15 @@ export default class Model {
 
     static getInitialState = (launchSettings: AppState, deck: Deck) => {
         const settings = new Settings(launchSettings);
-        const focus = new Focus(settings);
         const state = {
-            stock: new Stock([...deck.cards], settings, focus),
+            stock: new Stock([...deck.cards], settings),
             waste: new Waste(settings),
             foundation: new Foundation(settings),
-            tableau: new Tableau(settings, focus),
-            hand: new Hand(focus),
+            tableau: new Tableau(settings),
+            hand: new Hand(),
             game: new Game(settings),
             settings: settings,
-            focus: focus,
+            focus: new Focus(settings),
         };
         return state;
     };

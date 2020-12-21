@@ -6,7 +6,7 @@ const Navigator = () => {
     const isKeyboardDriven = state.settings.launchSettings.inputMode === "keyboard";
     const isSinglePlayer = state.settings.launchSettings.mode === "singleplayer";
     const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };
-    const switchToKeyboard = (ctx, isSinglePlayer) => {
+    const switchToKeyboard = (ctx) => {
         state.focus.isKeyBoard(true);
         if (isSinglePlayer) {
             ctx.settings.mouseMode = "remain-on-stack";
@@ -17,34 +17,39 @@ const Navigator = () => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 37) {
             updateContext((ctx) => {
-                switchToKeyboard(ctx, isSinglePlayer);
+                switchToKeyboard(ctx);
                 ctx.navigator.moveLeft(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 39) {
             updateContext((ctx) => {
-                switchToKeyboard(ctx, isSinglePlayer);
+                switchToKeyboard(ctx);
                 ctx.navigator.moveRight(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 38) {
             updateContext((ctx) => {
-                switchToKeyboard(ctx, isSinglePlayer);
+                switchToKeyboard(ctx);
                 ctx.navigator.moveUp(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 40) {
             updateContext((ctx) => {
-                switchToKeyboard(ctx, isSinglePlayer);
+                switchToKeyboard(ctx);
                 ctx.navigator.moveDown(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 96) {
-            updateGameContext(state.navigator.pressCurrent());
+            updateGameContext((context) => {
+                state.navigator.pressCurrent()(context);
+                switchToKeyboard(context, isSinglePlayer);
+                //@hack: we need updateGameContext for UNDO but if there is not focus yet, this is not a business action
+                context.game.timemachine.modified = true;
+            });
         }
     };
     React.useEffect(() => {

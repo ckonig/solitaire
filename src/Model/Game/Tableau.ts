@@ -1,6 +1,5 @@
 import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
-import Focus from "./Focus";
 import Hand from "./Hand";
 import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
@@ -16,10 +15,8 @@ class TableauStack extends BasicStack {
 export default class Tableau {
     stacks: TableauStack[];
     settings: Settings;
-    focus: Focus;
 
-    constructor(settings: Settings, focus: Focus) {
-        this.focus = focus;
+    constructor(settings: Settings) {
         const ids = [0, 1, 2, 3, 4, 5, 6];
         this.stacks = ids.map((id) => {
             const s = new TableauStack("tableau-" + id);
@@ -102,7 +99,6 @@ export default class Tableau {
             top.isHidden = false;
             this.stackEntropy(index);
             this.setClickability(index);
-            this.focus.setCard(top);
             return true;
         }
 
@@ -149,7 +145,7 @@ export default class Tableau {
     getTop = (index: number, offset?: number) => this.stacks[index].stack[this.stacks[index].stack.length - 1 - (offset || 0)];
 
     static copy = (orig: Tableau) => {
-        const copy = new Tableau(orig.settings, orig.focus);
+        const copy = new Tableau(orig.settings);
         copy.stacks = orig.stacks.map((stack, index) => {
             const s = new TableauStack(stack.source);
             s.id = index;

@@ -2,10 +2,9 @@ import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
 
 export default class Stock extends BasicStack {
-    constructor(stack, settings, focus) {
+    constructor(stack, settings) {
         super("stock");
         this.settings = settings;
-        this.focus = focus;
         this.stack = stack.map(this.setCardProperties);
         this.setClickability();
         this.recyclings = 0;
@@ -53,7 +52,6 @@ export default class Stock extends BasicStack {
             this.stack = waste.reverse().map(this.setCardProperties);
             this.setClickability();
             this.recyclings++;
-            this.focus.setCard(this.getTop());
             return true;
         }
 
@@ -81,11 +79,7 @@ export default class Stock extends BasicStack {
         if (this.stack.length == 0) {
             this.passes--;
         }
-        if (this.stack.length) {
-            this.focus.setCard(this.getTop());
-        } else {
-            this.focus.setStack("stock");
-        }
+       
 
         this.setClickability();
 
