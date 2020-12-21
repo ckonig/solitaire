@@ -11,7 +11,7 @@ const GamePad = () => {
         console.log(e);
         if (e == "DPadLeft") {
             updateContext((ctx) => {
-                state.focus.isKeyBoard(true);
+                ctx.focus.isKeyBoard(true);
                 if (isSinglePlayer) {
                     ctx.settings.mouseMode = "remain-on-stack";
                     ctx.settings.launchSettings.inputMode = "gamepad";
@@ -21,7 +21,7 @@ const GamePad = () => {
         }
         if (e == "DPadRight") {
             updateContext((ctx) => {
-                state.focus.isKeyBoard(true);
+                ctx.focus.isKeyBoard(true);
                 if (isSinglePlayer) {
                     ctx.settings.mouseMode = "remain-on-stack";
                     ctx.settings.launchSettings.inputMode = "gamepad";
@@ -31,7 +31,7 @@ const GamePad = () => {
         }
         if (e == "DPadUp") {
             updateContext((ctx) => {
-                state.focus.isKeyBoard(true);
+                ctx.focus.isKeyBoard(true);
                 if (isSinglePlayer) {
                     ctx.settings.mouseMode = "remain-on-stack";
                     ctx.settings.launchSettings.inputMode = "gamepad";
@@ -41,7 +41,7 @@ const GamePad = () => {
         }
         if (e == "DPadDown") {
             updateContext((ctx) => {
-                state.focus.isKeyBoard(true);
+                ctx.focus.isKeyBoard(true);
                 if (isSinglePlayer) {
                     ctx.settings.mouseMode = "remain-on-stack";
                     ctx.settings.launchSettings.inputMode = "gamepad";
@@ -50,7 +50,29 @@ const GamePad = () => {
             });
         }
         if (e == "A") {
-            updateGameContext(state.navigator.pressCurrent());
+            updateGameContext(
+                state.navigator.pressCurrent((ctx) => {
+                    //@hack: we need updateGameContext for UNDO but if there is not focus yet, this is not a business action
+                    ctx.game.timemachine.modified = true; 
+                    ctx.focus.isKeyBoard(true);
+                    if (isSinglePlayer) {
+                        ctx.settings.mouseMode = "remain-on-stack";
+                        ctx.settings.launchSettings.inputMode = "gamepad";
+                    }
+                })
+            );
+        }
+        if (e == "B") {
+            //putdown
+            console.debug("pressed B", e);
+        }
+        if (e == "X") {
+            //hint
+            console.debug("pressed X", e);
+        }
+        if (e == "Y") {
+            //
+            console.debug("pressed Y ", e);
         }
     };
     const connectHandler = (e) => {

@@ -1,6 +1,8 @@
+import BusinessModel from "./BusinessModel";
 import Card from "../Model/Deck/Card";
 import { IStack } from "../Model/Game/IStack";
 import Model from "../Model/Model";
+import { StateUpdater } from "../Common";
 
 interface NavIndex {
     x: number;
@@ -128,11 +130,16 @@ export default class Navigator {
         return this.rows[this.currentIndex.y][this.currentIndex.x];
     };
 
-    pressCurrent = () => {
+    pressCurrent = (modifier: StateUpdater) => {
         if (this.model.focus.card) {
             return this.model.focus.card.onClick({ isKeyboard: true });
         } else if (this.model.focus.stack) {
             return this.current().clickEmpty({ isKeyboard: true });
+        } else {
+            return (ctx: BusinessModel) => {
+                modifier(ctx);
+                ctx.navigator.finishNav();
+            };
         }
     };
 }

@@ -14,7 +14,7 @@ import Waste from "./Waste";
 export default class BusinessModel extends Model {
     suggestor: Suggestions;
     dealer: Dealer;
-    navigator: Navigator | undefined;
+    navigator: Navigator;
 
     constructor(obj: any) {
         super(obj);
