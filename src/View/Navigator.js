@@ -1,5 +1,5 @@
-import BoardGamePad from "./BoardGamePad";
-import BoardKeyboard from "./BoardKeyboard";
+import BoardGamePad from "./Game/BoardGamePad";
+import BoardKeyboard from "./Game/BoardKeyboard";
 import React from "react";
 
 const Navigator = (props) => {
@@ -14,6 +14,7 @@ const Navigator = (props) => {
                 onCancel={props.onCancel}
                 onHint={props.onHint}
                 onUndo={props.onUndo}
+                onPause={props.onPause}
             />
             <BoardGamePad
                 onLeft={props.onLeft}
@@ -24,6 +25,7 @@ const Navigator = (props) => {
                 onCancel={props.onCancel}
                 onHint={props.onHint}
                 onUndo={props.onUndo}
+                onPause={props.onPause}
             />
         </>
     );

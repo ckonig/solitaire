@@ -3,6 +3,7 @@ import ReactGamePad from "react-gamepad";
 
 const GamePad = (props) => {
     const buttonHandler = (e) => {
+        console.debug(e);
         if (e == "DPadLeft") {
             props.onLeft();
         }
@@ -26,6 +27,9 @@ const GamePad = (props) => {
         }
         if (e == "Y") {
             props.onUndo();
+        }
+        if (e == "Start") {
+            props.onPause();
         }
     };
     const connectHandler = (e) => {

@@ -103,12 +103,12 @@ const Card = (props) => {
                 ref={inputEl}
                 className={getClassName()}
                 onClick={onClick ? onClick : null}
-                disabled={!props.model.canClick()}
+                disabled={!props.model.canClick() || state.game.paused}
                 tabIndex={props.model.canClick() ? 0 : -1}
                 aria-label={label}
             >
                 <div className="card-content">
-                    {props.model.isHidden ? (
+                    {props.model.isHidden || state.game.paused ? (
                         <div className="card-back">&nbsp;</div>
                     ) : (
                         <div className="card-grid-container">

@@ -12,9 +12,9 @@ const Clock = () => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [state.game]);
 
-    return !state.game.started || !elapsed ? null : (
+    return !state.game.started || !state.game.getElapsed() ? null : (
         <div className="header-clock">
             <div className="icon-container">🕒</div>
             {elapsed}

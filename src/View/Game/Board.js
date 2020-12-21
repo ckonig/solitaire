@@ -21,7 +21,6 @@ const Board = (props) => (
                 <Tableau.Stacks />
             </div>
         </div>
-       
         <Dealer />
         <BoardNavigator />
     </>

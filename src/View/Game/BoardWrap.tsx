@@ -5,6 +5,7 @@ import BusinessModel from "../../Business/BusinessModel";
 import Deck from "../../Model/Deck/Deck";
 import EndScreen from "../UI/EndScreen";
 import Menu from "../UI/Menu";
+import PauseScreen from "../UI/PauseScreen";
 import { Provider } from "../Context";
 import React from "react";
 
@@ -55,6 +56,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
                 <Board mode={this.props.mode} />
                 <Menu />
                 <EndScreen />
+                <PauseScreen />
             </Provider>
         );
     };

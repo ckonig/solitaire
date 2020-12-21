@@ -5,6 +5,7 @@ import EndGame from "./EndGame";
 import Hearts from "./Hearts";
 import Hint from "./Hint";
 import InputMethod from "./InputMethod";
+import Pause from "./Pause";
 import Points from "./Points";
 import React from "react";
 import RestartGame from "../RestartGame";
@@ -22,6 +23,7 @@ const Header = () => (
             <InputMethod />
             <Hint />
             <Undo />
+            <Pause />
             <RestartGame />
             <EndGame />
             <ToggleMenu />

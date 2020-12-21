@@ -20,14 +20,15 @@ const BoardGamePad = (props) => {
     return isSinglePlayer || isGamePadDriven ? (
         <GamePad
             gamepadIndex={0}
-            onLeft={() => props.onLeft(switchToGamePad)}
-            onRight={() => props.onRight(switchToGamePad)}
-            onUp={() => props.onUp(switchToGamePad)}
-            onDown={() => props.onDown(switchToGamePad)}
-            onAction={() => props.onAction(switchToGamePad)}
-            onCancel={() => props.onCancel(switchToGamePad)}
-            onHint={() => props.onHint(switchToGamePad)}
-            onUndo={() => props.onUndo()}
+            onLeft={() => props.onLeft && props.onLeft(switchToGamePad)}
+            onRight={() => props.onRight && props.onRight(switchToGamePad)}
+            onUp={() => props.onUp && props.onUp(switchToGamePad)}
+            onDown={() => props.onDown && props.onDown(switchToGamePad)}
+            onAction={() => props.onAction && props.onAction(switchToGamePad)}
+            onCancel={() => props.onCancel && props.onCancel(switchToGamePad)}
+            onHint={() => props.onHint && props.onHint(switchToGamePad)}
+            onUndo={() => props.onUndo && props.onUndo()}
+            onPause={() => props.onPause && props.onPause(switchToGamePad)}
         >
             <span></span>
         </GamePad>

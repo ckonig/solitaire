@@ -35,6 +35,10 @@ const Keyboard = (props) => {
             props.onHint();
             e.preventDefault();
         }
+        if (evtobj.keyCode == 80) {
+            props.onPause();
+            e.preventDefault();
+        }
     };
     React.useEffect(() => {
         document.addEventListener("keydown", navListener);

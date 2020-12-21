@@ -1,10 +1,12 @@
 import GlobalContext from "../Context";
-import Navigator from "./Navigator";
+import Navigator from "../Navigator";
 import React from "react";
 
 const BoardNavigator = () => {
     const { state, updateContext, updateGameContext, replaceContext } = React.useContext(GlobalContext);
     const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };
+    const isPaused = !!state.game.paused;
+
     const onLeft = (modifier) =>
         updateContext((ctx) => {
             modifier(ctx);
@@ -41,6 +43,12 @@ const BoardNavigator = () => {
             ctx.hand.stack.length && ctx.hand.stack[0].onClick({ isKeyboard: true })(ctx);
         });
 
+    const onPause = (modifier) =>
+        updateContext((ctx) => {
+            modifier(ctx);
+            ctx.game.togglePause(isPaused);
+        });
+
     const isVisible = (state) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
     const isDisabled = (state) => state.settings.suggestionMode.isTemporary;
 
@@ -64,19 +72,18 @@ const BoardNavigator = () => {
         });
     };
 
-    return (
-        <>
-            <Navigator
-                onLeft={onLeft}
-                onRight={onRight}
-                onUp={onUp}
-                onDown={onDown}
-                onAction={onAction}
-                onCancel={onCancel}
-                onHint={onHint}
-                onUndo={onUndo}
-            />
-        </>
+    return isPaused ? null : (
+        <Navigator
+            onLeft={onLeft}
+            onRight={onRight}
+            onUp={onUp}
+            onDown={onDown}
+            onAction={onAction}
+            onCancel={onCancel}
+            onHint={onHint}
+            onUndo={onUndo}
+            onPause={onPause}
+        />
     );
 };
 

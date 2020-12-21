@@ -17,14 +17,15 @@ const BoardKeyboard = (props) => {
 
     return isKeyboardDriven || isSinglePlayer ? (
         <Keyboard
-            onLeft={() => props.onLeft(switchToKeyboard)}
-            onRight={() => props.onRight(switchToKeyboard)}
-            onUp={() => props.onUp(switchToKeyboard)}
-            onDown={() => props.onDown(switchToKeyboard)}
-            onAction={() => props.onAction(switchToKeyboard)}
-            onCancel={() => props.onCancel(switchToKeyboard)}
-            onHint={() => props.onHint(switchToKeyboard)}
-            onUndo={() => props.onUndo()}
+            onLeft={() => props.onLeft && props.onLeft(switchToKeyboard)}
+            onRight={() => props.onRight && props.onRight(switchToKeyboard)}
+            onUp={() => props.onUp && props.onUp(switchToKeyboard)}
+            onDown={() => props.onDown && props.onDown(switchToKeyboard)}
+            onAction={() => props.onAction && props.onAction(switchToKeyboard)}
+            onCancel={() => props.onCancel && props.onCancel(switchToKeyboard)}
+            onHint={() => props.onHint && props.onHint(switchToKeyboard)}
+            onUndo={() => props.onUndo && props.onUndo()}
+            onPause={() => props.onPause && props.onPause(switchToKeyboard)}
         />
     ) : null;
 };
