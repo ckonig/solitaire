@@ -12,9 +12,9 @@ import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
-const Board = () => (
+const Board = (props) => (
     <>
-        <div className="layout-grid-container splitscreen">
+        <div className={"layout-grid-container " + props.mode}>
             <Header />
             <div className="board-grid-container">
                 <Stock />

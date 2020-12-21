@@ -11,24 +11,15 @@ export default class Foundation extends BlinkingComponent {
     }
 
     static Stacks = () => {
-        const { state, updateGameContext } = React.useContext(GlobalContext);
-        const onClick = (c, p, i) => updateGameContext(state.foundation.onClick(c, p, i));
-        return state.foundation.stacks.map((foundation, index) => (
-            <Foundation key={index} model={foundation} index={index} onClick={onClick} />
-        ));
+        const { state } = React.useContext(GlobalContext);
+        return state.foundation.stacks.map((foundation, index) => <Foundation key={index} model={foundation} index={index} />);
     };
 
     render() {
         const model = this.props.model;
         return (
             <div className="board-field" key={this.props.index}>
-                <StackBase
-                    parent={model.source}
-                    suggested={model.suggestion && !model.stack.length}
-                    blink={model.blinkFor}
-                    onClick={(c, p) => this.props.onClick(null, p, this.props.index)}
-                    visible={!model.stack.length}
-                >
+                <StackBase model={model}>
                     <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>
                 </StackBase>
                 {model.stack.map((card, index) => (
@@ -37,12 +28,11 @@ export default class Foundation extends BlinkingComponent {
                         model={card}
                         blink={model.blinkFor}
                         isSuggested={model.suggestion && model.stack.length - 1 == index}
-                        onClick={(c, p) => this.props.onClick(c, p, this.props.index)}
                     />
                 ))}
                 <Hand
-                    parent={model.source}
-                    onClick={(c, p) => this.props.onClick(model.stack[model.stack.length - 1], p, this.props.index)}
+                parentModel={model}
+                    //onClick={(c, p) => onClick(model.stack[model.stack.length - 1], p, this.props.index)}
                     stack={model.stack}
                 />
             </div>

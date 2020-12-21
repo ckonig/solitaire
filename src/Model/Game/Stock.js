@@ -11,7 +11,6 @@ export default class Stock extends BasicStack {
         this.recyclings = 0;
         this.passes = -1;
         // eslint-disable-next-line no-unused-vars
-        this.onClick = (a, b, c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
         if (this.settings.launchSettings.recyclingMode == "1-pass") {
@@ -21,6 +20,13 @@ export default class Stock extends BasicStack {
             this.passes = 3;
         }
     }
+
+    setOnClick = (onClick) => {
+        this.clickEmpty = (p) => onClick(null, p);
+        this.stack.forEach((card) => {
+            card.onClick = (p) => onClick({...card}, p);
+        });
+    };
 
     setClickability = () => {
         if (this.getTop()) {
@@ -33,7 +39,7 @@ export default class Stock extends BasicStack {
         const result = this.stack.pop();
         this.setClickability();
         return result;
-    }
+    };
 
     canRecycle() {
         return (

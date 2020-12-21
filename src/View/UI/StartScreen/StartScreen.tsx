@@ -14,11 +14,13 @@ import TouchDetector from "./TouchDetector";
 
 interface StartScreenProps {
     start: (settings: AppState) => void;
+    initialState: AppState;
 }
 
 const StartScreen = (props: StartScreenProps) => {
     const start = () => {
         const settings = {
+            ...props.initialState,
             ...DifficultyOptions[state.difficultySettings].settings,
             ...state.ratingSettings,
             isTouch: state.isTouch,

@@ -9,7 +9,7 @@ interface NavIndex {
 }
 
 export default class Navigator {
-    model: any;
+    model: Model;
     currentIndex: NavIndex;
     rows: IStack[][];
     constructor(model: Model) {
@@ -69,7 +69,7 @@ export default class Navigator {
         if (this.current() == undefined) {
             this.move(this.currentIndex, direction);
         } else {
-            this.currentIndex.z = this.current().getClickable().length-1;
+            this.currentIndex.z = this.current().getClickable().length - 1;
             this.finishNav();
         }
     };
@@ -100,7 +100,7 @@ export default class Navigator {
         }
     };
 
-    toggleRow = (pickLast : boolean) => {
+    toggleRow = (pickLast: boolean) => {
         if (this.currentIndex.y == 0) {
             this.currentIndex.y = 1;
         } else {
@@ -126,5 +126,13 @@ export default class Navigator {
 
     current = () => {
         return this.rows[this.currentIndex.y][this.currentIndex.x];
+    };
+
+    pressCurrent = () => {
+        if (this.model.focus.card) {
+            return this.model.focus.card.onClick({ isKeyboard: true });
+        } else if (this.model.focus.stack) {
+            return this.current().clickEmpty({ isKeyboard: true });
+        }
     };
 }

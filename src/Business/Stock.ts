@@ -9,11 +9,14 @@ export default class Stock implements ClickHandler {
 
     dispatchPutDown = (_card: Card, _position: any, state: BusinessModel) => this.blink(state, 0);
 
-    dispatchPickup = (card: Card, _position: any, state: BusinessModel) =>
-        card != null ? this.moveToWaste(card, state) : this.recycleWaste(card, state);
+    dispatchPickup = (card: Card, _position: any, state: BusinessModel) =>{
+        return card != null ? this.moveToWaste(card, state) : this.recycleWaste(card, state);
+    }
 
     moveToWaste = (card: Card, state: BusinessModel) =>
-        state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock");
+    {
+        return state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock");
+    }
 
     recycleWaste = (_card: Card, state: BusinessModel) => {
         if (!state.stock.getTop()) {

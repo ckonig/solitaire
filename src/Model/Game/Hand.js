@@ -25,14 +25,27 @@ export default class Hand {
         this.source = null;
         const result = this.stack.splice(0, this.stack.length);
         if (result.length) {
-            this.focus.setCard(result[result.length-1]);
+            this.focus.setCard(result[result.length - 1]);
         }
         return result;
     };
 
+    setOnClick = (model) => {
+        if (this.source && this.source == model.source) {
+            let _onClick = model.clickEmpty;
+            if (model.stack.length) {
+                _onClick = model.stack[model.stack.length - 1].onClick;
+            }
+            this.stack.forEach((card) => {
+                card.onClick = _onClick;
+                card.canClick = true;
+            });
+        }
+    };
+
     isHoldingCard = () => !!this.stack.length;
 
-    isHoldingKing = () => this.isHoldingCard() && this.currentCard().face == 'K';
+    isHoldingKing = () => this.isHoldingCard() && this.currentCard().face == "K";
 
     currentCard = () => this.isHoldingCard() && this.stack[0];
 
@@ -42,11 +55,11 @@ export default class Hand {
 
     isFromWaste = () => this.source && this.source == "waste";
 
-    isFromFoundation = (index) => this.source && this.source == `foundation-${index}`
+    isFromFoundation = (index) => this.source && this.source == `foundation-${index}`;
 
-    isFromTableau = (index) => this.source && this.source == `tableau-${index}`
+    isFromTableau = (index) => this.source && this.source == `tableau-${index}`;
 
-    isFromAnyTableau = () => this.source && this.source.substring(0,8) == "tableau-";
+    isFromAnyTableau = () => this.source && this.source.substring(0, 8) == "tableau-";
 
     getTableauIndex = () => this.source && this.source.substring(8);
 

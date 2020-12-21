@@ -10,8 +10,7 @@ export default class Waste extends BlinkingComponent {
     }
 
     render() {
-        const { state, updateGameContext } = this.context;
-        const onClick = (c, p, i) => updateGameContext(state.waste.onClick(c, p, i));
+        const { state } = this.context;
         const getOffset = (index) => {
             if (state.settings.launchSettings.drawMode == "single") {
                 return 0;
@@ -34,13 +33,7 @@ export default class Waste extends BlinkingComponent {
 
         return (
             <div className="board-field">
-                <StackBase
-                    parent={state.waste.source}
-                    blink={state.waste.blinkFor}
-                    onClick={(c,p) => onClick(null, p)}
-                    suggested={state.waste.suggestion && !state.waste.stack.length}
-                    visible={!state.waste.stack.length}
-                />
+                <StackBase model={state.waste} />
                 {state.waste.stack.map((card, index) => (
                     <Card
                         key={index}
@@ -49,14 +42,12 @@ export default class Waste extends BlinkingComponent {
                         offsetLeft={getOffset(index)}
                         blink={state.waste.blinkFor}
                         isSuggested={state.waste.suggestion && index == state.waste.stack.length - 1}
-                        onClick={(c, p) => onClick(c, p)}
                     />
                 ))}
                 <Hand
                     offsetTop={(state.waste.stack.length / 2) * -1}
                     offsetLeft={getOffset(state.waste.stack.length)}
-                    parent="waste"
-                    onClick={onClick}
+                    parentModel={state.waste}
                     stack={state.waste.stack}
                 />
             </div>

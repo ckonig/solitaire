@@ -6,17 +6,26 @@ export default class Waste extends BasicStack {
         super("waste");
         this.settings = settings;
         // eslint-disable-next-line no-unused-vars
-        this.onClick = (_a, _b, _c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
     }
+
+    setOnClick = (onClick, hand) => {
+        this.clickEmpty = (p) => onClick(null, p);
+        this.stack.forEach((card) => {
+            card.onClick = (p) => onClick({...card}, p);
+        });
+        hand.setOnClick(this);
+    };
 
     tryPutDown = (card) => this.canAdd(card) && (this.add(card) || true);
 
     add = (card) => card && this.stack.push(this.setCardProperties(card));
 
     setClickability = (passthrough) => {
-        this.stack.forEach(card => { card.canClick = false;})
+        this.stack.forEach((card) => {
+            card.canClick = false;
+        });
         this.getTop() && (this.getTop().canClick = true);
         return passthrough;
     };

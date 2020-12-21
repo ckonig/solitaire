@@ -7,9 +7,11 @@ export type StateReplaceFunction = (modifier: StateReplacer) => void;
 export type StateUpdateFunction = (modifier: StateUpdater) => void;
 
 export interface AppState extends RatingSettings {
+    inputMode: string;
     initialized?: boolean;
     drawMode?: string;
     recyclingMode?: string;
+    mode: string;
 }
 
 export interface ClickHandler {

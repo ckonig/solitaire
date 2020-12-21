@@ -21,11 +21,20 @@ export default class Foundation {
             .map((suit, index) => ({ ...template(index), ...suit }));
         this.stacks = [...stacks];
         // eslint-disable-next-line no-unused-vars
-        this.onClick = (a, b, c) => {};
         this.blinkFor = 0;
         this.unblink = () => {};
         this.suggestion = false;
     }
+
+    setOnClick = (onClick, hand) => {
+        this.stacks.forEach((stack, index) => {
+            stack.clickEmpty = (p) => onClick(null, p, index);
+            stack.stack.forEach((card) => {
+                card.onClick = (p) => onClick({...card}, p, index);
+            });
+            hand.setOnClick(stack);
+        });
+    };
 
     getCurrentAccepted = (index) => {
         const currentFoundation = this.stacks[index].acceptedCards;

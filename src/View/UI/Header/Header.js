@@ -4,6 +4,7 @@ import Clock from "./Clock";
 import EndGame from "./EndGame";
 import Hearts from "./Hearts";
 import Hint from "./Hint";
+import InputMethod from "./InputMethod";
 import Points from "./Points";
 import React from "react";
 import RestartGame from "../RestartGame";
@@ -18,6 +19,7 @@ const Header = () => (
         </div>
         <Clock />
         <div className="header-buttons">
+            <InputMethod />
             <Hint />
             <Undo />
             <RestartGame />

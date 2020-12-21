@@ -11,11 +11,8 @@ export default class Tableau extends BlinkingComponent {
     }
 
     static Stacks = () => {
-        const { state, updateGameContext } = React.useContext(GlobalContext);
-        const onClick = (c, p, i) => updateGameContext(state.tableau.onClick(c, p, i));
-        return state.tableau.stacks.map((tableau, index) => (
-            <Tableau key={index} index={index} model={tableau} parent={state.tableau} onClick={onClick} />
-        ));
+        const { state } = React.useContext(GlobalContext);
+        return state.tableau.stacks.map((tableau, index) => <Tableau key={index} index={index} model={tableau} parent={state.tableau} />);
     };
 
     render() {
@@ -34,13 +31,7 @@ export default class Tableau extends BlinkingComponent {
 
         return (
             <div className="board-field">
-                <StackBase
-                    parent={props.model.source}
-                    suggested={props.model.suggestion && !props.model.stack.length}
-                    blink={props.model.blinkFor}
-                    onClick={(c,p) => props.onClick(null, p, props.index)}
-                    visible={!props.model.stack.length}
-                />
+                <StackBase model={props.model} />
                 {props.model.stack.map((card, index) => (
                     <Card
                         key={index}
@@ -48,15 +39,9 @@ export default class Tableau extends BlinkingComponent {
                         blink={props.model.blinkFor}
                         isSuggested={props.model.suggestion && props.model.stack.length - 1 == index}
                         offsetTop={getOffset(index)}
-                        onClick={(card, p) => props.onClick(card, p, props.index)}
                     />
                 ))}
-                <Hand
-                    parent={"tableau-" + props.index}
-                    onClick={(card, p) => props.onClick(card, p, props.index)}
-                    stack={props.model.stack}
-                    offsetTop={getOffset(props.model.stack.length)}
-                />
+                <Hand  parentModel={props.model} stack={props.model.stack} offsetTop={getOffset(props.model.stack.length)} />
             </div>
         );
     }

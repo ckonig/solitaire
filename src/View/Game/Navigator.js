@@ -2,49 +2,59 @@ import GlobalContext from "../Context";
 import React from "react";
 
 const Navigator = () => {
-    const { state, updateContext } = React.useContext(GlobalContext);
+    const { state, updateContext, updateGameContext } = React.useContext(GlobalContext);
+    const isKeyboardDriven = state.settings.launchSettings.inputMode === "keyboard";
+    const isSinglePlayer = state.settings.launchSettings.mode === "singleplayer";
     const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };
+    const switchToKeyboard = (ctx, isSinglePlayer) => {
+        state.focus.isKeyBoard(true);
+        if (isSinglePlayer) {
+            ctx.settings.mouseMode = "remain-on-stack";
+            state.settings.launchSettings.inputMode = "keyboard";
+        }
+    };
     const navListener = (e) => {
         const evtobj = window.event ? event : e;
         if (evtobj.keyCode == 37) {
             updateContext((ctx) => {
-                ctx.settings.mouseMode = "remain-on-stack";
-                ctx.focus.isKeyBoard(true);
+                switchToKeyboard(ctx, isSinglePlayer);
                 ctx.navigator.moveLeft(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 39) {
             updateContext((ctx) => {
-                ctx.settings.mouseMode = "remain-on-stack";
-                ctx.focus.isKeyBoard(true);
+                switchToKeyboard(ctx, isSinglePlayer);
                 ctx.navigator.moveRight(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 38) {
             updateContext((ctx) => {
-                ctx.settings.mouseMode = "remain-on-stack";
-                ctx.focus.isKeyBoard(true);
+                switchToKeyboard(ctx, isSinglePlayer);
                 ctx.navigator.moveUp(before);
             });
             e.preventDefault();
         }
         if (evtobj.keyCode == 40) {
             updateContext((ctx) => {
-                ctx.settings.mouseMode = "remain-on-stack";
-                ctx.focus.isKeyBoard(true);
+                switchToKeyboard(ctx, isSinglePlayer);
                 ctx.navigator.moveDown(before);
             });
             e.preventDefault();
         }
+        if (evtobj.keyCode == 96) {
+            updateGameContext(state.navigator.pressCurrent());
+        }
     };
     React.useEffect(() => {
-        document.addEventListener("keydown", navListener);
-        return () => {
-            document.removeEventListener("keydown", navListener);
-        };
-    }, [before]);
+        if (isKeyboardDriven || isSinglePlayer) {
+            document.addEventListener("keydown", navListener);
+            return () => {
+                document.removeEventListener("keydown", navListener);
+            };
+        }
+    }, [before, isKeyboardDriven, isSinglePlayer]);
     return null;
 };
 

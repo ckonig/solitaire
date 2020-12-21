@@ -2,14 +2,14 @@ import GlobalContext from "../Context";
 import React from "react";
 
 const Card = (props) => {
-    const { state, updateContext } = React.useContext(GlobalContext);
+    const { state, updateGameContext, updateContext } = React.useContext(GlobalContext);
     const inputEl = React.useRef(null);
     const isFocused = state.focus.hasCard(props.model);
     React.useEffect(() => {
-        if (isFocused) {
+        if (isFocused && state.settings.launchSettings.mode == "singleplayer") {
             inputEl && inputEl.current && inputEl.current.focus();
         }
-    }, [isFocused]);
+    }, [isFocused, state.focus.card]);
     const onClick = (e) => {
         e.preventDefault();
         const isKeyBoard = e.clientX == 0 && e.clientY == 0;
@@ -31,27 +31,27 @@ const Card = (props) => {
                 y: rect.y,
             },
         };
-
-        props.onClick && props.onClick({ ...props.model }, position);
+        if (props.model.onClick) {
+            updateGameContext(props.model.onClick(position));
+        }
     };
 
     const getClassName = () => {
         const hasSuggestion = props.isSuggested || props.model.suggestion;
         let className = `card card-base suit-${props.model.type.icon}`;
-        className += !props.isSelected && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
+        className += !props.isSelected && !isFocused && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
         className += props.isSelected ? " card-selected" : "";
         className += props.blink ? " blink" : "";
-        className += props.canClick ? " clickable" : "";
+        className += props.model.canClick ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
-        className += hasSuggestion ? " card-suggested" : "";
+        className += hasSuggestion && !isFocused ? " card-suggested" : "";
         className += isFocused ? " card-focused" : "";
-
         return className;
     };
 
     const getCardStyle = () => {
         const style = {
-            zIndex: props.zIndex ? props.zIndex : !!props.offsetTop + 2,
+            zIndex: props.zIndex ? props.zIndex : !!props.offsetTop * 20,
             top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
             ...props.model.entropyStyle,
         };
@@ -61,7 +61,7 @@ const Card = (props) => {
             style.left = props.offsetLeft * 4 + "vw";
         }
 
-        if (!props.onClick) {
+        if (!props.model.onClick) {
             style.pointerEvents = "none";
         }
 
@@ -69,7 +69,7 @@ const Card = (props) => {
     };
 
     const getStackbaseStyle = () => {
-        if (!props.onClick) {
+        if (!props.model.onClick) {
             return { pointerEvents: "none" };
         }
 
@@ -90,7 +90,7 @@ const Card = (props) => {
                     });
                 }}
                 onBlur={() => {
-                    updateContext((ctx) => ctx.focus.unsetCard(props.model));
+                    //updateContext((ctx) => ctx.focus.unsetCard(props.model));
                 }}
                 style={getCardStyle()}
                 ref={inputEl}

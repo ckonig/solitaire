@@ -37,6 +37,7 @@ export default class Card {
         copy.source = orig.source;
         copy.entropyStyle = { ...orig.entropyStyle };
         copy.canClick = orig.canClick;
+        copy.onClick = orig.onClick;
         return copy;
     };
 

@@ -1,26 +1,20 @@
 import "./View/Style/App.css";
 import "./View/Style/UI.css";
 
-import { AppState } from "./Common";
-import BoardWrap from "./View/Game/BoardWrap";
-import Deck from "./Model/Deck/Deck";
 import React from "react";
-import StartScreen from "./View/UI/StartScreen/StartScreen";
+import SinglePlayer from "./View/SinglePlayer";
+import SplitScreen from "./View/SplitScreen";
 
 const App = () => {
-    const [appState, setAppState] = React.useState<AppState>({});
-    //@todo add parent for keyboard navigation
-    const start = (settings: AppState) =>
-        setAppState({
-            ...settings,
-            initialized: true,
-        });
-    const restart = () => setAppState({});
-    const deck = new Deck().shuffle();
-    return !appState.initialized ? <StartScreen start={start} /> : <div className="game-layout-container">
-        <BoardWrap settings={appState} restart={restart} deck={deck} />
-        <BoardWrap settings={appState} restart={restart} deck={deck}/>
-    </div>;
+    const [mode, setMode] = React.useState<string>("");
+    const renderMode = () => (mode == "singleplayer" ? <SinglePlayer /> : <SplitScreen />);
+    return mode ? (
+        renderMode()
+    ) : (
+        <div>
+            <button onClick={() => setMode("singleplayer")}>single player</button>
+            <button onClick={() => setMode("splitscreen")}>splitscreen</button>
+        </div>
+    );
 };
-
 export default App;

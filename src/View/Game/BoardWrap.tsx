@@ -10,6 +10,7 @@ interface BoardWrapProps {
     settings: AppState;
     restart: () => void;
     deck: Deck;
+    mode: string;
 }
 
 export default class BoardWrap extends React.Component<BoardWrapProps, BusinessModel> {
@@ -49,7 +50,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
         };
         return (
             <Provider value={context}>
-                <Board />
+                <Board mode={this.props.mode} />
             </Provider>
         );
     };

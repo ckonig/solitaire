@@ -8,11 +8,14 @@ import { getTableauOrder } from "../Deck/DeckSize";
 class TableauStack extends BasicStack {
     blinkFor = 0;
     id = 0;
+    // eslint-disable-next-line no-unused-vars
+    onClick = (a: any, b: any) => {};
+    // eslint-disable-next-line no-unused-vars
+    clickEmpty = (a: any, b: any) => {};
 }
 export default class Tableau {
     stacks: TableauStack[];
     settings: Settings;
-    onClick: (a: any, b: any, c: any) => void;
     focus: Focus;
 
     constructor(settings: Settings, focus: Focus) {
@@ -26,8 +29,17 @@ export default class Tableau {
             return s;
         });
         this.settings = settings;
-        this.onClick = () => {};
     }
+
+    setOnClick = (onClick: (a: any, b: any, index: number) => void, hand: Hand) => {
+        this.stacks.forEach((stack, index) => {
+            stack.clickEmpty = (p: any) => onClick(null, p, index);
+            stack.stack.forEach((card) => {
+                card.onClick = (p: any) => onClick({...card}, p, index);
+            });
+            hand.setOnClick(stack);
+        });
+    };
 
     getStack = (index: number) => this.stacks[index];
 
@@ -77,7 +89,7 @@ export default class Tableau {
     deal = (card: Card, index: number) => {
         this.stacks[index].stack.push(card);
         this.setClickability(index);
-    }
+    };
 
     canUncover = (index: number, card: Card) => {
         const top = this.getTop(index);
@@ -88,9 +100,9 @@ export default class Tableau {
         const top = this.getTop(index);
         if (this.canUncover(index, card)) {
             top.isHidden = false;
-            this.focus.setCard(top);
             this.stackEntropy(index);
             this.setClickability(index);
+            this.focus.setCard(top);
             return true;
         }
 
@@ -107,6 +119,12 @@ export default class Tableau {
             top = this.getTop(index, next);
             next++;
         }
+    };
+
+    setClickabilities = () => {
+        this.stacks.forEach((_stack, index) => {
+            this.setClickability(index);
+        });
     };
 
     setClickability = (index: number) => {

@@ -4,7 +4,7 @@ import React from "react";
 export default class TouchHand extends React.Component {
     //@todo merge with mousehand
     render() {
-        if (!this.props.hand || this.props.parent !== this.props.hand.source) {
+        if (!this.props.hand || this.props.parentModel.source !== this.props.hand.source) {
             return null;
         }
         return [

@@ -22,4 +22,10 @@ export default class Deck {
             [array[i], array[j]] = [array[j], array[i]];
         }
     }
+
+    copy() {
+        const result = new Deck();
+        result.cards = Card.copyAll(this.cards);
+        return result;
+    }
 }
