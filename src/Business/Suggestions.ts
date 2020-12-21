@@ -33,7 +33,7 @@ export default class Suggestions {
         }
 
         const accepted = [];
-        if (state.waste.wouldAccept(state.hand)) {
+        if (state.waste.wouldAcceptHand()) {
             if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromWaste()) {
                 const move = { target: "waste", source: state.hand.source };
                 if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
@@ -44,7 +44,7 @@ export default class Suggestions {
         }
 
         state.foundation.stacks.forEach((stack, index) => {
-            if (state.foundation.wouldAccept(index, state.hand)) {
+            if (state.foundation.wouldAcceptHand(index)) {
                 if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromFoundation(index)) {
                     const move = { target: stack.source, source: state.hand.source };
                     if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
@@ -56,7 +56,7 @@ export default class Suggestions {
         });
 
         state.tableau.stacks.forEach((stack, index) => {
-            if (state.tableau.wouldAccept(index, state.hand)) {
+            if (state.tableau.wouldAcceptHand(index)) {
                 if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromTableau(index)) {
                     const isMoveOfKingBetweenEmptySlots =
                         state.hand.isHoldingKing() &&

@@ -100,7 +100,9 @@ button {
 }
 
 .socket-full {
-    margin: 0.3vw;
+    border-style: solid;
+    border-width: 0.3vw;
+    border-color: transparent;
 }
 
 .socket-suggested {

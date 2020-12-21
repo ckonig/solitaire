@@ -32,12 +32,13 @@ export default class Model {
 
     static getInitialState = (launchSettings: AppState, deck: Deck) => {
         const settings = new Settings(launchSettings);
+        const hand = new Hand();
         const state = {
             stock: new Stock([...deck.cards], settings),
-            waste: new Waste(settings),
-            foundation: new Foundation(settings),
-            tableau: new Tableau(settings),
-            hand: new Hand(),
+            waste: new Waste(settings, hand),
+            foundation: new Foundation(settings, hand),
+            tableau: new Tableau(settings, hand),
+            hand: hand,
             game: new Game(settings),
             settings: settings,
             focus: new Focus(settings),
@@ -46,12 +47,13 @@ export default class Model {
     };
 
     static copy = (state: Model) => {
+        const hand = Hand.copy(state.hand);
         return {
             stock: Stock.copy(state.stock),
-            waste: Waste.copy(state.waste),
-            foundation: Foundation.copy(state.foundation),
-            tableau: Tableau.copy(state.tableau),
-            hand: Hand.copy(state.hand),
+            waste: Waste.copy(state.waste, hand),
+            foundation: Foundation.copy(state.foundation, hand),
+            tableau: Tableau.copy(state.tableau, hand),
+            hand: hand,
             game: Game.copy(state.game),
             settings: Settings.copy(state.settings),
             focus: state.focus,

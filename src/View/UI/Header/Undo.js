@@ -13,18 +13,6 @@ const Undo = () => {
             return null;
         });
 
-    const ctrlZ = (e) => {
-        const evtobj = window.event ? event : e;
-        if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
-            undo();
-        }
-    };
-
-    React.useEffect(() => {
-        document.addEventListener("keydown", ctrlZ);
-        return () => document.removeEventListener("keydown", ctrlZ);
-    });
-
     return (
         <div>
             <button

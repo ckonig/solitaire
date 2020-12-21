@@ -1,10 +1,10 @@
-import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
 import Hand from "./Hand";
+import { HandHoldingStack } from "./BasicStack";
 import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
 
-class TableauStack extends BasicStack {
+class TableauStack extends HandHoldingStack {
     blinkFor = 0;
     id = 0;
     // eslint-disable-next-line no-unused-vars
@@ -15,11 +15,13 @@ class TableauStack extends BasicStack {
 export default class Tableau {
     stacks: TableauStack[];
     settings: Settings;
+    hand: Hand;
 
-    constructor(settings: Settings) {
+    constructor(settings: Settings, hand: Hand) {
         const ids = [0, 1, 2, 3, 4, 5, 6];
+        this.hand = hand;
         this.stacks = ids.map((id) => {
-            const s = new TableauStack("tableau-" + id);
+            const s = new TableauStack("tableau-" + id, hand);
             s.stack = [];
             s.blinkFor = 0;
             s.id = id;
@@ -28,11 +30,13 @@ export default class Tableau {
         this.settings = settings;
     }
 
-    setOnClick = (onClick: (a: any, b: any, index: number) => void, hand: Hand) => {
+    setOnClick = (onClick: (a: any, b: any, index: number) => void, onClickhidden: (a: any, b: any, index: number) => void, hand: Hand) => {
         this.stacks.forEach((stack, index) => {
             stack.clickEmpty = (p: any) => onClick(null, p, index);
-            stack.stack.forEach((card) => {
-                card.onClick = (p: any) => onClick({...card}, p, index);
+            stack.stack.forEach((card, sindex) => {
+                const click = card.isHidden && sindex == stack.stack.length-1 ? onClickhidden : onClick;
+                card.onClick = (p: any) => click({ ...card }, p, index);
+                card.canClick = () => !card.isHidden || this.canUncover(index, card);
             });
             hand.setOnClick(stack);
         });
@@ -40,7 +44,9 @@ export default class Tableau {
 
     getStack = (index: number) => this.stacks[index];
 
-    wouldAccept = (index: number, hand: Hand) => this.canPutDown(this.getTop(index), hand, index);
+    wouldAcceptHand = (index: number) => this.canPutDown(this.getTop(index), this.hand, index);
+
+    putDownHand = (index: number) => this.add(index, this.hand.putDown()); 
 
     canPutDown = (card: Card, hand: Hand, index: number) =>
         (card && card.isHidden && hand.isFromCurrentSource(card)) ||
@@ -75,7 +81,6 @@ export default class Tableau {
             if (card && card.equals(this.stacks[i].stack[j])) {
                 const result = this.stacks[i].stack.splice(j, this.stacks[i].stack.length);
                 this.stackEntropy(i);
-                this.setClickability(i);
                 return result;
             }
         }
@@ -85,7 +90,6 @@ export default class Tableau {
 
     deal = (card: Card, index: number) => {
         this.stacks[index].stack.push(card);
-        this.setClickability(index);
     };
 
     canUncover = (index: number, card: Card) => {
@@ -98,7 +102,6 @@ export default class Tableau {
         if (this.canUncover(index, card)) {
             top.isHidden = false;
             this.stackEntropy(index);
-            this.setClickability(index);
             return true;
         }
 
@@ -117,23 +120,9 @@ export default class Tableau {
         }
     };
 
-    setClickabilities = () => {
-        this.stacks.forEach((_stack, index) => {
-            this.setClickability(index);
-        });
-    };
-
-    setClickability = (index: number) => {
-        const stack = this.stacks[index];
-        stack.stack.forEach((card) => {
-            card.canClick = !card.isHidden || this.canUncover(index, card);
-        });
-    };
-
     add = (index: number, cards: Card[]) => {
         this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
         this.stackEntropy(index);
-        this.setClickability(index);
         return cards;
     };
 
@@ -144,10 +133,10 @@ export default class Tableau {
 
     getTop = (index: number, offset?: number) => this.stacks[index].stack[this.stacks[index].stack.length - 1 - (offset || 0)];
 
-    static copy = (orig: Tableau) => {
-        const copy = new Tableau(orig.settings);
+    static copy = (orig: Tableau, hand: Hand) => {
+        const copy = new Tableau(orig.settings, hand);
         copy.stacks = orig.stacks.map((stack, index) => {
-            const s = new TableauStack(stack.source);
+            const s = new TableauStack(stack.source, hand);
             s.id = index;
             s.stack = Card.copyAll(stack.stack);
             return s;

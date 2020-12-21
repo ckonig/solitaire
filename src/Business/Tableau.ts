@@ -8,19 +8,27 @@ export default class Tableau implements ClickHandler {
     blink: BlinkFunction = (state, index) => new Blinker().startBlink((s: BusinessModel) => s.tableau.stacks[index], state);
 
     dispatchPutDown = (card: Card, position: any, state: BusinessModel, index: number) => {
-        if (state.tableau.wouldAccept(index, state.hand)) {
+        if (state.tableau.wouldAcceptHand(index)) {
             const src = state.hand.source;
-            state.tableau.add(index, state.hand.putDown()) && state.game.registerMove("tableau-" + index, src);
+            state.tableau.putDownHand(index) && state.game.registerMove("tableau-" + index, src);
         } else {
             this.blink(state, index);
         }
     };
 
     dispatchPickup = (card: Card, position: any, state: BusinessModel, index: number) => {
-        if (card && !this.tryUncover(card, index, state) && !card.isHidden) {
+        if (card) {
             state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source, position) && state.game.registerPickup();
         } else if (!card) {
             this.blink(state, index);
+        }
+    };
+}
+
+export class TableauHidden extends Tableau {
+    dispatchPickup = (card: Card, position: any, state: BusinessModel, index: number) => {
+        if (card) {
+            this.tryUncover(card, index, state);
         }
     };
 

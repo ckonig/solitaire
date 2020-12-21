@@ -8,9 +8,8 @@ export default class Waste implements ClickHandler {
     blink: BlinkFunction = (state: BusinessModel) => new Blinker().startBlink((s: BusinessModel) => s.waste, state);
 
     dispatchPutDown = (card: Card, position: any, state: BusinessModel) =>
-        (state.waste.wouldAccept(state.hand) &&
-            state.waste.tryPutDown(state.hand.currentCard()) &&
-            state.hand.putDown() &&
+        (state.waste.wouldAcceptHand() &&
+            state.waste.putDownHand() &&
             state.game.registerMove("waste", "waste")) ||
         this.blink(state, 0);
 

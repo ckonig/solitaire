@@ -3,9 +3,7 @@ import React from "react";
 
 const Hint = () => {
     const { state, updateContext } = React.useContext(GlobalContext);
-    
-    //@todo update
-    
+
     const isVisible = (state) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
     const isDisabled = (state) => state.settings.suggestionMode.isTemporary;
 
@@ -16,20 +14,6 @@ const Hint = () => {
             }
         });
     };
-
-    const listenForH = (e) => {
-        const evtobj = window.event ? event : e;
-        if (evtobj.keyCode == 72) {
-            suggestOnce();
-        }
-    };
-
-    if (isVisible(state) && !isDisabled(state)) {
-        React.useEffect(() => {
-            document.addEventListener("keydown", listenForH);
-            return () => document.removeEventListener("keydown", listenForH);
-        }, []);
-    }
 
     return !isVisible(state) ? null : (
         <div>

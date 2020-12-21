@@ -10,14 +10,9 @@ export default class MouseHand extends React.Component {
             positionFixed: true,
         };
         this.onMouseMove = this.onMouseMove.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
     }
 
     componentDidMount() {
-        document.addEventListener("mousemove", this.onMouseMove, false);
-        if (this.props.putBack) {
-            document.addEventListener("keydown", this.onKeyDown, false);
-        }
         this.setState(() => ({
             positionFixed: true,
         }));
@@ -25,7 +20,6 @@ export default class MouseHand extends React.Component {
 
     componentWillUnmount() {
         document.removeEventListener("mousemove", this.onMouseMove, false);
-        document.addEventListener("keydown", this.onKeyDown, false);
     }
 
     onMouseMove = (e) => {
@@ -55,7 +49,8 @@ export default class MouseHand extends React.Component {
 
     onKeyDown(e) {
         const evtobj = window.event ? event : e;
-        if (evtobj.keyCode == 27 && this.props.hand && this.props.parent == this.props.hand.source) this.props.putBack(null, {isKeyboard: false});
+        if (evtobj.keyCode == 27 && this.props.hand && this.props.parent == this.props.hand.source)
+            this.props.putBack(null, { isKeyboard: false });
     }
 
     render() {
@@ -73,7 +68,7 @@ export default class MouseHand extends React.Component {
                 {this.props.hand &&
                     this.props.hand.stack &&
                     this.props.hand.stack.map((card, index) => (
-                        <Card canClick={true} key={index} model={card} offsetTop={getOffsetTop(index)} zIndex={1000 + index * 20} isSelected={true} />
+                        <Card key={index} model={card} offsetTop={getOffsetTop(index)} zIndex={1000 + index * 20} isSelected={true} />
                     ))}
             </div>
         );

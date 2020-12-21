@@ -2,7 +2,7 @@ import GlobalContext from "../Context";
 import React from "react";
 
 const Card = (props) => {
-    const { state, updateGameContext, updateContext } = React.useContext(GlobalContext);
+    const { state, updateGameContext } = React.useContext(GlobalContext);
     const inputEl = React.useRef(null);
     const isFocused = state.focus.hasCard(props.model);
     React.useEffect(() => {
@@ -32,6 +32,7 @@ const Card = (props) => {
             },
         };
         const isSinglePlayer = state.settings.launchSettings.mode === "singleplayer";
+        //@todo A11Y allow keyboard actions in singleplayer
         if (props.model.onClick && !position.isKeyBoard) {
             updateGameContext((context) => {
                 props.model.onClick(position)(context);
@@ -48,7 +49,7 @@ const Card = (props) => {
         className += !props.isSelected && !isFocused && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
         className += props.isSelected ? " card-selected" : "";
         className += props.blink ? " blink" : "";
-        className += props.model.canClick ? " clickable" : "";
+        className += props.model.canClick() ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion && !isFocused ? " card-suggested" : "";
         className += isFocused ? " card-focused" : "";
@@ -91,9 +92,9 @@ const Card = (props) => {
         <div style={getStackbaseStyle()} className="stack-base">
             <button
                 onFocus={() => {
-                    updateContext((ctx) => {
-                        ctx.navigator.update(props.model.source, props.model);
-                    });
+                    // updateContext((ctx) => {
+                    //     ctx.navigator.update(props.model.source, props.model);
+                    // });
                 }}
                 onBlur={() => {
                     //updateContext((ctx) => ctx.focus.unsetCard(props.model));
@@ -102,8 +103,8 @@ const Card = (props) => {
                 ref={inputEl}
                 className={getClassName()}
                 onClick={onClick ? onClick : null}
-                disabled={!props.model.canClick}
-                tabIndex={props.model.canClick ? 0 : -1}
+                disabled={!props.model.canClick()}
+                tabIndex={props.model.canClick() ? 0 : -1}
                 aria-label={label}
             >
                 <div className="card-content">

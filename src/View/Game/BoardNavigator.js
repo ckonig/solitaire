@@ -3,7 +3,7 @@ import GlobalContext from "../Context";
 import Keyboard from "./Keyboard";
 import React from "react";
 
-const Navigator = () => {
+const BoardNavigator = () => {
     const { state, updateContext, updateGameContext, replaceContext } = React.useContext(GlobalContext);
     const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };
     const onLeft = (modifier) =>
@@ -91,4 +91,4 @@ const Navigator = () => {
     );
 };
 
-export default Navigator;
+export default BoardNavigator;

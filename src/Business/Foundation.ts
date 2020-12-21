@@ -8,9 +8,9 @@ export default class Foundation implements ClickHandler {
     blink: BlinkFunction = (state, index) => new Blinker().startBlink((s: BusinessModel) => s.foundation.stacks[index], state);
 
     dispatchPutDown = (card: Card, position: any, state: BusinessModel, index: number) => {
-        if (state.foundation.wouldAccept(index, state.hand)) {
+        if (state.foundation.wouldAcceptHand(index)) {
             const src = state.hand.source;
-            state.foundation.add(index, state.hand.putDown()) && state.game.registerMove("foundation-" + index, src);
+            state.foundation.putDownHand(index) && state.game.registerMove("foundation-" + index, src);
             this.tryDetectEnd(state);
         } else {
             this.blink(state, index);

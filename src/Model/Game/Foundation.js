@@ -1,13 +1,14 @@
-import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
+import { HandHoldingStack } from "./BasicStack";
 import Suits from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
 export default class Foundation {
-    constructor(settings) {
+    constructor(settings, hand) {
         this.settings = settings;
+        this.hand = hand;
         const template = (index) => {
-            const s = new BasicStack("foundation-" + index);
+            const s = new HandHoldingStack("foundation-" + index, hand);
             s.stack = [];
             s.acceptedCards = [...getFoundationOrder()];
             s.usedCards = [];
@@ -23,16 +24,16 @@ export default class Foundation {
         // eslint-disable-next-line no-unused-vars
         this.blinkFor = 0;
         this.unblink = () => {};
-        this.suggestion = false;
     }
 
-    setOnClick = (onClick, hand) => {
+    setOnClick = (onClick) => {
         this.stacks.forEach((stack, index) => {
             stack.clickEmpty = (p) => onClick(null, p, index);
-            stack.stack.forEach((card) => {
-                card.onClick = (p) => onClick({...card}, p, index);
+            stack.stack.forEach((card, sindex) => {
+                card.onClick = (p) => onClick({ ...card }, p, index);
+                card.canClick = () => sindex == stack.stack.length - 1;
             });
-            hand.setOnClick(stack);
+            this.hand.setOnClick(stack);
         });
     };
 
@@ -41,7 +42,9 @@ export default class Foundation {
         return currentFoundation[currentFoundation.length - 1];
     };
 
-    wouldAccept = (index, hand) => !hand.hasMoreThanOneCard() && this.accepts(index, hand.currentCard());
+    wouldAcceptHand = (index) => !this.hand.hasMoreThanOneCard() && this.accepts(index, this.hand.currentCard());
+
+    putDownHand = (index) => this.add(index, this.hand.putDown());
 
     accepts = (index, card) => {
         const currentAccepted = this.getCurrentAccepted(index);
@@ -52,7 +55,6 @@ export default class Foundation {
         const card = cards[0];
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 3));
         card.source = this.stacks[index].source;
-        card.suggestion = false;
         this.stacks[index].stack.push(card);
         return this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
     };
@@ -68,10 +70,10 @@ export default class Foundation {
 
     getTop = (index) => this.stacks[index].stack[this.stacks[index].stack.length - 1];
 
-    static copy = (orig) => {
-        const copy = new Foundation(orig.settings);
+    static copy = (orig, hand) => {
+        const copy = new Foundation(orig.settings, hand);
         copy.stacks = orig.stacks.map((origStack) => {
-            const s = new BasicStack(origStack.source);
+            const s = new HandHoldingStack(origStack.source, hand);
             s.stack = Card.copyAll(origStack.stack);
             s.acceptedCards = [...origStack.acceptedCards];
             s.usedCards = [...origStack.usedCards];

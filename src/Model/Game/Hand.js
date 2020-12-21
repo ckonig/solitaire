@@ -34,7 +34,7 @@ export default class Hand {
             }
             this.stack.forEach((card) => {
                 card.onClick = _onClick;
-                card.canClick = true;
+                card.canClick = () => true;
             });
         }
     };

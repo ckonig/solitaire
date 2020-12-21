@@ -1,3 +1,5 @@
+import Tableau, { TableauHidden } from "./Tableau";
+
 import { AppState } from "../Common";
 import { ClickHandler } from "../Common";
 import Dealer from "./Dealer";
@@ -8,7 +10,6 @@ import Model from "../Model/Model";
 import Navigator from "./Navigator";
 import Stock from "./Stock";
 import Suggestions from "./Suggestions";
-import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 export default class BusinessModel extends Model {
@@ -39,9 +40,9 @@ export default class BusinessModel extends Model {
     withHandlers = () => {
         const getHandler = (clickHandler: ClickHandler) => new Dispatcher(clickHandler).getHandler(this.hand);
         this.stock.setOnClick(getHandler(new Stock()));
-        this.waste.setOnClick(getHandler(new Waste()), this.hand);
-        this.foundation.setOnClick(getHandler(new Foundation()), this.hand);
-        this.tableau.setOnClick(getHandler(new Tableau()), this.hand);
+        this.waste.setOnClick(getHandler(new Waste()));
+        this.foundation.setOnClick(getHandler(new Foundation()));
+        this.tableau.setOnClick(getHandler(new Tableau()),getHandler(new TableauHidden()), this.hand);
         return this;
     };
 

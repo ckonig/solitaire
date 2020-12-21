@@ -8,7 +8,7 @@ export default class Focus {
         this.keyboard = false;
     }
 
-    validSettings = () => this.settings.mouseMode !== "follow-cursor";
+    validSettings = () => this.settings.launchSettings.inputMode !== "mouse";
 
     isKeyBoard = (isKeyboard) => {
         this.keyboard = isKeyboard;

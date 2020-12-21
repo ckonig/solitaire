@@ -3,7 +3,6 @@ import "../Style/Board.scss";
 import Dealer from "./Dealer";
 import EndScreen from "../UI/EndScreen";
 import Foundation from "./Foundation";
-import GamePad from "./GamePad";
 import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu";
 import Navigator from "./Navigator";
@@ -28,7 +27,6 @@ const Board = (props) => (
         <EndScreen />
         <Dealer />
         <Navigator />
-        <GamePad />
     </>
 );
 
