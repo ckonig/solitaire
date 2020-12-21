@@ -1,39 +1,28 @@
-import GlobalContext from "../Context";
 import React from "react";
 import ReactGamePad from "react-gamepad";
 
 const GamePad = (props) => {
-    const { state } = React.useContext(GlobalContext);
-    const isGamePadDriven = state.settings.launchSettings.inputMode == "gamepad";
-    const isSinglePlayer = state.settings.launchSettings.mode === "singleplayer";
-    const switchToGamePad = (ctx) => {
-        ctx.focus.isKeyBoard(true);
-        if (isSinglePlayer) {
-            ctx.settings.mouseMode = "remain-on-stack";
-            ctx.settings.launchSettings.inputMode = "gamepad";
-        }
-    };
     const buttonHandler = (e) => {
         if (e == "DPadLeft") {
-            props.onLeft(switchToGamePad);
+            props.onLeft();
         }
         if (e == "DPadRight") {
-            props.onRight(switchToGamePad);
+            props.onRight();
         }
         if (e == "DPadUp") {
-            props.onUp(switchToGamePad);
+            props.onUp();
         }
         if (e == "DPadDown") {
-            props.onDown(switchToGamePad);
+            props.onDown();
         }
         if (e == "A") {
-            props.onAction(switchToGamePad);
+            props.onAction();
         }
         if (e == "B") {
-            props.onCancel(switchToGamePad);
+            props.onCancel();
         }
         if (e == "X") {
-            props.onHint(switchToGamePad);
+            props.onHint();
         }
         if (e == "Y") {
             props.onUndo();
@@ -49,11 +38,11 @@ const GamePad = (props) => {
     //@todo pick ID of gamepad dynamically
     //allow switching PS4 and XBOX layouts
     //also support splitscreen battle mode
-    return isSinglePlayer || isGamePadDriven ? (
-        <ReactGamePad gamepadIndex={0} onButtonDown={buttonHandler} onConnect={connectHandler} onDisconnect={disconnectHandler}>
+    return (
+        <ReactGamePad gamepadIndex={props.gamepadIndex} onButtonDown={buttonHandler} onConnect={connectHandler} onDisconnect={disconnectHandler}>
             <span></span>
         </ReactGamePad>
-    ) : null;
+    );
 };
 
 export default GamePad;

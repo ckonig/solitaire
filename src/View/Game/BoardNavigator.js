@@ -1,6 +1,5 @@
-import GamePad from "./GamePad";
 import GlobalContext from "../Context";
-import Keyboard from "./Keyboard";
+import Navigator from "./Navigator";
 import React from "react";
 
 const BoardNavigator = () => {
@@ -67,17 +66,7 @@ const BoardNavigator = () => {
 
     return (
         <>
-            <Keyboard
-                onLeft={onLeft}
-                onRight={onRight}
-                onUp={onUp}
-                onDown={onDown}
-                onAction={onAction}
-                onCancel={onCancel}
-                onHint={onHint}
-                onUndo={onUndo}
-            />
-            <GamePad
+            <Navigator
                 onLeft={onLeft}
                 onRight={onRight}
                 onUp={onUp}
