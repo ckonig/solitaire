@@ -1,6 +1,7 @@
 import { AppState } from "../Common";
 import { ClickHandler } from "../Common";
 import Dealer from "./Dealer";
+import Deck from "../Model/Deck/Deck";
 import Dispatcher from "./Dispatcher";
 import Foundation from "./Foundation";
 import Model from "../Model/Model";
@@ -44,8 +45,8 @@ export default class BusinessModel extends Model {
         return this;
     };
 
-    static getInitialState = (launchSettings: AppState) => {
-        return new BusinessModel(Model.getInitialState(launchSettings));
+    static getInitialState = (launchSettings: AppState, deck: Deck) => {
+        return new BusinessModel(Model.getInitialState(launchSettings, deck));
     };
 
     static copy = (state: Model) => {

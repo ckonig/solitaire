@@ -6,33 +6,29 @@
 }
 
 .header-title {
-    width: 35vw;
 }
 
 .header-clock {
-    padding-left: 5.3vw;
+    margin-left: 1vw;
 }
 
 .header-buttons {
     float: right;
-    padding-right: 1vw;
 }
 
 .header-buttons > div {
     float: left;
-    padding-left: 0.5vw;
 }
 
 .icon-container {
-    width: 5vw;
+    margin-left: 1vw;
     float: left;
     text-align: center;
 }
 
 .heart-container {
-    width: 13vw;
+    margin-left: 1vw;
     float: left;
-    padding-left: 0.5vw;
     text-align: left;
 }
 
@@ -45,4 +41,8 @@
     width: 5vw;
     margin-top: 0.25vw;
     background-color: transparent;
+}
+
+.splitscreen  .header-buttons > div > button {
+    width: 4vw;
 }

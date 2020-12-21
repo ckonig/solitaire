@@ -30,8 +30,7 @@ export default class Model {
         this.focus = obj.focus;
     }
 
-    static getInitialState = (launchSettings: AppState) => {
-        const deck = new Deck().shuffle();
+    static getInitialState = (launchSettings: AppState, deck: Deck) => {
         const settings = new Settings(launchSettings);
         const focus = new Focus(settings);
         const state = {

@@ -3,6 +3,7 @@ import "./View/Style/UI.css";
 
 import { AppState } from "./Common";
 import BoardWrap from "./View/Game/BoardWrap";
+import Deck from "./Model/Deck/Deck";
 import React from "react";
 import StartScreen from "./View/UI/StartScreen/StartScreen";
 
@@ -15,7 +16,11 @@ const App = () => {
             initialized: true,
         });
     const restart = () => setAppState({});
-    return !appState.initialized ? <StartScreen start={start} /> : <BoardWrap settings={appState} restart={restart} />;
+    const deck = new Deck().shuffle();
+    return !appState.initialized ? <StartScreen start={start} /> : <div className="game-layout-container">
+        <BoardWrap settings={appState} restart={restart} deck={deck} />
+        <BoardWrap settings={appState} restart={restart} deck={deck}/>
+    </div>;
 };
 
 export default App;

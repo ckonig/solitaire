@@ -2,18 +2,20 @@ import { AppState, StateReplacer, StateUpdater } from "../../Common";
 
 import Board from "./Board";
 import BusinessModel from "../../Business/BusinessModel";
+import Deck from "../../Model/Deck/Deck";
 import { Provider } from "../Context";
 import React from "react";
 
 interface BoardWrapProps {
     settings: AppState;
     restart: () => void;
+    deck: Deck;
 }
 
 export default class BoardWrap extends React.Component<BoardWrapProps, BusinessModel> {
     constructor(props: BoardWrapProps) {
         super(props);
-        this.state = BusinessModel.getInitialState(props.settings);
+        this.state = BusinessModel.getInitialState(props.settings, props.deck);
     }
 
     replaceContext = (modifier: StateReplacer) => this.setState(modifier);
