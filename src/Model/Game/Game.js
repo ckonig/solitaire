@@ -20,7 +20,7 @@ export default class Game {
                 this.pauses.push(Date.now() - this.pauseStartedAt);
                 this.pauseStartedAt = null;
                 this.paused = false;
-            } else {
+            } else if (this.pauses.length < 3) {
                 this.pauseStartedAt = Date.now();
                 this.paused = true;
             }
@@ -69,7 +69,7 @@ export default class Game {
     };
 
     getElapsedMs = () => {
-        const pauses = this.pauses.reduce((a, b) => a + b, 0)
+        const pauses = this.pauses.reduce((a, b) => a + b, 0);
         return (this.end || this.pauseStartedAt || Date.now()) - this.started - pauses;
     };
 

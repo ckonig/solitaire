@@ -9,11 +9,11 @@ const Pause = () => {
             ctx.game.togglePause(isPaused);
         });
 
-    return (
+    return state.game.pauses.length < 3 ? (
         <div>
             <button onClick={pause}>{isPaused ? "▶️" : "⏸️"}</button>
         </div>
-    );
+    ) : null;
 };
 
 export default Pause;
