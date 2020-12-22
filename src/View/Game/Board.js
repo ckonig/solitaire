@@ -15,7 +15,7 @@ const Board = (props) => (
     <div className={"layout-grid-container " + props.mode}>
         <Header mode={props.mode} />
         <div className={"board-jail " + props.mode}>
-            <div className="board-grid-container">
+            <div className={"board-grid-container " + props.mode}>
                 <Stock />
                 <Waste />
                 <div className="spacer">&nbsp;</div>

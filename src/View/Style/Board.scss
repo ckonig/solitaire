@@ -9,31 +9,45 @@ button {
 .board-jail {
     position: relative;
 }
+.game-layout-container {
+    position: absolute;
+    top: 0.5vw;
+}
+.game-layout-container.splitscreen {
+    left: 1vw;
+    right: 1vw;
+}
+
+.game-layout-container.singleplayer {
+    position: absolute;
+    left: 17.5vw;
+    right: 17.5vw;
+}
 
 .layout-grid-container.singleplayer {
-    width: 90vw;
+    width: 65vw;
     display: grid;
     grid-template-areas:
         "header"
         "game";
-    grid-template-rows: 3.3vw 50vw;
     grid-gap: 0.5vw;
     background-color: "darkgreen";
-    font-size: 2vw;
+    font-size: 1.7vw;
 }
 
 .layout-grid-container.splitscreen {
     width: 47vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
     display: grid;
     grid-template-areas:
         "header"
         "game";
-    grid-template-rows: 3.3vw 50vw;
+
     grid-gap: 0.5vw;
     background-color: "darkgreen";
     font-size: 1vw;
     float: left;
-    margin-left: 2vw;
 }
 
 .header {
@@ -44,6 +58,7 @@ button {
 }
 
 .board-grid-container {
+    margin-top: 1vw;
     margin: 1vw;
     grid-area: game;
     display: grid;
@@ -53,6 +68,9 @@ button {
         "stock waste spacer foundation foundation foundation foundation"
         "tableau tableau tableau tableau tableau tableau tableau";
     background-color: "darkgreen";
+}
+.board-grid-container.splitscreen {
+    margin-top: 2vw;
 }
 
 .board-field {

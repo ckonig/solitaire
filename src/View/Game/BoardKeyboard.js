@@ -5,7 +5,7 @@ import React from "react";
 const BoardKeyboard = (props) => {
     const { state } = React.useContext(GlobalContext);
     const isKeyboardDriven = state.settings.launchSettings.inputMode === "keyboard";
-    const isSinglePlayer = state.settings.launchSettings.mode === "singleplayer";
+    const isSinglePlayer = state.settings.launchSettings.gameMode === "singleplayer";
 
     const switchToKeyboard = (ctx) => {
         ctx.focus.isKeyBoard(true);

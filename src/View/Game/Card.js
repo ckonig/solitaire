@@ -8,7 +8,7 @@ const Card = (props) => {
     const inputEl = React.useRef(null);
     const isFocused = state.focus.hasCard(props.model);
     React.useEffect(() => {
-        if (isFocused && state.settings.launchSettings.mode == "singleplayer") {
+        if (isFocused && state.settings.launchSettings.gameMode == "singleplayer") {
             inputEl && inputEl.current && inputEl.current.focus();
         }
     }, [isFocused, state.focus.card]);
@@ -33,7 +33,7 @@ const Card = (props) => {
                 y: rect.y,
             },
         };
-        const isSinglePlayer = state.settings.launchSettings.mode === "singleplayer";
+        const isSinglePlayer = state.settings.launchSettings.gameMode === "singleplayer";
         //@todo A11Y allow keyboard actions in singleplayer
         if (props.model.onClick && !position.isKeyBoard) {
             updateGameContext((context) => {
@@ -60,7 +60,7 @@ const Card = (props) => {
 
     const getCardStyle = () => {
         const style = {
-            zIndex: props.zIndex ? props.zIndex : !!props.offsetTop * 20,
+            zIndex: (props.zIndex ? props.zIndex : !!props.offsetTop * 20)+1,
             top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
             ...props.model.entropyStyle,
         };

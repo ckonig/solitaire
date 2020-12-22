@@ -11,7 +11,7 @@ export interface AppState extends RatingSettings {
     initialized?: boolean;
     drawMode?: string;
     recyclingMode?: string;
-    mode: string;
+    gameMode: string;
 }
 
 export interface ClickHandler {

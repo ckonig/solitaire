@@ -11,7 +11,6 @@ interface BoardWrapProps {
     settings: AppState;
     restart: () => void;
     deck: Deck;
-    mode: string;
     player: string;
 }
 
@@ -52,7 +51,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
         };
         return (
             <Provider value={context}>
-                <Board mode={this.props.mode} />
+                <Board mode={this.props.settings.gameMode} />
                 <EndScreen />
             </Provider>
         );

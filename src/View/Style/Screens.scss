@@ -1,7 +1,6 @@
 .quickstart {
-    top: 2vw;
+    margin-top: 2vw;
 }
-
 .endscreen {
     top: 4vw;
 }
@@ -65,16 +64,6 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     color: white;
 }
 
-.quickstart .left {
-    float: left;
-    width: 16vw;
-}
-
-.quickstart .right {
-    float: right;
-    width: 16vw;
-}
-
 .rating {
     top: 2vw;
 }
@@ -83,7 +72,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     text-align: center;
 }
 
-.quickstart button.blinking {
+button.blinking {
     animation: blinker 3s linear infinite;
     border-color: #339900;
 }
@@ -101,4 +90,12 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
         background-color: #013b0e;
         border-color: #013b0e;
     }
+}
+
+
+.tab.header {
+
+}
+.tab.content { 
+
 }

@@ -6,7 +6,7 @@ const StackBase = (props) => {
     const inputEl = React.useRef(null);
     const { state, updateGameContext } = React.useContext(GlobalContext);
     React.useEffect(() => {
-        if (state.focus.hasStack(props.model.parent) && state.settings.launchSettings.mode == "singleplayer") {
+        if (state.focus.hasStack(props.model.parent) && state.settings.launchSettings.gameMode == "singleplayer") {
             inputEl && inputEl.current && inputEl.current.focus();
         }
     });

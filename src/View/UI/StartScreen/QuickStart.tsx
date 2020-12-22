@@ -1,11 +1,11 @@
 import React from "react";
 import StartScreenContext from "./Context";
 
-const QuickStart = (props: { start: () => void }) => {
+const QuickStart = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     return (
-        <div className="ui right quickstart">
-            <div className="title">Quickstart</div>
+        <div className="quickstart">
+            <div className="title">Settings</div>
             <div className="content center">
                 <div>
                     <button
@@ -25,10 +25,6 @@ const QuickStart = (props: { start: () => void }) => {
                         📱
                         <div>{state.isTouch ? "Optimized" : "Optimize"} for Mobile</div>
                         <div>with Touch Support</div>
-                    </button>
-                    <button className="blinking" onClick={props.start}>
-                        🎲
-                        <div>Start</div>
                     </button>
                 </div>
             </div>

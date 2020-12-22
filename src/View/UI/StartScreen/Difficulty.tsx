@@ -7,7 +7,7 @@ const Difficulty = () => {
     const updateDifficulty = (settings: number) => setState({ ...state, difficultySettings: settings });
     const getButtonClass = (index: number) => (state.difficultySettings == index ? `active active-${index}` : `inactive-${index}`);
     return (
-        <div className="ui center quickstart">
+        <div className="quickstart">
             <div className="title">Difficulty</div>
             <div className="content">
                 <div className="left">

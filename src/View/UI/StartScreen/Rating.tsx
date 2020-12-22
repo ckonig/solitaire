@@ -24,7 +24,7 @@ const Rating = () => {
     const setHintPenalty = (value: string) => customizeRating((r) => (r.hintPenalty = value == "true"));
 
     return (
-        <div className="ui left quickstart">
+        <div className="ui rating">
             <div className="closer">
                 <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
             </div>
