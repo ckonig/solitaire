@@ -69,6 +69,14 @@ const BoardNavigator = () => {
             return null;
         });
     };
+    const menuToggle = state.settings.showMenu;
+    const onMenu = (modifier) => {
+        updateContext((state) => {
+            modifier(state);
+            state.settings.showMenu = !menuToggle;
+        });
+        paused.togglePause(!state.settings.showMenu, state.player);
+    };
 
     return isPaused ? null : (
         <Navigator
@@ -81,6 +89,7 @@ const BoardNavigator = () => {
             onHint={onHint}
             onUndo={onUndo}
             onPause={onPause}
+            onMenu={onMenu}
         />
     );
 };

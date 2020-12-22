@@ -1,8 +1,10 @@
 import GlobalContext from "../Context";
+import PauseContext from "../PauseContext";
 import React from "react";
 
 const Card = (props) => {
     const { state, updateGameContext } = React.useContext(GlobalContext);
+    const pause = React.useContext(PauseContext);
     const inputEl = React.useRef(null);
     const isFocused = state.focus.hasCard(props.model);
     React.useEffect(() => {
@@ -83,7 +85,16 @@ const Card = (props) => {
         return {};
     };
 
-    const label = props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face + " card";
+    const names = [0, 1, 2, 3, 4, 5, 6].map((id) => " stack " + (id + 1));
+    let label = "";
+    const split = props.model.source.split("-");
+    label += split[0];
+    if (split.length > 1) {
+        label += names[split[1]]
+    }
+    label += ": "
+
+    label += props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face;
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
@@ -103,12 +114,13 @@ const Card = (props) => {
                 ref={inputEl}
                 className={getClassName()}
                 onClick={onClick ? onClick : null}
-                disabled={!props.model.canClick() || state.game.paused}
+                disabled={!props.model.canClick() || pause.state.paused}
                 tabIndex={props.model.canClick() ? 0 : -1}
                 aria-label={label}
+                title={label}
             >
                 <div className="card-content">
-                    {props.model.isHidden || state.game.paused ? (
+                    {props.model.isHidden || pause.state.paused ? (
                         <div className="card-back">&nbsp;</div>
                     ) : (
                         <div className="card-grid-container">

@@ -12,12 +12,13 @@ interface BoardWrapProps {
     restart: () => void;
     deck: Deck;
     mode: string;
+    player: string;
 }
 
 export default class BoardWrap extends React.Component<BoardWrapProps, BusinessModel> {
     constructor(props: BoardWrapProps) {
         super(props);
-        this.state = BusinessModel.getInitialState(props.settings, props.deck);
+        this.state = BusinessModel.getInitialState(props.settings, props.deck, props.player);
     }
 
     replaceContext = (modifier: StateReplacer) => this.setState(modifier);

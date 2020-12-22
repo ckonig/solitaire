@@ -1,4 +1,3 @@
-import PauseScreen from "./UI/PauseScreen";
 import React from "react";
 
 export interface IPauseState {
@@ -8,12 +7,13 @@ export interface IPauseState {
     pauses: number[];
     pauseStartedAt: number;
     allowed: number;
+    isSilent: string;
 }
 export interface IPauseContext {
     state: IPauseState;
     togglePause: (isPaused: boolean) => void;
 }
-export const defaultPauseState = { started: 0, end: 0, paused: false, pauses: [], pauseStartedAt: 0, allowed: 3 };
+export const defaultPauseState = { started: 0, end: 0, paused: false, pauses: [], pauseStartedAt: 0, allowed: 5, isSilent: "" };
 export const defaultPauseContext = {
     state: defaultPauseState,
     togglePause: () => {},
@@ -40,7 +40,7 @@ export const PauseProvider = (props: any) => {
         msec -= ss * 1000;
         return hh ? hh + ":" + padleft(mm) + ":" + padleft(ss) : padleft(mm) + ":" + padleft(ss);
     };
-    const togglePause = (isPaused: boolean) => {
+    const togglePause = (isPaused: boolean, isSilent?: string) => {
         if (paused.paused == isPaused) {
             if (paused.paused) {
                 setPaused({
@@ -48,12 +48,14 @@ export const PauseProvider = (props: any) => {
                     pauses: [...paused.pauses, Date.now() - paused.pauseStartedAt],
                     pauseStartedAt: 0,
                     paused: false,
+                    isSilent: isSilent ? isSilent : "",
                 });
-            } else if (paused.pauses.length < 3) {
+            } else if (paused.pauses.length < paused.allowed) {
                 setPaused({
                     ...paused,
                     pauseStartedAt: Date.now(),
                     paused: true,
+                    isSilent: isSilent ? isSilent : "",
                 });
             }
         }
@@ -64,12 +66,7 @@ export const PauseProvider = (props: any) => {
         getElapsed,
     };
 
-    return (
-        <PauseContextProvider value={context}>
-            {props.children}
-            <PauseScreen />
-        </PauseContextProvider>
-    );
+    return <PauseContextProvider value={context}>{props.children}</PauseContextProvider>;
 };
 
 export default PauseContext;

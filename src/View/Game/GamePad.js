@@ -31,6 +31,9 @@ const GamePad = (props) => {
         if (e == "Start") {
             props.onPause && props.onPause();
         }
+        if (e == "Back") {
+            props.onPause && props.onMenu();
+        }
     };
     const connectHandler = (e) => {
         console.debug("connected", e);

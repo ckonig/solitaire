@@ -1,10 +1,12 @@
 import "../Style/Menu.css";
 
 import GlobalContext from "../Context";
+import PauseContext from "../PauseContext";
 import React from "react";
 
 const Menu = () => {
     const { state, updateContext } = React.useContext(GlobalContext);
+    const { togglePause } = React.useContext(PauseContext);
 
     //@todo persist game settings in local storage too and use for initialization
     const setSuggestionMode = (sm) => updateContext((state) => state.settings.setSuggestionMode(sm));
@@ -17,6 +19,7 @@ const Menu = () => {
         updateContext((state) => {
             if (state.settings.showMenu == menu) {
                 state.settings.showMenu = !state.settings.showMenu;
+                togglePause(!state.settings.showMenu, state.player);
             }
         });
     };
@@ -26,7 +29,7 @@ const Menu = () => {
     }
 
     return (
-        <div className="ui right menu">
+        <div className="ui neutral menu">
             <div className="closer">
                 <button onClick={() => toggleMenu(state.settings.showMenu)}>🗙</button>
             </div>

@@ -25,7 +25,7 @@ const SinglePlayer = () => {
         <StartScreen initialState={appState} start={start} />
     ) : (
         <PauseProvider started={started}>
-            <BoardWrap settings={appState} restart={restart} deck={deck} mode="singleplayer" />
+            <BoardWrap player="2" settings={appState} restart={restart} deck={deck} mode="singleplayer" />
         </PauseProvider>
     );
 };

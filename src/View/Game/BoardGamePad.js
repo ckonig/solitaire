@@ -29,6 +29,8 @@ const BoardGamePad = (props) => {
             onHint={() => props.onHint && props.onHint(switchToGamePad)}
             onUndo={() => props.onUndo && props.onUndo()}
             onPause={() => props.onPause && props.onPause(switchToGamePad)}
+            onMenu={() => props.onPause && props.onMenu(switchToGamePad)}
+            
         >
             <span></span>
         </GamePad>

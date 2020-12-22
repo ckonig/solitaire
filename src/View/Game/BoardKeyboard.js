@@ -26,6 +26,7 @@ const BoardKeyboard = (props) => {
             onHint={() => props.onHint && props.onHint(switchToKeyboard)}
             onUndo={() => props.onUndo && props.onUndo()}
             onPause={() => props.onPause && props.onPause(switchToKeyboard)}
+            onMenu={() => props.onMenu && props.onMenu(switchToKeyboard)}
         />
     ) : null;
 };

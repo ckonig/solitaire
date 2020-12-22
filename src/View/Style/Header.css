@@ -48,11 +48,8 @@
     margin-top: 0.25vw;
     background-color: transparent;
 }
-.singleplayer > .header-buttons > div > button {
-    width: 15vw;
-}
-.splitscreen > .header-buttons > div > button {
-    width: 15vw;
+.singleplayer  .header-buttons > div > button {
+    width: 5vw;
 }
 
 .splitscreen .header-buttons > div > button {

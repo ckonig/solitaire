@@ -29,8 +29,8 @@ const SplitScreen = () => {
     ) : (
         <PauseProvider started={started}>
             <div className="game-layout-container">
-                <BoardWrap settings={appState} restart={restart} deck={deck.copy()} mode="splitscreen" />
-                <BoardWrap settings={{ ...appState, inputMode: "keyboard" }} restart={restart} deck={deck.copy()} mode="splitscreen" />
+                <BoardWrap player="1" settings={appState} restart={restart} deck={deck.copy()} mode="splitscreen" />
+                <BoardWrap player="2" settings={{ ...appState, inputMode: "keyboard" }} restart={restart} deck={deck.copy()} mode="splitscreen" />
             </div>
         </PauseProvider>
     );

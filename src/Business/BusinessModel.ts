@@ -46,8 +46,8 @@ export default class BusinessModel extends Model {
         return this;
     };
 
-    static getInitialState = (launchSettings: AppState, deck: Deck) => {
-        return new BusinessModel(Model.getInitialState(launchSettings, deck));
+    static getInitialState = (launchSettings: AppState, deck: Deck, player: string) => {
+        return new BusinessModel(Model.getInitialState(launchSettings, deck, player));
     };
 
     static copy = (state: Model) => {

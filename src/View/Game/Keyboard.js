@@ -39,6 +39,10 @@ const Keyboard = (props) => {
             props.onPause && props.onPause();
             e.preventDefault();
         }
+        if (evtobj.keyCode == 77) {
+            props.onPause && props.onMenu();
+            e.preventDefault();
+        }
     };
     React.useEffect(() => {
         document.addEventListener("keydown", navListener);

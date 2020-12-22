@@ -15,6 +15,7 @@ const Navigator = (props) => {
                 onHint={props.onHint}
                 onUndo={props.onUndo}
                 onPause={props.onPause}
+                onMenu={props.onMenu}
             />
             <BoardGamePad
                 onLeft={props.onLeft}
@@ -26,6 +27,7 @@ const Navigator = (props) => {
                 onHint={props.onHint}
                 onUndo={props.onUndo}
                 onPause={props.onPause}
+                onMenu={props.onMenu}
             />
         </>
     );
