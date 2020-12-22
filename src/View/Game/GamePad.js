@@ -5,31 +5,31 @@ const GamePad = (props) => {
     const buttonHandler = (e) => {
         console.debug(e);
         if (e == "DPadLeft") {
-            props.onLeft();
+            props.onLeft && props.onLeft();
         }
         if (e == "DPadRight") {
-            props.onRight();
+            props.onRight && props.onRight();
         }
         if (e == "DPadUp") {
-            props.onUp();
+            props.onUp && props.onUp();
         }
         if (e == "DPadDown") {
-            props.onDown();
+            props.onDown && props.onDown();
         }
         if (e == "A") {
-            props.onAction();
+            props.onAction && props.onAction();
         }
         if (e == "B") {
-            props.onCancel();
+            props.onCancel && props.onCancel();
         }
         if (e == "X") {
-            props.onHint();
+            props.onHint && props.onHint();
         }
         if (e == "Y") {
-            props.onUndo();
+            props.onUndo && props.onUndo();
         }
         if (e == "Start") {
-            props.onPause();
+            props.onPause && props.onPause();
         }
     };
     const connectHandler = (e) => {

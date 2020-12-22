@@ -1,17 +1,12 @@
-import GlobalContext from "../../Context";
+import PauseContext from "../../PauseContext";
 import React from "react";
 
 const Pause = () => {
-    const { state, updateContext } = React.useContext(GlobalContext);
-    const isPaused = !!state.game.paused;
-    const pause = () =>
-        updateContext((ctx) => {
-            ctx.game.togglePause(isPaused);
-        });
+    const { state, togglePause } = React.useContext(PauseContext);
 
-    return state.game.pauses.length < 3 ? (
+    return state.pauses.length < 3 ? (
         <div>
-            <button onClick={pause}>{isPaused ? "▶️" : "⏸️"}</button>
+            <button onClick={() => togglePause(state.paused)}>{state.paused ? "▶️" : "⏸️"}</button>
         </div>
     ) : null;
 };

@@ -4,6 +4,7 @@ import BoardNavigator from "./BoardNavigator";
 import Dealer from "./Dealer";
 import Foundation from "./Foundation";
 import Header from "../UI/Header/Header";
+import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
@@ -12,7 +13,7 @@ import Waste from "./Waste";
 const Board = (props) => (
     <>
         <div className={"layout-grid-container " + props.mode}>
-            <Header />
+            <Header mode={props.mode} />
             <div className="board-grid-container">
                 <Stock />
                 <Waste />
@@ -23,6 +24,7 @@ const Board = (props) => (
         </div>
         <Dealer />
         <BoardNavigator />
+        <Menu />
     </>
 );
 

@@ -1,11 +1,13 @@
 import GlobalContext from "../Context";
 import Navigator from "../Navigator";
+import PauseContext from "../PauseContext";
 import React from "react";
 
 const BoardNavigator = () => {
     const { state, updateContext, updateGameContext, replaceContext } = React.useContext(GlobalContext);
+    const paused = React.useContext(PauseContext);
     const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };
-    const isPaused = !!state.game.paused;
+    const isPaused = !!paused.state.paused;
 
     const onLeft = (modifier) =>
         updateContext((ctx) => {
@@ -43,11 +45,7 @@ const BoardNavigator = () => {
             ctx.hand.stack.length && ctx.hand.stack[0].onClick({ isKeyboard: true })(ctx);
         });
 
-    const onPause = (modifier) =>
-        updateContext((ctx) => {
-            modifier(ctx);
-            ctx.game.togglePause(isPaused);
-        });
+    const onPause = () => paused.togglePause(isPaused);
 
     const isVisible = (state) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
     const isDisabled = (state) => state.settings.suggestionMode.isTemporary;

@@ -1,18 +1,13 @@
 import "../Style/Screens.scss";
 
-import GlobalContext from "../Context";
-import Navigator from "../Navigator";
+import GamePad from "../Game/GamePad";
+import Keyboard from "../Game/Keyboard";
+import PauseContext from "../PauseContext";
 import React from "react";
 
 const PauseScreen = () => {
-    const { state, updateContext } = React.useContext(GlobalContext);
-    const isPaused = state.game.paused;
-    const unpause = () =>
-        updateContext((ctx) => {
-            ctx.game.togglePause(isPaused);
-        });
-    const timesPaused = state.game.pauses.length;
-    const remaining = 2 - timesPaused;
+    const { state, togglePause } = React.useContext(PauseContext);
+    const remaining = 2 - state.pauses.length;
 
     //@todo proper I18N
     let announcement = `You can pause the game ${remaining} more times.`;
@@ -24,18 +19,20 @@ const PauseScreen = () => {
     }
 
     //@todo show launch settings (draw mode, recycling mode)
-    return !state.game.paused ? null : (
+    const _toggle = () => togglePause(state.paused);
+    return !state.paused ? null : (
         <div className="ui center endscreen">
             <div className="title">😴</div>
             <div className="content">
                 <div>{announcement}</div>
                 <div>
-                    <button onClick={unpause}>
+                    <button onClick={_toggle}>
                         ▶️<div>Continue</div>
                     </button>
                 </div>
             </div>
-            <Navigator onAction={unpause} onCancel={unpause} />
+            <Keyboard onAction={_toggle} onCancel={_toggle} />
+            <GamePad onAction={_toggle} onCancel={_toggle} />
         </div>
     );
 };

@@ -12,8 +12,8 @@ import RestartGame from "../RestartGame";
 import ToggleMenu from "./ToggleMenu";
 import Undo from "./Undo";
 
-const Header = () => (
-    <div className="header">
+const Header = (props) => (
+    <div className={"header " + props.mode}>
         <div className="header-title">
             <Hearts />
             <Points />
