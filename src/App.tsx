@@ -5,9 +5,7 @@ import { AppState, StartScreenState } from "./Common";
 import GameModes, { GameMode } from "./View/GameModes";
 
 import BoardWrap from "./View/Game/BoardWrap";
-import Controls from "./View/UI/StartScreen/Controls";
 import Deck from "./Model/Deck/Deck";
-import Difficulty from "./View/UI/StartScreen/Difficulty";
 import DifficultyOptions from "./View/UI/StartScreen/DifficultyOptions";
 import GamePad from "./View/Game/GamePad";
 import Keyboard from "./View/Game/Keyboard";
@@ -15,10 +13,9 @@ import MenuButton from "./View/UI/Menu/MenuButton";
 import MenuTitle from "./View/UI/Menu/MenuTitle";
 import { PauseProvider } from "./View/PauseContext";
 import { Provider } from "./View/UI/StartScreen/Context";
-import QuickStart from "./View/UI/StartScreen/QuickStart";
-import Rating from "./View/UI/StartScreen/Rating";
 import RatingPresets from "./View/UI/StartScreen/RatingOptions";
 import React from "react";
+import Screen from "./View/UI/StartScreen/Screen";
 import TouchDetector from "./View/UI/StartScreen/TouchDetector";
 import VerticalMenu from "./View/UI/Menu/VerticalMenu";
 
@@ -135,16 +132,39 @@ class MenuPageButton extends MenuLeafButton {
     }
 }
 
-class MenuRootButton extends MenuNodeButton {
-    constructor(children: IButton[]) {
+interface XY {
+    x: number;
+    y: number;
+}
+
+interface NavHandler {
+    moveUp: (x: number, y: number) => XY;
+    moveDown: (x: number, y: number) => XY;
+    moveLeft: (x: number, y: number) => XY;
+    moveRight: (x: number, y: number) => XY;
+    action: (x: number, y: number) => void;
+}
+
+class MenuRootButton extends MenuNodeButton implements NavHandler {
+    escape: () => void;
+    constructor(escape: () => void, children: IButton[]) {
         super(children);
         this.isRoot = true;
         this.children = children;
+        this.escape = escape;
     }
     getClickable: () => IButton[] = () => [...this.children.map((child: IButton) => child.getClickable())].flat();
     withMap = () => {
         this.children.forEach((child: IButton, i: number) => child.updateMap(i, 0));
         return this;
+    };
+    moveRight = () => {
+        //switch to screen handler if possible
+        throw new Error("cant go right");
+    };
+    moveLeft = (x: number, y: number) => {
+        //ignore
+        return { x, y };
     };
     moveDown = (x: number, y: number) => {
         const current = this.children[x];
@@ -180,6 +200,20 @@ class MenuRootButton extends MenuNodeButton {
             current.onClick();
         }
     };
+}
+
+class ScreenNavigator implements NavHandler {
+    escape: () => void;
+    constructor(escape: () => void) {
+        this.escape = escape;
+    }
+    moveUp: (x: number, y: number) => XY = (x: number, y: number) => ({ x: x, y: y });
+    moveDown: (x: number, y: number) => XY = (x: number, y: number) => ({ x: x, y: y });
+    moveLeft: (x: number, y: number) => XY = () => {
+        throw new Error("cant go left");
+    };
+    moveRight: (x: number, y: number) => XY = (x: number, y: number) => ({ x: x, y: y });
+    action: (x: number, y: number) => void = () => {};
 }
 
 class MenuStartButton extends MenuLeafButton {
@@ -230,8 +264,15 @@ const App = () => {
             baseEntropy: TouchDetector() ? 1 : 2,
             interactionEntropy: TouchDetector() ? 1 : 2,
         },
-        x: 0,
-        y: 0,
+        menu: {
+            x: 0,
+            y: 0,
+        },
+        screen: {
+            x: 0,
+            y: 0,
+        },
+        focus: "menu",
     });
     const restart = () => {
         setAppState(defaultState);
@@ -251,21 +292,6 @@ const App = () => {
         };
         setAppState(settings);
         setStarted(Date.now());
-    };
-
-    const getScreen = () => {
-        switch (screen) {
-            case "rating":
-                return <Rating head={mainMenu.title} />;
-            case "difficulty":
-                return <Difficulty head={mainMenu.title} />;
-            case "settings":
-                return <QuickStart head={mainMenu.title} />;
-            case "controls":
-                return <Controls head={mainMenu.title} />;
-            default:
-                return null;
-        }
     };
 
     if (appState.initialized) {
@@ -288,19 +314,61 @@ const App = () => {
         return <PauseProvider started={started}>{board}</PauseProvider>;
     }
 
+    const switchToScreen = () => {
+        if (screen) {
+            setState({ ...state, focus: "screen" });
+        }
+    };
+
+    const switchToMenu = () => {
+        setState({ ...state, focus: "menu" });
+    };
+
+    const getNavigator = () => (state.focus == "menu" ? buttons() : new ScreenNavigator(switchToMenu));
+    const assignState = (result: XY) => {
+        if (state.focus == "menu") {
+            setState({ ...state, menu: result });
+        }
+        if (state.focus == "screen") {
+            setState({ ...state, screen: result });
+        }
+    };
+
+    const getPos = () => (state.focus == "menu" ? state.menu : state.screen);
     const onUp = () => {
-        setState({ ...state, ...buttons().moveUp(state.x, state.y) });
+        const result = getNavigator().moveUp(getPos().x, getPos().y);
+        assignState(result);
     };
     const onDown = () => {
-        setState({ ...state, ...buttons().moveDown(state.x, state.y) });
+        const result = getNavigator().moveDown(getPos().x, getPos().y);
+        assignState(result);
+    };
+
+    const onLeft = () => {
+        try {
+            const result = getNavigator().moveLeft(getPos().x, getPos().y);
+            assignState(result);
+        } catch (e) {
+            getNavigator().escape();
+        }
+    };
+
+    const onRight = () => {
+        try {
+            const result = getNavigator().moveRight(getPos().x, getPos().y);
+            assignState(result);
+        } catch (e) {
+            getNavigator().escape();
+            console.error(e);
+        }
     };
 
     const onAction = () => {
-        buttons().action(state.x, state.y);
+        getNavigator().action(getPos().x, getPos().y);
     };
 
     const buttons = (): MenuRootButton =>
-        new MenuRootButton([
+        new MenuRootButton(switchToScreen, [
             new MenuStartButton(mainMenu, start),
             new MenuSectionButton("custom", "⚙️", "Custom Game", GameModes.CUSTOM, mainMenu.key, toggleMainMenu, [
                 new MenuPageButton("rating", "🎲", "Rating", screen, setScreen),
@@ -317,7 +385,6 @@ const App = () => {
 
     const ButtonRenderer = (props: any) => {
         const render = (c: Button) => {
-            //<div className="submenu">{c.children && c.toggled && c.children.map(render)}</div>
             return (
                 <MenuButton
                     key={c.x + "-" + c.y}
@@ -342,13 +409,9 @@ const App = () => {
                 <MenuTitle label="Solitaire" />
                 <ButtonRenderer buttons={buttons().getClickable()} />
             </VerticalMenu>
-            {screen && (
-                <div className="startscreen-layout">
-                    <div className="startscreen-jail">{getScreen()}</div>
-                </div>
-            )}
-            <Keyboard onUp={onUp} onDown={onDown} onAction={onAction} />
-            <GamePad onUp={onUp} onDown={onDown} onAction={onAction} />
+            <Screen screen={screen} mainMenu={mainMenu} />
+            <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />
+            <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />
         </Provider>
     );
 };

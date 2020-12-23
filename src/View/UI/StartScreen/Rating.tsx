@@ -1,7 +1,13 @@
+import { ScreenButton, ScreenRow } from "./Navigation";
+
 import RatingPresets from "./RatingOptions";
 import { RatingSettings } from "../../../Common";
 import React from "react";
 import StartScreenContext from "./Context";
+
+export const getRatingRows = () => [
+    new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
+];
 
 const Rating = (props: { head: string }) => {
     const ctx = React.useContext(StartScreenContext);
@@ -83,14 +89,16 @@ const Rating = (props: { head: string }) => {
                 </div>
             ) : (
                 <div className="content center">
-                    <div>
-                        {RatingPresets.all.map((preset) => (
-                            <button className={getButtonClass(preset.id)} key={preset.id} onClick={() => applyPreset(preset.id)}>
-                                {preset.icon}
-                                <div>{preset.label}</div>
-                            </button>
-                        ))}
-                    </div>
+                    {getRatingRows().map((row, ri) => (
+                        <div key={ri}>
+                            {row.buttons.map((preset) => (
+                                <button key={preset.id} className={getButtonClass(preset.id)} onClick={() => applyPreset(preset.id)}>
+                                    {preset.icon}
+                                    <div>{preset.lines[0]}</div>
+                                </button>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

@@ -1,11 +1,33 @@
+import { ScreenButton, ScreenRow } from "./Navigation";
+
 import EntropyLevels from "../../../Model/Game/EntropyLevels";
 import React from "react";
 import StartScreenContext from "./Context";
+import { StartScreenState } from "../../../Common";
+
+const optimizeOptions = (state: StartScreenState) => [
+    {
+        entropy: 2,
+        quickDeal: false,
+        lines: [(!state.quickDeal ? "Optimized" : "Optimize") + " for Desktop", "with Mouse Support"],
+        icon: "🖥️",
+    },
+    {
+        entropy: 1,
+        quickDeal: true,
+        lines: [(state.quickDeal ? "Optimized" : "Optimize") + " for Mobile", "with Touch Support"],
+        icon: "📱",
+    },
+];
+
+const getSettingRows = (state: StartScreenState) => {
+    return [new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option)))];
+};
 
 const QuickStart = (props: { head: string }) => {
     const { state, setState } = React.useContext(StartScreenContext);
     const [toggle, setToggle] = React.useState<boolean>(false);
-    
+
     const setBaseEntropy = (value: string) => {
         setState({ ...state, entropySettings: { ...state.entropySettings, baseEntropy: parseInt(value) } });
     };
@@ -15,6 +37,7 @@ const QuickStart = (props: { head: string }) => {
     const setQuickDeal = (value: string) => {
         setState({ ...state, quickDeal: !!parseInt(value) });
     };
+
     return (
         <div className="ui quickstart startdetails">
             <div className="closer">
@@ -71,30 +94,32 @@ const QuickStart = (props: { head: string }) => {
                 </div>
             ) : (
                 <div className="content center">
-                    <div>
-                        <button
-                            disabled={!state.quickDeal}
-                            className={!state.quickDeal ? "active active-0" : `inactive-0`}
-                            onClick={() =>
-                                setState({ ...state, quickDeal: false, entropySettings: { baseEntropy: 2, interactionEntropy: 2 } })
-                            }
-                        >
-                            🖥️
-                            <div>{!state.quickDeal ? "Optimized" : "Optimize"} for Desktop</div>
-                            <div>with Mouse Support</div>
-                        </button>
-                        <button
-                            disabled={state.quickDeal}
-                            className={state.quickDeal ? "active active-0" : "inactive-0"}
-                            onClick={() =>
-                                setState({ ...state, quickDeal: true, entropySettings: { baseEntropy: 1, interactionEntropy: 1 } })
-                            }
-                        >
-                            📱
-                            <div>{state.quickDeal ? "Optimized" : "Optimize"} for Mobile</div>
-                            <div>with Touch Support</div>
-                        </button>
-                    </div>
+                    {getSettingRows(state).map((row, index) => (
+                        <div key={index}>
+                            {row.buttons.map((button) => (
+                                <button
+                                    key={button.id}
+                                    disabled={state.quickDeal == button.model.quickDeal}
+                                    className={state.quickDeal == button.model.quickDeal ? "active active-0" : "inactive-0"}
+                                    onClick={() =>
+                                        setState({
+                                            ...state,
+                                            quickDeal: button.model.quickDeal,
+                                            entropySettings: {
+                                                baseEntropy: button.model.entropy,
+                                                interactionEntropy: button.model.entropy,
+                                            },
+                                        })
+                                    }
+                                >
+                                    {button.icon}
+                                    {button.lines.map((line, lindex) => (
+                                        <div key={lindex}>{line}</div>
+                                    ))}
+                                </button>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

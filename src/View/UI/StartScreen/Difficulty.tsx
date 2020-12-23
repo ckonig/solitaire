@@ -1,8 +1,14 @@
+import { ScreenButton, ScreenRow } from "./Navigation";
+
 import DifficultyOptions from "./DifficultyOptions";
 import React from "react";
 import StartScreenContext from "./Context";
 
-const Difficulty = (props: {head: string}) => {
+const mapOption = (option: any) => new ScreenButton(option.id, option.icon, option.lines, option);
+const getDifficultyRows = () => {
+    return [new ScreenRow(DifficultyOptions.slice(0, 3).map(mapOption)), new ScreenRow(DifficultyOptions.slice(3).map(mapOption))];
+};
+const Difficulty = (props: { head: string }) => {
     const { state, setState } = React.useContext(StartScreenContext);
     const updateDifficulty = (settings: number) => setState({ ...state, difficultySettings: settings });
     const getButtonClass = (index: number) => (state.difficultySettings == index ? `active active-${index}` : `inactive-${index}`);
@@ -11,26 +17,18 @@ const Difficulty = (props: {head: string}) => {
             <div className="title">{props.head}</div>
             <div className="title">Difficulty</div>
             <div className="content center">
-                <div className="left">
-                    {DifficultyOptions.slice(0, 3).map((option) => (
-                        <button key={option.id} className={getButtonClass(option.id)} onClick={() => updateDifficulty(option.id)}>
-                            {option.icon}
-                            {option.lines.map((line, i) => (
-                                <div key={i}>{line}</div>
-                            ))}
-                        </button>
-                    ))}
-                </div>
-                <div className="right">
-                    {DifficultyOptions.slice(3).map((option) => (
-                        <button key={option.id} className={getButtonClass(option.id)} onClick={() => updateDifficulty(option.id)}>
-                            {option.icon}
-                            {option.lines.map((line, i) => (
-                                <div key={i}>{line}</div>
-                            ))}
-                        </button>
-                    ))}
-                </div>
+                {getDifficultyRows().map((row, index) => (
+                    <div key={index}>
+                        {row.buttons.map((button) => (
+                            <button key={button.id} className={getButtonClass(button.id)} onClick={() => updateDifficulty(button.id)}>
+                                {button.icon}
+                                {button.lines.map((line, i) => (
+                                    <div key={i}>{line}</div>
+                                ))}
+                            </button>
+                        ))}
+                    </div>
+                ))}
             </div>
         </div>
     );

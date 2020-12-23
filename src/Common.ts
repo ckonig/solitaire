@@ -39,6 +39,13 @@ export interface StartScreenState {
     ratingPreset: number;
     quickDeal: boolean;
     entropySettings: EntropySettings;
-    x: number;
-    y: number;
+    menu: {
+        x: number;
+        y: number;
+    };
+    screen: {
+        x: number;
+        y: number;
+    };
+    focus: string,
 }

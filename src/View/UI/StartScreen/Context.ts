@@ -13,8 +13,15 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         ratingSettings: {},
         entropySettings: {},
         quickDeal: false,
-        x: 0,
-        y:0 ,
+        menu: {
+            x: 0,
+            y: 0,
+        },
+        screen: {
+            x: 0,
+            y: 0,
+        },
+        focus: "menu"
     },
     setState: () => {},
 });

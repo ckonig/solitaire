@@ -13,7 +13,7 @@ const MenuButton = (props) => {
         className += " indented";
     }
 
-    if (state.x == props.x && state.y == props.y) {
+    if (state.menu.x == props.x && state.menu.y == props.y && state.focus == "menu") {
         className += " highlight";
     }
     if (props.active || props.toggled) {
