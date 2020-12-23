@@ -216,7 +216,7 @@ const App = () => {
         } else {
             setMainMenu(GameModes.QUICK);
             setScreen("");
-            //@todo also move cursor to QUICK 
+            //@todo also move cursor to QUICK
             //? should screen, mainmenu and cursor be part of the same state object ?
         }
     };
@@ -280,7 +280,7 @@ const App = () => {
         if (mainMenu.boardMode == "splitscreen") {
             board = (
                 <div className="game-layout-container splitscreen">
-                    <BoardWrap player="1" settings={appState} restart={restart} deck={deck.copy()} />
+                    <BoardWrap player="1" settings={{ ...appState, inputMode: "gamepad" }} restart={restart} deck={deck.copy()} />
                     <BoardWrap player="2" settings={{ ...appState, inputMode: "keyboard" }} restart={restart} deck={deck.copy()} />
                 </div>
             );
@@ -290,7 +290,6 @@ const App = () => {
 
     const onUp = () => {
         setState({ ...state, ...buttons().moveUp(state.x, state.y) });
-        
     };
     const onDown = () => {
         setState({ ...state, ...buttons().moveDown(state.x, state.y) });
