@@ -17,7 +17,7 @@ export default class Tableau extends BlinkingComponent {
 
     render() {
         const props = this.props;
-        let offset = 0;
+        let offset = 1;
         const getOffset = (index) => {
             for (let i = 0; i <= index; i++) {
                 if (props.model.stack[i] && !props.model.stack[i].isHidden) {
