@@ -3,7 +3,7 @@ import { RatingSettings } from "../../../Common";
 import React from "react";
 import StartScreenContext from "./Context";
 
-const Rating = () => {
+const Rating = (props: { head: string }) => {
     const ctx = React.useContext(StartScreenContext);
     const context = ctx.state;
     const setContext = ctx.setState;
@@ -24,10 +24,11 @@ const Rating = () => {
     const setHintPenalty = (value: string) => customizeRating((r) => (r.hintPenalty = value == "true"));
 
     return (
-        <div className="ui rating">
+        <div className="ui rating startdetails quickstart">
             <div className="closer">
                 <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
             </div>
+            <div className="title">{props.head}</div>
             <div className="title">{toggle ? "Customize Rating" : "Rating"}</div>
             {toggle ? (
                 <div className="content">

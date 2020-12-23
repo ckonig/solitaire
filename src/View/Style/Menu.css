@@ -1,10 +1,10 @@
 .menu {
     margin-top: 2vw;
-    margin:1vw;
+    margin: 1vw;
     padding: 0.5vw;
     width: 20vw;
     float: left;
-    
+
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     color: white;
@@ -13,19 +13,17 @@
     border-radius: 0.5vw;
 }
 
-.menu > .title {
-    padding-top: 0.5vw;
+.submenu {
     padding-left: 1vw;
-    width: 100%;
-    font-size: 3vw;
 }
 
+.submenu > button,
 .menu > button {
     padding: 0.2vw;
     padding-left: 1vw;
     margin-top: 0.1vw;
     margin-bottom: 0.2vw;
-    width: 100%;
+
     font-size: 2vw;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
@@ -36,6 +34,21 @@
     border-radius: 0.25vw;
 }
 
+.menu > button {
+    width: 100%;
+}
+
+.submenu > button {
+    width: 100%;
+    color: gray;
+}
+
+.submenu > button.active {
+    border-color: white;
+    color: white;
+}
+
+.submenu > button > .icon,
 .menu > button > .icon {
     float: left;
     padding-right: 1vw;
@@ -43,12 +56,48 @@
 
 .startscreen-layout {
     padding: 0.5vw;
-    float: left;
+    margin-top: 0vw;
     margin: 1vw;
+    width: 50vw;
+    float: left;
+    height: 46vw;
     background-color: red;
     background-color: rgba(0, 0, 0, 0.95);
     border-radius: 0.25vw;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     color: white;
+    position: relative;
+}
+
+.startscreen-jail {
+    position: absolute;
+    left: 0;
+    top:0;
+    right:0;
+    bottom:0; 
+}
+
+.menu > .title,
+.startdetails > .title {
+    padding-top: 0.5vw;
+    padding-left: 1vw;
+    width: 100%;
+    font-size: 3vw;
+}
+
+
+.controls .left {
+    float: left;
+    width: 50%;
+}
+
+.controls .right {
+    float: left;
+    width: 50%;
+}
+.rating .content .section {
+    padding:0vw;
+    padding-right:2vw;
+    padding-left:2vw;
 }

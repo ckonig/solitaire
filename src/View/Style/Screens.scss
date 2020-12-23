@@ -1,6 +1,3 @@
-.quickstart {
-    margin-top: 2vw;
-}
 .endscreen {
     top: 4vw;
 }
@@ -64,11 +61,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     color: white;
 }
 
-.rating {
-    top: 2vw;
-}
-
-.quickstart > .content.center > div {
+.content.center > div {
     text-align: center;
 }
 
@@ -92,10 +85,3 @@ button.blinking {
     }
 }
 
-
-.tab.header {
-
-}
-.tab.content { 
-
-}

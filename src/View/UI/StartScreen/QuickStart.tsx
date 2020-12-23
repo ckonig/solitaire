@@ -1,10 +1,11 @@
 import React from "react";
 import StartScreenContext from "./Context";
 
-const QuickStart = () => {
+const QuickStart = (props: {head: string}) => {
     const { state, setState } = React.useContext(StartScreenContext);
     return (
-        <div className="quickstart">
+        <div className="quickstart startdetails">
+            <div className="title">{props.head}</div>
             <div className="title">Settings</div>
             <div className="content center">
                 <div>

@@ -2,18 +2,13 @@
     z-index: 2000;
 }
 
-.ui > .title {
-    font-size: 2vw;
-    margin-bottom: 2vw;
-}
-
-.ui .closer {
+.closer {
     position: absolute;
     right: 0.3vw;
     top: 0.1vw;
 }
 
-.ui .closer button {
+.closer button {
     font-size: 2vw;
     padding-top: 0vw;
     border-color: transparent;
@@ -24,31 +19,9 @@
     background-color: transparent;
 }
 
-.ui .closer button:focus {
+.closer button:focus {
     outline-color: gray;
     outline-width: 0.05vw;
-}
-
-.ui.left {
-    position: absolute;
-    border-radius: 0.5vw;
-    z-index: 6000;
-    background-color: rgba(0, 0, 0, 0.95);
-    color: white;
-    left: 2vw;
-    padding: 2vw;
-    width: 25vw;
-}
-
-.ui.right {
-    position: absolute;
-    border-radius: 0.5vw;
-    z-index: 6000;
-    background-color: rgba(0, 0, 0, 0.95);
-    color: white;
-    right: 2vw;
-    padding: 2vw;
-    width: 25vw;
 }
 
 .ui > .content > .section {
@@ -82,17 +55,6 @@
 
 .ui > .content > .section > .row {
     clear: both;
-}
-
-.ui.center {
-    background-color: rgba(0, 0, 0, 0.95);
-    color: #fff;
-    padding: 2vw;
-    border-radius: 0.5vw;
-    z-index: 5000;
-    width: 32vw;
-    position: absolute;
-    right: 32vw;
 }
 
 .ui.neutral {
