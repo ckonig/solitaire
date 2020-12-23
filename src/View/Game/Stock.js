@@ -28,7 +28,7 @@ const InnerRenderer = (props) => {
         if (previous && started && !paused && (previous.length != length || previous.started != started || previous.paused != paused)) {
             timeout = setTimeout(() => {
                 context.updateContext((state) => {
-                    if (state.stock.passes > 0 && (state.stock.stack.length || state.waste.stack.length)) {
+                    if (length == state.stock.stack.length && state.stock.passes > 0 && (state.stock.stack.length || state.waste.stack.length)) {
                         if (state.hand.isFromWaste()) {
                             state.waste.putDownHand();
                         }
