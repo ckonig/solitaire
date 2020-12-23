@@ -11,7 +11,10 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         difficultySettings: 0,
         ratingPreset: 0,
         ratingSettings: {},
-        isTouch: false,
+        entropySettings: {},
+        quickDeal: false,
+        x: 0,
+        y:0 ,
     },
     setState: () => {},
 });

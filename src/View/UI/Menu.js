@@ -1,5 +1,6 @@
 import "../Style/Menu.css";
 
+import EntropyLevels from "../../Model/Game/EntropyLevels";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
@@ -70,7 +71,7 @@ const Menu = () => {
                     <div className="row">
                         <div className="label">How much chaos will the stacks on the board contain by themselves?</div>
                         <select onChange={(e) => setBaseEntropy(e.target.value)} value={state.settings.baseEntropy}>
-                            {state.settings.entropyLevels.map((entropyLevel, index) => (
+                            {EntropyLevels.map((entropyLevel, index) => (
                                 <option key={entropyLevel} value={index}>
                                     {entropyLevel}
                                 </option>
@@ -83,7 +84,7 @@ const Menu = () => {
                     <div className="row">
                         <div className="label">How much chaos will each interaction add to a stack on the board?</div>
                         <select onChange={(e) => setInteractionEntropy(e.target.value)} value={state.settings.interactionEntropy}>
-                            {state.settings.entropyLevels.map((entropyLevel, index) => (
+                            {EntropyLevels.map((entropyLevel, index) => (
                                 <option key={entropyLevel} value={index}>
                                     {entropyLevel}
                                 </option>

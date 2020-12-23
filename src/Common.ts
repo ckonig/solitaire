@@ -28,10 +28,17 @@ export interface RatingSettings {
     missPenalty?: boolean;
 }
 
+export interface EntropySettings {
+    baseEntropy?: number;
+    interactionEntropy?: number;
+}
+
 export interface StartScreenState {
     ratingSettings: RatingSettings;
     difficultySettings: number;
     ratingPreset: number;
-    isTouch: boolean;
+    quickDeal: boolean;
+    entropySettings: EntropySettings;
+    x: number;
+    y: number;
 }
-

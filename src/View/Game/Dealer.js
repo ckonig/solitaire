@@ -5,7 +5,7 @@ const Dealer = () => {
     const { state, replaceContext } = React.useContext(GlobalContext);
     const timeouts = [];
     //@todo implement launch setting UI for quick dealing
-    if (state.settings.launchSettings.isTouch) {
+    if (state.settings.launchSettings.quickDeal) {
         if (state && state.dealer && !state.dealer.isDealt) {
             replaceContext(state.dealer.dealAll(state));
         }
