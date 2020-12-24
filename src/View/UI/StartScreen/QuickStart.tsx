@@ -49,8 +49,7 @@ const QuickStart = (props: { head: string }) => {
             <div className="closer">
                 <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
             </div>
-            <div className="title">{props.head}</div>
-            <div className="title">Settings</div>
+            <div className="title">{props.head}: Settings</div>
 
             {toggle ? (
                 <div className="content">

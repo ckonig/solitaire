@@ -39,8 +39,7 @@ const Rating = (props: { head: string }) => {
             <div className="closer">
                 <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
             </div>
-            <div className="title">{props.head}</div>
-            <div className="title">{toggle ? "Customize Rating" : "Rating"}</div>
+            <div className="title">{props.head}: Rating</div>
             {toggle ? (
                 <div className="content">
                     <div className="section">

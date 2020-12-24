@@ -19,8 +19,7 @@ const Difficulty = (props: { head: string }) => {
     };
     return (
         <div className="quickstart startdetails">
-            <div className="title">{props.head}</div>
-            <div className="title">Difficulty</div>
+            <div className="title">{props.head}: Difficulty</div>
             <div className="content center">
                 {getDifficultyRows().map((row, index) => (
                     <div key={index}>

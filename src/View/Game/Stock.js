@@ -25,7 +25,7 @@ const InnerRenderer = (props) => {
     const previous = usePrevious({ length, paused, started });
     React.useEffect(() => {
         let timeout = null;
-        if (previous && started && !paused && (previous.length != length || previous.started != started || previous.paused != paused)) {
+        if (context.state.settings.launchSettings.speed && previous && started && !paused && (previous.length != length || previous.started != started || previous.paused != paused)) {
             timeout = setTimeout(() => {
                 context.updateContext((state) => {
                     if (length == state.stock.stack.length && state.stock.passes > 0 && (state.stock.stack.length || state.waste.stack.length)) {

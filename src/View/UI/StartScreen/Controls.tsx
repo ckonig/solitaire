@@ -3,8 +3,7 @@ import React from "react";
 const Controls = (props: { head: string }) => {
     return (
         <div className="controls startdetails">
-            <div className="title">{props.head}</div>
-            <div className="title">Controls</div>
+            <div className="title">{props.head}: Controls</div>
             <div className="content center">
                 <div className="left">
                     <div className="title">Player 1</div>
