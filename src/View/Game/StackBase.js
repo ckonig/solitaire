@@ -22,7 +22,7 @@ const StackBase = (props) => {
         classname += " socket-full";
     }
 
-    if (props.model.suggestions && !props.model.stack.length) {
+    if (props.model.suggestion && !props.model.stack.length) {
         classname += " socket-suggested";
     }
 
