@@ -16,7 +16,12 @@ const Rating = (props: { head: string }) => {
     const [toggle, setToggle] = React.useState<boolean>(false);
 
     const applyPreset = (id: number) => setContext({ ...context, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
-    const getButtonClass = (index: number) => (context.ratingPreset == index ? `active active-${index}` : `inactive-${index}`);
+    const getButtonClass = (index: number, y: number, x: number) => {
+        const hasFocus = context.focus == "screen" && context.screen.x == x && context.screen.y == y;
+        let name = context.ratingPreset == index ? `active active-${index}` : `inactive-${index}`;
+        name += hasFocus ? " focused" : "";
+        return name;
+    };
 
     const customizeRating = (modifier: (context: RatingSettings) => void) => {
         const next = { ...context };
@@ -91,8 +96,12 @@ const Rating = (props: { head: string }) => {
                 <div className="content center">
                     {getRatingRows().map((row, ri) => (
                         <div key={ri}>
-                            {row.buttons.map((preset) => (
-                                <button key={preset.id} className={getButtonClass(preset.id)} onClick={() => applyPreset(preset.id)}>
+                            {row.buttons.map((preset, bi) => (
+                                <button
+                                    key={preset.id}
+                                    className={getButtonClass(preset.id, ri, bi)}
+                                    onClick={() => applyPreset(preset.id)}
+                                >
                                     {preset.icon}
                                     <div>{preset.lines[0]}</div>
                                 </button>

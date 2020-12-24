@@ -20,7 +20,7 @@ const optimizeOptions = (state: StartScreenState) => [
     },
 ];
 
-const getSettingRows = (state: StartScreenState) => {
+export const getSettingRows = (state: StartScreenState) => {
     return [new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option)))];
 };
 
@@ -36,6 +36,12 @@ const QuickStart = (props: { head: string }) => {
     };
     const setQuickDeal = (value: string) => {
         setState({ ...state, quickDeal: !!parseInt(value) });
+    };
+    const getClassName = (button: ScreenButton<any>, y: number, x: number) => {
+        const hasFocus = state.focus == "screen"&& state.screen.x == x && state.screen.y == y;
+        let name = state.quickDeal == button.model.quickDeal ? "active active-0" : "inactive-0";
+        name += hasFocus ? " focused" : "";
+        return name;
     };
 
     return (
@@ -96,11 +102,11 @@ const QuickStart = (props: { head: string }) => {
                 <div className="content center">
                     {getSettingRows(state).map((row, index) => (
                         <div key={index}>
-                            {row.buttons.map((button) => (
+                            {row.buttons.map((button, bi) => (
                                 <button
                                     key={button.id}
                                     disabled={state.quickDeal == button.model.quickDeal}
-                                    className={state.quickDeal == button.model.quickDeal ? "active active-0" : "inactive-0"}
+                                    className={getClassName(button, index, bi)}
                                     onClick={() =>
                                         setState({
                                             ...state,

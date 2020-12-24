@@ -4,6 +4,7 @@ import { GameMode } from "../../GameModes";
 import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import React from "react";
+import StartScreenContext from "./Context";
 
 const Screen = (props: { screen: string; mainMenu: GameMode }) => {
     const getScreen = () => {
@@ -21,9 +22,13 @@ const Screen = (props: { screen: string; mainMenu: GameMode }) => {
         }
     };
 
+    const { state } = React.useContext(StartScreenContext);
+
     return props.screen ? (
         <div className="startscreen-layout">
-            <div className="startscreen-jail">{getScreen()}</div>
+            <div className="startscreen-jail">
+                {getScreen()}
+            </div>
         </div>
     ) : null;
 };

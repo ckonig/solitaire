@@ -38,7 +38,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     .quickstart button.inactive-#{$j}:hover {
         border-color: nth($colors, $i);
     }
-    .quickstart button.inactive-#{$j}:focus {
+    .quickstart button.inactive-#{$j}.focused {
         outline-color: nth($colors, $i);
         outline-width: 0.25vw;
         outline-offset: -0.25vw;

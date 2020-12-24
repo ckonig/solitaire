@@ -1,5 +1,6 @@
 import BusinessModel from "./Business/BusinessModel";
 import Card from "./Model/Deck/Card";
+import { ScreenButton } from "./View/UI/StartScreen/Navigation";
 
 export type StateReplacer = (state: BusinessModel) => BusinessModel | null;
 export type StateUpdater = (state: BusinessModel) => void;
@@ -48,4 +49,5 @@ export interface StartScreenState {
         y: number;
     };
     focus: string,
+    currentButton?: ScreenButton<any>
 }

@@ -18,6 +18,9 @@ import React from "react";
 import Screen from "./View/UI/StartScreen/Screen";
 import TouchDetector from "./View/UI/StartScreen/TouchDetector";
 import VerticalMenu from "./View/UI/Menu/VerticalMenu";
+import { getDifficultyRows } from "./View/UI/StartScreen/Difficulty";
+import { getRatingRows } from "./View/UI/StartScreen/Rating";
+import { getSettingRows } from "./View/UI/StartScreen/QuickStart";
 
 interface IButton {
     getClickable: () => IButton[];
@@ -204,15 +207,64 @@ class MenuRootButton extends MenuNodeButton implements NavHandler {
 
 class ScreenNavigator implements NavHandler {
     escape: () => void;
-    constructor(escape: () => void) {
+    screen: string;
+    state: StartScreenState;
+    constructor(escape: () => void, screen: string, state: StartScreenState) {
         this.escape = escape;
+        this.screen = screen;
+        this.state = state;
     }
-    moveUp: (x: number, y: number) => XY = (x: number, y: number) => ({ x: x, y: y });
-    moveDown: (x: number, y: number) => XY = (x: number, y: number) => ({ x: x, y: y });
-    moveLeft: (x: number, y: number) => XY = () => {
-        throw new Error("cant go left");
+    getRows = () => {
+        if (this.screen == "rating") {
+            return getRatingRows();
+        }
+        if (this.screen == "settings") {
+            return getSettingRows(this.state);
+        }
+        if (this.screen == "difficulty") {
+            return getDifficultyRows();
+        }
+        return [];
     };
-    moveRight: (x: number, y: number) => XY = (x: number, y: number) => ({ x: x, y: y });
+    getRow = (x: number) => this.getRows()[x];
+    moveUp: (x: number, y: number) => XY = (x: number, y: number) => {
+        const rows = this.getRows();
+        console.debug(rows, x, y);
+        if (rows.length < 2) {
+            return { x: x, y: y };
+        }
+        if (y == 0) {
+            return { x: x, y: rows.length - 1 };
+        }
+        return { x: x, y: y - 1 };
+    };
+    moveDown: (x: number, y: number) => XY = (x: number, y: number) => {
+        const rows = this.getRows();
+        console.debug(rows, x, y);
+        if (rows.length < 2) {
+            return { x: x, y: y };
+        }
+        if (y == rows.length - 1) {
+            return { x: x, y: 0 };
+        }
+        return { x: x, y: y + 1 };
+    };
+    moveLeft: (x: number, y: number) => XY = (x: number, y: number) => {
+        const row = this.getRow(y);
+        console.debug(row, x, y);
+        if (x == 0) {
+            throw new Error("cant go left");
+        }
+        return { x: x - 1, y: y };
+    };
+    moveRight: (x: number, y: number) => XY = (x: number, y: number) => {
+        const row = this.getRow(y);
+        console.debug(row, x, y);
+        if (x == row.buttons.length - 1) {
+            return { x: 0, y: y };
+        }
+        return { x: x + 1, y: y };
+    };
     action: (x: number, y: number) => void = () => {};
 }
 
@@ -324,13 +376,17 @@ const App = () => {
         setState({ ...state, focus: "menu" });
     };
 
-    const getNavigator = () => (state.focus == "menu" ? buttons() : new ScreenNavigator(switchToMenu));
+    const getNavigator = () => (state.focus == "menu" ? buttons() : new ScreenNavigator(switchToMenu, screen, state));
     const assignState = (result: XY) => {
         if (state.focus == "menu") {
             setState({ ...state, menu: result });
         }
         if (state.focus == "screen") {
-            setState({ ...state, screen: result });
+            setState({
+                ...state,
+                screen: result,
+                currentButton: new ScreenNavigator(switchToMenu, screen, state).getRows()[state.screen.y].buttons[state.screen.x],
+            });
         }
     };
 
