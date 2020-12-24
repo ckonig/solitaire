@@ -42,7 +42,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
         outline-color: nth($colors, $i);
         outline-width: 0.25vw;
         outline-offset: -0.25vw;
-        outline-style: solid;
+        outline-style: dashed;
     }
     .quickstart button.inactive-#{$j}:hover > div {
         color: white;
