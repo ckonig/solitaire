@@ -89,28 +89,16 @@ class MenuNodeButton extends Button implements IButton {
         return !this.toggled ? [this] : [this, ...this.children.map((child: IButton) => child.getClickable())].flat();
     };
 }
-
 class MenuSectionButton extends MenuNodeButton {
-    gameMode: GameMode;
-    constructor(
-        id: string,
-        icon: string,
-        title: string,
-        gameMode: GameMode,
-        currentGameMode: string,
-        toggleMainMenu: (val: GameMode) => void,
-        children: IButton[]
-    ) {
+    constructor(id: string, icon: string, title: string, onClick: () => void, toggled: boolean, children: IButton[]) {
         super(children);
         this.id = id;
         this.icon = icon;
         this.title = title;
-        this.gameMode = gameMode;
-        this.onClick = () => toggleMainMenu(gameMode);
-        this.toggled = gameMode.key == currentGameMode;
+        this.onClick = onClick;
+        this.toggled = toggled;
     }
     moveDown = (x: number, y: number, next: number) => {
-        //const current = this.children[y];
         if (this.children.length > y) {
             return { x: x, y: y + 1 };
         } else {
@@ -118,7 +106,6 @@ class MenuSectionButton extends MenuNodeButton {
         }
     };
     moveUp = (x: number, y: number, previous: number) => {
-        //const current = this.children[y];
         if (y > 1) {
             return { x: x, y: y - 1 };
         } else {
@@ -127,9 +114,16 @@ class MenuSectionButton extends MenuNodeButton {
     };
 }
 
-class MenuPageButton extends MenuLeafButton {
-    constructor(id: string, icon: string, title: string, screen: string, setScreen: (s: string) => void) {
+class MenuActionButton extends MenuLeafButton {
+    constructor(id: string, icon: string, title: string, active: boolean, onClick: () => void) {
         super(id, icon, title);
+        this.active = active;
+        this.onClick = onClick;
+    }
+}
+class StartMenuPageButton extends MenuActionButton {
+    constructor(id: string, icon: string, title: string, screen: string, setScreen: (s: string) => void) {
+        super(id, icon, title, id == screen, () => setScreen(this.id));
         this.active = id == screen;
         this.onClick = () => setScreen(this.id);
     }
@@ -269,18 +263,8 @@ class ScreenNavigator implements NavHandler {
 }
 
 class MenuStartButton extends MenuLeafButton {
-    static getTitle = (gameMode: GameMode) => {
-        if (gameMode.key == GameModes.CUSTOM.key) {
-            return "Start Custom";
-        }
-        if (gameMode.key == GameModes.VERSUS.key) {
-            return "Start Versus";
-        }
-        return "Quick Start";
-    };
-    constructor(gameMode: GameMode, start: () => void) {
-        super("start", "🎲", MenuStartButton.getTitle(gameMode));
-        this.blink = true;
+    constructor(title: string, icon: string, start: () => void) {
+        super("start", icon, title);
         this.onClick = start;
     }
 }
@@ -288,22 +272,16 @@ class MenuStartButton extends MenuLeafButton {
 const App = () => {
     const [started, setStarted] = React.useState<number>(0);
     const [paused, setPaused] = React.useState<boolean>(false);
-    const defaultState = { gameMode: "singleplayer", inputMode: "mouse", paused, setPaused, initialized: false };
+    const defaultState = { gameMode: GameModes.CUSTOM, inputMode: "mouse", paused, setPaused, initialized: false };
     const [appState, setAppState] = React.useState<AppState>(defaultState);
-    const [mainMenu, setMainMenu] = React.useState<GameMode>(GameModes.QUICK);
+    const [mainMenu, setMainMenu] = React.useState<string>("");
 
-    const toggleMainMenu = (val: GameMode) => {
-        if (mainMenu.key !== val.key) {
+    const toggleMainMenu = (val: string) => {
+        if (mainMenu !== val) {
             setMainMenu(val);
-            if (!val.autoConfig) {
-                setScreen("rating");
-                //@todo also move cursor to rating
-            }
         } else {
-            setMainMenu(GameModes.QUICK);
+            setMainMenu("");
             setScreen("");
-            //@todo also move cursor to QUICK
-            //? should screen, mainmenu and cursor be part of the same state object ?
         }
     };
     const [screen, setScreen] = React.useState<string>("");
@@ -331,7 +309,7 @@ const App = () => {
     };
 
     const deck = new Deck().shuffle();
-    const start = () => {
+    const start = (gameMode: GameMode) => {
         deck.shuffle();
         const settings = {
             ...appState,
@@ -339,7 +317,7 @@ const App = () => {
             ...state.ratingSettings,
             ...state.entropySettings,
             quickDeal: state.quickDeal,
-            gameMode: mainMenu.boardMode,
+            gameMode: gameMode,
             initialized: true,
         };
         setAppState(settings);
@@ -348,14 +326,14 @@ const App = () => {
 
     if (appState.initialized) {
         let board = null;
-        if (mainMenu.boardMode == "singleplayer") {
+        if (appState.gameMode.boardMode == "singleplayer") {
             board = (
                 <div className="game-layout-container singleplayer">
                     <BoardWrap player="1" settings={appState} restart={restart} deck={deck} />
                 </div>
             );
         }
-        if (mainMenu.boardMode == "splitscreen") {
+        if (appState.gameMode.boardMode == "splitscreen") {
             board = (
                 <div className="game-layout-container splitscreen">
                     <BoardWrap player="1" settings={{ ...appState, inputMode: "gamepad" }} restart={restart} deck={deck.copy()} />
@@ -423,19 +401,20 @@ const App = () => {
         getNavigator().action(getPos().x, getPos().y);
     };
 
+    //@todo separate start button for each mode.
+
     const buttons = (): MenuRootButton =>
         new MenuRootButton(switchToScreen, [
-            new MenuStartButton(mainMenu, start),
-            new MenuSectionButton("custom", "⚙️", "Custom Game", GameModes.CUSTOM, mainMenu.key, toggleMainMenu, [
-                new MenuPageButton("rating", "🎲", "Rating", screen, setScreen),
-                new MenuPageButton("difficulty", "💪", "Difficulty", screen, setScreen),
-                new MenuPageButton("settings", "🔧", "Settings", screen, setScreen),
+            new MenuStartButton("Single Player", "🎲", () => start(GameModes.CUSTOM)),
+            new MenuStartButton("Versus", "🏆", () => start(GameModes.VERSUS)),
+            new MenuSectionButton("custom", "⚙️", "Customize", () => toggleMainMenu("custom"), mainMenu == "custom", [
+                new StartMenuPageButton("rating", "🎲", "Rating", screen, setScreen),
+                new StartMenuPageButton("difficulty", "💪", "Difficulty", screen, setScreen),
+                new StartMenuPageButton("settings", "🔧", "Settings", screen, setScreen),
             ]),
-            new MenuSectionButton("versus", "🏆", "Versus", GameModes.VERSUS, mainMenu.key, toggleMainMenu, [
-                new MenuPageButton("rating", "🎲", "Rating", screen, setScreen),
-                new MenuPageButton("difficulty", "💪", "Difficulty", screen, setScreen),
-                new MenuPageButton("settings", "🔧", "Settings", screen, setScreen),
-                new MenuPageButton("controls", "🎮", "Controls", screen, setScreen),
+            new MenuSectionButton("controls", "🎮", "Controls", () => toggleMainMenu("controls"), mainMenu == "controls", [
+                new StartMenuPageButton("controls", "🎮", "Player 1", screen, setScreen),
+                new StartMenuPageButton("controls", "🎮", "Player 2", screen, setScreen),
             ]),
         ]).withMap();
 
@@ -465,7 +444,7 @@ const App = () => {
                 <MenuTitle label="Solitaire" />
                 <ButtonRenderer buttons={buttons().getClickable()} />
             </VerticalMenu>
-            <Screen screen={screen} mainMenu={mainMenu} />
+            <Screen screen={screen} gameMode={appState.gameMode} />
             <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />
             <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />
         </Provider>

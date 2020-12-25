@@ -5,17 +5,17 @@ import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import React from "react";
 
-const Screen = (props: { screen: string; mainMenu: GameMode }) => {
+const Screen = (props: { screen: string; gameMode: GameMode }) => {
     const getScreen = () => {
         switch (props.screen) {
             case "rating":
-                return <Rating head={props.mainMenu.title} />;
+                return <Rating head={props.gameMode.title} />;
             case "difficulty":
-                return <Difficulty head={props.mainMenu.title} />;
+                return <Difficulty head={props.gameMode.title} />;
             case "settings":
-                return <QuickStart head={props.mainMenu.title} />;
+                return <QuickStart head={props.gameMode.title} />;
             case "controls":
-                return <Controls head={props.mainMenu.title} />;
+                return <Controls head={props.gameMode.title} />;
             default:
                 return null;
         }

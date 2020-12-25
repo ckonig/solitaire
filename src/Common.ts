@@ -1,5 +1,6 @@
 import BusinessModel from "./Business/BusinessModel";
 import Card from "./Model/Deck/Card";
+import { GameMode } from "./View/GameModes";
 import { ScreenButton } from "./View/UI/StartScreen/Navigation";
 
 export type StateReplacer = (state: BusinessModel) => BusinessModel | null;
@@ -12,7 +13,7 @@ export interface AppState extends RatingSettings {
     initialized?: boolean;
     drawMode?: string;
     recyclingMode?: string;
-    gameMode: string;
+    gameMode: GameMode;
 }
 
 export interface ClickHandler {
