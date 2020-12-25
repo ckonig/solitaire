@@ -10,7 +10,7 @@ import React from "react";
 //     length: number;
 // };
 //firefox and edge have different formats
-const Controls = (props: { head: string }) => {
+const Controls = () => {
     const [pads, setPads] = React.useState([
         {
             found: false,
@@ -45,7 +45,7 @@ const Controls = (props: { head: string }) => {
 
     return (
         <div className="controls startdetails">
-            <div className="title">{props.head}: Controls</div>
+            <div className="title">Controls</div>
             <div className="content center">
                 <div>
                     <div className="title">Player 1</div>

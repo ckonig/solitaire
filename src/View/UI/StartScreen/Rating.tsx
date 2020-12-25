@@ -9,7 +9,7 @@ export const getRatingRows = () => [
     new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
 ];
 
-const Rating = (props: { head: string }) => {
+const Rating = () => {
     const ctx = React.useContext(StartScreenContext);
     const context = ctx.state;
     const setContext = ctx.setState;
@@ -39,7 +39,7 @@ const Rating = (props: { head: string }) => {
             <div className="closer">
                 <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
             </div>
-            <div className="title">{props.head}: Rating</div>
+            <div className="title">Rating</div>
             {toggle ? (
                 <div className="content">
                     <div className="section">

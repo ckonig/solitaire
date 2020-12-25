@@ -24,7 +24,7 @@ export const getSettingRows = (state: StartScreenState) => {
     return [new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option)))];
 };
 
-const QuickStart = (props: { head: string }) => {
+const QuickStart = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     const [toggle, setToggle] = React.useState<boolean>(false);
 
@@ -49,7 +49,7 @@ const QuickStart = (props: { head: string }) => {
             <div className="closer">
                 <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
             </div>
-            <div className="title">{props.head}: Settings</div>
+            <div className="title">Settings</div>
 
             {toggle ? (
                 <div className="content">

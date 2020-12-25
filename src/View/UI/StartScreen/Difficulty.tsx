@@ -8,7 +8,7 @@ const mapOption = (option: any) => new ScreenButton(option.id, option.icon, opti
 export const getDifficultyRows = () => {
     return [new ScreenRow(DifficultyOptions.slice(0, 3).map(mapOption)), new ScreenRow(DifficultyOptions.slice(3).map(mapOption))];
 };
-const Difficulty = (props: { head: string }) => {
+const Difficulty = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     const updateDifficulty = (settings: number) => setState({ ...state, difficultySettings: settings });
     const getButtonClass = (index: number, y: number, x: number) => {
@@ -19,7 +19,7 @@ const Difficulty = (props: { head: string }) => {
     };
     return (
         <div className="quickstart startdetails">
-            <div className="title">{props.head}: Difficulty</div>
+            <div className="title">Difficulty</div>
             <div className="content center">
                 {getDifficultyRows().map((row, index) => (
                     <div key={index}>
