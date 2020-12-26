@@ -1,7 +1,6 @@
 .menu {
     margin-top: 2vw;
     margin: 1vw;
-    padding: 0.5vw;
     width: 20vw;
     float: left;
 
@@ -11,18 +10,20 @@
     text-align: left;
     background-color: rgba(0, 0, 0, 0.95);
     border-radius: 0.5vw;
+    height: 46vw;
+    position: relative;
 }
 
 
-.menu > button.indented {
+.menu  button.indented {
     padding-left: 3vw;
 }
 
-.menu > button.active {
+.menu  button.active {
     color: white;
 }
 
-.menu > button {
+.menu  button {
     padding: 0.2vw;
     padding-left: 1vw;
     margin-top: 0.1vw;
@@ -35,19 +36,25 @@
     color: gray;
     
     border-color: light-gray;
+    border-style: solid;    ;
     background-color: rgba(0, 0, 0, 0.95);
     border-radius: 0.25vw;
-}
-
-.menu > button {
     width: 100%;
 }
 
-.menu > button.highlight {
+.menu  button:focus {
+    outline: none;
+    outline-style: solid;
+    outline-color: blue;
+    outline-offset: -0.1vw;
     border-color: blue;
 }
 
-.menu > button > .icon {
+.menu  button.highlight {
+    border-color: blue;
+}
+
+.menu  button > .icon {
     float: left;
     padding-right: 1vw;
 }
@@ -74,11 +81,13 @@
     top:0;
     right:0;
     bottom:0; 
+    padding:0.5vw;
 }
 
-.menu > .title,
-.startdetails > .title {
+.menu .title,
+.startdetails  .title {
     padding-top: 0.5vw;
+    padding-bottom: 1.5vw;
     padding-left: 1vw;
     width: 100%;
     font-size: 3vw;

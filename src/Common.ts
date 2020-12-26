@@ -50,5 +50,7 @@ export interface StartScreenState {
         y: number;
     };
     focus: string,
+    mainMenu: string,
+    screeen: string,
     currentButton?: ScreenButton<any>
 }

@@ -13,8 +13,10 @@ const Screen = (props: { screen: string }) => {
                 return <Difficulty  />;
             case "settings":
                 return <QuickStart />;
-            case "controls":
-                return <Controls />;
+            case "controls0":
+                return <Controls player={0} />;
+            case "controls1":
+                return <Controls player={1} />;
             default:
                 return null;
         }

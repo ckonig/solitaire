@@ -10,7 +10,7 @@ export default class TouchHand extends React.Component {
     static contextType = GlobalContext;
 
     enableKeyNav = (context, mode) => {
-        const isSinglePlayer = context.settings.launchSettings.gameMode === "singleplayer";
+        const isSinglePlayer = context.settings.launchSettings.gameMode.boardMode === "singleplayer";
         context.focus.isKeyBoard(true);
         if (isSinglePlayer) {
             context.settings.mouseMode = "remain-on-stack";

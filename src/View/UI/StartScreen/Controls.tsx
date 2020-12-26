@@ -10,7 +10,7 @@ import React from "react";
 //     length: number;
 // };
 //firefox and edge have different formats
-const Controls = () => {
+const Controls = (props: { player: number }) => {
     const [pads, setPads] = React.useState([
         {
             found: false,
@@ -31,11 +31,6 @@ const Controls = () => {
         setPads({ ...pads });
         console.log(pads);
     };
-    // one screen for two players is too much. restructure menu to have separate control screen per user:
-    //start singleplayer
-    //start splitscreen
-    //customize: difficulty, (device) settings, rating
-    //controls: player 1 | player 2
     const display = (pad: any) => (
         <div>
             <div>pressed: {pad.buttonPressed}</div>
@@ -48,7 +43,7 @@ const Controls = () => {
             <div className="title">Controls</div>
             <div className="content center">
                 <div>
-                    <div className="title">Player 1</div>
+                    <div className="title">Player {props.player}</div>
                     {display(pads[0])}
                     <div>
                         <GamePad
@@ -61,19 +56,6 @@ const Controls = () => {
                             onAction={() => press(0)}
                         />
                     </div>
-                </div>
-                <div>
-                    <div className="title">Player 2</div>
-                    {display(pads[1])}
-                    <GamePad
-                        gamepadIndex={1}
-                        onConnect={() => connect(1)}
-                        onUp={() => press(1)}
-                        onDown={() => press(1)}
-                        onRight={() => press(1)}
-                        onLeft={() => press(1)}
-                        onAction={() => press(1)}
-                    />
                 </div>
             </div>
         </div>

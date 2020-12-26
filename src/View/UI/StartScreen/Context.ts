@@ -21,7 +21,9 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
             x: 0,
             y: 0,
         },
-        focus: "menu"
+        focus: "menu",
+        mainMenu: "",
+        screeen: "",
     },
     setState: () => {},
 });

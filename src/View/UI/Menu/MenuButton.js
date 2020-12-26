@@ -1,32 +1,67 @@
 import React from "react";
-import StartScreenContext from "../StartScreen/Context";
 
 const MenuButton = (props) => {
+    const inputEl = React.useRef(null);
+    React.useEffect(() => {
+        props.subscribe({
+            id: 100* props.x +  props.y,
+            click: (pos) => props.x == pos.x && props.y == pos.y && console.debug("click handler inside the MenuButton", props.x, props.y, pos.x, pos.y),
+        });
+    }, [props.x, props.y]);
+
     let className = "";
     if (props.blink) {
         className += " blinking";
     }
 
-    const { state } = React.useContext(StartScreenContext);
-
     if (props.y > 0) {
         className += " indented";
     }
 
-    if (state.menu.x == props.x && state.menu.y == props.y && state.focus == "menu") {
+    const shouldBeFocus = props.menuX == props.x && props.menuY == props.y && props.menuFocus == "menu";
+
+    if (shouldBeFocus) {
         className += " highlight";
     }
-    if (props.active || props.toggled) {
+
+    React.useEffect(() => {
+        if (
+            props.menuX == props.x &&
+            props.menuY == props.y &&
+            props.menuFocus == "menu" &&
+            document.activeElement !== inputEl.current &&
+            inputEl.current &&
+            inputEl.current !== document.activeElement
+        ) {
+            setClicking(true);
+            inputEl && inputEl.current && inputEl.current.focus();
+        }
+    }, [props.menuFocus, props.menuX, props.menuY, props.x, props.y]);
+
+    if (props.active) {
         className += " active";
     }
 
+    //omg this is the worst but it works (5h lost)
+    const [isClicking, setClicking] = React.useState(false);
+
+    const focus = () => {
+        if (!isClicking && !(props.menuX == props.x && props.menuY == props.y) && props.menuFocus == "menu") {
+            props.onFocus({ x: props.x, y: props.y });
+            setClicking(false);
+        }
+    };
+
+    const click = () => {
+        setClicking(false);
+        props.onClick({ x: props.x, y: props.y });
+    };
+
     return (
-        <>
-            <button className={className} title={props.title} onClick={props.onClick}>
-                <div className="icon">{props.icon}</div>
-                <div className="label">{props.title}</div>
-            </button>
-        </>
+        <button ref={inputEl} className={className} title={props.title} onFocus={focus} onClick={click} onMouseDown={()=>setClicking(true)}>
+            <div className="icon">{props.icon}</div>
+            <div className="label">{props.title}</div>
+        </button>
     );
 };
 export default MenuButton;
