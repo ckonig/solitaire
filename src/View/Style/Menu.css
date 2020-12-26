@@ -1,31 +1,26 @@
 .menu {
-    margin-top: 2vw;
-    margin: 1vw;
-    width: 20vw;
+    width: 33.3vw;
     float: left;
 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     color: white;
     text-align: left;
-    background-color: rgba(0, 0, 0, 0.95);
+    
     border-radius: 0.5vw;
-    height: 46vw;
+    height: 100vh;
     position: relative;
 }
 
-
-.menu  button.indented {
+.menu button.indented {
     padding-left: 3vw;
 }
 
-.menu  button.active {
+.menu button.active {
     color: white;
 }
 
-.menu  button {
-    padding: 0.2vw;
-    padding-left: 1vw;
+.menu button {
     margin-top: 0.1vw;
     margin-bottom: 0.2vw;
 
@@ -34,15 +29,17 @@
         "Helvetica Neue", sans-serif;
     text-align: left;
     color: gray;
-    
+
     border-color: light-gray;
-    border-style: solid;    ;
+    border-style: solid;
     background-color: rgba(0, 0, 0, 0.95);
-    border-radius: 0.25vw;
-    width: 100%;
+    
+    width: 82.5%;
+    left: 8.25%;
+    position: relative;
 }
 
-.menu  button:focus {
+.menu button:focus {
     outline: none;
     outline-style: solid;
     outline-color: blue;
@@ -50,49 +47,62 @@
     border-color: blue;
 }
 
-.menu  button.highlight {
+.menu button.highlight {
     border-color: blue;
 }
 
-.menu  button > .icon {
+.menu button > .icon {
     float: left;
     padding-right: 1vw;
 }
 
 .startscreen-layout {
-    padding: 0.5vw;
-    margin-top: 0vw;
-    margin: 1vw;
-    width: 50vw;
+    width: 66vw;
     float: left;
-    height: 46vw;
-    background-color: red;
-    background-color: rgba(0, 0, 0, 0.95);
-    border-radius: 0.25vw;
+    height: 100vh;
+    
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     color: white;
     position: relative;
+    
 }
 
 .startscreen-jail {
     position: absolute;
     left: 0;
-    top:0;
-    right:0;
-    bottom:0; 
-    padding:0.5vw;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }
-
+.innermenu {
+    border-radius: 0.25vw;
+    position: relative;
+    top: 12.5%;
+    left: 24.25%;
+    width: 66%;
+    height: 66%;
+    background-color: rgba(0, 0, 0, 0.95);
+}
+.startdetails {
+    border-radius: 0.25vw;
+    position: relative;
+    top: 12.5%;
+    left: 8.25%;
+    width: 82.5%;
+    height: 66%;
+    background-color: rgba(0, 0, 0, 0.95);
+}
 .menu .title,
-.startdetails  .title {
+.startdetails .title {
     padding-top: 0.5vw;
     padding-bottom: 1.5vw;
-    padding-left: 1vw;
     width: 100%;
     font-size: 3vw;
+    text-align: center;
+    position: relative;
+    pointer-events: none;
 }
-
 
 .controls .left {
     float: left;
@@ -104,7 +114,7 @@
     width: 50%;
 }
 .rating .content .section {
-    padding:0vw;
-    padding-right:2vw;
-    padding-left:2vw;
+    padding: 0vw;
+    padding-right: 2vw;
+    padding-left: 2vw;
 }

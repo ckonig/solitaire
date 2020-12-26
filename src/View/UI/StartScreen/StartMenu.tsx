@@ -216,7 +216,35 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
         setButtons(
             new MenuRootButton([
                 new MenuStartButton("Single Player", "🎲", () => start(GameModes.CUSTOM), onfocus),
-                new MenuStartButton("Versus", "🏆", () => start(GameModes.VERSUS), onfocus),
+
+                new MenuSectionButton(
+                    "versus",
+                    "🏆",
+                    "Versus",
+                    (pos: XY) => toggleMainMenu("versus", pos),
+                    onfocus,
+                    state.mainMenu == "versus",
+                    [
+                        new StartMenuPageButton(
+                            "controls0",
+                            "🎮",
+                            "Player 1",
+                            state.screeen,
+                            (pos: XY) => toggleScreen("controls0", pos),
+                            onfocus
+                        ),
+                        new StartMenuPageButton(
+                            "controls1",
+                            "🎮",
+                            "Player 2",
+                            state.screeen,
+                            (pos: XY) => toggleScreen("controls1", pos),
+                            onfocus
+                        ),
+                        new MenuStartButton("Start", "🎲", () => start(GameModes.VERSUS), onfocus),
+                    ]
+                ),
+
                 new MenuSectionButton(
                     "custom",
                     "⚙️",
@@ -240,32 +268,6 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                             "Device",
                             state.screeen,
                             (pos: XY) => toggleScreen("settings", pos),
-                            onfocus
-                        ),
-                    ]
-                ),
-                new MenuSectionButton(
-                    "controls",
-                    "🎮",
-                    "Controls",
-                    (pos: XY) => toggleMainMenu("controls", pos),
-                    onfocus,
-                    state.mainMenu == "controls",
-                    [
-                        new StartMenuPageButton(
-                            "controls0",
-                            "🎮",
-                            "Player 1",
-                            state.screeen,
-                            (pos: XY) => toggleScreen("controls0", pos),
-                            onfocus
-                        ),
-                        new StartMenuPageButton(
-                            "controls1",
-                            "🎮",
-                            "Player 2",
-                            state.screeen,
-                            (pos: XY) => toggleScreen("controls1", pos),
                             onfocus
                         ),
                     ]
@@ -310,10 +312,8 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
     return (
         <Provider value={{ state, setState }}>
             <VerticalMenu>
-                <div className="startscreen-jail">
-                    <MenuTitle label="Solitaire" />
-                    <ButtonRenderer button={buttons} x={0} y={0} menuX={state.menu.x} />
-                </div>
+                <MenuTitle label="Solitaire" />
+                <ButtonRenderer button={buttons} x={0} y={0} menuX={state.menu.x} />
             </VerticalMenu>
             <Screen screen={state.screeen} />
             <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
