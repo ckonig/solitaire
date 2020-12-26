@@ -3,23 +3,39 @@ import "../../Style/react-toggle.css";
 import { ScreenButton, ScreenRow } from "./Navigation";
 
 import RatingPresets from "./RatingOptions";
-import { RatingSettings } from "../../../Common";
+import { RatingSettings, StartScreenState } from "../../../Common";
 import React from "react";
 import StartScreenContext from "./Context";
 import MenuToggle from "./MenuToggle";
+import ScreenMainButton from "./ScreenMainButton";
 
 export const getRatingRows = () => [
     new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
 ];
+export const getRatingNav = (state: StartScreenState) => {
+    let result = { x: 0, y: 0 };
+    getRatingRows().forEach((row, ri) => {
+        row.buttons.forEach((button, bi) => {
+            if (ratingIsActive(state, button.id)) {
+                result = { x: bi, y: ri };
+            }
+        });
+    });
+    return result;
+};
+const ratingIsActive = (state: StartScreenState,id: number) => state.ratingPreset == id
+const ratingHasFocus = (state: StartScreenState, y: number, x: number) =>
+    state.focus == "screen" && state.screen.x == x && state.screen.y == y;
 
 const Rating = () => {
     const { state, setState } = React.useContext(StartScreenContext);
+    const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
 
     const applyPreset = (id: number) => setState({ ...state, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
-    const getButtonClass = (index: number, y: number, x: number) => {
-        const hasFocus = state.focus == "screen" && state.screen.x == x && state.screen.y == y;
-        let name = state.ratingPreset == index ? `active active-${index}` : `inactive-${index}`;
-        name += hasFocus ? " focused" : "";
+
+    const getButtonClass = (id: number, y: number, x: number) => {
+        let name = ratingIsActive(state, id) ? `active active-${id}` : `inactive-${id}`;
+        name += ratingHasFocus(state, y, x) ? " focused" : "";
         return name;
     };
 
@@ -49,7 +65,7 @@ const Rating = () => {
     return (
         <div className="ui rating startdetails">
             <div className="closer">
-                <button onClick={() => {}}>🗙</button>
+                <button onClick={closeScreen}>🗙</button>
             </div>
             <div className="title">Rating</div>
 
@@ -57,14 +73,21 @@ const Rating = () => {
                 {getRatingRows().map((row, ri) => (
                     <div key={ri} className="row">
                         {row.buttons.map((preset, bi) => (
-                            <button key={preset.id} className={getButtonClass(preset.id, ri, bi)} onClick={() => applyPreset(preset.id)}>
-                                {preset.icon}
-                                <div>{preset.lines[0]}</div>
-                            </button>
+                            <ScreenMainButton
+                                key={preset.id}
+                                x={bi}
+                                y={ri}
+                                icon={preset.icon}
+                                id={preset.id}
+                                hasFocus={ratingHasFocus(state, ri, bi)}
+                                className={getButtonClass(preset.id, ri, bi)}
+                                onClick={() => applyPreset(preset.id)}
+                                lines={[preset.lines[0]]}
+                            />
                         ))}
                     </div>
                 ))}
-                 <div className="row"></div>
+                <div className="row"></div>
                 <div className="row">
                     <MenuToggle
                         label="Undo Penalty"

@@ -1,5 +1,5 @@
 import GameModes, { GameMode } from "../../GameModes";
-import { MenuActionButton, MenuLeafButton, MenuRootButton, MenuSectionButton, NavHandler, XY } from "./Tree";
+import { MenuActionButton, MenuLeafButton, MenuRootButton, MenuSectionButton, XY } from "./Tree";
 
 import DifficultyOptions from "./DifficultyOptions";
 import GamePad from "../../Game/GamePad";
@@ -9,13 +9,10 @@ import MenuTitle from "../Menu/MenuTitle";
 import { Provider } from "./Context";
 import RatingPresets from "./RatingOptions";
 import React from "react";
-import Screen from "./Screen";
+import Screen, { getScreenStartPos } from "./Screen";
 import { StartScreenState } from "../../../Common";
 import TouchDetector from "./TouchDetector";
 import VerticalMenu from "../Menu/VerticalMenu";
-import { getDifficultyRows } from "./Difficulty";
-import { getRatingRows } from "./Rating";
-import { getSettingRows } from "./QuickStart";
 
 export class StartMenuPageButton extends MenuActionButton {
     constructor(id: string, icon: string, title: string, screen: string, onClick: (pos: XY) => void, onfocus: (pos: XY) => void) {
@@ -24,68 +21,6 @@ export class StartMenuPageButton extends MenuActionButton {
         this.onClick = onClick;
         this.onFocus = onfocus;
     }
-}
-
-export class ScreenNavigator implements NavHandler {
-    screen: string;
-    state: StartScreenState;
-    constructor(screen: string, state: StartScreenState) {
-        this.screen = screen;
-        this.state = state;
-    }
-    getRows = () => {
-        if (this.screen == "rating") {
-            return getRatingRows();
-        }
-        if (this.screen == "settings") {
-            return getSettingRows(this.state);
-        }
-        if (this.screen == "difficulty") {
-            return getDifficultyRows();
-        }
-        return [];
-    };
-    getRow = (x: number) => this.getRows()[x];
-    moveUp: (x: number, y: number) => XY = (x: number, y: number) => {
-        const rows = this.getRows();
-        console.debug(rows, x, y);
-        if (rows.length < 2) {
-            return { x: x, y: y };
-        }
-        if (y == 0) {
-            return { x: x, y: rows.length - 1 };
-        }
-        return { x: x, y: y - 1 };
-    };
-    moveDown: (x: number, y: number) => XY = (x: number, y: number) => {
-        const rows = this.getRows();
-        console.debug(rows, x, y);
-        if (rows.length < 2) {
-            return { x: x, y: y };
-        }
-        if (y == rows.length - 1) {
-            return { x: x, y: 0 };
-        }
-        return { x: x, y: y + 1 };
-    };
-    moveLeft: (x: number, y: number) => XY = (x: number, y: number) => {
-        const row = this.getRow(y);
-        console.debug(row, x, y);
-        if (x == 0) {
-            return { x: row.buttons.length - 1, y: y };
-        }
-        return { x: x - 1, y: y };
-    };
-    moveRight: (x: number, y: number) => XY = (x: number, y: number) => {
-        const row = this.getRow(y);
-        console.debug(row, x, y);
-        if (x == row.buttons.length - 1) {
-            return { x: 0, y: y };
-        }
-        return { x: x + 1, y: y };
-    };
-    //@todo implement
-    action: (xy: XY) => void = () => {};
 }
 
 export class MenuStartButton extends MenuLeafButton {
@@ -142,18 +77,14 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
 
     const [buttons, setButtons] = React.useState(new MenuRootButton([]));
 
-    const getNavigator = () => (state.focus == "menu" ? buttons : new ScreenNavigator(state.screeen, state));
+    const getNavigator = () => buttons;
 
     const assignState = (result: XY) => {
         if (state.focus == "menu") {
             setState({ ...state, menu: result });
         }
         if (state.focus == "screen") {
-            setState({
-                ...state,
-                screen: result,
-                currentButton: new ScreenNavigator(state.screeen, state).getRows()[state.screen.y].buttons[state.screen.x],
-            });
+            throw "Invalid navigation action";
         }
     };
 
@@ -179,14 +110,12 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
     };
 
     const onCancel = () => {
-        if (state.focus == "screen") {
-            switchToMenu(state.mainMenu, state.menu);
-        } else if (state.menu.y > 0) {
+        if (state.menu.y > 0) {
             switchToMenu(state.mainMenu, { ...state.menu, y: 0 });
         }
     };
     const switchToScreen = (s: string, pos: XY) => {
-        setState({ ...state, focus: "screen", screeen: s, screen: { x: 0, y: 0 }, menu: { ...pos } });
+        setState({ ...state, focus: "screen", screeen: s, screen: getScreenStartPos(s, state), menu: { ...pos } });
     };
     const switchToMenu = (menu: string, pos: XY) => {
         setState({ ...state, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
@@ -316,8 +245,12 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                 <ButtonRenderer button={buttons} x={0} y={0} menuX={state.menu.x} />
             </VerticalMenu>
             <Screen screen={state.screeen} />
-            <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
-            <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            {state.focus == "menu" && (
+                <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            )}
+            {state.focus == "menu" && (
+                <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            )}
         </Provider>
     );
 };

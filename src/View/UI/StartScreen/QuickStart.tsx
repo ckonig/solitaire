@@ -5,6 +5,7 @@ import React from "react";
 import StartScreenContext from "./Context";
 import { StartScreenState } from "../../../Common";
 import MenuToggle from "./MenuToggle";
+import ScreenMainButton from "./ScreenMainButton";
 
 const optimizeOptions = (state: StartScreenState) => [
     {
@@ -25,9 +26,23 @@ export const getSettingRows = (state: StartScreenState) => {
     return [new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option)))];
 };
 
+export const getSettingNav = (state: StartScreenState) => {
+    let result = { x: 0, y: 0 };
+    getSettingRows(state).forEach((row, ri) => {
+        row.buttons.forEach((button, bi) => {
+            if (settingIsActive(state, button.model.quickDeal)) {
+                result = { x: bi, y: ri };
+            }
+        });
+    });
+    return result;
+};
+const settingIsActive = (state: StartScreenState, val: boolean) => state.quickDeal == val
+
 const QuickStart = () => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const [toggle, setToggle] = React.useState<boolean>(false);
+    const hasFocus = (index: number, y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+    const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
 
     const setBaseEntropy = (value: string) => {
         setState({ ...state, entropySettings: { ...state.entropySettings, baseEntropy: parseInt(value) } });
@@ -40,7 +55,7 @@ const QuickStart = () => {
     };
     const getClassName = (button: ScreenButton<any>, y: number, x: number) => {
         const hasFocus = state.focus == "screen" && state.screen.x == x && state.screen.y == y;
-        let name = state.quickDeal == button.model.quickDeal ? "active active-0" : "inactive-0";
+        let name = settingIsActive(state, button.model.quickDeal) ? "active active-0" : "inactive-0";
         name += hasFocus ? " focused" : "";
         return name;
     };
@@ -48,34 +63,33 @@ const QuickStart = () => {
     return (
         <div className="ui quickstart startdetails">
             <div className="closer">
-                <button onClick={() => setToggle(!toggle)}>🗙</button>
+                <button onClick={closeScreen}>🗙</button>
             </div>
             <div className="title">Settings</div>
 
             <div className="content center">
                 {getSettingRows(state).map((row, index) => (
-                    <div key={index}>
+                    <div key={index} className="row">
                         {row.buttons.map((button, bi) => (
-                            <button
-                                key={button.id}
-                                disabled={state.quickDeal == button.model.quickDeal}
-                                className={getClassName(button, index, bi)}
-                                onClick={() =>
-                                    setState({
-                                        ...state,
-                                        quickDeal: button.model.quickDeal,
-                                        entropySettings: {
-                                            baseEntropy: button.model.entropy,
-                                            interactionEntropy: button.model.entropy,
-                                        },
-                                    })
-                                }
-                            >
-                                {button.icon}
-                                {button.lines.map((line, lindex) => (
-                                    <div key={lindex}>{line}</div>
-                                ))}
-                            </button>
+                            <ScreenMainButton
+                            key={button.id}
+                            x={bi}
+                            y={index}
+                            icon={button.icon}
+                            id={button.id}
+                            hasFocus={hasFocus(button.id, index, bi)}
+                            className={getClassName(button, index, bi)}
+                            onClick={() =>
+                                setState({
+                                    ...state,
+                                    quickDeal: button.model.quickDeal,
+                                    entropySettings: {
+                                        baseEntropy: button.model.entropy,
+                                        interactionEntropy: button.model.entropy,
+                                    },
+                                })}
+                            lines={button.lines}
+                        />
                         ))}
                     </div>
                 ))}

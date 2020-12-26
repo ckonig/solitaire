@@ -29,7 +29,6 @@ const MenuButton = (props) => {
             props.menuX == props.x &&
             props.menuY == props.y &&
             props.menuFocus == "menu" &&
-            document.activeElement !== inputEl.current &&
             inputEl.current &&
             inputEl.current !== document.activeElement
         ) {

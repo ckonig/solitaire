@@ -10,6 +10,7 @@
 .endscreen > .title {
     font-size: 15vw;
 }
+.difficulty .content button,
 .quickstart .content button,
 .rating .content button {
     font-size: 3vw;
@@ -25,7 +26,6 @@
     margin-top: 0vw;
 }
 
-.difficulty .content button,
 .endscreen .content button {
     font-size: 4vw;
     color: white;
@@ -70,14 +70,13 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
         color: white;
     }
 }
-
+.difficulty button > div,
 .quickstart button > div,
 .rating button > div {
     font-size: 0.75vw;
     color: lightgray;
 }
 
-.difficulty button > div,
 .endscreen button > div {
     font-size: 1vw;
     color: lightgray;
