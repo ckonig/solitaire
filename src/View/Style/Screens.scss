@@ -10,7 +10,7 @@
 .endscreen > .title {
     font-size: 15vw;
 }
-
+.quickstart .content button,
 .rating .content button {
     font-size: 3vw;
     color: white;
@@ -25,7 +25,7 @@
     margin-top: 0vw;
 }
 
-.quickstart .content button,
+.difficulty .content button,
 .endscreen .content button {
     font-size: 4vw;
     color: white;
@@ -42,7 +42,8 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 
 @for $i from 1 through length($colors) {
     $j: $i - 1;
-    .rating button.active-#{$j}, 
+    .difficulty button.active-#{$j},
+    .rating button.active-#{$j},
     .quickstart button.active-#{$j} {
         border-color: nth($colors, $i);
         outline-color: nth($colors, $i);
@@ -50,10 +51,12 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
         outline-offset: -0.25vw;
         box-shadow: 0 0 0.1vw 0.1vw nth($colors, $i);
     }
+    .difficulty button.inactive-#{$j}:hover,
     .rating button.inactive-#{$j}:hover,
     .quickstart button.inactive-#{$j}:hover {
         border-color: nth($colors, $i);
     }
+    .difficulty button.inactive-#{$j}.focused,
     .rating button.inactive-#{$j}.focused,
     .quickstart button.inactive-#{$j}.focused {
         outline-color: nth($colors, $i);
@@ -61,23 +64,26 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
         outline-offset: -0.25vw;
         outline-style: dashed;
     }
+    .difficulty button.inactive-#{$j}:hover > div,
     .rating button.inactive-#{$j}:hover > div,
     .quickstart button.inactive-#{$j}:hover > div {
         color: white;
     }
 }
 
+.quickstart button > div,
 .rating button > div {
     font-size: 0.75vw;
     color: lightgray;
 }
 
-.quickstart button > div,
+.difficulty button > div,
 .endscreen button > div {
     font-size: 1vw;
     color: lightgray;
 }
 
+.difficulty button.active > div,
 .quickstart button.active > div,
 .endscreen button.active > div {
     color: white;
@@ -91,19 +97,3 @@ button.blinking {
     animation: blinker 3s linear infinite;
     border-color: #339900;
 }
-.quickstart button.blinking:hover {
-    background-color: #013b0e;
-    border-color: #013b0e;
-    animation: none;
-}
-.quickstart button.blinking > div {
-    font-size: 2.5vw;
-}
-
-@keyframes blinker {
-    50% {
-        background-color: #013b0e;
-        border-color: #013b0e;
-    }
-}
-

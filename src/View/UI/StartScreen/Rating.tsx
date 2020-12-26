@@ -6,27 +6,11 @@ import RatingPresets from "./RatingOptions";
 import { RatingSettings } from "../../../Common";
 import React from "react";
 import StartScreenContext from "./Context";
-import Toggle from "react-toggle";
+import MenuToggle from "./MenuToggle";
 
 export const getRatingRows = () => [
     new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
 ];
-
-const MyToggle = (props: { label: string; description: string; value: boolean; callBack: (s: boolean) => void }) => {
-    const cb = (e: any) => {
-        console.log(e);
-        props.callBack(!props.value);
-    };
-    return (
-        <div className="togglecontainer">
-            <div className="title">{props.label}</div>
-            <div className="toggle">
-                <Toggle checked={props.value} onChange={cb} />
-            </div>
-            <div className="description">{props.description}</div>
-        </div>
-    );
-};
 
 const Rating = () => {
     const { state, setState } = React.useContext(StartScreenContext);
@@ -71,7 +55,7 @@ const Rating = () => {
 
             <div className="content center">
                 {getRatingRows().map((row, ri) => (
-                    <div key={ri} className="ratingrow">
+                    <div key={ri} className="row">
                         {row.buttons.map((preset, bi) => (
                             <button key={preset.id} className={getButtonClass(preset.id, ri, bi)} onClick={() => applyPreset(preset.id)}>
                                 {preset.icon}
@@ -80,29 +64,29 @@ const Rating = () => {
                         ))}
                     </div>
                 ))}
-                 <div className="ratingrow"></div>
-                <div className="ratingrow">
-                    <MyToggle
+                 <div className="row"></div>
+                <div className="row">
+                    <MenuToggle
                         label="Undo Penalty"
                         description="Undo is enabled, but excessive use will be painful. This penalty starts with 2 and increases exponentially."
                         value={!!state.ratingSettings.undoPenalty}
                         callBack={setUndoPenalty}
                     />
-                    <MyToggle
+                    <MenuToggle
                         label="Time Penalty"
                         description="Fast players are rewarded with a time bonus, slow players will be punished."
                         value={!!state.ratingSettings.timedMode}
                         callBack={setTimeRating}
                     />
                 </div>
-                <div className="ratingrow">
-                    <MyToggle
+                <div className="row">
+                    <MenuToggle
                         label="Hint Penalty"
                         description="Each manual hint will reduce the number of points by 10. This setting disables automatic suggestions. "
                         value={!!state.ratingSettings.hintPenalty}
                         callBack={setHintPenalty}
                     />
-                    <MyToggle
+                    <MenuToggle
                         label="Miss Penalty"
                         description="Be careful where you click, as each invalid action will lead to a penalty of 10 points."
                         value={!!state.ratingSettings.missPenalty}

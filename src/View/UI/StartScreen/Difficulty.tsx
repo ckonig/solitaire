@@ -18,7 +18,7 @@ const Difficulty = () => {
         return name;
     };
     return (
-        <div className="quickstart startdetails">
+        <div className="difficulty startdetails">
             <div className="title">Difficulty</div>
             <div className="content center">
                 {getDifficultyRows().map((row, index) => (
