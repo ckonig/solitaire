@@ -12,19 +12,18 @@
     position: relative;
 }
 
-.menu button.indented {
-    padding-left: 3vw;
-}
 
 .menu button.active {
     color: white;
 }
 
 .menu button {
+    padding: 0;
     margin-top: 0.1vw;
     margin-bottom: 0.2vw;
+    margin-left:0;
 
-    font-size: 2vw;
+    font-size: 1.75vw;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     text-align: left;
@@ -43,7 +42,7 @@
     outline: none;
     outline-style: solid;
     outline-color: blue;
-    outline-offset: -0.1vw;
+    outline-offset: -0.3vw;
     border-color: blue;
 }
 
@@ -53,11 +52,24 @@
 
 .menu button > .icon {
     float: left;
-    padding-right: 1vw;
+    margin: 0;
+    width: 2.2vw;
+    padding: 0;
+    padding-left: 0.25vw;
+    padding-right: 0.25vw;
+}
+
+.menu button.indented > .icon {
+    padding-left: 2.7vw;
+}
+
+
+.menu button > .label {
+    float: left;
 }
 
 .startscreen-layout {
-    width: 66vw;
+    width: 66.6vw;
     float: left;
     height: 100vh;
     
@@ -79,8 +91,9 @@
     border-radius: 0.25vw;
     position: relative;
     top: 12.5%;
-    left: 24.25%;
-    width: 66%;
+    left: 6.66vw;
+    width: 19.98vw;
+    right: 6.66vw;
     height: 66%;
     background-color: rgba(0, 0, 0, 0.95);
 }
@@ -88,8 +101,7 @@
     border-radius: 0.25vw;
     position: relative;
     top: 12.5%;
-    left: 8.25%;
-    width: 82.5%;
+    width: 59.94vw;
     height: 66%;
     background-color: rgba(0, 0, 0, 0.95);
 }
