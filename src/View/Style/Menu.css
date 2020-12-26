@@ -1,17 +1,13 @@
 .menu {
     width: 33.3vw;
     float: left;
-
+    height: 100vmin;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     color: white;
     text-align: left;
-    
-    border-radius: 0.5vw;
-    height: 100vh;
     position: relative;
 }
-
 
 .menu button.active {
     color: white;
@@ -19,9 +15,11 @@
 
 .menu button {
     padding: 0;
-    margin-top: 0.1vw;
-    margin-bottom: 0.2vw;
-    margin-left:0;
+    padding-top:0.25vw;
+    padding-bottom:0.25vw;
+    margin: 0;
+    margin-top: 0.25vw;
+    margin-bottom: 0.25vw;
 
     font-size: 1.75vw;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -32,7 +30,7 @@
     border-color: light-gray;
     border-style: solid;
     background-color: rgba(0, 0, 0, 0.95);
-    
+
     width: 82.5%;
     left: 8.25%;
     position: relative;
@@ -63,7 +61,6 @@
     padding-left: 2.7vw;
 }
 
-
 .menu button > .label {
     float: left;
 }
@@ -71,13 +68,12 @@
 .startscreen-layout {
     width: 66.6vw;
     float: left;
-    height: 100vh;
-    
+    height: 100vmin;
+
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     color: white;
     position: relative;
-    
 }
 
 .startscreen-jail {
@@ -94,7 +90,8 @@
     left: 6.66vw;
     width: 19.98vw;
     right: 6.66vw;
-    height: 66%;
+    min-height: 66%;
+    padding-bottom: 2vmin;
     background-color: rgba(0, 0, 0, 0.95);
 }
 .startdetails {
@@ -102,7 +99,8 @@
     position: relative;
     top: 12.5%;
     width: 59.94vw;
-    height: 66%;
+    min-height: 66%;
+    padding-bottom: 2vmin;
     background-color: rgba(0, 0, 0, 0.95);
 }
 .menu .title,
@@ -116,17 +114,42 @@
     pointer-events: none;
 }
 
-.controls .left {
-    float: left;
-    width: 50%;
+.startdetails .togglecontainer {
+    width: 20vw;
+    height: 9vw;
+    display: inline-block;
+    border-color: gray;
+    border-style: solid;
+    border-width: 0.1vw;
+    position: relative;
+    text-align: left;
+    border-radius: 0.5vw;
+    margin: 0;
+    margin-left: 1vw;
+    margin-right: 1vw;
 }
 
-.controls .right {
-    float: left;
-    width: 50%;
+.startdetails .togglecontainer .title {
+    font-size: 1.25vw;
+    position: absolute;
+    left: 1vw;
+    top: 0.5vw;
+    text-align: left;
 }
-.rating .content .section {
-    padding: 0vw;
-    padding-right: 2vw;
-    padding-left: 2vw;
+.startdetails .togglecontainer .description {
+    font-size: 1vw;
+    position: absolute;
+    left: 1vw;
+    right: 1vw;
+    top: 3.5vw;
+}
+
+.startdetails .togglecontainer .toggle {
+    font-size: 2vw;
+    position: absolute;
+    right: 1vw;
+    top: 0.5vw;
+}
+.startdetails .ratingrow {
+    padding-bottom: 1.5vw;
 }

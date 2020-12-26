@@ -11,7 +11,20 @@
     font-size: 15vw;
 }
 
-.rating .content button,
+.rating .content button {
+    font-size: 3vw;
+    color: white;
+    border-radius: 0.5vw;
+    border-style: solid;
+    height: 8vw;
+    background-color: rgba(0, 0, 0, 0);
+    width: 10vw;
+    margin-bottom: 0;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 0vw;
+}
+
 .quickstart .content button,
 .endscreen .content button {
     font-size: 4vw;
@@ -29,6 +42,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 
 @for $i from 1 through length($colors) {
     $j: $i - 1;
+    .rating button.active-#{$j}, 
     .quickstart button.active-#{$j} {
         border-color: nth($colors, $i);
         outline-color: nth($colors, $i);
@@ -36,21 +50,28 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
         outline-offset: -0.25vw;
         box-shadow: 0 0 0.1vw 0.1vw nth($colors, $i);
     }
+    .rating button.inactive-#{$j}:hover,
     .quickstart button.inactive-#{$j}:hover {
         border-color: nth($colors, $i);
     }
+    .rating button.inactive-#{$j}.focused,
     .quickstart button.inactive-#{$j}.focused {
         outline-color: nth($colors, $i);
         outline-width: 0.25vw;
         outline-offset: -0.25vw;
         outline-style: dashed;
     }
+    .rating button.inactive-#{$j}:hover > div,
     .quickstart button.inactive-#{$j}:hover > div {
         color: white;
     }
 }
 
-.rating button > div,
+.rating button > div {
+    font-size: 0.75vw;
+    color: lightgray;
+}
+
 .quickstart button > div,
 .endscreen button > div {
     font-size: 1vw;

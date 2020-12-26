@@ -1,5 +1,3 @@
-import { lookup } from "dns";
-
 export interface IButton {
     getClickable: () => IButton[];
     updateMap: (x: number, y: number) => void;

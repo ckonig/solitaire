@@ -1,114 +1,115 @@
+import "../../Style/react-toggle.css";
+
 import { ScreenButton, ScreenRow } from "./Navigation";
 
 import RatingPresets from "./RatingOptions";
 import { RatingSettings } from "../../../Common";
 import React from "react";
 import StartScreenContext from "./Context";
+import Toggle from "react-toggle";
 
 export const getRatingRows = () => [
     new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
 ];
 
-const Rating = () => {
-    const ctx = React.useContext(StartScreenContext);
-    const context = ctx.state;
-    const setContext = ctx.setState;
-    const [toggle, setToggle] = React.useState<boolean>(false);
+const MyToggle = (props: { label: string; description: string; value: boolean; callBack: (s: boolean) => void }) => {
+    const cb = (e: any) => {
+        console.log(e);
+        props.callBack(!props.value);
+    };
+    return (
+        <div className="togglecontainer">
+            <div className="title">{props.label}</div>
+            <div className="toggle">
+                <Toggle checked={props.value} onChange={cb} />
+            </div>
+            <div className="description">{props.description}</div>
+        </div>
+    );
+};
 
-    const applyPreset = (id: number) => setContext({ ...context, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
+const Rating = () => {
+    const { state, setState } = React.useContext(StartScreenContext);
+
+    const applyPreset = (id: number) => setState({ ...state, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
     const getButtonClass = (index: number, y: number, x: number) => {
-        const hasFocus = context.focus == "screen" && context.screen.x == x && context.screen.y == y;
-        let name = context.ratingPreset == index ? `active active-${index}` : `inactive-${index}`;
+        const hasFocus = state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+        let name = state.ratingPreset == index ? `active active-${index}` : `inactive-${index}`;
         name += hasFocus ? " focused" : "";
         return name;
     };
 
     const customizeRating = (modifier: (context: RatingSettings) => void) => {
-        const next = { ...context };
+        const next = { ...state };
         modifier(next.ratingSettings);
         next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
-        setContext(next);
+        setState(next);
     };
-    const setMissPenalty = (value: string) => customizeRating((r) => (r.missPenalty = value == "true"));
-    const setTimeRating = (value: string) => customizeRating((r) => (r.timedMode = value == "true"));
-    const setUndoPenalty = (value: string) => customizeRating((r) => (r.undoPenalty = value == "true"));
-    const setHintPenalty = (value: string) => customizeRating((r) => (r.hintPenalty = value == "true"));
+    const setMissPenalty = (value: boolean) =>
+        customizeRating((r) => {
+            r.missPenalty = value;
+        });
+    const setTimeRating = (value: boolean) =>
+        customizeRating((r) => {
+            r.timedMode = value;
+        });
+    const setUndoPenalty = (value: boolean) =>
+        customizeRating((r) => {
+            r.undoPenalty = value;
+        });
+    const setHintPenalty = (value: boolean) =>
+        customizeRating((r) => {
+            r.hintPenalty = value;
+        });
 
     return (
-        <div className="ui rating startdetails quickstart">
+        <div className="ui rating startdetails">
             <div className="closer">
-                <button onClick={() => setToggle(!toggle)}>{toggle ? "🗙" : "☰"}</button>
+                <button onClick={() => {}}>🗙</button>
             </div>
             <div className="title">Rating</div>
-            {toggle ? (
-                <div className="content">
-                    <div className="section">
-                        <div className="title">Undo Penalty</div>
-                        <div className="row">
-                            <div className="label">
-                                Should there be a penalty for the UNDO operation? This penalty increases exponentially.
-                            </div>
-                            <select onChange={(e) => setUndoPenalty(e.target.value)} value={String(!!context.ratingSettings.undoPenalty)}>
-                                <option value={"true"}>yes</option>
-                                <option value={"false"}>no</option>
-                            </select>
-                        </div>
+
+            <div className="content center">
+                {getRatingRows().map((row, ri) => (
+                    <div key={ri} className="ratingrow">
+                        {row.buttons.map((preset, bi) => (
+                            <button key={preset.id} className={getButtonClass(preset.id, ri, bi)} onClick={() => applyPreset(preset.id)}>
+                                {preset.icon}
+                                <div>{preset.lines[0]}</div>
+                            </button>
+                        ))}
                     </div>
-                    <div className="section">
-                        <div className="title">Time Rating</div>
-                        <div className="row">
-                            <div className="label">
-                                Should the performance be part of the final rating, according to the rules described{" "}
-                                <a href="https://en.wikipedia.org/wiki/Klondike_(solitaire)#Scoring" rel="noreferrer" target="_blank">
-                                    here
-                                </a>
-                                ?
-                            </div>
-                            <select onChange={(e) => setTimeRating(e.target.value)} value={String(!!context.ratingSettings.timedMode)}>
-                                <option value={"true"}>yes</option>
-                                <option value={"false"}>no</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="section">
-                        <div className="title">Hint Penalty</div>
-                        <div className="row">
-                            <div className="label">Should there be a penalty for the HINT operation? This penalty does not increase.</div>
-                            <select onChange={(e) => setHintPenalty(e.target.value)} value={String(!!context.ratingSettings.hintPenalty)}>
-                                <option value={"true"}>yes</option>
-                                <option value={"false"}>no</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="section">
-                        <div className="title">Miss Penalty</div>
-                        <div className="row">
-                            <div className="label">Should there be a penalty for attempting to perform invalid actions?</div>
-                            <select onChange={(e) => setMissPenalty(e.target.value)} value={String(!!context.ratingSettings.missPenalty)}>
-                                <option value={"true"}>yes</option>
-                                <option value={"false"}>no</option>
-                            </select>
-                        </div>
-                    </div>
+                ))}
+                 <div className="ratingrow"></div>
+                <div className="ratingrow">
+                    <MyToggle
+                        label="Undo Penalty"
+                        description="Undo is enabled, but excessive use will be painful. This penalty starts with 2 and increases exponentially."
+                        value={!!state.ratingSettings.undoPenalty}
+                        callBack={setUndoPenalty}
+                    />
+                    <MyToggle
+                        label="Time Penalty"
+                        description="Fast players are rewarded with a time bonus, slow players will be punished."
+                        value={!!state.ratingSettings.timedMode}
+                        callBack={setTimeRating}
+                    />
                 </div>
-            ) : (
-                <div className="content center">
-                    {getRatingRows().map((row, ri) => (
-                        <div key={ri}>
-                            {row.buttons.map((preset, bi) => (
-                                <button
-                                    key={preset.id}
-                                    className={getButtonClass(preset.id, ri, bi)}
-                                    onClick={() => applyPreset(preset.id)}
-                                >
-                                    {preset.icon}
-                                    <div>{preset.lines[0]}</div>
-                                </button>
-                            ))}
-                        </div>
-                    ))}
+                <div className="ratingrow">
+                    <MyToggle
+                        label="Hint Penalty"
+                        description="Each manual hint will reduce the number of points by 10. This setting disables automatic suggestions. "
+                        value={!!state.ratingSettings.hintPenalty}
+                        callBack={setHintPenalty}
+                    />
+                    <MyToggle
+                        label="Miss Penalty"
+                        description="Be careful where you click, as each invalid action will lead to a penalty of 10 points."
+                        value={!!state.ratingSettings.missPenalty}
+                        callBack={setMissPenalty}
+                    />
                 </div>
-            )}
+            </div>
         </div>
     );
 };
