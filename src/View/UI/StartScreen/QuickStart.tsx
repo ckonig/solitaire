@@ -5,6 +5,7 @@ import React from "react";
 import StartScreenContext from "./Context";
 import { StartScreenState } from "../../../Common";
 import MenuToggle from "./MenuToggle";
+import MenuSelect from "./MenuSelect";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "./Tree";
 
@@ -24,21 +25,25 @@ const optimizeOptions = (state: StartScreenState) => [
 ];
 
 export const getSettingRows = (state: StartScreenState) => {
-    return [new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option)))];
+    return [
+        new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option))),
+        new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
+        new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
+    ];
 };
 
 export const getSettingNav = (state: StartScreenState) => {
     let result = { x: 0, y: 0 };
     getSettingRows(state).forEach((row, ri) => {
         row.buttons.forEach((button, bi) => {
-            if (settingIsActive(state, button.model.quickDeal)) {
+            if (button.model && settingIsActive(state, button.model.quickDeal)) {
                 result = { x: bi, y: ri };
             }
         });
     });
     return result;
 };
-const settingIsActive = (state: StartScreenState, val: boolean) => state.quickDeal == val
+const settingIsActive = (state: StartScreenState, val: boolean) => state.quickDeal == val;
 
 const QuickStart = () => {
     const { state, setState } = React.useContext(StartScreenContext);
@@ -69,77 +74,77 @@ const QuickStart = () => {
             <div className="title">Settings</div>
 
             <div className="content center">
-                {getSettingRows(state).map((row, index) => (
-                    <div key={index} className="row">
-                        {row.buttons.map((button, bi) => (
-                            <ScreenMainButton
-                            key={button.id}
-                            x={bi}
-                            y={index}
-                            icon={button.icon}
-                            id={button.id}
-                            hasFocus={hasFocus(index, bi)}
-                            className={getClassName(button, index, bi)}
-                            onClick={() =>
-                                setState({
-                                    ...state,
-                                    quickDeal: button.model.quickDeal,
-                                    entropySettings: {
-                                        baseEntropy: button.model.entropy,
-                                        interactionEntropy: button.model.entropy,
-                                    },
-                                })}
-                            lines={button.lines}
-                        />
-                        ))}
-                    </div>
-                ))}
+                {getSettingRows(state)
+                    .slice(0, 1)
+                    .map((row, index) => (
+                        <div key={index} className="row">
+                            {row.buttons.map((button, bi) => (
+                                <ScreenMainButton
+                                    key={button.id}
+                                    x={bi}
+                                    y={index}
+                                    icon={button.icon}
+                                    id={button.id}
+                                    hasFocus={hasFocus(index, bi)}
+                                    className={getClassName(button, index, bi)}
+                                    onClick={() =>
+                                        setState({
+                                            ...state,
+                                            quickDeal: button.model.quickDeal,
+                                            entropySettings: {
+                                                baseEntropy: button.model.entropy,
+                                                interactionEntropy: button.model.entropy,
+                                            },
+                                        })
+                                    }
+                                    lines={button.lines}
+                                />
+                            ))}
+                        </div>
+                    ))}
 
                 <div className="row"></div>
                 <div className="row">
-                    <div className="togglecontainer">
-                        <div className="title">Base Entropy</div>
-                        <div className="toggle">
-                            <select onChange={(e) => setBaseEntropy(e.target.value)} value={state.entropySettings.baseEntropy}>
-                                {EntropyLevels.map((entropyLevel, index) => (
-                                    <option key={entropyLevel} value={index}>
-                                        {entropyLevel}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="description">
-                            <div className="label">How much chaos will the stacks on the board contain by themselves?</div>
-                        </div>
-                    </div>
-                    <div className="togglecontainer">
-                        <div className="title">Interaction Entropy</div>
-                        <div className="toggle">
-                            <select
-                                onChange={(e) => setInteractionEntropy(e.target.value)}
-                                value={state.entropySettings.interactionEntropy}
-                            >
-                                {EntropyLevels.map((entropyLevel, index) => (
-                                    <option key={entropyLevel} value={index}>
-                                        {entropyLevel}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="description">
-                            <div className="label">How much chaos will each interaction add to a stack on the board?</div>
-                        </div>
-                    </div>
+                    <MenuSelect
+                        x={0}
+                        y={1}
+                        hasFocus={hasFocus(1, 0)}
+                        label="Base Entropy"
+                        description="How much chaos will the stacks on the board contain by themselves?"
+                        value={state.entropySettings.baseEntropy || 0}
+                        values={EntropyLevels.map((label, id) => ({ id, label }))}
+                        callBack={setBaseEntropy}
+                    />
+                    <MenuSelect
+                        x={1}
+                        y={1}
+                        hasFocus={hasFocus(1, 1)}
+                        label="Interaction Entropy"
+                        description="How much chaos will each interaction add to a stack on the board?"
+                        value={state.entropySettings.interactionEntropy || 0}
+                        values={EntropyLevels.map((label, id) => ({ id, label }))}
+                        callBack={setInteractionEntropy}
+                    />
                 </div>
                 <div className="row">
                     <MenuToggle
-                        x={3}
-                        y={0}
-                        hasFocus={hasFocus(0,3)}
+                        x={0}
+                        y={2}
+                        hasFocus={hasFocus(2, 0)}
                         label="Instant Deal"
                         description="Should the deal animation at the beginning of the game be skipped?"
                         value={state.quickDeal}
                         callBack={setQuickDeal}
+                    />
+                    <MenuToggle
+                        x={1}
+                        y={2}
+                        disabled={true}
+                        hasFocus={hasFocus(2, 1)}
+                        label="Auto Deal"
+                        description="Should the game draw one card from the stock every 5 seconds?"
+                        value={false}
+                        callBack={() => {}}
                     />
                 </div>
             </div>
