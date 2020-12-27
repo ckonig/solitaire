@@ -53,3 +53,4 @@ const App = () => {
     return <StartMenu start={start} />;
 };
 export default App;
+

@@ -1,5 +1,6 @@
 import React from "react";
 import { StartScreenState } from "../../../Common";
+import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 
 export interface IStartScreenContext {
     state: StartScreenState;
@@ -24,6 +25,7 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         focus: "menu",
         mainMenu: "",
         screeen: "",
+        suggestionMode: SuggestionModes.REGULAR,
     },
     setState: () => {},
 });

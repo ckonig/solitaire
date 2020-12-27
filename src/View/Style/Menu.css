@@ -97,9 +97,9 @@
 .startdetails {
     border-radius: 0.25vw;
     position: relative;
-    top: 12.5%;
+    top: 6.25%;
     width: 59.94vw;
-    min-height: 66%;
+    min-height: 78.5%;
     padding-bottom: 2vmin;
     background-color: rgba(0, 0, 0, 0.95);
 }

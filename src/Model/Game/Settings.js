@@ -10,7 +10,7 @@ export default class Settings {
         this.interactionEntropy = launchSettings.interactionEntropy;
 
         this.suggestionModes = SuggestionModes.allSuggestionModes();
-        this.suggestionMode = SuggestionModes.default();
+        this.suggestionMode = SuggestionModes.get(launchSettings.suggestionMode);
     }
 
     setSuggestionMode = (sm) => {

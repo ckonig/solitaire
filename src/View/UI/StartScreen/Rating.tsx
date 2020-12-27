@@ -62,10 +62,11 @@ const Rating = () => {
         customizeRating((r) => {
             r.undoPenalty = value;
         }, pos);
-    const setHintPenalty = (value: boolean, pos: XY) =>
+    const setHintPenalty = (value: boolean, pos: XY) => {
         customizeRating((r) => {
             r.hintPenalty = value;
         }, pos);
+    };
 
     return (
         <div className="ui rating startdetails">

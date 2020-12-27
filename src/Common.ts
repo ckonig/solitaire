@@ -52,5 +52,6 @@ export interface StartScreenState {
     focus: string,
     mainMenu: string,
     screeen: string,
-    currentButton?: ScreenButton<any>
+    currentButton?: ScreenButton<any>,
+    suggestionMode: string,
 }

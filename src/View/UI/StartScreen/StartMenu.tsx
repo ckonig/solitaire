@@ -13,6 +13,7 @@ import Screen, { getScreenStartPos } from "./Screen";
 import { StartScreenState } from "../../../Common";
 import TouchDetector from "./TouchDetector";
 import VerticalMenu from "../Menu/VerticalMenu";
+import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 
 export class StartMenuPageButton extends MenuActionButton {
     constructor(id: string, icon: string, title: string, screen: string, onClick: (pos: XY) => void, onfocus: (pos: XY) => void) {
@@ -39,6 +40,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
             quickDeal: state.quickDeal,
             gameMode: gameMode,
             initialized: true,
+            suggestionMode: state.ratingSettings.hintPenalty ? SuggestionModes.NONE : state.suggestionMode,
         };
         props.start(settings);
     };
@@ -62,6 +64,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
         focus: "menu",
         screeen: "",
         mainMenu: "",
+        suggestionMode: SuggestionModes.REGULAR,
     });
 
     interface Subscriber {
@@ -109,11 +112,6 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
         getNavigator().action(getPos());
     };
 
-    const onCancel = () => {
-        if (state.menu.y > 0) {
-            switchToMenu(state.mainMenu, { ...state.menu, y: 0 });
-        }
-    };
     const switchToScreen = (s: string, pos: XY) => {
         setState({ ...state, focus: "screen", screeen: s, screen: getScreenStartPos(s, state), menu: { ...pos } });
     };
@@ -245,12 +243,8 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                 <ButtonRenderer button={buttons} x={0} y={0} menuX={state.menu.x} />
             </VerticalMenu>
             <Screen screen={state.screeen} />
-            {state.focus == "menu" && (
-                <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
-            )}
-            {state.focus == "menu" && (
-                <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
-            )}
+            {state.focus == "menu" && <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
+            {state.focus == "menu" && <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
         </Provider>
     );
 };
