@@ -6,6 +6,7 @@ import StartScreenContext from "./Context";
 import { StartScreenState } from "../../../Common";
 import MenuToggle from "./MenuToggle";
 import ScreenMainButton from "./ScreenMainButton";
+import { XY } from "./Tree";
 
 const optimizeOptions = (state: StartScreenState) => [
     {
@@ -41,7 +42,7 @@ const settingIsActive = (state: StartScreenState, val: boolean) => state.quickDe
 
 const QuickStart = () => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const hasFocus = (index: number, y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
     const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
 
     const setBaseEntropy = (value: string) => {
@@ -50,8 +51,8 @@ const QuickStart = () => {
     const setInteractionEntropy = (value: string) => {
         setState({ ...state, entropySettings: { ...state.entropySettings, interactionEntropy: parseInt(value) } });
     };
-    const setQuickDeal = (value: boolean) => {
-        setState({ ...state, quickDeal: value });
+    const setQuickDeal = (value: boolean, pos: XY) => {
+        setState({ ...state, quickDeal: value, screen: pos });
     };
     const getClassName = (button: ScreenButton<any>, y: number, x: number) => {
         const hasFocus = state.focus == "screen" && state.screen.x == x && state.screen.y == y;
@@ -77,7 +78,7 @@ const QuickStart = () => {
                             y={index}
                             icon={button.icon}
                             id={button.id}
-                            hasFocus={hasFocus(button.id, index, bi)}
+                            hasFocus={hasFocus(index, bi)}
                             className={getClassName(button, index, bi)}
                             onClick={() =>
                                 setState({
@@ -132,6 +133,9 @@ const QuickStart = () => {
                 </div>
                 <div className="row">
                     <MenuToggle
+                        x={3}
+                        y={0}
+                        hasFocus={hasFocus(0,3)}
                         label="Instant Deal"
                         description="Should the deal animation at the beginning of the game be skipped?"
                         value={state.quickDeal}
