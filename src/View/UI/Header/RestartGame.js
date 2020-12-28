@@ -1,4 +1,4 @@
-import GlobalContext from "../Context";
+import GlobalContext from "../../Context";
 import React from "react";
 
 const RestartGame = () => {

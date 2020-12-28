@@ -1,5 +1,3 @@
-import "../../../Style/react-toggle.css";
-
 import { ScreenButton, ScreenRow } from "./Navigation";
 
 import RatingPresets from "../RatingOptions";

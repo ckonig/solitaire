@@ -1,4 +1,5 @@
 import Toggle from "react-toggle";
+import "../../../Style/react-toggle.css";
 import React from "react";
 import StartScreenContext from "../Context";
 import { XY } from "../Menu/Tree";

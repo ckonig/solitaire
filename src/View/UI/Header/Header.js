@@ -8,7 +8,7 @@ import InputMethod from "./InputMethod";
 import Pause from "./Pause";
 import Points from "./Points";
 import React from "react";
-import RestartGame from "../RestartGame";
+import RestartGame from "./RestartGame";
 import ToggleMenu from "./ToggleMenu";
 import Undo from "./Undo";
 
