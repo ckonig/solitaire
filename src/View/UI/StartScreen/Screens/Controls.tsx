@@ -1,4 +1,4 @@
-import GamePad from "../../Game/GamePad";
+import GamePad from "../../../Game/GamePad";
 import React from "react";
 
 //this is what Chrome returns on navigator.getGamepads()

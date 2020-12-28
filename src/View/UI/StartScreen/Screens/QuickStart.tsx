@@ -1,13 +1,12 @@
 import { ScreenButton, ScreenRow } from "./Navigation";
 
-import EntropyLevels from "../../../Model/Game/EntropyLevels";
+import EntropyLevels from "../../../../Model/Game/EntropyLevels";
 import React from "react";
-import StartScreenContext from "./Context";
-import { StartScreenState } from "../../../Common";
+import StartScreenContext, { StartScreenState } from "../Context";
 import MenuToggle from "./MenuToggle";
 import MenuSelect from "./MenuSelect";
 import ScreenMainButton from "./ScreenMainButton";
-import { XY } from "./Tree";
+import { XY } from "../Menu/Tree";
 
 const optimizeOptions = (state: StartScreenState) => [
     {
@@ -45,10 +44,9 @@ export const getSettingNav = (state: StartScreenState) => {
 };
 const settingIsActive = (state: StartScreenState, val: boolean) => state.quickDeal == val;
 
-const QuickStart = () => {
+const QuickStart = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
     const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
-    const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
 
     const setBaseEntropy = (value: string) => {
         setState({ ...state, entropySettings: { ...state.entropySettings, baseEntropy: parseInt(value) } });
@@ -67,9 +65,9 @@ const QuickStart = () => {
     };
 
     return (
-        <div className="ui quickstart startdetails">
+        <div className="quickstart startdetails">
             <div className="closer">
-                <button onClick={closeScreen}>🗙</button>
+                <button onClick={props.closeScreen}>🗙</button>
             </div>
             <div className="title">Settings</div>
 

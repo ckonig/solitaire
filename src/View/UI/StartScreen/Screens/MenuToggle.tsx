@@ -1,36 +1,20 @@
 import Toggle from "react-toggle";
 import React from "react";
-import StartScreenContext from "./Context";
-import { XY } from "./Tree";
+import StartScreenContext from "../Context";
+import { XY } from "../Menu/Tree";
+import { getMenuClassName, MenuInpputElementProps, useFocusEffect } from "./MenuElement";
 
-type ToggleProps = {
-    label: string;
-    description: string;
+interface ToggleProps extends MenuInpputElementProps {
     value: boolean;
     callBack: (s: boolean, pos: XY) => void;
-    x: number;
-    y: number;
-    hasFocus: boolean;
-    disabled?: boolean;
-};
+}
 
 const MenuToggle = (props: ToggleProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    React.useEffect(() => {
-        if (props.hasFocus && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
-            inputEl.current.focus();
-        }
-    }, [props.hasFocus, inputEl]);
+    useFocusEffect(props, inputEl);
     const { state, setState } = React.useContext(StartScreenContext);
-    let className = "";
-    if (props.hasFocus) {
-        className += " focused";
-    }
-    if (props.disabled) {
-        className += " disabled";
-    }
     return (
-        <div className={"togglecontainer" + className}>
+        <div className={"togglecontainer" + getMenuClassName(props)}>
             <div className="title">{props.label}</div>
             <div className="toggle">
                 <Toggle

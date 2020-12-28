@@ -2,18 +2,9 @@ import React from "react";
 
 const MenuButton = (props) => {
     const inputEl = React.useRef(null);
-    React.useEffect(() => {
-        props.subscribe({
-            id: 100* props.x +  props.y,
-            click: (pos) => props.x == pos.x && props.y == pos.y && console.debug("click handler inside the MenuButton", props.x, props.y, pos.x, pos.y),
-        });
-    }, [props.x, props.y]);
 
     let className = "";
-    if (props.blink) {
-        className += " blinking";
-    }
-
+  
     if (props.y > 0) {
         className += " indented";
     }

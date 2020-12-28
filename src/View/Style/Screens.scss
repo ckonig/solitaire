@@ -1,5 +1,5 @@
 .endscreen {
-    top: 4vw;
+    top: 4em;
 }
 
 .endscreen > div {
@@ -8,26 +8,11 @@
 }
 
 .endscreen > .title {
-    font-size: 15vw;
-}
-.difficulty .content button,
-.quickstart .content button,
-.rating .content button {
-    font-size: 3vw;
-    color: white;
-    border-radius: 0.5vw;
-    border-style: solid;
-    height: 8vw;
-    background-color: rgba(0, 0, 0, 0);
-    width: 10vw;
-    margin-bottom: 0;
-    margin-left: 1vw;
-    margin-right: 1vw;
-    margin-top: 0vw;
+    font-size: 15em;
 }
 
 .endscreen .content button {
-    font-size: 4vw;
+    font-size: 4em;
     color: white;
     border-radius: 0.5vw;
     border-style: solid;
@@ -38,61 +23,7 @@
     margin-top: 0vw;
 }
 
-$colors: #339900, #ffcc00, red, #99cc33, orange, brown;
-
-@for $i from 1 through length($colors) {
-    $j: $i - 1;
-    .difficulty button.active-#{$j},
-    .rating button.active-#{$j},
-    .quickstart button.active-#{$j} {
-        border-color: nth($colors, $i);
-        outline-color: nth($colors, $i);
-        outline-width: 0.25vw;
-        outline-offset: -0.25vw;
-        box-shadow: 0 0 0.1vw 0.1vw nth($colors, $i);
-    }
-    .difficulty button.inactive-#{$j}:hover,
-    .rating button.inactive-#{$j}:hover,
-    .quickstart button.inactive-#{$j}:hover {
-        border-color: nth($colors, $i);
-    }
-    .difficulty button.inactive-#{$j}.focused,
-    .rating button.inactive-#{$j}.focused,
-    .quickstart button.inactive-#{$j}.focused {
-        outline-color: nth($colors, $i);
-        outline-width: 0.25vw;
-        outline-offset: -0.25vw;
-        outline-style: dashed;
-    }
-    .difficulty button.inactive-#{$j}:hover > div,
-    .rating button.inactive-#{$j}:hover > div,
-    .quickstart button.inactive-#{$j}:hover > div {
-        color: white;
-    }
-}
-.difficulty button > div,
-.quickstart button > div,
-.rating button > div {
-    font-size: 0.75vw;
-    color: lightgray;
-}
-
 .endscreen button > div {
-    font-size: 1vw;
+    font-size: 1em;
     color: lightgray;
-}
-
-.difficulty button.active > div,
-.quickstart button.active > div,
-.endscreen button.active > div {
-    color: white;
-}
-
-.content.center > div {
-    text-align: center;
-}
-
-button.blinking {
-    animation: blinker 3s linear infinite;
-    border-color: #339900;
 }

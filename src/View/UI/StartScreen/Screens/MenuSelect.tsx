@@ -1,43 +1,28 @@
 import React from "react";
-import StartScreenContext from "./Context";
-import { XY } from "./Tree";
+import StartScreenContext from "../Context";
+import { getMenuClassName, MenuInpputElementProps, useFocusEffect } from "./MenuElement";
+import { XY } from "../Menu/Tree";
 
 type SelectItem = {
     label: string;
     id: string | number;
 };
 
-type SelectProps = {
-    label: string;
-    description: string;
+interface SelectProps extends MenuInpputElementProps {
     value: number;
     values: SelectItem[];
     callBack: (s: string, pos: XY) => void;
-    x: number;
-    y: number;
-    hasFocus: boolean;
-    disabled?: boolean;
-};
+}
 
 const MenuSelect = (props: SelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    React.useEffect(() => {
-        if (props.hasFocus && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
-            inputEl.current.focus();
-        }
-    }, [props.hasFocus, inputEl]);
+    useFocusEffect(props, inputEl);
     const { state, setState } = React.useContext(StartScreenContext);
     const increment = () =>
         props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString(), { x: props.x, y: props.y });
-    let className = "";
-    if (props.hasFocus) {
-        className += " focused";
-    }
-    if (props.disabled) {
-        className += " disabled";
-    }
+
     return (
-        <div className={"togglecontainer" + className}>
+        <div className={"togglecontainer" + getMenuClassName(props)}>
             <div className="title">
                 {props.label}: {props.values[props.value].label}
             </div>

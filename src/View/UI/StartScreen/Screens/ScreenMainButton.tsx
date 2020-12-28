@@ -1,5 +1,5 @@
 import React from "react";
-import StartScreenContext from "./Context";
+import StartScreenContext from "../Context";
 const ScreenMainButton = (props: {
     id: number;
     x: number;

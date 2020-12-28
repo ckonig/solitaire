@@ -1,7 +1,6 @@
 import BusinessModel from "./Business/BusinessModel";
 import Card from "./Model/Deck/Card";
-import { GameMode } from "./View/GameModes";
-import { ScreenButton } from "./View/UI/StartScreen/Navigation";
+import { GameMode } from "./GameModes";
 
 export type StateReplacer = (state: BusinessModel) => BusinessModel | null;
 export type StateUpdater = (state: BusinessModel) => void;
@@ -13,7 +12,7 @@ export interface AppState extends RatingSettings {
     initialized?: boolean;
     drawMode?: string;
     recyclingMode?: string;
-    gameMode: GameMode;
+    boardMode: string;
 }
 
 export interface ClickHandler {
@@ -33,25 +32,4 @@ export interface RatingSettings {
 export interface EntropySettings {
     baseEntropy?: number;
     interactionEntropy?: number;
-}
-
-export interface StartScreenState {
-    ratingSettings: RatingSettings;
-    difficultySettings: number;
-    ratingPreset: number;
-    quickDeal: boolean;
-    entropySettings: EntropySettings;
-    menu: {
-        x: number;
-        y: number;
-    };
-    screen: {
-        x: number;
-        y: number;
-    };
-    focus: string,
-    mainMenu: string,
-    screeen: string,
-    currentButton?: ScreenButton<any>,
-    suggestionMode: string,
 }

@@ -1,4 +1,4 @@
-import "../Style/Menu.css";
+import "../Style/Menu.scss";
 
 import EntropyLevels from "../../Model/Game/EntropyLevels";
 import GlobalContext from "../Context";
@@ -15,7 +15,6 @@ const Menu = () => {
     const setInteractionEntropy = (lvl) => updateContext((state) => (state.settings.interactionEntropy = lvl));
     const setMouseMode = (mm) => updateContext((state) => (state.settings.mouseMode = mm));
 
-    //@todo review duplication with ToggleMenu Component from Header
     const toggleMenu = (menu) => {
         updateContext((state) => {
             if (state.settings.showMenu == menu) {

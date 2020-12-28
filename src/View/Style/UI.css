@@ -2,28 +2,6 @@
     z-index: 2000;
 }
 
-.closer {
-    position: absolute;
-    right: 0.3vw;
-    top: 0.1vw;
-}
-
-.closer button {
-    font-size: 2vw;
-    padding-top: 0vw;
-    border-color: transparent;
-    border-style: none;
-    width: 3vw;
-    margin-top: 0vw;
-    color: white;
-    background-color: transparent;
-}
-
-.closer button:focus {
-    outline-color: gray;
-    outline-width: 0.05vw;
-}
-
 .ui > .content > .section {
     font-size: 1vw;
     margin-bottom: 8vw;

@@ -1,14 +1,14 @@
-import "../../Style/react-toggle.css";
+import "../../../Style/react-toggle.css";
 
 import { ScreenButton, ScreenRow } from "./Navigation";
 
-import RatingPresets from "./RatingOptions";
-import { RatingSettings, StartScreenState } from "../../../Common";
+import RatingPresets from "../RatingOptions";
+import { RatingSettings } from "../../../../Common";
 import React from "react";
-import StartScreenContext from "./Context";
+import StartScreenContext, { StartScreenState } from "../Context";
 import MenuToggle from "./MenuToggle";
 import ScreenMainButton from "./ScreenMainButton";
-import { XY } from "./Tree";
+import { XY } from "../Menu/Tree";
 
 export const getRatingRows = () => [
     new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
@@ -31,10 +31,9 @@ const ratingIsActive = (state: StartScreenState, id: number) => state.ratingPres
 const ratingHasFocus = (state: StartScreenState, y: number, x: number) =>
     state.focus == "screen" && state.screen.x == x && state.screen.y == y;
 
-const Rating = () => {
+const Rating = (props: {closeScreen: () => void}) => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
-
+    
     const applyPreset = (id: number) => setState({ ...state, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
 
     const getButtonClass = (id: number, y: number, x: number) => {
@@ -69,9 +68,9 @@ const Rating = () => {
     };
 
     return (
-        <div className="ui rating startdetails">
+        <div className="rating startdetails">
             <div className="closer">
-                <button onClick={closeScreen}>🗙</button>
+                <button onClick={props.closeScreen}>🗙</button>
             </div>
             <div className="title">Rating</div>
 

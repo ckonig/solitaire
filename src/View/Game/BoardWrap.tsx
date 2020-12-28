@@ -51,7 +51,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
         };
         return (
             <Provider value={context}>
-                <Board mode={this.props.settings.gameMode.boardMode} />
+                <Board mode={this.props.settings.boardMode} />
                 <EndScreen />
             </Provider>
         );

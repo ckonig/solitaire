@@ -1,33 +1,27 @@
-import GameModes, { GameMode } from "../../GameModes";
-import { MenuActionButton, MenuLeafButton, MenuRootButton, MenuSectionButton, XY } from "./Tree";
+import GameModes, { GameMode } from "../../../GameModes";
+import { MenuActionButton, MenuLeafButton, MenuRootButton, MenuSectionButton, XY } from "./Menu/Tree";
 
 import DifficultyOptions from "./DifficultyOptions";
 import GamePad from "../../Game/GamePad";
 import Keyboard from "../../Game/Keyboard";
 import MenuButton from "../Menu/MenuButton";
 import MenuTitle from "../Menu/MenuTitle";
-import { Provider } from "./Context";
-import RatingPresets from "./RatingOptions";
+import { defaultStartScreenState, Provider, StartScreenState } from "./Context";
 import React from "react";
-import Screen, { getScreenStartPos } from "./Screen";
-import { StartScreenState } from "../../../Common";
-import TouchDetector from "./TouchDetector";
+import Screen, { getScreenStartPos } from "./Screens/Screen";
 import VerticalMenu from "../Menu/VerticalMenu";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 
 export class StartMenuPageButton extends MenuActionButton {
-    constructor(id: string, icon: string, title: string, screen: string, onClick: (pos: XY) => void, onfocus: (pos: XY) => void) {
-        super(id, icon, title, id == screen, onClick);
+    constructor(id: string, icon: string, title: string, screen: string, onClick: (pos: XY) => void, onFocus: (pos: XY) => void) {
+        super(id, icon, title, id == screen, onClick, onFocus);
         this.active = id == screen;
-        this.onClick = onClick;
-        this.onFocus = onfocus;
     }
 }
 
 export class MenuStartButton extends MenuLeafButton {
     constructor(title: string, icon: string, start: () => void, onFocus: (pos: XY) => void) {
-        super("start", icon, title, start);
-        this.onFocus = onFocus;
+        super("start", icon, title, start, onFocus);
     }
 }
 
@@ -38,86 +32,41 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
             ...state.ratingSettings,
             ...state.entropySettings,
             quickDeal: state.quickDeal,
-            gameMode: gameMode,
+            boardMode: gameMode.boardMode,
             initialized: true,
             suggestionMode: state.ratingSettings.hintPenalty ? SuggestionModes.NONE : state.suggestionMode,
         };
         props.start(settings);
     };
-    const [state, setState] = React.useState<StartScreenState>({
-        ratingSettings: { ...RatingPresets.all[1].settings },
-        difficultySettings: 1,
-        ratingPreset: 1,
-        quickDeal: TouchDetector(),
-        entropySettings: {
-            baseEntropy: TouchDetector() ? 1 : 2,
-            interactionEntropy: TouchDetector() ? 1 : 2,
-        },
-        menu: {
-            x: 0,
-            y: 0,
-        },
-        screen: {
-            x: 0,
-            y: 0,
-        },
-        focus: "menu",
-        screeen: "",
-        mainMenu: "",
-        suggestionMode: SuggestionModes.REGULAR,
-    });
 
-    interface Subscriber {
-        id: number;
-        click: (pos: XY) => {};
-    }
-
-    const [subscriber, setSubscriber] = React.useState<Subscriber[]>([]);
-    const subscribe = (s: Subscriber) => {
-        subscriber[s.id] = s;
-        setSubscriber(subscriber);
-    };
+    const [state, setState] = React.useState<StartScreenState>(defaultStartScreenState);
 
     const [buttons, setButtons] = React.useState(new MenuRootButton([]));
-
-    const getNavigator = () => buttons;
 
     const assignState = (result: XY) => {
         if (state.focus == "menu") {
             setState({ ...state, menu: result });
-        }
-        if (state.focus == "screen") {
+        } else {
             throw "Invalid navigation action";
         }
     };
 
     const getPos = () => (state.focus == "menu" ? state.menu : state.screen);
 
-    const onUp = () => {
-        assignState(getNavigator().moveUp(getPos().x, getPos().y));
-    };
-    const onDown = () => {
-        assignState(getNavigator().moveDown(getPos().x, getPos().y));
-    };
+    const onUp = () => assignState(buttons.moveUp(getPos().x, getPos().y));
 
-    const onLeft = () => {
-        assignState(getNavigator().moveLeft(getPos().x, getPos().y));
-    };
+    const onDown = () => assignState(buttons.moveDown(getPos().x, getPos().y));
 
-    const onRight = () => {
-        assignState(getNavigator().moveRight(getPos().x, getPos().y));
-    };
+    const onLeft = () => assignState(buttons.moveLeft(getPos().x, getPos().y));
 
-    const onAction = () => {
-        getNavigator().action(getPos());
-    };
+    const onRight = () => assignState(buttons.moveRight(getPos().x, getPos().y));
 
-    const switchToScreen = (s: string, pos: XY) => {
+    const onAction = () => buttons.action(getPos());
+
+    const switchToScreen = (s: string, pos: XY) =>
         setState({ ...state, focus: "screen", screeen: s, screen: getScreenStartPos(s, state), menu: { ...pos } });
-    };
-    const switchToMenu = (menu: string, pos: XY) => {
-        setState({ ...state, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
-    };
+
+    const switchToMenu = (menu: string, pos: XY) => setState({ ...state, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
 
     React.useEffect(() => {
         const toggleScreen = (s: string, pos: XY) => {
@@ -209,7 +158,6 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
             <div>
                 {!c.isRoot && (
                     <MenuButton
-                        subscribe={subscribe}
                         x={props.x}
                         y={props.y}
                         active={c.active}
@@ -218,7 +166,6 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                         icon={c.icon}
                         title={c.title}
                         toggled={c.toggled}
-                        blink={c.blink}
                         menuX={state.menu.x}
                         menuY={state.menu.y}
                         menuFocus={state.focus}

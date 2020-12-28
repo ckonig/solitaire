@@ -3,6 +3,7 @@ body {
     background-image: url("./felt.png");
     /*https://www.transparenttextures.com/felt.html This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
     margin: 0;
+    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -15,27 +16,46 @@ body {
     user-select: none;
 }
 
-.align-left,
-.align-right {
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+button {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
 }
 
-.align-left {
+
+.appwrapper-portrait {
+    overflow: none;
+    box-sizing: border-box;
+    width: 100vw;
+    max-height: 100vh;
+}
+.appwrapper-landscape {
+    overflow: none;
+    box-sizing: border-box;
+    width: 100vw; 
+    height: 56.25vw; /* height:width ratio = 9/16 = .5625  */
+    max-height: 100vh;
+    max-width: 177.78vh; /* 16/9 = 1.778 */
+
+}
+.appwrapper-16-to-9-landscape {
+    width: 100%;
+    padding-bottom: 56.25%;
+    font-size: 1.778vh;
+    position: relative;
+    
+}
+.appwrapper-16-to-9-portrait {
+    width: 100%;
+    padding-bottom: 56.25%;
+    font-size: 1vw;
+    position: relative;
+}
+.appwrapper-jail {
+    position: absolute;
     left: 0;
-}
-
-.align-right {
+    top: 0;
     right: 0;
+    bottom: 0;
 }
-
-.align-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-

@@ -3,11 +3,10 @@ import Difficulty, { getDifficultyNav, getDifficultyRows } from "./Difficulty";
 import QuickStart, { getSettingNav, getSettingRows } from "./QuickStart";
 import Rating, { getRatingRows, getRatingNav } from "./Rating";
 import React from "react";
-import { NavHandler, XY } from "./Tree";
-import { StartScreenState } from "../../../Common";
-import StartScreenContext from "./Context";
-import Keyboard from "../../Game/Keyboard";
-import GamePad from "../../Game/GamePad";
+import { NavHandler, XY } from "../Menu/Tree";
+import StartScreenContext, { StartScreenState } from "../Context";
+import Keyboard from "../../../Game/Keyboard";
+import GamePad from "../../../Game/GamePad";
 
 export class ScreenNavigator implements NavHandler {
     screen: string;
@@ -126,24 +125,26 @@ export const getScreenStartPos = (screen: string, state: StartScreenState) => {
     }
 };
 const Screen = (props: { screen: string }) => {
+    const { state, setState } = React.useContext(StartScreenContext);
+    const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
     const getScreen = () => {
         switch (props.screen) {
             case "rating":
                 return (
                     <>
-                        <Rating />
+                        <Rating closeScreen={closeScreen} />
                     </>
                 );
             case "difficulty":
                 return (
                     <>
-                        <Difficulty />
+                        <Difficulty closeScreen={closeScreen} />
                     </>
                 );
             case "settings":
                 return (
                     <>
-                        <QuickStart />
+                        <QuickStart closeScreen={closeScreen} />
                     </>
                 );
             case "controls0":

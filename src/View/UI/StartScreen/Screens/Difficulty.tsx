@@ -1,12 +1,12 @@
 import { ScreenButton, ScreenRow } from "./Navigation";
 
-import DifficultyOptions from "./DifficultyOptions";
+import DifficultyOptions from "../DifficultyOptions";
 import React from "react";
-import StartScreenContext from "./Context";
+import StartScreenContext, { StartScreenState } from "../Context";
 import ScreenMainButton from "./ScreenMainButton";
-import { StartScreenState } from "../../../Common";
 
 const mapOption = (option: any) => new ScreenButton(option.id, option.icon, option.lines, option);
+
 export const getDifficultyRows = () => {
     return [new ScreenRow(DifficultyOptions.slice(0, 3).map(mapOption)), new ScreenRow(DifficultyOptions.slice(3).map(mapOption))];
 };
@@ -22,12 +22,13 @@ export const getDifficultyNav = (state: StartScreenState) => {
     });
     return result;
 };
-const difficultyIsActive = (state: StartScreenState, id: number) => state.difficultySettings == id
-const Difficulty = () => {
+
+const difficultyIsActive = (state: StartScreenState, id: number) => state.difficultySettings == id;
+
+const Difficulty = (props: {closeScreen: () => void}) => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
-    const hasFocus = (index: number, y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
-    const updateDifficulty = (settings: number) => setState({ ...state, difficultySettings: settings });
+    
+    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
     const getButtonClass = (index: number, y: number, x: number) => {
         const hasFocus = state.screen.x == x && state.screen.y == y;
         let name = difficultyIsActive(state, index) ? `active active-${index}` : `inactive-${index}`;
@@ -35,9 +36,9 @@ const Difficulty = () => {
         return name;
     };
     return (
-        <div className="ui difficulty startdetails">
+        <div className="difficulty startdetails">
             <div className="closer">
-                <button onClick={closeScreen}>🗙</button>
+                <button onClick={props.closeScreen}>🗙</button>
             </div>
             <div className="title">Difficulty</div>
             <div className="content center">
@@ -50,9 +51,9 @@ const Difficulty = () => {
                                 y={index}
                                 icon={button.icon}
                                 id={button.id}
-                                hasFocus={hasFocus(button.id, index, bi)}
+                                hasFocus={hasFocus(index, bi)}
                                 className={getButtonClass(button.id, index, bi)}
-                                onClick={() => updateDifficulty(button.id)}
+                                onClick={() => setState({ ...state, difficultySettings: button.id })}
                                 lines={button.lines}
                             />
                         ))}

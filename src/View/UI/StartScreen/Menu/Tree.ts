@@ -14,21 +14,19 @@ export class Button {
     title: any;
     onClick: (pos: XY) => void;
     onFocus: (pos: XY) => void;
-    blink: boolean;
     toggled: boolean;
     children: Button[];
     x: number;
     y: number;
 
-    constructor() {
+    constructor(onClick: (pos: XY) => void, onFocus: (pos: XY) => void) {
         this.isRoot = false;
         this.id = "not null";
         this.active = false;
         this.icon = "";
         this.title = "";
-        this.onClick = () => {};
-        this.onFocus = () => {};
-        this.blink = false;
+        this.onClick = onClick;
+        this.onFocus = onFocus;
         this.toggled = false;
         this.children = [];
         this.x = 0;
@@ -37,12 +35,11 @@ export class Button {
 }
 
 export class MenuLeafButton extends Button implements IButton {
-    constructor(id: string, icon: string, title: string, onClick: (pos: XY) => void) {
-        super();
+    constructor(id: string, icon: string, title: string, onClick: (pos: XY) => void, onFocus: (pos: XY) => void) {
+        super(onClick, onFocus);
         this.id = id;
         this.icon = icon;
         this.title = title;
-        this.onClick = onClick;
     }
     updateMap: (x: number, y: number) => void = (x: number, y: number) => {
         this.x = x;
@@ -56,8 +53,8 @@ export class MenuLeafButton extends Button implements IButton {
 class MenuNodeButton extends Button implements IButton {
     children: any;
     toggled: any;
-    constructor(children: IButton[]) {
-        super();
+    constructor(onClick: (pos: XY) => void, onFocus: (pos: XY) => void, children: IButton[]) {
+        super(onClick, onFocus);
         this.children = children;
         this.toggled = false;
     }
@@ -80,12 +77,10 @@ export class MenuSectionButton extends MenuNodeButton {
         toggled: boolean,
         children: IButton[]
     ) {
-        super(children);
+        super(onClick, onFocus, children);
         this.id = id;
         this.icon = icon;
         this.title = title;
-        this.onClick = onClick;
-        this.onFocus = onFocus;
         this.toggled = toggled;
     }
     moveDown = (x: number, y: number, next: number) => {
@@ -118,8 +113,8 @@ export interface NavHandler {
 }
 
 export class MenuActionButton extends MenuLeafButton {
-    constructor(id: string, icon: string, title: string, active: boolean, onClick: (pos: XY) => void) {
-        super(id, icon, title, onClick);
+    constructor(id: string, icon: string, title: string, active: boolean, onClick: (pos: XY) => void, onFocus: (pos: XY) => void) {
+        super(id, icon, title, onClick, onFocus);
         this.active = active;
         this.onClick = onClick;
     }
@@ -127,7 +122,11 @@ export class MenuActionButton extends MenuLeafButton {
 
 export class MenuRootButton extends MenuNodeButton implements NavHandler {
     constructor(children: IButton[]) {
-        super(children);
+        super(
+            () => {},
+            () => {},
+            children
+        );
         this.isRoot = true;
         this.children = children;
         this.children.forEach((child: IButton, i: number) => child.updateMap(i, 0));
