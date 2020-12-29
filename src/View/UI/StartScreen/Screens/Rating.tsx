@@ -7,6 +7,7 @@ import StartScreenContext, { StartScreenState } from "../Context";
 import MenuToggle from "./MenuToggle";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../Menu/Tree";
+import CookieBanner from "./CookieBanner";
 
 export const getRatingRows = () => [
     new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
@@ -70,7 +71,9 @@ const Rating = (props: {closeScreen: () => void}) => {
             <div className="closer">
                 <button onClick={props.closeScreen}>🗙</button>
             </div>
-            <div className="title">Rating</div>
+            <div className="title">Penalties</div>
+
+            <CookieBanner />
 
             <div className="content center">
                 {getRatingRows()

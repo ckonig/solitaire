@@ -24,3 +24,10 @@ const GlobalContext = React.createContext<IGlobalContext>(defaultValue);
 export const Provider = GlobalContext.Provider;
 
 export default GlobalContext;
+
+export interface ICookieContext {
+    consented: boolean;
+    setConsented: (c: boolean) => void;
+}
+export const CookieContext = React.createContext<ICookieContext>({ consented: false, setConsented: () => {} });
+export const CookieContextProvider = CookieContext.Provider;

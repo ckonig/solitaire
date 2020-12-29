@@ -4,6 +4,7 @@ import DifficultyOptions from "../DifficultyOptions";
 import React from "react";
 import StartScreenContext, { StartScreenState } from "../Context";
 import ScreenMainButton from "./ScreenMainButton";
+import CookieBanner from "./CookieBanner";
 
 const mapOption = (option: any) => new ScreenButton(option.id, option.icon, option.lines, option);
 
@@ -41,6 +42,7 @@ const Difficulty = (props: {closeScreen: () => void}) => {
                 <button onClick={props.closeScreen}>🗙</button>
             </div>
             <div className="title">Difficulty</div>
+            <CookieBanner />
             <div className="content center">
                 {getDifficultyRows().map((row, index) => (
                     <div key={index} className="row">

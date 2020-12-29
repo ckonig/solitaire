@@ -7,6 +7,7 @@ import MenuToggle from "./MenuToggle";
 import MenuSelect from "./MenuSelect";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../Menu/Tree";
+import CookieBanner from "./CookieBanner";
 
 const optimizeOptions = (state: StartScreenState) => [
     {
@@ -69,8 +70,8 @@ const QuickStart = (props: { closeScreen: () => void }) => {
             <div className="closer">
                 <button onClick={props.closeScreen}>🗙</button>
             </div>
-            <div className="title">Settings</div>
-
+            <div className="title">Various</div>
+            <CookieBanner />
             <div className="content center">
                 {getSettingRows(state)
                     .slice(0, 1)

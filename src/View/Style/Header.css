@@ -39,7 +39,7 @@
 
 .header-buttons > div > button {
     padding-top: 0vw;
-    border-radius: 0.5vw;
+    border-radius: 0.5em;
     border-color: gray;
     border-style: none;
 
