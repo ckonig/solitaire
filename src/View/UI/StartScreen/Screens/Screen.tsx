@@ -7,52 +7,55 @@ import { NavHandler, XY } from "../Menu/Tree";
 import StartScreenContext, { StartScreenState } from "../Context";
 import Keyboard from "../../../Game/Keyboard";
 import GamePad from "../../../Game/GamePad";
+import { CookieContext } from "../../../Context";
 
 export class ScreenNavigator implements NavHandler {
     screen: string;
     state: StartScreenState;
-    constructor(screen: string, state: StartScreenState) {
+    consented: boolean;
+    constructor(screen: string, state: StartScreenState, consented: boolean) {
         this.screen = screen;
         this.state = state;
+        this.consented = consented;
     }
     getRows = () => {
         if (this.screen == "rating") {
-            return getRatingRows();
+            return getRatingRows(this.consented);
         }
         if (this.screen == "settings") {
-            return getSettingRows(this.state);
+            return getSettingRows(this.state, this.consented);
         }
         if (this.screen == "difficulty") {
-            return getDifficultyRows();
+            return getDifficultyRows(this.consented);
         }
         return [];
     };
     getRow = (x: number) => this.getRows()[x];
+    goToRow = (pos: XY) => {
+        const rows = this.getRows();
+        const row = rows[pos.y];
+        if (row.buttons.length - 1 < pos.x) {
+            return { ...pos, x: row.buttons.length - 1 };
+        }
+
+        return pos;
+    };
     moveUp: (x: number, y: number) => XY = (x: number, y: number) => {
         const rows = this.getRows();
-        console.debug(rows, x, y);
-        if (rows.length < 2) {
-            return { x: x, y: y };
-        }
         if (y == 0) {
-            return { x: x, y: rows.length - 1 };
+            return this.goToRow({ x: x, y: rows.length - 1 });
         }
-        return { x: x, y: y - 1 };
+        return this.goToRow({ x: x, y: y - 1 });
     };
     moveDown: (x: number, y: number) => XY = (x: number, y: number) => {
         const rows = this.getRows();
-        console.debug(rows, x, y);
-        if (rows.length < 2) {
-            return { x: x, y: y };
-        }
         if (y == rows.length - 1) {
-            return { x: x, y: 0 };
+            return this.goToRow({ x: x, y: 0 });
         }
-        return { x: x, y: y + 1 };
+        return this.goToRow({ x: x, y: y + 1 });
     };
     moveLeft: (x: number, y: number) => XY = (x: number, y: number) => {
         const row = this.getRow(y);
-        console.debug(row, x, y);
         if (x == 0) {
             return { x: row.buttons.length - 1, y: y };
         }
@@ -60,7 +63,6 @@ export class ScreenNavigator implements NavHandler {
     };
     moveRight: (x: number, y: number) => XY = (x: number, y: number) => {
         const row = this.getRow(y);
-        console.debug(row, x, y);
         if (x == row.buttons.length - 1) {
             return { x: 0, y: y };
         }
@@ -73,7 +75,8 @@ export class ScreenNavigator implements NavHandler {
 }
 const NavWrapper = (props: { screen: string }) => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const navigator = new ScreenNavigator(props.screen, state);
+    const { consented } = React.useContext(CookieContext);
+    const navigator = new ScreenNavigator(props.screen, state, consented);
     const assignState = (result: XY) => {
         if (state.focus == "screen") {
             setState({ ...state, screen: result });
@@ -112,14 +115,14 @@ const NavWrapper = (props: { screen: string }) => {
         </>
     ) : null;
 };
-export const getScreenStartPos = (screen: string, state: StartScreenState) => {
+export const getScreenStartPos = (screen: string, state: StartScreenState, consented: boolean) => {
     switch (screen) {
         case "rating":
-            return getRatingNav(state);
+            return getRatingNav(state, consented);
         case "difficulty":
-            return getDifficultyNav(state);
+            return getDifficultyNav(state, consented);
         case "settings":
-            return getSettingNav(state);
+            return getSettingNav(state, consented);
         default:
             return { x: 0, y: 0 };
     }

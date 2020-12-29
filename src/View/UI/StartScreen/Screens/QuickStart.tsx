@@ -8,6 +8,7 @@ import MenuSelect from "./MenuSelect";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../Menu/Tree";
 import CookieBanner from "./CookieBanner";
+import { CookieContext } from "../../../Context";
 
 const optimizeOptions = (state: StartScreenState) => [
     {
@@ -23,18 +24,21 @@ const optimizeOptions = (state: StartScreenState) => [
         icon: "📱",
     },
 ];
-
-export const getSettingRows = (state: StartScreenState) => {
-    return [
+const prependCookieBanner = (consented: boolean, arr: ScreenRow<any>[]) => {
+    if (consented) return arr;
+    else return [new ScreenRow([new ScreenButton<any>(-1, "", [], null)]), ...arr];
+};
+export const getSettingRows = (state: StartScreenState, consented: boolean) => {
+    return prependCookieBanner(consented, [
         new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option))),
         new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
         new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
-    ];
+    ]);
 };
 
-export const getSettingNav = (state: StartScreenState) => {
+export const getSettingNav = (state: StartScreenState, consented: boolean) => {
     let result = { x: 0, y: 0 };
-    getSettingRows(state).forEach((row, ri) => {
+    getSettingRows(state, consented).forEach((row, ri) => {
         row.buttons.forEach((button, bi) => {
             if (button.model && settingIsActive(state, button.model.quickDeal)) {
                 result = { x: bi, y: ri };
@@ -47,6 +51,7 @@ const settingIsActive = (state: StartScreenState, val: boolean) => state.quickDe
 
 const QuickStart = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
+    const { consented } = React.useContext(CookieContext);
     const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
 
     const setBaseEntropy = (value: string) => {
@@ -65,27 +70,29 @@ const QuickStart = (props: { closeScreen: () => void }) => {
         return name;
     };
 
+    const offset = consented ? 0 : 1;
+
     return (
         <div className="quickstart startdetails">
             <div className="closer">
                 <button onClick={props.closeScreen}>🗙</button>
             </div>
             <div className="title">Various</div>
-            <CookieBanner />
+            <CookieBanner hasFocus={hasFocus(0, 0)} />
             <div className="content center">
-                {getSettingRows(state)
-                    .slice(0, 1)
+                {getSettingRows(state, consented)
+                    .slice(0 + offset, 1 + offset)
                     .map((row, index) => (
                         <div key={index} className="row">
                             {row.buttons.map((button, bi) => (
                                 <ScreenMainButton
                                     key={button.id}
                                     x={bi}
-                                    y={index}
+                                    y={index + offset}
                                     icon={button.icon}
                                     id={button.id}
-                                    hasFocus={hasFocus(index, bi)}
-                                    className={getClassName(button, index, bi)}
+                                    hasFocus={hasFocus(index + offset, bi)}
+                                    className={getClassName(button, index + offset, bi)}
                                     onClick={() =>
                                         setState({
                                             ...state,
@@ -106,8 +113,8 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                 <div className="row">
                     <MenuSelect
                         x={0}
-                        y={1}
-                        hasFocus={hasFocus(1, 0)}
+                        y={1 + offset}
+                        hasFocus={hasFocus(1 + offset, 0)}
                         label="Base Entropy"
                         description="How much chaos will the stacks on the board contain by themselves?"
                         value={state.entropySettings.baseEntropy || 0}
@@ -116,8 +123,8 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                     />
                     <MenuSelect
                         x={1}
-                        y={1}
-                        hasFocus={hasFocus(1, 1)}
+                        y={1 + offset}
+                        hasFocus={hasFocus(1 + offset, 1)}
                         label="Interaction Entropy"
                         description="How much chaos will each interaction add to a stack on the board?"
                         value={state.entropySettings.interactionEntropy || 0}
@@ -128,8 +135,8 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                 <div className="row">
                     <MenuToggle
                         x={0}
-                        y={2}
-                        hasFocus={hasFocus(2, 0)}
+                        y={2 + offset}
+                        hasFocus={hasFocus(2 + offset, 0)}
                         label="Instant Deal"
                         description="Should the deal animation at the beginning of the game be skipped?"
                         value={state.quickDeal}
@@ -137,9 +144,9 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                     />
                     <MenuToggle
                         x={1}
-                        y={2}
+                        y={2 + offset}
                         disabled={true}
-                        hasFocus={hasFocus(2, 1)}
+                        hasFocus={hasFocus(2 + offset, 1)}
                         label="Auto Deal"
                         description="Should the game draw one card from the stock every 5 seconds?"
                         value={false}

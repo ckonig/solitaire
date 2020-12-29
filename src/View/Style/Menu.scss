@@ -280,6 +280,11 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     padding-bottom: 1%;
 }
 
+.cookiebanner.focused {
+    border-color: blue;
+    outline: none;
+}
+
 .cookiebanner .icon {
     font-size: 2em;
     float: left;

@@ -1,11 +1,13 @@
 import React from "react";
 
-export interface MenuElementProps {
-    label: string;
-    description: string;
+export interface Focusable {
     x: number;
     y: number;
     hasFocus: boolean;
+}
+export interface MenuElementProps extends Focusable {
+    label: string;
+    description: string;
 }
 
 export interface MenuInpputElementProps extends MenuElementProps {
@@ -23,10 +25,10 @@ export const getMenuClassName = (props: MenuInpputElementProps) => {
     return className;
 };
 
-export const useFocusEffect =  (props: MenuInpputElementProps, inputEl: React.RefObject<HTMLElement>) => {
+export const useFocusEffect = (props: Focusable, inputEl: React.RefObject<HTMLElement>) => {
     React.useEffect(() => {
         if (props.hasFocus && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
             inputEl.current.focus();
         }
     }, [props.hasFocus, inputEl]);
-}
+};

@@ -108,7 +108,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
     const onAction = () => buttons.action(getPos());
 
     const switchToScreen = (s: string, pos: XY) =>
-        setState({ ...state, focus: "screen", screeen: s, screen: getScreenStartPos(s, state), menu: { ...pos } });
+        setState({ ...state, focus: "screen", screeen: s, screen: getScreenStartPos(s, state, consented), menu: { ...pos } });
 
     const switchToMenu = (menu: string, pos: XY) => setState({ ...state, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
 
