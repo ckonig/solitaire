@@ -1,3 +1,5 @@
+import { NavHandler } from "../NavHandler";
+
 export interface IButton {
     getClickable: () => IButton[];
     updateMap: (x: number, y: number) => void;
@@ -102,14 +104,6 @@ export class MenuSectionButton extends MenuNodeButton {
 export interface XY {
     x: number;
     y: number;
-}
-
-export interface NavHandler {
-    moveUp: (x: number, y: number) => XY;
-    moveDown: (x: number, y: number) => XY;
-    moveLeft: (x: number, y: number) => XY;
-    moveRight: (x: number, y: number) => XY;
-    action: (xy: XY) => void;
 }
 
 export class MenuActionButton extends MenuLeafButton {

@@ -1,4 +1,13 @@
-const DifficultyOptions = [
+export interface DifficultyOption {
+    id: number;
+    settings: {
+        drawMode: string;
+        recyclingMode: string;
+    };
+    icon: string;
+    lines: string[];
+}
+const DifficultyOptions: DifficultyOption[] = [
     {
         id: 0,
         settings: { drawMode: "single", recyclingMode: "infinite" },

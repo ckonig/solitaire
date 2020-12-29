@@ -1,16 +1,10 @@
 import React from "react";
 
 export interface Focusable {
-    x: number;
-    y: number;
     hasFocus: boolean;
 }
-export interface MenuElementProps extends Focusable {
-    label: string;
-    description: string;
-}
 
-export interface MenuInpputElementProps extends MenuElementProps {
+export interface MenuInpputElementProps extends Focusable {
     disabled?: boolean;
 }
 

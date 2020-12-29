@@ -8,7 +8,7 @@ import MenuButton from "../Menu/MenuButton";
 import MenuTitle from "../Menu/MenuTitle";
 import { defaultStartScreenState, Provider, StartScreenState } from "./Context";
 import React from "react";
-import Screen, { getScreenStartPos } from "./Screens/Screen";
+import Screen from "./Screens/Screen";
 import VerticalMenu from "../Menu/VerticalMenu";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 import StorageManager from "../StorageManager";
@@ -108,7 +108,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
     const onAction = () => buttons.action(getPos());
 
     const switchToScreen = (s: string, pos: XY) =>
-        setState({ ...state, focus: "screen", screeen: s, screen: getScreenStartPos(s, state, consented), menu: { ...pos } });
+        setState({ ...state, focus: "screen", screeen: s, screen: { x: -1, y: -1 }, menu: { ...pos } });
 
     const switchToMenu = (menu: string, pos: XY) => setState({ ...state, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
 
@@ -181,7 +181,14 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                             (pos: XY) => toggleScreen("difficulty", pos),
                             onfocus
                         ),
-                        new StartMenuPageButton("rating", "⚖️", "Penalties", state.screeen, (pos: XY) => toggleScreen("rating", pos), onfocus),
+                        new StartMenuPageButton(
+                            "rating",
+                            "⚖️",
+                            "Penalties",
+                            state.screeen,
+                            (pos: XY) => toggleScreen("rating", pos),
+                            onfocus
+                        ),
                         new StartMenuPageButton(
                             "settings",
                             "🧰",

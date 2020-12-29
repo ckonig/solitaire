@@ -1,20 +1,30 @@
 import React from "react";
 import StartScreenContext from "../Context";
-import { getMenuClassName, MenuInpputElementProps, useFocusEffect } from "./MenuElement";
+import { getMenuClassName, useFocusEffect } from "./MenuElement";
 import { XY } from "../Menu/Tree";
 
-type SelectItem = {
+export type SelectItem = {
     label: string;
     id: string | number;
 };
-
-interface SelectProps extends MenuInpputElementProps {
+interface StaticSelectProps {
+    disabled?: boolean;
     value: number;
     values: SelectItem[];
+    label: string;
+    description: string;
     callBack: (s: string, pos: XY) => void;
 }
-
-const MenuSelect = (props: SelectProps) => {
+interface SelectProps extends StaticSelectProps {
+    x: number;
+    y: number;
+    hasFocus: boolean;
+}
+interface _MenuSelectProps extends StaticSelectProps {
+    x?: number;
+    y?: number;
+}
+const _MenuSelect = (props: SelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { state, setState } = React.useContext(StartScreenContext);
@@ -42,6 +52,28 @@ const MenuSelect = (props: SelectProps) => {
             </div>
             <div className="description">{props.description}</div>
         </div>
+    );
+};
+
+const MenuSelect = (props: _MenuSelectProps) => {
+    if (typeof props.x == "undefined" || typeof props.y == "undefined") {
+        return null;
+    }
+    const { state } = React.useContext(StartScreenContext);
+    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+    const pos = { x: props.x || 0, y: props.y || 0 };
+    return (
+        <_MenuSelect
+            x={pos.x}
+            y={pos.y}
+            disabled={!!props.disabled}
+            hasFocus={hasFocus(pos.y, pos.x)}
+            label={props.label}
+            description={props.description}
+            value={props.value}
+            values={props.values}
+            callBack={props.callBack}
+        />
     );
 };
 

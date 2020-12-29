@@ -2,14 +2,19 @@ import StorageManager from "../../StorageManager";
 import React from "react";
 import { CookieContext, ICookieContext } from "../../../Context";
 import { useFocusEffect } from "./MenuElement";
-interface RenderCookieBannerProps extends ICookieContext {
-    hasFocus: boolean;
-}
+import { XY } from "../Menu/Tree";
+import StartScreenContext from "../Context";
+import Row from "./Row";
+
+interface RenderCookieBannerProps extends ICookieContext, XY {}
+
 const RenderCookieBanner = (props: RenderCookieBannerProps) => {
+    const { state } = React.useContext(StartScreenContext);
+    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    useFocusEffect({ ...props, x: 0, y: 0 }, inputEl);
+    useFocusEffect({ hasFocus: hasFocus(props.y, props.x) }, inputEl);
     let className = "cookiebanner";
-    if (props.hasFocus) {
+    if (hasFocus(props.y, props.x)) {
         className += " focused";
     }
     return !props.consented ? (
@@ -34,9 +39,12 @@ const RenderCookieBanner = (props: RenderCookieBannerProps) => {
     ) : null;
 };
 
-const CookieBanner = (props: { hasFocus: boolean }) => {
+const CookieBanner = (props: { x?: number; y?: number }) => {
+    if (typeof props.x == "undefined" || typeof props.y == "undefined") {
+        return null;
+    }
     const { consented, setConsented } = React.useContext(CookieContext);
-    return <RenderCookieBanner hasFocus={props.hasFocus} consented={consented} setConsented={setConsented} />;
+    return <RenderCookieBanner x={props.x} y={props.y} consented={consented} setConsented={setConsented} />;
 };
 
 export default CookieBanner;

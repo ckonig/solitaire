@@ -1,16 +1,23 @@
-import { ScreenButton, ScreenRow } from "./Navigation";
-
 import EntropyLevels from "../../../../Model/Game/EntropyLevels";
 import React from "react";
 import StartScreenContext, { StartScreenState } from "../Context";
-import MenuToggle from "./MenuToggle";
-import MenuSelect from "./MenuSelect";
-import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../Menu/Tree";
+import MenuSelect from "./MenuSelect";
+import MenuToggle from "./MenuToggle";
 import CookieBanner from "./CookieBanner";
+import ScreenMainButton from "./ScreenMainButton";
+import ScreenContent from "./ScreenContent";
+import Row from "./Row";
 import { CookieContext } from "../../../Context";
 
-const optimizeOptions = (state: StartScreenState) => [
+interface OptimizeOption {
+    entropy: number;
+    quickDeal: boolean;
+    lines: string[];
+    icon: string;
+}
+
+const optimizeOptions: (state: StartScreenState) => OptimizeOption[] = (state: StartScreenState) => [
     {
         entropy: 2,
         quickDeal: false,
@@ -25,54 +32,26 @@ const optimizeOptions = (state: StartScreenState) => [
     },
 ];
 
-const prependCookieBanner = (consented: boolean, arr: ScreenRow<any>[]) => {
-    if (consented) return arr;
-    else return [new ScreenRow([new ScreenButton<any>(-1, "", [], null, () => {})]), ...arr];
-};
-
-export const getSettingRows = (state: StartScreenState, consented: boolean) => {
-    return prependCookieBanner(consented, [
-        new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option, () => {}))),
-        new ScreenRow([new ScreenButton<any>(-1, "", [], null, () => {}), new ScreenButton<any>(-1, "", [], null, () => {})]),
-        new ScreenRow([new ScreenButton<any>(-1, "", [], null, () => {}), new ScreenButton<any>(-1, "", [], null, () => {})]),
-    ]);
-};
-
-export const getSettingNav = (state: StartScreenState, consented: boolean) => {
-    let result = { x: 0, y: 0 };
-    getSettingRows(state, consented).forEach((row, ri) => {
-        row.buttons.forEach((button, bi) => {
-            if (button.model && settingIsActive(state, button.model.quickDeal)) {
-                result = { x: bi, y: ri };
-            }
-        });
-    });
-    return result;
-};
-const settingIsActive = (state: StartScreenState, val: boolean) => state.quickDeal == val;
-
 const QuickStart = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const { consented } = React.useContext(CookieContext);
-    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+    const isActive = (val: boolean) => state.quickDeal == val;
 
-    const setBaseEntropy = (value: string) => {
+    const setBaseEntropy = (value: string) =>
         setState({ ...state, entropySettings: { ...state.entropySettings, baseEntropy: parseInt(value) } });
-    };
-    const setInteractionEntropy = (value: string) => {
+
+    const setInteractionEntropy = (value: string) =>
         setState({ ...state, entropySettings: { ...state.entropySettings, interactionEntropy: parseInt(value) } });
-    };
-    const setQuickDeal = (value: boolean, pos: XY) => {
-        setState({ ...state, quickDeal: value, screen: pos });
-    };
-    const getClassName = (button: ScreenButton<any>, y: number, x: number) => {
-        const hasFocus = state.focus == "screen" && state.screen.x == x && state.screen.y == y;
-        let name = settingIsActive(state, button.model.quickDeal) ? "active active-0" : "inactive-0";
+
+    const setQuickDeal = (value: boolean, pos: XY) => setState({ ...state, quickDeal: value, screen: pos });
+
+    const getClassName = (button: OptimizeOption, y: number, x: number) => {
+        const hasFocus = state.screen.x == x && state.screen.y == y;
+        let name = isActive(button.quickDeal) ? "active active-0" : "inactive-0";
         name += hasFocus ? " focused" : "";
         return name;
     };
 
-    const offset = consented ? 0 : 1;
+    const { consented } = React.useContext(CookieContext);
 
     return (
         <div className="quickstart startdetails">
@@ -80,43 +59,34 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                 <button onClick={props.closeScreen}>🗙</button>
             </div>
             <div className="title">Various</div>
-            <CookieBanner hasFocus={hasFocus(0, 0)} />
-            <div className="content center">
-                {getSettingRows(state, consented)
-                    .slice(0 + offset, 1 + offset)
-                    .map((row, index) => (
-                        <div key={index} className="row">
-                            {row.buttons.map((button, bi) => (
-                                <ScreenMainButton
-                                    key={button.id}
-                                    x={bi}
-                                    y={index + offset}
-                                    icon={button.icon}
-                                    id={button.id}
-                                    hasFocus={hasFocus(index + offset, bi)}
-                                    className={getClassName(button, index + offset, bi)}
-                                    onClick={() =>
-                                        setState({
-                                            ...state,
-                                            quickDeal: button.model.quickDeal,
-                                            entropySettings: {
-                                                baseEntropy: button.model.entropy,
-                                                interactionEntropy: button.model.entropy,
-                                            },
-                                        })
-                                    }
-                                    lines={button.lines}
-                                />
-                            ))}
-                        </div>
+            <ScreenContent id="settings">
+                <Row skip={consented}>
+                    <CookieBanner />
+                </Row>
+                <Row>
+                    {optimizeOptions(state).map((button, i) => (
+                        <ScreenMainButton
+                            key={i}
+                            icon={button.icon}
+                            id={i}
+                            initialFocus={isActive(button.quickDeal)}
+                            className={(pos) => getClassName(button, pos.x, pos.y)}
+                            lines={button.lines}
+                            onClick={() =>
+                                setState({
+                                    ...state,
+                                    quickDeal: button.quickDeal,
+                                    entropySettings: {
+                                        baseEntropy: button.entropy,
+                                        interactionEntropy: button.entropy,
+                                    },
+                                })
+                            }
+                        />
                     ))}
-
-                <div className="row"></div>
-                <div className="row">
+                </Row>
+                <Row>
                     <MenuSelect
-                        x={0}
-                        y={1 + offset}
-                        hasFocus={hasFocus(1 + offset, 0)}
                         label="Base Entropy"
                         description="How much chaos will the stacks on the board contain by themselves?"
                         value={state.entropySettings.baseEntropy || 0}
@@ -124,38 +94,29 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                         callBack={setBaseEntropy}
                     />
                     <MenuSelect
-                        x={1}
-                        y={1 + offset}
-                        hasFocus={hasFocus(1 + offset, 1)}
                         label="Interaction Entropy"
                         description="How much chaos will each interaction add to a stack on the board?"
                         value={state.entropySettings.interactionEntropy || 0}
                         values={EntropyLevels.map((label, id) => ({ id, label }))}
                         callBack={setInteractionEntropy}
                     />
-                </div>
-                <div className="row">
+                </Row>
+                <Row>
                     <MenuToggle
-                        x={0}
-                        y={2 + offset}
-                        hasFocus={hasFocus(2 + offset, 0)}
                         label="Instant Deal"
                         description="Should the deal animation at the beginning of the game be skipped?"
                         value={state.quickDeal}
                         callBack={setQuickDeal}
                     />
                     <MenuToggle
-                        x={1}
-                        y={2 + offset}
                         disabled={true}
-                        hasFocus={hasFocus(2 + offset, 1)}
                         label="Auto Deal"
                         description="Should the game draw one card from the stock every 5 seconds?"
                         value={false}
                         callBack={() => {}}
                     />
-                </div>
-            </div>
+                </Row>
+            </ScreenContent>
         </div>
     );
 };
