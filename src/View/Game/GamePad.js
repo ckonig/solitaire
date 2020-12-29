@@ -42,11 +42,15 @@ const GamePad = (props) => {
         console.debug("disconnected", e);
     };
 
-    //@todo pick ID of gamepad dynamically
+    //@todo pick ID of gamepad dynamically?
     //allow switching PS4 and XBOX layouts
-    //also support splitscreen battle mode
     return (
-        <ReactGamePad gamepadIndex={props.gamepadIndex} onButtonDown={buttonHandler} onConnect={connectHandler} onDisconnect={disconnectHandler}>
+        <ReactGamePad
+            gamepadIndex={props.gamepadIndex}
+            onButtonDown={buttonHandler}
+            onConnect={connectHandler}
+            onDisconnect={disconnectHandler}
+        >
             <span></span>
         </ReactGamePad>
     );
