@@ -24,15 +24,17 @@ const optimizeOptions = (state: StartScreenState) => [
         icon: "📱",
     },
 ];
+
 const prependCookieBanner = (consented: boolean, arr: ScreenRow<any>[]) => {
     if (consented) return arr;
-    else return [new ScreenRow([new ScreenButton<any>(-1, "", [], null)]), ...arr];
+    else return [new ScreenRow([new ScreenButton<any>(-1, "", [], null, () => {})]), ...arr];
 };
+
 export const getSettingRows = (state: StartScreenState, consented: boolean) => {
     return prependCookieBanner(consented, [
-        new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option))),
-        new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
-        new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
+        new ScreenRow(optimizeOptions(state).map((option) => new ScreenButton(option.entropy, option.icon, option.lines, option, () => {}))),
+        new ScreenRow([new ScreenButton<any>(-1, "", [], null, () => {}), new ScreenButton<any>(-1, "", [], null, () => {})]),
+        new ScreenRow([new ScreenButton<any>(-1, "", [], null, () => {}), new ScreenButton<any>(-1, "", [], null, () => {})]),
     ]);
 };
 

@@ -1,41 +1,11 @@
-import { ScreenButton, ScreenRow } from "./Navigation";
-
 import RatingPresets from "../RatingOptions";
 import { RatingSettings } from "../../../../Common";
 import React from "react";
-import StartScreenContext, { StartScreenState } from "../Context";
-import MenuToggle from "./MenuToggle";
-import ScreenMainButton from "./ScreenMainButton";
+import StartScreenContext from "../Context";
 import { XY } from "../Menu/Tree";
-import CookieBanner from "./CookieBanner";
+import { ScreenNavigator } from "./Screen";
 import { CookieContext } from "../../../Context";
-
-const prependCookieBanner = (consented: boolean, arr: ScreenRow<any>[]) => {
-    if (consented) return arr;
-    else return [new ScreenRow([new ScreenButton<any>(-1, "", [], null)]), ...arr];
-};
-
-export const getRatingRows = (consented: boolean) =>
-    prependCookieBanner(consented, [
-        new ScreenRow(RatingPresets.all.map((preset) => new ScreenButton(preset.id, preset.icon, [preset.label], preset))),
-        //this can be done better
-        new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
-        new ScreenRow([new ScreenButton<any>(-1, "", [], null), new ScreenButton<any>(-1, "", [], null)]),
-    ]);
-export const getRatingNav = (state: StartScreenState, consented: boolean) => {
-    let result = { x: 0, y: 0 };
-    getRatingRows(consented).forEach((row, ri) => {
-        row.buttons.forEach((button, bi) => {
-            if (ratingIsActive(state, button.id)) {
-                result = { x: bi, y: ri };
-            }
-        });
-    });
-    return result;
-};
-const ratingIsActive = (state: StartScreenState, id: number) => state.ratingPreset == id;
-const ratingHasFocus = (state: StartScreenState, y: number, x: number) =>
-    state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+import { _CookieBanner, _MenuToggle, _Row, _Screen, _ScreenMainButton } from "./_Components";
 
 const Rating = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
@@ -43,9 +13,13 @@ const Rating = (props: { closeScreen: () => void }) => {
 
     const applyPreset = (id: number) => setState({ ...state, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
 
+    const isActive = (id: number) => state.ratingPreset == id;
+
+    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+
     const getButtonClass = (id: number, y: number, x: number) => {
-        let name = ratingIsActive(state, id) ? `active active-${id}` : `inactive-${id}`;
-        name += ratingHasFocus(state, y, x) ? " focused" : "";
+        let name = isActive(id) ? `active active-${id}` : `inactive-${id}`;
+        name += hasFocus(y, x) ? " focused" : "";
         return name;
     };
 
@@ -56,25 +30,27 @@ const Rating = (props: { closeScreen: () => void }) => {
         next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
         setState(next);
     };
+
     const setMissPenalty = (value: boolean, pos: XY) =>
         customizeRating((r) => {
             r.missPenalty = value;
         }, pos);
+
     const setTimeRating = (value: boolean, pos: XY) =>
         customizeRating((r) => {
             r.timedMode = value;
         }, pos);
+
     const setUndoPenalty = (value: boolean, pos: XY) =>
         customizeRating((r) => {
             r.undoPenalty = value;
         }, pos);
+
     const setHintPenalty = (value: boolean, pos: XY) => {
         customizeRating((r) => {
             r.hintPenalty = value;
         }, pos);
     };
-
-    const offset = consented ? 0 : 1;
 
     return (
         <div className="rating startdetails">
@@ -82,71 +58,57 @@ const Rating = (props: { closeScreen: () => void }) => {
                 <button onClick={props.closeScreen}>🗙</button>
             </div>
             <div className="title">Penalties</div>
-
-            <CookieBanner hasFocus={ratingHasFocus(state, 0, 0)} />
-
-            <div className="content center">
-                {getRatingRows(consented)
-                    .slice(0 + offset, 1 + offset)
-                    .map((row, ri) => (
-                        <div key={ri} className="row">
-                            {row.buttons.map((preset, bi) => (
-                                <ScreenMainButton
-                                    key={preset.id}
-                                    x={bi}
-                                    y={ri}
-                                    icon={preset.icon}
-                                    id={preset.id}
-                                    hasFocus={ratingHasFocus(state, ri + offset, bi)}
-                                    className={getButtonClass(preset.id, ri + offset, bi)}
-                                    onClick={() => applyPreset(preset.id)}
-                                    lines={[preset.lines[0]]}
-                                />
-                            ))}
-                        </div>
+            <_Screen id="penalties" navigator={new ScreenNavigator("rating")}>
+                <_Row>
+                    <_CookieBanner hasFocus={(pos: XY) => hasFocus(pos.y, pos.x)} />
+                </_Row>
+                <_Row>
+                    {RatingPresets.all.map((preset) => (
+                        <_ScreenMainButton
+                            key={preset.id}
+                            icon={preset.icon}
+                            id={preset.id}
+                            initialFocus={isActive(preset.id)}
+                            hasFocus={(pos: XY) => hasFocus(pos.y, pos.x)}
+                            className={(pos: XY) => getButtonClass(preset.id, pos.y, pos.x)}
+                            onClick={() => applyPreset(preset.id)}
+                            lines={[preset.label]}
+                        />
                     ))}
-                <div className="row"></div>
-                <div className="row">
-                    <MenuToggle
-                        x={0}
-                        y={1 + offset}
-                        hasFocus={ratingHasFocus(state, 1 + offset, 0)}
+                </_Row>
+                <_Row>
+                    <_MenuToggle
+                        hasFocus={(pos: XY) => hasFocus(pos.y, pos.x)}
                         label="Undo Penalty"
                         description="Undo is enabled, but excessive use will be painful. This penalty starts with 2 and increases exponentially."
                         value={!!state.ratingSettings.undoPenalty}
                         callBack={setUndoPenalty}
                     />
-                    <MenuToggle
-                        x={1}
-                        y={1 + offset}
-                        hasFocus={ratingHasFocus(state, 1 + offset, 1)}
+                    <_MenuToggle
+                        hasFocus={(pos: XY) => hasFocus(pos.y, pos.x)}
                         label="Time Penalty"
                         description="Fast players are rewarded with a time bonus, slow players will be punished."
                         value={!!state.ratingSettings.timedMode}
                         callBack={setTimeRating}
                     />
-                </div>
-                <div className="row">
-                    <MenuToggle
-                        x={0}
-                        y={2 + offset}
-                        hasFocus={ratingHasFocus(state, 2 + offset, 0)}
+                </_Row>
+                <_Row>
+                    <_MenuToggle
+                        hasFocus={(pos: XY) => hasFocus(pos.y, pos.x)}
                         label="Hint Penalty"
                         description="Each manual hint will reduce the number of points by 10. This setting disables automatic suggestions. "
                         value={!!state.ratingSettings.hintPenalty}
                         callBack={setHintPenalty}
                     />
-                    <MenuToggle
-                        x={1}
-                        y={2 + offset}
-                        hasFocus={ratingHasFocus(state, 2 + offset, 1)}
+                    <_MenuToggle
+                        hasFocus={(pos: XY) => hasFocus(pos.y, pos.x)}
                         label="Miss Penalty"
                         description="Be careful where you click, as each invalid action will lead to a penalty of 10 points."
                         value={!!state.ratingSettings.missPenalty}
                         callBack={setMissPenalty}
                     />
-                </div>
-            </div>
+                </_Row>
+            </_Screen>
         </div>
     );
 };

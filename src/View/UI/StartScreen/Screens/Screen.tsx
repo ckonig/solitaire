@@ -1,7 +1,7 @@
 import Controls from "./Controls";
 import Difficulty, { getDifficultyNav, getDifficultyRows } from "./Difficulty";
 import QuickStart, { getSettingNav, getSettingRows } from "./QuickStart";
-import Rating, { getRatingRows, getRatingNav } from "./Rating";
+import Rating from "./Rating";
 import React from "react";
 import { NavHandler, XY } from "../Menu/Tree";
 import StartScreenContext, { StartScreenState } from "../Context";
@@ -11,25 +11,12 @@ import { CookieContext } from "../../../Context";
 
 export class ScreenNavigator implements NavHandler {
     screen: string;
-    state: StartScreenState;
-    consented: boolean;
-    constructor(screen: string, state: StartScreenState, consented: boolean) {
+    rows: any[];
+    constructor(screen: string, rows?: any[]) {
         this.screen = screen;
-        this.state = state;
-        this.consented = consented;
+        this.rows = typeof rows == "undefined" ? [] : rows;
     }
-    getRows = () => {
-        if (this.screen == "rating") {
-            return getRatingRows(this.consented);
-        }
-        if (this.screen == "settings") {
-            return getSettingRows(this.state, this.consented);
-        }
-        if (this.screen == "difficulty") {
-            return getDifficultyRows(this.consented);
-        }
-        return [];
-    };
+    getRows = () => this.rows;
     getRow = (x: number) => this.getRows()[x];
     goToRow = (pos: XY) => {
         const rows = this.getRows();
@@ -73,10 +60,9 @@ export class ScreenNavigator implements NavHandler {
         activeElement && activeElement.click();
     };
 }
-const NavWrapper = (props: { screen: string }) => {
+export const NavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
+    const { navigator } = props;
     const { state, setState } = React.useContext(StartScreenContext);
-    const { consented } = React.useContext(CookieContext);
-    const navigator = new ScreenNavigator(props.screen, state, consented);
     const assignState = (result: XY) => {
         if (state.focus == "screen") {
             setState({ ...state, screen: result });
@@ -117,8 +103,6 @@ const NavWrapper = (props: { screen: string }) => {
 };
 export const getScreenStartPos = (screen: string, state: StartScreenState, consented: boolean) => {
     switch (screen) {
-        case "rating":
-            return getRatingNav(state, consented);
         case "difficulty":
             return getDifficultyNav(state, consented);
         case "settings":
@@ -129,6 +113,7 @@ export const getScreenStartPos = (screen: string, state: StartScreenState, conse
 };
 const Screen = (props: { screen: string }) => {
     const { state, setState } = React.useContext(StartScreenContext);
+    const { consented } = React.useContext(CookieContext);
     const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
     const getScreen = () => {
         switch (props.screen) {
@@ -142,24 +127,28 @@ const Screen = (props: { screen: string }) => {
                 return (
                     <>
                         <Difficulty closeScreen={closeScreen} />
+                        <NavWrapper navigator={new ScreenNavigator(props.screen, getDifficultyRows(consented))} screen={props.screen} />
                     </>
                 );
             case "settings":
                 return (
                     <>
                         <QuickStart closeScreen={closeScreen} />
+                        <NavWrapper navigator={new ScreenNavigator(props.screen, getSettingRows(state, consented))} screen={props.screen} />
                     </>
                 );
             case "controls0":
                 return (
                     <>
                         <Controls player={0} />
+                        <NavWrapper navigator={new ScreenNavigator(props.screen)} screen={props.screen} />
                     </>
                 );
             case "controls1":
                 return (
                     <>
                         <Controls player={1} />
+                        <NavWrapper navigator={new ScreenNavigator(props.screen)} screen={props.screen} />
                     </>
                 );
             default:
@@ -170,7 +159,6 @@ const Screen = (props: { screen: string }) => {
     return props.screen ? (
         <div className="startscreen-layout">
             <div className="startscreen-jail">{getScreen()}</div>
-            <NavWrapper screen={props.screen} />
         </div>
     ) : null;
 };

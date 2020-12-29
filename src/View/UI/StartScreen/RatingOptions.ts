@@ -1,5 +1,13 @@
+import { RatingSettings } from "../../../Common";
+
+export interface RatingPreset {
+    id:number;
+    icon: string,
+    label: string;
+    settings: RatingSettings;
+}
 export default class RatingPresets {
-    static all = [
+    static all: RatingPreset[] = [
         {
             id: 0,
             icon: "🌴",

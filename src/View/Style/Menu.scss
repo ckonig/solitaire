@@ -268,7 +268,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 }
 
 
-.cookiebanner {
+.startdetails button.cookiebanner {
     background-color: rgba(0, 0, 0, 0.95);
     width: 90%;
     border-style: solid;
@@ -280,7 +280,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     padding-bottom: 1%;
 }
 
-.cookiebanner.focused {
+.startdetails button.cookiebanner.focused {
     border-color: blue;
     outline: none;
 }
