@@ -6,29 +6,21 @@ import GamePad from "../../Game/GamePad";
 import Keyboard from "../../Game/Keyboard";
 import MenuButton from "../Menu/MenuButton";
 import MenuTitle from "../Menu/MenuTitle";
-import StartScreenContext, {
-    defaultStartScreenState,
-    NavigationContext,
-    NavigationProvider,
-    NavigationState,
-    Provider,
-    StartScreenState,
-} from "./Context";
+import StartScreenContext, { NavigationContext } from "./Context";
 import React from "react";
-import Screen from "./Screens/Screen";
 import VerticalMenu from "../Menu/VerticalMenu";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 import StorageManager from "../StorageManager";
-import { CookieContext, CookieContextProvider } from "../../Context";
+import { CookieContext } from "../../Context";
 
-export class StartMenuPageButton extends MenuActionButton {
+class StartMenuPageButton extends MenuActionButton {
     constructor(id: string, icon: string, title: string, screen: string, onClick: (pos: XY) => void, onFocus: (pos: XY) => void) {
         super(id, icon, title, id == screen, onClick, onFocus);
         this.active = id == screen;
     }
 }
 
-export class MenuStartButton extends MenuLeafButton {
+class MenuStartButton extends MenuLeafButton {
     constructor(title: string, icon: string, start: () => void, onFocus: (pos: XY) => void) {
         super("start", icon, title, start, onFocus);
     }
@@ -63,7 +55,7 @@ class MenuConsentButton extends MenuActionButton {
     }
 }
 
-const _StartMenu = (props: { start: (settings: any) => void }) => {
+const StartMenu = (props: { start: (settings: any) => void }) => {
     const start = (gameMode: GameMode) => {
         const settings = {
             ...DifficultyOptions[state.difficultySettings].settings,
@@ -237,58 +229,9 @@ const _StartMenu = (props: { start: (settings: any) => void }) => {
                 <MenuTitle label="♦ Solitaire" />
                 <ButtonRenderer button={buttons} x={0} y={0} menuX={navigation.menu.x} />
             </VerticalMenu>
-            <Screen screen={navigation.screeen} />
             {navigation.focus == "menu" && <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
             {navigation.focus == "menu" && <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
         </>
-    );
-};
-
-const StartMenu = (props: { start: (settings: any) => void }) => {
-    const storage = new StorageManager();
-    const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
-    const previous = storage.getPreviousState();
-    const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
-    const [navigation, setNavigation] = React.useState<NavigationState>({
-        menu: {
-            x: 0,
-            y: 0,
-        },
-        screen: {
-            x: 0,
-            y: 0,
-        },
-        focus: "menu",
-        mainMenu: "",
-        screeen: "",
-    });
-
-    return (
-        <Provider
-            value={{
-                state,
-                setState: (s) => {
-                    setState(s);
-                    storage.store(s);
-                },
-            }}
-        >
-            <NavigationProvider
-                value={{
-                    navigation,
-                    setNavigation,
-                }}
-            >
-                <CookieContextProvider
-                    value={{
-                        consented,
-                        setConsented,
-                    }}
-                >
-                    <_StartMenu start={props.start} />
-                </CookieContextProvider>
-            </NavigationProvider>
-        </Provider>
     );
 };
 export default StartMenu;

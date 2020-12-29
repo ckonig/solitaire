@@ -1,7 +1,7 @@
 import React from "react";
 import "./16to9.css";
 
-export default class AspectRation16to9 extends React.Component<any, { width: number; height: number }> {
+export default class AspectRatio16to9 extends React.Component<any, { width: number; height: number }> {
     constructor(props: any) {
         super(props);
         this.state = { width: 0, height: 0 };

@@ -7,8 +7,8 @@ import Deck from "./Model/Deck/Deck";
 import GameModes from "./GameModes";
 import { PauseProvider } from "./View/PauseContext";
 import React from "react";
-import StartMenu from "./View/UI/StartScreen/StartMenu";
-import AspectRation16to9 from "./View/AspectRatio/AspectRation16to9";
+import AspectRatio16to9 from "./View/AspectRatio/AspectRatio16to9";
+import Home from "./View/UI/StartScreen/Home";
 
 const App = () => {
     const [started, setStarted] = React.useState<number>(0);
@@ -51,9 +51,9 @@ const App = () => {
     }
 
     return (
-        <AspectRation16to9>
-            <StartMenu start={start} />
-        </AspectRation16to9>
+        <AspectRatio16to9>
+            <Home start={start} />
+        </AspectRatio16to9>
     );
 };
 export default App;
