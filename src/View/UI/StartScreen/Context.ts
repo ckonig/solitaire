@@ -8,7 +8,7 @@ export interface IStartScreenContext {
     state: StartScreenState;
     setState: (s: StartScreenState) => void;
 }
-export const defaultStartScreenState= {
+export const defaultStartScreenState = {
     ratingSettings: { ...RatingPresets.all[1].settings },
     difficultySettings: 1,
     ratingPreset: 1,
@@ -29,7 +29,7 @@ export const defaultStartScreenState= {
     screeen: "",
     mainMenu: "",
     suggestionMode: SuggestionModes.REGULAR,
-}
+};
 
 export interface StartScreenState {
     ratingSettings: RatingSettings;
@@ -37,6 +37,10 @@ export interface StartScreenState {
     ratingPreset: number;
     quickDeal: boolean;
     entropySettings: EntropySettings;
+    suggestionMode: string;
+}
+
+export interface NavigationState {
     menu: {
         x: number;
         y: number;
@@ -45,19 +49,17 @@ export interface StartScreenState {
         x: number;
         y: number;
     };
-    focus: string,
-    mainMenu: string,
-    screeen: string,
-    suggestionMode: string,
+    focus: string;
+    mainMenu: string;
+    screeen: string;
+}
+interface INavigationContext {
+    navigation: NavigationState;
+    setNavigation: (n: NavigationState) => void;
 }
 
-const StartScreenContext = React.createContext<IStartScreenContext>({
-    state: {
-        difficultySettings: 0,
-        ratingPreset: 0,
-        ratingSettings: {},
-        entropySettings: {},
-        quickDeal: false,
+export const NavigationContext = React.createContext<INavigationContext>({
+    navigation: {
         menu: {
             x: 0,
             y: 0,
@@ -69,10 +71,23 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         focus: "menu",
         mainMenu: "",
         screeen: "",
+    },
+    setNavigation: () => {},
+});
+
+const StartScreenContext = React.createContext<IStartScreenContext>({
+    state: {
+        difficultySettings: 0,
+        ratingPreset: 0,
+        ratingSettings: {},
+        entropySettings: {},
+        quickDeal: false,
+
         suggestionMode: SuggestionModes.REGULAR,
     },
     setState: () => {},
 });
 
 export const Provider = StartScreenContext.Provider;
+export const NavigationProvider = NavigationContext.Provider;
 export default StartScreenContext;

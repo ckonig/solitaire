@@ -6,13 +6,20 @@ import GamePad from "../../Game/GamePad";
 import Keyboard from "../../Game/Keyboard";
 import MenuButton from "../Menu/MenuButton";
 import MenuTitle from "../Menu/MenuTitle";
-import { defaultStartScreenState, Provider, StartScreenState } from "./Context";
+import StartScreenContext, {
+    defaultStartScreenState,
+    NavigationContext,
+    NavigationProvider,
+    NavigationState,
+    Provider,
+    StartScreenState,
+} from "./Context";
 import React from "react";
 import Screen from "./Screens/Screen";
 import VerticalMenu from "../Menu/VerticalMenu";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 import StorageManager from "../StorageManager";
-import { CookieContextProvider } from "../../Context";
+import { CookieContext, CookieContextProvider } from "../../Context";
 
 export class StartMenuPageButton extends MenuActionButton {
     constructor(id: string, icon: string, title: string, screen: string, onClick: (pos: XY) => void, onFocus: (pos: XY) => void) {
@@ -29,14 +36,7 @@ export class MenuStartButton extends MenuLeafButton {
 
 class MenuConsentButton extends MenuActionButton {
     storage: StorageManager;
-    constructor(
-        id: string,
-        screen: string,
-        consented: boolean,
-        setConsented: (v: boolean) => void,
-        onFocus: (pos: XY) => void,
-        storage: StorageManager
-    ) {
+    constructor(id: string, consented: boolean, setConsented: (v: boolean) => void, onFocus: (pos: XY) => void, storage: StorageManager) {
         super(
             id,
             "🍪",
@@ -63,8 +63,7 @@ class MenuConsentButton extends MenuActionButton {
     }
 }
 
-const StartMenu = (props: { start: (settings: any) => void }) => {
-    const storage = new StorageManager();
+const _StartMenu = (props: { start: (settings: any) => void }) => {
     const start = (gameMode: GameMode) => {
         const settings = {
             ...DifficultyOptions[state.difficultySettings].settings,
@@ -77,25 +76,21 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
         };
         props.start(settings);
     };
-
-    const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
-
-    const previous = storage.getPreviousState();
-    const [state, setState] = React.useState<StartScreenState>(
-        previous ? { ...previous, screeen: "", mainMenu: "", menu: { x: 0, y: 0 } } : defaultStartScreenState
-    );
-
-    const [buttons, setButtons] = React.useState(new MenuRootButton([]));
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { state } = React.useContext(StartScreenContext);
+    const { consented, setConsented } = React.useContext(CookieContext);
 
     const assignState = (result: XY) => {
-        if (state.focus == "menu") {
-            setState({ ...state, menu: result });
+        if (navigation.focus == "menu") {
+            setNavigation({ ...navigation, menu: result });
         } else {
             throw "Invalid navigation action";
         }
     };
 
-    const getPos = () => (state.focus == "menu" ? state.menu : state.screen);
+    const [buttons, setButtons] = React.useState(new MenuRootButton([]));
+
+    const getPos = () => (navigation.focus == "menu" ? navigation.menu : navigation.screen);
 
     const onUp = () => assignState(buttons.moveUp(getPos().x, getPos().y));
 
@@ -108,21 +103,22 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
     const onAction = () => buttons.action(getPos());
 
     const switchToScreen = (s: string, pos: XY) =>
-        setState({ ...state, focus: "screen", screeen: s, screen: { x: -1, y: -1 }, menu: { ...pos } });
+        setNavigation({ ...navigation, focus: "screen", screeen: s, screen: { x: -1, y: -1 }, menu: { ...pos } });
 
-    const switchToMenu = (menu: string, pos: XY) => setState({ ...state, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
+    const switchToMenu = (menu: string, pos: XY) =>
+        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
 
     React.useEffect(() => {
         const toggleScreen = (s: string, pos: XY) => {
-            if (state.screeen !== s) {
+            if (navigation.screeen !== s) {
                 switchToScreen(s, pos);
             } else {
-                switchToMenu(state.mainMenu, pos);
+                switchToMenu(navigation.mainMenu, pos);
             }
         };
 
         const toggleMainMenu = (val: string, pos: XY) => {
-            if (state.mainMenu !== val) {
+            if (navigation.mainMenu !== val) {
                 switchToMenu(val, pos);
             } else {
                 switchToMenu("", pos);
@@ -130,7 +126,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
         };
 
         const onfocus = (pos: XY) => {
-            setState({ ...state, menu: pos });
+            setNavigation({ ...navigation, menu: pos });
         };
 
         setButtons(
@@ -143,13 +139,13 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                     "Versus",
                     (pos: XY) => toggleMainMenu("versus", pos),
                     onfocus,
-                    state.mainMenu == "versus",
+                    navigation.mainMenu == "versus",
                     [
                         new StartMenuPageButton(
                             "controls0",
                             "🎮",
                             "Player 1",
-                            state.screeen,
+                            navigation.screeen,
                             (pos: XY) => toggleScreen("controls0", pos),
                             onfocus
                         ),
@@ -157,7 +153,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                             "controls1",
                             "🎮",
                             "Player 2",
-                            state.screeen,
+                            navigation.screeen,
                             (pos: XY) => toggleScreen("controls1", pos),
                             onfocus
                         ),
@@ -171,13 +167,13 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                     "Options",
                     (pos: XY) => toggleMainMenu("custom", pos),
                     onfocus,
-                    state.mainMenu == "custom",
+                    navigation.mainMenu == "custom",
                     [
                         new StartMenuPageButton(
                             "difficulty",
                             "💪",
                             "Difficulty",
-                            state.screeen,
+                            navigation.screeen,
                             (pos: XY) => toggleScreen("difficulty", pos),
                             onfocus
                         ),
@@ -185,7 +181,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                             "rating",
                             "⚖️",
                             "Penalties",
-                            state.screeen,
+                            navigation.screeen,
                             (pos: XY) => toggleScreen("rating", pos),
                             onfocus
                         ),
@@ -193,16 +189,16 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                             "settings",
                             "🧰",
                             "Various",
-                            state.screeen,
+                            navigation.screeen,
                             (pos: XY) => toggleScreen("settings", pos),
                             onfocus
                         ),
                     ]
                 ),
-                new MenuConsentButton("consent", "consent", consented, setConsented, onfocus, storage),
+                new MenuConsentButton("consent", consented, setConsented, onfocus, new StorageManager()),
             ])
         );
-    }, [state, state.menu.x, state.menu.y, state.screeen, state.mainMenu, consented]);
+    }, [state, navigation.menu.x, navigation.menu.y, navigation.screeen, navigation.mainMenu, consented]);
 
     const ButtonRenderer = (props: any) => {
         const c = props.button;
@@ -218,9 +214,9 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                         icon={c.icon}
                         title={c.title}
                         toggled={c.toggled}
-                        menuX={state.menu.x}
-                        menuY={state.menu.y}
-                        menuFocus={state.focus}
+                        menuX={navigation.menu.x}
+                        menuY={navigation.menu.y}
+                        menuFocus={navigation.focus}
                     ></MenuButton>
                 )}
                 {c.isRoot &&
@@ -236,6 +232,38 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
     };
 
     return (
+        <>
+            <VerticalMenu>
+                <MenuTitle label="♦ Solitaire" />
+                <ButtonRenderer button={buttons} x={0} y={0} menuX={navigation.menu.x} />
+            </VerticalMenu>
+            <Screen screen={navigation.screeen} />
+            {navigation.focus == "menu" && <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
+            {navigation.focus == "menu" && <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
+        </>
+    );
+};
+
+const StartMenu = (props: { start: (settings: any) => void }) => {
+    const storage = new StorageManager();
+    const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
+    const previous = storage.getPreviousState();
+    const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
+    const [navigation, setNavigation] = React.useState<NavigationState>({
+        menu: {
+            x: 0,
+            y: 0,
+        },
+        screen: {
+            x: 0,
+            y: 0,
+        },
+        focus: "menu",
+        mainMenu: "",
+        screeen: "",
+    });
+
+    return (
         <Provider
             value={{
                 state,
@@ -245,20 +273,21 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                 },
             }}
         >
-            <CookieContextProvider
+            <NavigationProvider
                 value={{
-                    consented,
-                    setConsented,
+                    navigation,
+                    setNavigation,
                 }}
             >
-                <VerticalMenu>
-                    <MenuTitle label="♦ Solitaire" />
-                    <ButtonRenderer button={buttons} x={0} y={0} menuX={state.menu.x} />
-                </VerticalMenu>
-                <Screen screen={state.screeen} />
-                {state.focus == "menu" && <Keyboard onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
-                {state.focus == "menu" && <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} />}
-            </CookieContextProvider>
+                <CookieContextProvider
+                    value={{
+                        consented,
+                        setConsented,
+                    }}
+                >
+                    <_StartMenu start={props.start} />
+                </CookieContextProvider>
+            </NavigationProvider>
         </Provider>
     );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import StartScreenContext from "../Context";
+import { NavigationContext } from "../Context";
 import { XY } from "../Menu/Tree";
 
 interface ScreenMainButtonProps {
@@ -19,8 +19,8 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
 
     const pos = { x: props.x, y: props.y };
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    const { state, setState } = React.useContext(StartScreenContext);
-    const hasFocus = state.focus == "screen" && state.screen.x == props.x && state.screen.y == props.y;
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const hasFocus = navigation.focus == "screen" && navigation.screen.x == props.x && navigation.screen.y == props.y;
     const [isClicking, setClicking] = React.useState<boolean>(false);
     React.useEffect(() => {
         if (hasFocus && !isClicking && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
@@ -35,8 +35,8 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
             inputEl &&
             inputEl.current &&
             inputEl.current !== document.activeElement &&
-            state.screen.x == -1 &&
-            state.screen.y == -1
+            navigation.screen.x == -1 &&
+            navigation.screen.y == -1
         ) {
             setClicking(true);
             inputEl.current.focus();
@@ -44,11 +44,14 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
     }, [inputEl]);
     const focus = () => {
         if (!hasFocus && !isClicking) {
-            setState({ ...state, screen: { x: props.x || 0, y: props.y || 0 } });
+            setNavigation({ ...navigation, screen: { x: props.x || 0, y: props.y || 0 } });
             setClicking(false);
         }
     };
-
+    const click = () => {
+        props.onClick();
+        setNavigation({ ...navigation, screen: { x: props.x || 0, y: props.y || 0 } });
+    };
     return (
         <button
             onFocus={focus}
@@ -56,7 +59,7 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
             key={props.id}
             className={props.className(pos)}
             onMouseDown={() => setClicking(true)}
-            onClick={props.onClick}
+            onClick={click}
         >
             {props.icon}
             {props.lines.map((line: string, index: number) => (

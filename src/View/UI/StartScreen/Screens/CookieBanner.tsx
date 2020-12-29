@@ -3,14 +3,13 @@ import React from "react";
 import { CookieContext, ICookieContext } from "../../../Context";
 import { useFocusEffect } from "./MenuElement";
 import { XY } from "../Menu/Tree";
-import StartScreenContext from "../Context";
-import Row from "./Row";
+import {NavigationContext} from "../Context";
 
 interface RenderCookieBannerProps extends ICookieContext, XY {}
 
 const RenderCookieBanner = (props: RenderCookieBannerProps) => {
-    const { state } = React.useContext(StartScreenContext);
-    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+    const { navigation } = React.useContext(NavigationContext);
+    const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect({ hasFocus: hasFocus(props.y, props.x) }, inputEl);
     let className = "cookiebanner";

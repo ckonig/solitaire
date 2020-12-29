@@ -1,7 +1,7 @@
 import Toggle from "react-toggle";
 import "../../../Style/react-toggle.css";
 import React from "react";
-import StartScreenContext from "../Context";
+import { NavigationContext } from "../Context";
 import { XY } from "../Menu/Tree";
 import { getMenuClassName, useFocusEffect } from "./MenuElement";
 
@@ -27,7 +27,7 @@ interface _MenuToggleProps extends StaticMenuToggleProps {
 const _MenuToggle = (props: ToggleProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
-    const { state, setState } = React.useContext(StartScreenContext);
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
     return (
         <div className={"togglecontainer" + getMenuClassName(props)}>
             <div className="title">{props.label}</div>
@@ -38,7 +38,7 @@ const _MenuToggle = (props: ToggleProps) => {
                     autoFocus={props.hasFocus}
                     onFocus={() => {
                         if (!props.hasFocus) {
-                            setState({ ...state, screen: { x: props.x, y: props.y } });
+                            setNavigation({ ...navigation, screen: { x: props.x, y: props.y } });
                         }
                     }}
                     checked={props.value}
@@ -54,8 +54,8 @@ const MenuToggle = (props: _MenuToggleProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
         return null;
     }
-    const { state } = React.useContext(StartScreenContext);
-    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+    const { navigation } = React.useContext(NavigationContext);
+    const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (
         <_MenuToggle

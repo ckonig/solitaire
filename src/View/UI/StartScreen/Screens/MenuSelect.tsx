@@ -1,5 +1,5 @@
 import React from "react";
-import StartScreenContext from "../Context";
+import { NavigationContext } from "../Context";
 import { getMenuClassName, useFocusEffect } from "./MenuElement";
 import { XY } from "../Menu/Tree";
 
@@ -27,7 +27,7 @@ interface _MenuSelectProps extends StaticSelectProps {
 const _MenuSelect = (props: SelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
-    const { state, setState } = React.useContext(StartScreenContext);
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
     const increment = () =>
         props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString(), { x: props.x, y: props.y });
 
@@ -43,7 +43,7 @@ const _MenuSelect = (props: SelectProps) => {
                     disabled={!!props.disabled}
                     onFocus={() => {
                         if (!props.hasFocus) {
-                            setState({ ...state, screen: { x: props.x, y: props.y } });
+                            setNavigation({ ...navigation, screen: { x: props.x, y: props.y } });
                         }
                     }}
                 >
@@ -59,8 +59,8 @@ const MenuSelect = (props: _MenuSelectProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
         return null;
     }
-    const { state } = React.useContext(StartScreenContext);
-    const hasFocus = (y: number, x: number) => state.focus == "screen" && state.screen.x == x && state.screen.y == y;
+    const { navigation } = React.useContext(NavigationContext);
+    const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (
         <_MenuSelect

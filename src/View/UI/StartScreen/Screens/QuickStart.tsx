@@ -1,6 +1,6 @@
 import EntropyLevels from "../../../../Model/Game/EntropyLevels";
 import React from "react";
-import StartScreenContext, { StartScreenState } from "../Context";
+import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
 import { XY } from "../Menu/Tree";
 import MenuSelect from "./MenuSelect";
 import MenuToggle from "./MenuToggle";
@@ -34,6 +34,7 @@ const optimizeOptions: (state: StartScreenState) => OptimizeOption[] = (state: S
 
 const QuickStart = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
     const isActive = (val: boolean) => state.quickDeal == val;
 
     const setBaseEntropy = (value: string) =>
@@ -42,10 +43,13 @@ const QuickStart = (props: { closeScreen: () => void }) => {
     const setInteractionEntropy = (value: string) =>
         setState({ ...state, entropySettings: { ...state.entropySettings, interactionEntropy: parseInt(value) } });
 
-    const setQuickDeal = (value: boolean, pos: XY) => setState({ ...state, quickDeal: value, screen: pos });
+    const setQuickDeal = (value: boolean, pos: XY) => {
+        setState({ ...state, quickDeal: value });
+        setNavigation({ ...navigation, screen: pos });
+    };
 
     const getClassName = (button: OptimizeOption, y: number, x: number) => {
-        const hasFocus = state.screen.x == x && state.screen.y == y;
+        const hasFocus = navigation.screen.x == x && navigation.screen.y == y;
         let name = isActive(button.quickDeal) ? "active active-0" : "inactive-0";
         name += hasFocus ? " focused" : "";
         return name;

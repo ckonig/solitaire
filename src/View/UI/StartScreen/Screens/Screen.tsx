@@ -3,11 +3,13 @@ import Difficulty from "./Difficulty";
 import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import React from "react";
-import StartScreenContext from "../Context";
+import { NavigationContext } from "../Context";
 
 const Screen = (props: { screen: string }) => {
-    const { state, setState } = React.useContext(StartScreenContext);
-    const closeScreen = () => setState({ ...state, focus: "menu", screeen: "", mainMenu: state.mainMenu, menu: { ...state.menu } });
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const closeScreen = () => {
+        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: { ...navigation.menu } });
+    };
     const Wrap = (props: { children: any }) => (
         <div className="startscreen-layout">
             <div className="startscreen-jail">{props.children}</div>

@@ -1,7 +1,7 @@
 import RatingPresets from "../RatingOptions";
 import { RatingSettings } from "../../../../Common";
 import React from "react";
-import StartScreenContext from "../Context";
+import StartScreenContext, { NavigationContext } from "../Context";
 import { XY } from "../Menu/Tree";
 import MenuToggle from "./MenuToggle";
 import CookieBanner from "./CookieBanner";
@@ -12,22 +12,23 @@ import { CookieContext } from "../../../Context";
 
 const Rating = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
     const applyPreset = (id: number) => setState({ ...state, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
 
     const isActive = (id: number) => state.ratingPreset == id;
 
     const getButtonClass = (id: number, y: number, x: number) => {
         let name = isActive(id) ? `active active-${id}` : `inactive-${id}`;
-        name += state.screen.x == x && state.screen.y == y ? " focused" : "";
+        name += navigation.screen.x == x && navigation.screen.y == y ? " focused" : "";
         return name;
     };
 
     const customizeRating = (modifier: (context: RatingSettings) => void, pos: XY) => {
         const next = { ...state };
         modifier(next.ratingSettings);
-        next.screen = pos;
         next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
         setState(next);
+        setNavigation({ ...navigation, screen: pos });
     };
 
     const setMissPenalty = (value: boolean, pos: XY) =>

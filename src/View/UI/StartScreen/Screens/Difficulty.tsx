@@ -1,6 +1,6 @@
 import DifficultyOptions, { DifficultyOption } from "../DifficultyOptions";
 import React from "react";
-import StartScreenContext from "../Context";
+import StartScreenContext, { NavigationContext } from "../Context";
 import ScreenMainButton from "./ScreenMainButton";
 import CookieBanner from "./CookieBanner";
 import Row from "./Row";
@@ -9,9 +9,10 @@ import { CookieContext } from "../../../Context";
 
 const Difficulty = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
+    const { navigation } = React.useContext(NavigationContext);
     const isActive = (id: number) => state.difficultySettings == id;
     const getButtonClass = (index: number, y: number, x: number) => {
-        const hasFocus = state.screen.x == x && state.screen.y == y;
+        const hasFocus = navigation.screen.x == x && navigation.screen.y == y;
         let name = isActive(index) ? `active active-${index}` : `inactive-${index}`;
         name += hasFocus ? " focused" : "";
         return name;
