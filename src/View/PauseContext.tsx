@@ -7,13 +7,13 @@ export interface IPauseState {
     pauses: number[];
     pauseStartedAt: number;
     allowed: number;
-    isSilent: string;
+    isSilent?: boolean;
 }
 export interface IPauseContext {
     state: IPauseState;
-    togglePause: (isPaused: boolean) => void;
+    togglePause: (isPaused: boolean, silend: boolean) => void;
 }
-export const defaultPauseState = { started: 0, end: 0, paused: false, pauses: [], pauseStartedAt: 0, allowed: 5, isSilent: "" };
+export const defaultPauseState = { started: 0, end: 0, paused: false, pauses: [], pauseStartedAt: 0, allowed: 5 };
 export const defaultPauseContext = {
     state: defaultPauseState,
     togglePause: () => {},
@@ -40,7 +40,7 @@ export const PauseProvider = (props: any) => {
         msec -= ss * 1000;
         return hh ? hh + ":" + padleft(mm) + ":" + padleft(ss) : padleft(mm) + ":" + padleft(ss);
     };
-    const togglePause = (isPaused: boolean, isSilent?: string) => {
+    const togglePause = (isPaused: boolean, isSilent?: boolean) => {
         if (paused.paused == isPaused) {
             if (paused.paused) {
                 setPaused({
@@ -48,14 +48,14 @@ export const PauseProvider = (props: any) => {
                     pauses: [...paused.pauses, Date.now() - paused.pauseStartedAt],
                     pauseStartedAt: 0,
                     paused: false,
-                    isSilent: isSilent ? isSilent : "",
+                    isSilent: isSilent,
                 });
             } else if (paused.pauses.length < paused.allowed) {
                 setPaused({
                     ...paused,
                     pauseStartedAt: Date.now(),
                     paused: true,
-                    isSilent: isSilent ? isSilent : "",
+                    isSilent: isSilent,
                 });
             }
         }

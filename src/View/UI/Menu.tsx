@@ -8,6 +8,7 @@ import { NavigationContext, NavigationProvider, NavigationState } from "./StartS
 import { XY } from "./XY";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
+import BusinessModel from "../../Business/BusinessModel";
 const _Menu = () => {
     const [navigation, setNavigation] = React.useState<NavigationState>({
         menu: {
@@ -33,8 +34,22 @@ const _Menu = () => {
     );
 };
 const Menu = () => {
-    const { state, updateContext } = React.useContext(GlobalContext);
+    const { state, updateContext, replaceContext, restart } = React.useContext(GlobalContext);
     const { togglePause } = React.useContext(PauseContext);
+    const reset = () => {
+        togglePause(true, true);
+        replaceContext((state) => (state.game.timemachine.previousStates ? state.game.timemachine.previousStates[0] : null));
+    };
+    const isVisible = (state: BusinessModel) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
+    const isDisabled = (state: BusinessModel) => state.settings.suggestionMode.isTemporary;
+
+    const suggestOnce = () => {
+        updateContext((state) => {
+            if (isVisible(state) && !isDisabled(state)) {
+                state.settings.enableHint();
+            }
+        });
+    };
 
     //@todo persist game settings in local storage too and use for initialization
     // const setSuggestionMode = (sm) => updateContext((state) => state.settings.setSuggestionMode(sm));
@@ -43,19 +58,30 @@ const Menu = () => {
     // const setMouseMode = (mm) => updateContext((state) => (state.settings.mouseMode = mm));
 
     const toggleMenu = (menu: boolean) => {
+        togglePause(!state?.settings.showMenu, true);
         updateContext((state) => {
             if (state.settings.showMenu == menu) {
                 state.settings.showMenu = !state.settings.showMenu;
-                togglePause(!state.settings.showMenu);
             }
         });
     };
 
+    React.useEffect(() => {
+        if (state?.settings.showMenu) {
+            togglePause(false, true);
+        }
+        return () => {
+            if (!state?.settings.showMenu) {
+                togglePause(true, true);
+            }
+        };
+    });
+
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
+
     if (!state?.settings.showMenu) {
         return null;
     }
-
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
     const onfocus = (pos: XY) => {
         setNavigation({ ...navigation, menu: pos });
     };
@@ -75,14 +101,27 @@ const Menu = () => {
                             onFocus={onfocus}
                         />
                         <MenuButton icon="⏪" title="Undo last move" onClick={() => {}} onFocus={onfocus} />
-                        <MenuButton icon="💡" title="Hint" onClick={() => {}} onFocus={onfocus}/>
-                        <MenuButton icon="💡" title="Suggestions" onClick={() => {}} onFocus={onfocus}/>
+                        <MenuButton
+                            icon="💡"
+                            title="Hint"
+                            onClick={() => suggestOnce()}
+                            onFocus={onfocus}
+                            skip={!isVisible(state)}
+                            disabled={isDisabled(state) || !isVisible(state)}
+                        />
+                        <MenuButton icon="💡" title="Suggestions" onClick={() => {}} onFocus={onfocus} />
                         <MenuButton icon="⚙️" title="Entropy" onClick={() => {}} onFocus={onfocus}>
                             <MenuButton icon="⚙️" title="Base Entropy: low" onClick={() => {}} onFocus={onfocus} />
                             <MenuButton icon="⚙️" title="Action Entropy: low" onClick={() => {}} onFocus={onfocus} />
                         </MenuButton>
-                        <MenuButton icon="♻️" title="Restart Game" onClick={() => {}} onFocus={onfocus} />
-                        <MenuButton icon="🗑️" title="Quit Game" onClick={() => {}} onFocus={onfocus} />
+                        <MenuButton
+                            icon="♻️"
+                            title="Restart Game"
+                            onClick={() => reset()}
+                            onFocus={onfocus}
+                            skip={!state.game.timemachine.previousStates.length}
+                        />
+                        <MenuButton icon="🗑️" title="Quit Game" onClick={() => restart()} onFocus={onfocus} />
                     </MenuTree>
                 </div>
             </div>

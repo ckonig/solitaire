@@ -45,11 +45,9 @@ const Keyboard = (props) => {
         }
     };
     React.useEffect(() => {
-        console.debug('registered nav listener')
         document.addEventListener("keydown", navListener);
         return () => {
             document.removeEventListener("keydown", navListener);
-            console.debug('un-registered nav listener')
         };
     }, [props]);
     return null;

@@ -17,6 +17,8 @@ export interface StaticMenuButtonProps {
     onFocus: (pos: XY) => void;
     toggled?: boolean;
     children?: any[];
+    disabled?: boolean;
+    skip?: boolean;
 }
 interface MenuButtonProps extends StaticMenuButtonProps {
     x: number;
@@ -39,6 +41,7 @@ const MenuButton = (props: _MenuButtonProps) => {
             n[props.x || 0].buttons[index + 1] = { ...props };
         };
         assign(props.navigator?.rows || []);
+
         return React.cloneElement(child, { x: props.x, y: index + 1, navigator: props.navigator });
     };
 
@@ -51,10 +54,12 @@ const MenuButton = (props: _MenuButtonProps) => {
             menuX={navigation.menu.x}
             menuY={navigation.menu.y}
             menuFocus={navigation.focus}
+            disabled={props.disabled}
             active={false}
             onFocus={props.onFocus}
             onClick={props.onClick}
             toggled={!!props.toggled}
+            skip={props.skip}
         >
             {props.children?.map(addItem)}
         </_MenuButton>
@@ -71,7 +76,7 @@ const _MenuButton = (props: MenuButtonProps) => {
 
     const shouldBeFocus = props.menuX == props.x && props.menuY == props.y && props.menuFocus == "menu";
 
-    if (shouldBeFocus) {
+    if (shouldBeFocus && !props.skip) {
         className += " highlight";
     }
 
@@ -115,6 +120,7 @@ const _MenuButton = (props: MenuButtonProps) => {
                 title={props.title}
                 onFocus={focus}
                 onClick={click}
+                disabled={props.skip}
                 onMouseDown={() => setClicking(true)}
             >
                 <div className="icon">{props.icon}</div>
