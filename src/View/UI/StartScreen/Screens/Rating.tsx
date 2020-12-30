@@ -3,7 +3,7 @@ import { RatingSettings } from "../../../../Common";
 import React from "react";
 import StartScreenContext, { NavigationContext } from "../Context";
 import { XY } from "../Menu/Tree";
-import MenuToggle from "./MenuToggle";
+import ScreenToggle from "./ScreenToggle";
 import CookieBanner from "./CookieBanner";
 import ScreenMainButton from "./ScreenMainButton";
 import ScreenContent from "./ScreenContent";
@@ -78,13 +78,13 @@ const Rating = (props: { closeScreen: () => void }) => {
                     ))}
                 </Row>
                 <Row>
-                    <MenuToggle
+                    <ScreenToggle
                         label="Undo Penalty"
                         description="Undo is enabled, but excessive use will be painful. This penalty starts with 2 and increases exponentially."
                         value={!!state.ratingSettings.undoPenalty}
                         callBack={setUndoPenalty}
                     />
-                    <MenuToggle
+                    <ScreenToggle
                         label="Time Penalty"
                         description="Fast players are rewarded with a time bonus, slow players will be punished."
                         value={!!state.ratingSettings.timedMode}
@@ -92,13 +92,13 @@ const Rating = (props: { closeScreen: () => void }) => {
                     />
                 </Row>
                 <Row>
-                    <MenuToggle
+                    <ScreenToggle
                         label="Hint Penalty"
                         description="Each manual hint will reduce the number of points by 10. This setting disables automatic suggestions. "
                         value={!!state.ratingSettings.hintPenalty}
                         callBack={setHintPenalty}
                     />
-                    <MenuToggle
+                    <ScreenToggle
                         label="Miss Penalty"
                         description="Be careful where you click, as each invalid action will lead to a penalty of 10 points."
                         value={!!state.ratingSettings.missPenalty}

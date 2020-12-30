@@ -2,8 +2,8 @@ import EntropyLevels from "../../../../Model/Game/EntropyLevels";
 import React from "react";
 import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
 import { XY } from "../Menu/Tree";
-import MenuSelect from "./MenuSelect";
-import MenuToggle from "./MenuToggle";
+import ScreenSelect from "./ScreenSelect";
+import ScreenToggle from "./ScreenToggle";
 import CookieBanner from "./CookieBanner";
 import ScreenMainButton from "./ScreenMainButton";
 import ScreenContent from "./ScreenContent";
@@ -90,14 +90,14 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                     ))}
                 </Row>
                 <Row>
-                    <MenuSelect
+                    <ScreenSelect
                         label="Base Entropy"
                         description="How much chaos will the stacks on the board contain by themselves?"
                         value={state.entropySettings.baseEntropy || 0}
                         values={EntropyLevels.map((label, id) => ({ id, label }))}
                         callBack={setBaseEntropy}
                     />
-                    <MenuSelect
+                    <ScreenSelect
                         label="Interaction Entropy"
                         description="How much chaos will each interaction add to a stack on the board?"
                         value={state.entropySettings.interactionEntropy || 0}
@@ -106,13 +106,13 @@ const QuickStart = (props: { closeScreen: () => void }) => {
                     />
                 </Row>
                 <Row>
-                    <MenuToggle
+                    <ScreenToggle
                         label="Instant Deal"
                         description="Should the deal animation at the beginning of the game be skipped?"
                         value={state.quickDeal}
                         callBack={setQuickDeal}
                     />
-                    <MenuToggle
+                    <ScreenToggle
                         disabled={true}
                         label="Auto Deal"
                         description="Should the game draw one card from the stock every 5 seconds?"

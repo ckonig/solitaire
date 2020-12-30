@@ -1,9 +1,10 @@
 import { NavigationContext } from "../Context";
 import { XY } from "../Menu/Tree";
-import { ScreenNavigator, TreeNavigator } from "./ScreenNavigator";
+import { ScreenNavigator } from "./ScreenNavigator";
 import React from "react";
 import Keyboard from "../../../Game/Keyboard";
 import GamePad from "../../../Game/GamePad";
+import { TreeNavigator } from "../TreeNavigator";
 
 const NavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
     const { navigator } = props;

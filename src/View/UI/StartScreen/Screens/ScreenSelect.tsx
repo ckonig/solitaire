@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContext } from "../Context";
-import { getMenuClassName, useFocusEffect } from "./MenuElement";
+import { getScreenElementClassName, useFocusEffect } from "./MenuElement";
 import { XY } from "../Menu/Tree";
 
 export type SelectItem = {
@@ -20,11 +20,11 @@ interface SelectProps extends StaticSelectProps {
     y: number;
     hasFocus: boolean;
 }
-interface _MenuSelectProps extends StaticSelectProps {
+interface _ScreenSelectProps extends StaticSelectProps {
     x?: number;
     y?: number;
 }
-const _MenuSelect = (props: SelectProps) => {
+const _ScreenSelect = (props: SelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { navigation, setNavigation } = React.useContext(NavigationContext);
@@ -32,7 +32,7 @@ const _MenuSelect = (props: SelectProps) => {
         props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString(), { x: props.x, y: props.y });
 
     return (
-        <div className={"togglecontainer" + getMenuClassName(props)}>
+        <div className={getScreenElementClassName("togglecontainer", props)}>
             <div className="title">
                 {props.label}: {props.values[props.value].label}
             </div>
@@ -55,7 +55,7 @@ const _MenuSelect = (props: SelectProps) => {
     );
 };
 
-const MenuSelect = (props: _MenuSelectProps) => {
+const ScreenSelect = (props: _ScreenSelectProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
         return null;
     }
@@ -63,7 +63,7 @@ const MenuSelect = (props: _MenuSelectProps) => {
     const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (
-        <_MenuSelect
+        <_ScreenSelect
             x={pos.x}
             y={pos.y}
             disabled={!!props.disabled}
@@ -77,4 +77,4 @@ const MenuSelect = (props: _MenuSelectProps) => {
     );
 };
 
-export default MenuSelect;
+export default ScreenSelect;

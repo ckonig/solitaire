@@ -3,9 +3,9 @@ import "../../../Style/react-toggle.css";
 import React from "react";
 import { NavigationContext } from "../Context";
 import { XY } from "../Menu/Tree";
-import { getMenuClassName, useFocusEffect } from "./MenuElement";
+import { getScreenElementClassName, useFocusEffect } from "./MenuElement";
 
-interface StaticMenuToggleProps {
+interface StaticScreenToggleProps {
     value: boolean;
     label: string;
     description: string;
@@ -13,23 +13,23 @@ interface StaticMenuToggleProps {
     callBack: (s: boolean, pos: XY) => void;
 }
 
-interface ToggleProps extends StaticMenuToggleProps {
+interface ToggleProps extends StaticScreenToggleProps {
     x: number;
     y: number;
     hasFocus: boolean;
 }
 
-interface _MenuToggleProps extends StaticMenuToggleProps {
+interface _ScreenToggleProps extends StaticScreenToggleProps {
     x?: number;
     y?: number;
 }
 
-const _MenuToggle = (props: ToggleProps) => {
+const _ScreenToggle = (props: ToggleProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { navigation, setNavigation } = React.useContext(NavigationContext);
     return (
-        <div className={"togglecontainer" + getMenuClassName(props)}>
+        <div className={getScreenElementClassName("togglecontainer", props)}>
             <div className="title">{props.label}</div>
             <div className="toggle">
                 <Toggle
@@ -50,7 +50,7 @@ const _MenuToggle = (props: ToggleProps) => {
     );
 };
 
-const MenuToggle = (props: _MenuToggleProps) => {
+const ScreenToggle = (props: _ScreenToggleProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
         return null;
     }
@@ -58,7 +58,7 @@ const MenuToggle = (props: _MenuToggleProps) => {
     const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (
-        <_MenuToggle
+        <_ScreenToggle
             x={pos.x}
             y={pos.y}
             disabled={!!props.disabled}
@@ -71,4 +71,4 @@ const MenuToggle = (props: _MenuToggleProps) => {
     );
 };
 
-export default MenuToggle;
+export default ScreenToggle;

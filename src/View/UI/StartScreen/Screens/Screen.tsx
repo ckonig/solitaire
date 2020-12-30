@@ -8,13 +8,15 @@ import { NavigationContext } from "../Context";
 const Screen = (props: { screen: string }) => {
     const { navigation, setNavigation } = React.useContext(NavigationContext);
     const closeScreen = () => {
-        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: { ...navigation.menu } });
+        const prev = { ...navigation.menu };
+        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: prev });
     };
     const Wrap = (props: { children: any }) => (
         <div className="startscreen-layout">
             <div className="startscreen-jail">{props.children}</div>
         </div>
     );
+    //@todo use router instead of switch
     switch (props.screen) {
         case "rating":
             return (

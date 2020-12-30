@@ -8,8 +8,8 @@ export interface MenuInpputElementProps extends Focusable {
     disabled?: boolean;
 }
 
-export const getMenuClassName = (props: MenuInpputElementProps) => {
-    let className = "";
+export const getScreenElementClassName = (base: string, props: MenuInpputElementProps) => {
+    let className = base;
     if (props.hasFocus) {
         className += " focused";
     }
