@@ -1,37 +1,32 @@
 import GlobalContext from "../Context";
-import MouseHand from "./MouseHand";
 import React from "react";
-import TouchHand from "./TouchHand";
+import Card from "./Card";
 
 const Hand = (props) => {
-    const { state, updateGameContext } = React.useContext(GlobalContext);
+    const { state } = React.useContext(GlobalContext);
     if (!state.hand || props.parentModel.source !== state.hand.source) {
         return null;
     }
-    const putBack = (p) => {
-        if (props.parentModel.stack.length) {
-            updateGameContext(props.parentModel.getTop().onClick(p));
-        } else {
-            updateGameContext(props.parentModel.clickEmpty(p));
-        }
-    };
-    if (state.settings.mouseMode == "follow-cursor") {
-        return <MouseHand parent={props.parentModel.source} hand={state.hand} offsetTop={props.offsetTop} putBack={putBack} />;
-    }
-    if (state.settings.mouseMode == "remain-on-stack") {
-        return (
-            <>
-                <TouchHand
-                    parentModel={props.parentModel}
-                    hand={state.hand}
-                    offsetTop={props.offsetTop}
-                    offsetLeft={props.offsetLeft}
-                />
-            </>
-        );
-    } else {
-        return null;
-    }
+
+    return (
+        <>
+            {[
+                state.hand &&
+                    state.hand.stack &&
+                    state.hand.stack.map((card, index) => (
+                        <Card
+                            key={index}
+                            model={card}
+                            offsetTop={props.offsetTop + index * 24}
+                            offsetLeft={props.offsetLeft}
+                            zIndex={1000 + index * 20}
+                            isSelected={true}
+                            onClick={(_c, p) => props.onClick(p)}
+                        />
+                    )),
+            ]}
+        </>
+    );
 };
 
 export default Hand;

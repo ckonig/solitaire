@@ -55,7 +55,6 @@ const Menu = () => {
     // const setSuggestionMode = (sm) => updateContext((state) => state.settings.setSuggestionMode(sm));
     // const setBaseEntropy = (lvl) => updateContext((state) => state.setEntropy(lvl));
     // const setInteractionEntropy = (lvl) => updateContext((state) => (state.settings.interactionEntropy = lvl));
-    // const setMouseMode = (mm) => updateContext((state) => (state.settings.mouseMode = mm));
 
     const toggleMenu = (menu: boolean) => {
         togglePause(!state?.settings.showMenu, true);
@@ -97,9 +96,7 @@ const Menu = () => {
     if (remaining == 0) {
         announcement = "This is the last remaining pause. If you continue, no more pause will be possible.";
     }
-    if (remaining < 0) [
-        announcement = "The game is not paused."
-    ]
+    if (remaining < 0) [(announcement = "The game is not paused.")];
 
     return (
         <div className="gamemenu menu">
@@ -116,7 +113,7 @@ const Menu = () => {
                             }}
                             onFocus={onfocus}
                         />
-                        <MenuButton icon="⏪" title="Undo last move" onClick={() => {}} onFocus={onfocus} />
+                        <MenuButton icon="⏪" skip={true} title="Undo last move" onClick={() => {}} onFocus={onfocus} />
                         <MenuButton
                             icon="💡"
                             title="Hint"
@@ -125,8 +122,8 @@ const Menu = () => {
                             skip={!isVisible(state)}
                             disabled={isDisabled(state) || !isVisible(state)}
                         />
-                        <MenuButton icon="💡" title="Suggestions" onClick={() => {}} onFocus={onfocus} />
-                        <MenuButton icon="⚙️" title="Entropy" onClick={() => {}} onFocus={onfocus}>
+                        <MenuButton icon="💡" skip={true} title="Suggestions" onClick={() => {}} onFocus={onfocus} />
+                        <MenuButton icon="⚙️" skip={true} title="Entropy" onClick={() => {}} onFocus={onfocus}>
                             <MenuButton icon="⚙️" title="Base Entropy: low" onClick={() => {}} onFocus={onfocus} />
                             <MenuButton icon="⚙️" title="Action Entropy: low" onClick={() => {}} onFocus={onfocus} />
                         </MenuButton>

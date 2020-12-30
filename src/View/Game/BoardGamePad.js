@@ -11,7 +11,6 @@ const BoardGamePad = (props) => {
     const switchToGamePad = (ctx) => {
         ctx.focus.isKeyBoard(true);
         if (isSinglePlayer) {
-            ctx.settings.mouseMode = "remain-on-stack";
             ctx.settings.launchSettings.inputMode = "gamepad";
         }
     };

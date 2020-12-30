@@ -15,10 +15,7 @@ export default class Waste extends BlinkingComponent {
             if (state.settings.launchSettings.drawMode == "single") {
                 return 0;
             }
-            const length =
-                state.waste.settings.mouseMode == "remain-on-stack" && state.hand.isHoldingCard() && state.hand.isFromWaste()
-                    ? state.waste.stack.length + 1
-                    : state.waste.stack.length;
+            const length = state.hand.isHoldingCard() && state.hand.isFromWaste() ? state.waste.stack.length + 1 : state.waste.stack.length;
             let additionalOffset = 2;
             if (length == 2) {
                 additionalOffset = 1;
