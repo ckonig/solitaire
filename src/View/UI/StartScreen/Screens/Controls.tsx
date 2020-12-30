@@ -7,7 +7,7 @@ import { CookieContext } from "../../../Context";
 import StartScreenContext, { NavigationContext } from "../Context";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../../XY";
-import ScreenSelect from "./ScreenSelect";
+import { ControlPresets } from "../ControlsPresets";
 
 const Controls = (props: { player: number; closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
@@ -51,19 +51,30 @@ const Controls = (props: { player: number; closeScreen: () => void }) => {
 
     const { consented } = React.useContext(CookieContext);
 
-    const isActive = (id: string) => player.inputMethod === id;
+    const playerHasSettings = (id: number, playerId: number) =>
+        state.players[playerId].inputLayout == ControlPresets[id].inputLayout &&
+        state.players[playerId].inputMethod == ControlPresets[id].inputMethod;
 
-    const applyPreset = (id: string) => {
+    const isActive = (id: number) => playerHasSettings(id, props.player);
+
+    const applyPreset = (id: number) => {
         const nextPlayer = { ...state.players };
-        nextPlayer[props.player].inputMethod = id;
+        nextPlayer[props.player].inputMethod = ControlPresets[id].inputMethod;
+        nextPlayer[props.player].inputLayout = ControlPresets[id].inputLayout;
         setState({ ...state, players: nextPlayer });
     };
 
-    const getButtonClass = (id: string, x: number, y: number) => {
-        let className = "";
-        className += navigation.menu.x == x && navigation.menu.y == y ? " focused" : null;
-        className += id == player.inputMethod ? " active-0" : null;
+    const getButtonClass = (id: number, x: number, y: number) => {
+        let className = x + "" + y + " " + navigation.screen.x + "" + navigation.screen.y + " ";
+        className += navigation.screen.x == x && navigation.screen.y == y ? " focused" : "";
+        className += isActive(id) ? " active-0" : "";
+        className += blockedByOtherPlayers(id) ? " disabled" : "";
         return className;
+    };
+
+    const blockedByOtherPlayers = (id: number) => {
+        const otherPlayers = [0, 1].filter((p) => p !== props.player);
+        return playerHasSettings(id, otherPlayers[0]);
     };
 
     return (
@@ -77,81 +88,47 @@ const Controls = (props: { player: number; closeScreen: () => void }) => {
                     <CookieBanner />
                 </Row>
                 <Row>
-                    <ScreenMainButton
-                        icon={"🖱️"}
-                        id={0}
-                        initialFocus={isActive("mouse")}
-                        className={(pos: XY) => getButtonClass("mouse", pos.y, pos.x)}
-                        onClick={() => applyPreset("mouse")}
-                        lines={["Mouse"]}
-                    />
-                    <ScreenMainButton
-                        icon={"⌨️"}
-                        id={1}
-                        initialFocus={isActive("keyboard")}
-                        className={(pos: XY) => getButtonClass("keyboard", pos.y, pos.x)}
-                        onClick={() => applyPreset("keyboard")}
-                        lines={["Keyboard"]}
-                    />
-                    <ScreenMainButton
-                        icon={"🎮"}
-                        id={2}
-                        initialFocus={isActive("gamepad")}
-                        className={(pos: XY) => getButtonClass("gamepad", pos.y, pos.x)}
-                        onClick={() => applyPreset("gamepad")}
-                        lines={["Gamepad"]}
-                    />
+                    {ControlPresets.slice(0, 3).map((preset) => (
+                        <ScreenMainButton
+                            key={preset.id}
+                            icon={preset.icon}
+                            id={preset.id}
+                            disabled={blockedByOtherPlayers(preset.id)}
+                            initialFocus={isActive(preset.id)}
+                            className={(pos: XY) => getButtonClass(preset.id, pos.x, pos.y)}
+                            onClick={() => applyPreset(preset.id)}
+                            lines={preset.lines}
+                        />
+                    ))}
                 </Row>
                 <Row>
-                    {player.inputMethod !== "keyboard" ? null : (
-                        <ScreenSelect
-                            label="Keyboard Layout"
-                            description="How much chaos will the stacks on the board contain by themselves?"
-                            value={player.inputLayout}
-                            values={[
-                                { label: "WASD", id: 0 },
-                                { label: "ARROWS", id: 1 },
-                                { label: "NUMPAD", id: 2 },
-                            ]}
-                            callBack={(s) => {
-                                const next = { ...state.players };
-                                next[props.player].inputLayout = parseInt(s);
-                                setState({ ...state, players: next });
-                            }}
+                    {ControlPresets.slice(3).map((preset) => (
+                        <ScreenMainButton
+                            key={preset.id}
+                            icon={preset.icon}
+                            id={preset.id}
+                            initialFocus={isActive(preset.id)}
+                            className={(pos: XY) => getButtonClass(preset.id, pos.x, pos.y)}
+                            onClick={() => applyPreset(preset.id)}
+                            lines={preset.lines}
                         />
-                    )}
-                    {player.inputMethod !== "gamepad" ? null : (
-                        <ScreenSelect
-                            label="Gamepad Selection"
-                            description="Which Gamepad?"
-                            value={player.inputLayout}
-                            values={[
-                                { label: "1", id: 0 },
-                                { label: "2", id: 1 },
-                            ]}
-                            callBack={(s) => {
-                                const next = { ...state.players };
-                                next[props.player].inputLayout = parseInt(s);
-                                setState({ ...state, players: next });
-                            }}
-                        />
-                    )}
-                </Row>
-                <Row>
-                    {display(pads[0])}
-                    <div>
-                        <GamePad
-                            gamepadIndex={0}
-                            onConnect={() => connect(0)}
-                            onUp={() => press(0)}
-                            onDown={() => press(0)}
-                            onRight={() => press(0)}
-                            onLeft={() => press(0)}
-                            onAction={() => press(0)}
-                        />
-                    </div>
+                    ))}
                 </Row>
             </ScreenContent>
+            <div>
+                {display(pads[0])}
+                <div>
+                    <GamePad
+                        gamepadIndex={0}
+                        onConnect={() => connect(0)}
+                        onUp={() => press(0)}
+                        onDown={() => press(0)}
+                        onRight={() => press(0)}
+                        onLeft={() => press(0)}
+                        onAction={() => press(0)}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

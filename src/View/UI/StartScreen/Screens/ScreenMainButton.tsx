@@ -11,6 +11,7 @@ interface ScreenMainButtonProps {
     lines: string[];
     onClick: () => void;
     initialFocus: boolean;
+    disabled?: boolean;
 }
 const ScreenMainButton = (props: ScreenMainButtonProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
@@ -57,6 +58,7 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
             onFocus={focus}
             ref={inputEl}
             key={props.id}
+            disabled={props.disabled}
             className={props.className(pos)}
             onMouseDown={() => setClicking(true)}
             onClick={click}

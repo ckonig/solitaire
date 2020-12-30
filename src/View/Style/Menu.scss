@@ -228,6 +228,21 @@
     margin-top: 0vw;
 }
 
+.startdetails .content button.disabled > div {
+    text-decoration: line-through;
+}
+.startdetails .content button.disabled {
+    border-color: gray;
+    border-style:dotted;
+}
+.startdetails .content button.disabled.focused  {
+    border-color: brown;    
+}
+.startdetails .content button.disabled.focused > div {
+    color: red;
+    
+}
+
 $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 
 @for $i from 1 through length($colors) {
