@@ -1,6 +1,6 @@
 import React from "react";
-import { TreeNavWrapper } from "../StartScreen/Screens/NavWrapper";
-import { TreeNavigator } from "../StartScreen/TreeNavigator";
+import { TreeNavWrapper } from "../Screens/NavWrapper";
+import { TreeNavigator } from "./TreeNavigator";
 
 const MenuTree = (props: { children: any[] }) => {
     const navigator = new TreeNavigator();

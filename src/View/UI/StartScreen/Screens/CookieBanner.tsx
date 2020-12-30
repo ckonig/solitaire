@@ -1,8 +1,8 @@
 import StorageManager from "../../StorageManager";
 import React from "react";
 import { CookieContext, ICookieContext } from "../../../Context";
-import { useFocusEffect } from "./MenuElement";
-import { XY } from "../Menu/Tree";
+import { useFocusEffect } from "./ScreenElement";
+import { XY } from "../../XY";
 import {NavigationContext} from "../Context";
 
 interface RenderCookieBannerProps extends ICookieContext, XY {}

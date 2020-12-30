@@ -12,7 +12,13 @@ export default class Tableau extends BlinkingComponent {
 
     static Stacks = () => {
         const { state } = React.useContext(GlobalContext);
-        return state.tableau.stacks.map((tableau, index) => <Tableau key={index} index={index} model={tableau} parent={state.tableau} />);
+        return (
+            <>
+                {state.tableau.stacks.map((tableau, index) => (
+                    <Tableau key={index} index={index} model={tableau} parent={state.tableau} />
+                ))}
+            </>
+        );
     };
 
     render() {
@@ -41,7 +47,7 @@ export default class Tableau extends BlinkingComponent {
                         offsetTop={getOffset(index)}
                     />
                 ))}
-                <Hand  parentModel={props.model} stack={props.model.stack} offsetTop={getOffset(props.model.stack.length)} />
+                <Hand parentModel={props.model} stack={props.model.stack} offsetTop={getOffset(props.model.stack.length)} />
             </div>
         );
     }

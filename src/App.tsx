@@ -7,8 +7,8 @@ import Deck from "./Model/Deck/Deck";
 import GameModes from "./GameModes";
 import { PauseProvider } from "./View/PauseContext";
 import React from "react";
-import AspectRatio16to9 from "./View/AspectRatio/AspectRatio16to9";
 import Home from "./View/UI/StartScreen/Home";
+import AspectRatio16to9 from "./View/AspectRatio/AspectRatio16to9";
 
 const App = () => {
     const [started, setStarted] = React.useState<number>(0);

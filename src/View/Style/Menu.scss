@@ -205,7 +205,6 @@
     margin-top: 0;
     color: white;
     background-color: transparent;
-    
 }
 
 .closer button:focus {
@@ -267,7 +266,6 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     text-align: center;
 }
 
-
 .startdetails button.cookiebanner {
     background-color: rgba(0, 0, 0, 0.95);
     width: 90%;
@@ -288,7 +286,7 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 .cookiebanner .icon {
     font-size: 2em;
     float: left;
-    width: 10%
+    width: 10%;
 }
 
 .cookiebanner .message {
@@ -298,4 +296,14 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     width: 80%;
     text-align: left;
     padding-right: 10%;
+}
+
+.gamemenu {
+    z-index: 10000;
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    top: 10%;
+    bottom: 10%;
 }

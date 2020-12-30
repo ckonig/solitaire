@@ -3,6 +3,7 @@ import SuggestionModes from "./Settings/SuggestionModes";
 export default class Settings {
     constructor(launchSettings) {
         this.launchSettings = launchSettings;
+        this.showMenu = false;
         this.mouseModes = ["follow-cursor", "remain-on-stack"];
         this.mouseMode = "remain-on-stack";
 

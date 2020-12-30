@@ -12,7 +12,13 @@ export default class Foundation extends BlinkingComponent {
 
     static Stacks = () => {
         const { state } = React.useContext(GlobalContext);
-        return state.foundation.stacks.map((foundation, index) => <Foundation key={index} model={foundation} index={index} />);
+        return (
+            <>
+                {state.foundation.stacks.map((foundation, index) => (
+                    <Foundation key={index} model={foundation} index={index} />
+                ))}
+            </>
+        );
     };
 
     render() {
@@ -31,7 +37,7 @@ export default class Foundation extends BlinkingComponent {
                     />
                 ))}
                 <Hand
-                parentModel={model}
+                    parentModel={model}
                     //onClick={(c, p) => onClick(model.stack[model.stack.length - 1], p, this.props.index)}
                     stack={model.stack}
                 />

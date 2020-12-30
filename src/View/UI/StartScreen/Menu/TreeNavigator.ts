@@ -1,5 +1,5 @@
-import { XY } from "./Menu/Tree";
-import { NavHandler } from "./NavHandler";
+import { XY } from "../../XY";
+import { NavHandler } from "../../NavHandler";
 
 export class TreeNavigator implements NavHandler {
     rows: any[];
@@ -38,7 +38,6 @@ export class TreeNavigator implements NavHandler {
     };
     moveDown: (x: number, y: number) => XY = (x: number, y: number) => {
         const row = this.getRow(x);
-        console.debug(row);
         if (y == 0 && row.toggled) {
             return { x: x, y: 1 };
         }

@@ -1,7 +1,6 @@
 import EntropyLevels from "../../../../Model/Game/EntropyLevels";
 import React from "react";
 import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
-import { XY } from "../Menu/Tree";
 import ScreenSelect from "./ScreenSelect";
 import ScreenToggle from "./ScreenToggle";
 import CookieBanner from "./CookieBanner";
@@ -34,7 +33,7 @@ const optimizeOptions: (state: StartScreenState) => OptimizeOption[] = (state: S
 
 const QuickStart = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation } = React.useContext(NavigationContext);
     const isActive = (val: boolean) => state.quickDeal == val;
 
     const setBaseEntropy = (value: string) =>
@@ -43,9 +42,8 @@ const QuickStart = (props: { closeScreen: () => void }) => {
     const setInteractionEntropy = (value: string) =>
         setState({ ...state, entropySettings: { ...state.entropySettings, interactionEntropy: parseInt(value) } });
 
-    const setQuickDeal = (value: boolean, pos: XY) => {
+    const setQuickDeal = (value: boolean) => {
         setState({ ...state, quickDeal: value });
-        setNavigation({ ...navigation, screen: pos });
     };
 
     const getClassName = (button: OptimizeOption, y: number, x: number) => {

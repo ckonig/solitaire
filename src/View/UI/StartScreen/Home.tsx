@@ -3,7 +3,9 @@ import React from "react";
 import Screen from "./Screens/Screen";
 import StorageManager from "../StorageManager";
 import { CookieContextProvider } from "../../Context";
-import StartMenu from "./StartMenu";
+import StartMenu from "./Menu/StartMenu";
+import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
+import DifficultyOptions from "./DifficultyOptions";
 
 const Home = (props: { start: (settings: any) => void }) => {
     const storage = new StorageManager();
@@ -39,11 +41,24 @@ const Home = (props: { start: (settings: any) => void }) => {
         setConsented,
     };
 
+    const start = (boardMode: string) => {
+        const settings = {
+            ...DifficultyOptions[state.difficultySettings].settings,
+            ...state.ratingSettings,
+            ...state.entropySettings,
+            quickDeal: state.quickDeal,
+            boardMode: boardMode,
+            initialized: true,
+            suggestionMode: state.ratingSettings.hintPenalty ? SuggestionModes.NONE : state.suggestionMode,
+        };
+        props.start(settings);
+    };
+
     return (
         <Provider value={startScreenContext}>
             <NavigationProvider value={navigationContext}>
                 <CookieContextProvider value={cookieContext}>
-                    <StartMenu start={props.start} />
+                    <StartMenu start={start} />
                     <Screen screen={navigation.screeen} />
                 </CookieContextProvider>
             </NavigationProvider>

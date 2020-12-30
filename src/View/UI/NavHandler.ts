@@ -1,4 +1,4 @@
-import { XY } from "./Menu/Tree";
+import { XY } from "./XY";
 
 export interface NavHandler {
     moveUp: (x: number, y: number) => XY;

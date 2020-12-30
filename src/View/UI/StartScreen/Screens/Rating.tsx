@@ -2,7 +2,7 @@ import RatingPresets from "../RatingOptions";
 import { RatingSettings } from "../../../../Common";
 import React from "react";
 import StartScreenContext, { NavigationContext } from "../Context";
-import { XY } from "../Menu/Tree";
+import { XY } from "../../XY";
 import ScreenToggle from "./ScreenToggle";
 import CookieBanner from "./CookieBanner";
 import ScreenMainButton from "./ScreenMainButton";
@@ -12,7 +12,7 @@ import { CookieContext } from "../../../Context";
 
 const Rating = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation } = React.useContext(NavigationContext);
     const applyPreset = (id: number) => setState({ ...state, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
 
     const isActive = (id: number) => state.ratingPreset == id;
@@ -23,33 +23,32 @@ const Rating = (props: { closeScreen: () => void }) => {
         return name;
     };
 
-    const customizeRating = (modifier: (context: RatingSettings) => void, pos: XY) => {
+    const customizeRating = (modifier: (context: RatingSettings) => void) => {
         const next = { ...state };
         modifier(next.ratingSettings);
         next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
         setState(next);
-        setNavigation({ ...navigation, screen: pos });
     };
 
-    const setMissPenalty = (value: boolean, pos: XY) =>
+    const setMissPenalty = (value: boolean) =>
         customizeRating((r) => {
             r.missPenalty = value;
-        }, pos);
+        });
 
-    const setTimeRating = (value: boolean, pos: XY) =>
+    const setTimeRating = (value: boolean) =>
         customizeRating((r) => {
             r.timedMode = value;
-        }, pos);
+        });
 
-    const setUndoPenalty = (value: boolean, pos: XY) =>
+    const setUndoPenalty = (value: boolean) =>
         customizeRating((r) => {
             r.undoPenalty = value;
-        }, pos);
+        });
 
-    const setHintPenalty = (value: boolean, pos: XY) => {
+    const setHintPenalty = (value: boolean) => {
         customizeRating((r) => {
             r.hintPenalty = value;
-        }, pos);
+        });
     };
 
     const { consented } = React.useContext(CookieContext);

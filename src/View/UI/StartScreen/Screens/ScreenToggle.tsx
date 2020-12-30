@@ -2,15 +2,15 @@ import Toggle from "react-toggle";
 import "../../../Style/react-toggle.css";
 import React from "react";
 import { NavigationContext } from "../Context";
-import { XY } from "../Menu/Tree";
-import { getScreenElementClassName, useFocusEffect } from "./MenuElement";
+import { XY } from "../../XY";
+import { getScreenElementClassName, useFocusEffect } from "./ScreenElement";
 
 interface StaticScreenToggleProps {
     value: boolean;
     label: string;
     description: string;
     disabled?: boolean;
-    callBack: (s: boolean, pos: XY) => void;
+    callBack: (s: boolean) => void;
 }
 
 interface ToggleProps extends StaticScreenToggleProps {
@@ -28,6 +28,10 @@ const _ScreenToggle = (props: ToggleProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const change = (val: boolean, pos: XY) => {
+        setNavigation({ ...navigation, screen: pos });
+        props.callBack(val);
+    };
     return (
         <div className={getScreenElementClassName("togglecontainer", props)}>
             <div className="title">{props.label}</div>
@@ -42,7 +46,7 @@ const _ScreenToggle = (props: ToggleProps) => {
                         }
                     }}
                     checked={props.value}
-                    onChange={() => props.callBack(!props.value, { x: props.x, y: props.y })}
+                    onChange={() => change(!props.value, { x: props.x, y: props.y })}
                 />
             </div>
             <div className="description">{props.description}</div>

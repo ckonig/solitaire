@@ -1,35 +1,40 @@
 import React from "react";
 import { NavigationContext } from "../Context";
-import { getScreenElementClassName, useFocusEffect } from "./MenuElement";
-import { XY } from "../Menu/Tree";
+import { getScreenElementClassName, useFocusEffect } from "./ScreenElement";
 
 export type SelectItem = {
     label: string;
     id: string | number;
 };
+
 interface StaticSelectProps {
     disabled?: boolean;
     value: number;
     values: SelectItem[];
     label: string;
     description: string;
-    callBack: (s: string, pos: XY) => void;
+    callBack: (s: string) => void;
 }
+
 interface SelectProps extends StaticSelectProps {
     x: number;
     y: number;
     hasFocus: boolean;
 }
+
 interface _ScreenSelectProps extends StaticSelectProps {
     x?: number;
     y?: number;
 }
+
 const _ScreenSelect = (props: SelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { navigation, setNavigation } = React.useContext(NavigationContext);
-    const increment = () =>
-        props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString(), { x: props.x, y: props.y });
+    const increment = () => {
+        props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString());
+        setNavigation({ ...navigation, screen: { x: props.x, y: props.y } });
+    };
 
     return (
         <div className={getScreenElementClassName("togglecontainer", props)}>

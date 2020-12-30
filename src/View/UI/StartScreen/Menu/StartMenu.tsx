@@ -1,32 +1,17 @@
-import GameModes, { GameMode } from "../../../GameModes";
-import { XY } from "./Menu/Tree";
+import GameModes from "../../../../GameModes";
+import { XY } from "../../XY";
 
-import DifficultyOptions from "./DifficultyOptions";
-import MenuButton from "../Menu/MenuButton";
-import MenuTitle from "../Menu/MenuTitle";
-import StartScreenContext, { NavigationContext } from "./Context";
+import MenuButton from "./MenuButton";
+import MenuTitle from "./MenuTitle";
+import { NavigationContext } from "../Context";
 import React from "react";
-import VerticalMenu from "../Menu/VerticalMenu";
-import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
-import StorageManager from "../StorageManager";
-import { CookieContext } from "../../Context";
-import MenuTree from "../Menu/MenuTree";
+import VerticalMenu from "./VerticalMenu";
+import StorageManager from "../../StorageManager";
+import { CookieContext } from "../../../Context";
+import MenuTree from "./MenuTree";
 
-const StartMenu = (props: { start: (settings: any) => void }) => {
-    const start = (gameMode: GameMode) => {
-        const settings = {
-            ...DifficultyOptions[state.difficultySettings].settings,
-            ...state.ratingSettings,
-            ...state.entropySettings,
-            quickDeal: state.quickDeal,
-            boardMode: gameMode.boardMode,
-            initialized: true,
-            suggestionMode: state.ratingSettings.hintPenalty ? SuggestionModes.NONE : state.suggestionMode,
-        };
-        props.start(settings);
-    };
+const StartMenu = (props: { start: (boardMode: string) => void }) => {
     const { navigation, setNavigation } = React.useContext(NavigationContext);
-    const { state } = React.useContext(StartScreenContext);
     const { consented, setConsented } = React.useContext(CookieContext);
 
     const switchToScreen = (s: string, pos: XY) =>
@@ -61,7 +46,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
         <VerticalMenu>
             <MenuTitle label="♦ Solitaire" />
             <MenuTree>
-                <MenuButton icon="🎲" title="Single Player" onClick={() => start(GameModes.CUSTOM)} onFocus={onfocus} />
+                <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.CUSTOM.boardMode)} onFocus={onfocus} />
                 <MenuButton
                     icon="⚔️"
                     title="Versus"
@@ -83,7 +68,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                         onFocus={onfocus}
                         toggled={navigation.screeen == "controls1"}
                     />
-                    <MenuButton icon="🎲" title="Start" onClick={() => start(GameModes.VERSUS)} onFocus={onfocus} />
+                    <MenuButton icon="🎲" title="Start" onClick={() => props.start(GameModes.VERSUS.boardMode)} onFocus={onfocus} />
                 </MenuButton>
                 <MenuButton
                     icon="⚙️"
@@ -116,7 +101,7 @@ const StartMenu = (props: { start: (settings: any) => void }) => {
                 </MenuButton>
                 <MenuButton
                     icon="🍪"
-                    title={consented ? "Revoke Consent" : "Give Consent"}
+                    title={consented ? "Delete Cookie" : "Allow Cookie"}
                     onClick={
                         consented
                             ? () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContext } from "../Context";
-import { XY } from "../Menu/Tree";
+import { XY } from "../../XY";
 
 interface ScreenMainButtonProps {
     x?: number;
@@ -44,8 +44,8 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
     }, [inputEl]);
     const focus = () => {
         if (!hasFocus && !isClicking) {
-            setNavigation({ ...navigation, screen: { x: props.x || 0, y: props.y || 0 } });
             setClicking(false);
+            setNavigation({ ...navigation, screen: { x: props.x || 0, y: props.y || 0 } });
         }
     };
     const click = () => {

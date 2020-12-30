@@ -1,5 +1,5 @@
-import { XY } from "../Menu/Tree";
-import { NavHandler } from "../NavHandler";
+import { XY } from "../../XY";
+import { NavHandler } from "../../NavHandler";
 
 export class ScreenNavigator implements NavHandler {
     rows: any[];
