@@ -10,8 +10,9 @@ import React from "react";
 import Home from "./View/UI/StartScreen/Home";
 import AspectRatio from "./View/AspectRatio/AspectRatio";
 import Ratios from "./View/AspectRatio/Ratios";
+import { withTranslation, WithTranslation } from "react-i18next";
 
-const App = () => {
+const App: React.FC<WithTranslation> = () => {
     const [started, setStarted] = React.useState<number>(0);
     const defaultState = { boardMode: GameModes.CUSTOM.boardMode, inputMode: "mouse", initialized: false, players: defaultPlayerSettings };
     const [appState, setAppState] = React.useState<AppState>(defaultState);
@@ -74,4 +75,4 @@ const App = () => {
         </AspectRatio>
     );
 };
-export default App;
+export default withTranslation()(App);

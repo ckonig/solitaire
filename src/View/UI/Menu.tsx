@@ -9,6 +9,8 @@ import { XY } from "./XY";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import BusinessModel from "../../Business/BusinessModel";
+import { useTranslation } from "react-i18next";
+
 const _Menu = () => {
     const [navigation, setNavigation] = React.useState<NavigationState>({
         menu: {
@@ -34,6 +36,7 @@ const _Menu = () => {
     );
 };
 const Menu = () => {
+    const { t } = useTranslation();
     const { state, updateContext, replaceContext, restart } = React.useContext(GlobalContext);
     const { togglePause } = React.useContext(PauseContext);
     const reset = () => {
@@ -103,11 +106,12 @@ const Menu = () => {
             <div className="startscreen-jail">
                 <div className="innermenu">
                     <MenuTitle label="😴" />
+
                     <div className="announcement">{announcement}</div>
                     <MenuTree>
                         <MenuButton
                             icon="▶️"
-                            title="Resume"
+                            title={t("resume")}
                             onClick={() => {
                                 toggleMenu(state.settings.showMenu);
                             }}
