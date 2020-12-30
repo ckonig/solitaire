@@ -3,7 +3,7 @@ import { ScreenNavigator } from "./ScreenNavigator";
 import React from "react";
 
 const ScreenContent = (props: { id: string; children: any[] }) => {
-    const navigator = new ScreenNavigator(props.id);
+    const navigator = new ScreenNavigator();
     let _index = -1;
     const addRow = (child: any) => {
         if (!child.props.skip) {

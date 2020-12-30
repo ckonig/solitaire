@@ -1,10 +1,28 @@
 import React from "react";
+import { XY } from "../StartScreen/Menu/Tree";
+export interface StaticMenuButtonProps {
+    icon: string;
+    title: string;
+    onClick: (pos: XY) => void;
+    onFocus: (pos: XY) => void;
+    toggled?: boolean;
+    children?: any[];
+}
+interface MenuButtonProps extends StaticMenuButtonProps {
+    x: number;
+    y: number;
+    menuX: number;
+    menuY: number;
+    menuFocus: string;
+    active: boolean;
 
-const MenuButton = (props) => {
-    const inputEl = React.useRef(null);
+    toggled: boolean;
+}
+const MenuButton = (props: MenuButtonProps) => {
+    const inputEl = React.useRef<HTMLButtonElement>(null);
 
     let className = "";
-  
+
     if (props.y > 0) {
         className += " indented";
     }
@@ -48,10 +66,20 @@ const MenuButton = (props) => {
     };
 
     return (
-        <button ref={inputEl} className={className} title={props.title} onFocus={focus} onClick={click} onMouseDown={()=>setClicking(true)}>
-            <div className="icon">{props.icon}</div>
-            <div className="label">{props.title}</div>
-        </button>
+        <>
+            <button
+                ref={inputEl}
+                className={className}
+                title={props.title}
+                onFocus={focus}
+                onClick={click}
+                onMouseDown={() => setClicking(true)}
+            >
+                <div className="icon">{props.icon}</div>
+                <div className="label">{props.title}</div>
+            </button>
+            <div>{!props.toggled ? null : props.children}</div>
+        </>
     );
 };
 export default MenuButton;
