@@ -36,25 +36,32 @@ const App = () => {
         if (appState.boardMode == "singleplayer") {
             board = (
                 <AspectRatio ratio={Ratios._4to3}>
-                    <BoardWrap player={0} settings={appState} restart={restart} deck={deck} />
+                    <div className={"layout-grid-container singleplayer"}>
+                        <BoardWrap player={0} settings={appState} restart={restart} deck={deck} />
+                    </div>
                 </AspectRatio>
             );
         }
         if (appState.boardMode == "splitscreen") {
             board = (
                 <div className="game-layout-container splitscreen">
-                    <BoardWrap
-                        player={0}
-                        settings={{ ...appState, inputMode: appState.players[0].inputMethod }}
-                        restart={restart}
-                        deck={deck.copy()}
-                    />
-                    <BoardWrap
-                        player={1}
-                        settings={{ ...appState, inputMode: appState.players[1].inputMethod }}
-                        restart={restart}
-                        deck={deck.copy()}
-                    />
+                    <div className={"layout-grid-container " + appState.boardMode}>
+                        <BoardWrap
+                            player={0}
+                            settings={{ ...appState, inputMode: appState.players[0].inputMethod }}
+                            restart={restart}
+                            deck={deck.copy()}
+                        />
+                    </div>
+
+                    <div className={"layout-grid-container " + appState.boardMode}>
+                        <BoardWrap
+                            player={1}
+                            settings={{ ...appState, inputMode: appState.players[1].inputMethod }}
+                            restart={restart}
+                            deck={deck.copy()}
+                        />
+                    </div>
                 </div>
             );
         }

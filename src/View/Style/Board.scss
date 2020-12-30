@@ -50,6 +50,7 @@ button {
     background-color: "darkgreen";
     font-size: 1vw;
     float: left;
+    position: relative;
 }
 
 .header {
@@ -59,11 +60,12 @@ button {
     border-radius: 0.25em;
     color: white;
     z-index:3000;
+    height: 1.75em;
 }
 
 .board-grid-container {
-    margin-top: 0.1em;
-    margin: 1em;
+    margin: 0em;
+    margin-top: 1.25em;
     grid-area: game;
     display: grid;
     grid-gap: 1.5vw;
@@ -73,9 +75,12 @@ button {
         "tableau tableau tableau tableau tableau tableau tableau";
     background-color: "darkgreen";
 }
-
-.board-grid-container {
-    margin-top: 1.25em;
+.board-grid-container.singleplayer {
+    margin-top:1.25em;
+}
+.board-grid-container.splitscreen {
+    width: 100%;
+  
 }
 
 .board-field {

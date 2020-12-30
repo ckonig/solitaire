@@ -1,6 +1,3 @@
-.appwrapper {
-    text-align: center;
-}
 .appwrapper-4-to-3-portrait {
     margin: auto;
     overflow: none;
@@ -28,11 +25,4 @@
     padding-bottom: 75%;
     font-size: 1vw;
     position: relative;
-}
-.appwrapper-jail {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
 }

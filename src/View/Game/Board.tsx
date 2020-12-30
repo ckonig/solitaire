@@ -14,22 +14,20 @@ import Waste from "./Waste";
 const Board = (props: any) => (
     <>
         <Menu />
-        <div className={"layout-grid-container " + props.mode}>
-            <Header mode={props.mode} />
-            <div className={"board-jail " + props.mode}>
-                <div className={"board-grid-container " + props.mode}>
-                    <Stock />
-                    <Waste />
-                    <div className="spacer">&nbsp;</div>
-                    <Foundation.Stacks />
-                    <Tableau.Stacks />
-                </div>
-
-                <PauseScreen />
+        <Header mode={props.mode} />
+        <div className={"board-jail " + props.mode}>
+            <div className={"board-grid-container " + props.mode}>
+                <Stock />
+                <Waste />
+                <div className="spacer">&nbsp;</div>
+                <Foundation.Stacks />
+                <Tableau.Stacks />
             </div>
-            <Dealer />
-            <BoardNavigator />
+
+            <PauseScreen />
         </div>
+        <Dealer />
+        <BoardNavigator />
     </>
 );
 
