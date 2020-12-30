@@ -22,19 +22,19 @@ button {
 
 .game-layout-container.singleplayer {
     position: absolute;
-    left: 17.5vw;
-    right: 17.5vw;
+    
 }
 
 .layout-grid-container.singleplayer {
-    width: 65vw;
+    
+    width: 100%;
     display: grid;
     grid-template-areas:
         "header"
         "game";
-    grid-gap: 0.5vw;
+    grid-gap: 0.5%vw;
     background-color: "darkgreen";
-    font-size: 1.7vw;
+    font-size: 2.25em;
 }
 
 .layout-grid-container.splitscreen {
@@ -53,15 +53,17 @@ button {
 }
 
 .header {
+    font-size: 1em;
     grid-area: header;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 0.25em;
     color: white;
+    z-index:3000;
 }
 
 .board-grid-container {
-    margin-top: 1vw;
-    margin: 1vw;
+    margin-top: 0.1em;
+    margin: 1em;
     grid-area: game;
     display: grid;
     grid-gap: 1.5vw;
@@ -72,8 +74,8 @@ button {
     background-color: "darkgreen";
 }
 
-.board-grid-container.splitscreen {
-    margin-top: 2vw;
+.board-grid-container {
+    margin-top: 1.25em;
 }
 
 .board-field {
@@ -209,62 +211,62 @@ button {
     background-color: hsl(34, 53%, 82%);
     background-image: repeating-linear-gradient(
             45deg,
-            transparent 5vw,
-            hsla(197, 62%, 11%, 0.5) 0.5vw,
-            hsla(197, 62%, 11%, 0.5) 1vw,
-            hsla(5, 53%, 63%, 0) 1vw,
-            hsla(5, 53%, 63%, 0) 3.5vw,
-            hsla(5, 53%, 63%, 0.5) 3.5vw,
-            hsla(5, 53%, 63%, 0.5) 4vw,
-            hsla(197, 62%, 11%, 0.5) 4vw,
-            hsla(197, 62%, 11%, 0.5) 5vw,
-            hsla(197, 62%, 11%, 0) 5vw,
-            hsla(197, 62%, 11%, 0) 6vw,
-            hsla(5, 53%, 63%, 0.5) 6vw,
-            hsla(5, 53%, 63%, 0.5) 7vw,
-            hsla(35, 91%, 65%, 0.5) 7vw,
-            hsla(35, 91%, 65%, 0.5) 8vw,
-            hsla(35, 91%, 65%, 0) 8vw,
-            hsla(35, 91%, 65%, 0) 9vw,
-            hsla(5, 53%, 63%, 0.5) 9vw,
-            hsla(5, 53%, 63%, 0.5) 11vw,
-            hsla(5, 53%, 63%, 0) 11vw,
-            hsla(5, 53%, 63%, 0) 12vw,
-            hsla(197, 62%, 11%, 0.5) 12vw,
-            hsla(197, 62%, 11%, 0.5) 1.4vw
+            transparent 5em,
+            hsla(197, 62%, 11%, 0.5) 0.5em,
+            hsla(197, 62%, 11%, 0.5) 1em,
+            hsla(5, 53%, 63%, 0) 1em,
+            hsla(5, 53%, 63%, 0) 3.5em,
+            hsla(5, 53%, 63%, 0.5) 3.5em,
+            hsla(5, 53%, 63%, 0.5) 4em,
+            hsla(197, 62%, 11%, 0.5) 4em,
+            hsla(197, 62%, 11%, 0.5) 5em,
+            hsla(197, 62%, 11%, 0) 5em,
+            hsla(197, 62%, 11%, 0) 6em,
+            hsla(5, 53%, 63%, 0.5) 6em,
+            hsla(5, 53%, 63%, 0.5) 7em,
+            hsla(35, 91%, 65%, 0.5) 7em,
+            hsla(35, 91%, 65%, 0.5) 8em,
+            hsla(35, 91%, 65%, 0) 8em,
+            hsla(35, 91%, 65%, 0) 9em,
+            hsla(5, 53%, 63%, 0.5) 9em,
+            hsla(5, 53%, 63%, 0.5) 11em,
+            hsla(5, 53%, 63%, 0) 11em,
+            hsla(5, 53%, 63%, 0) 12em,
+            hsla(197, 62%, 11%, 0.5) 12em,
+            hsla(197, 62%, 11%, 0.5) 1.4em
         ),
         repeating-linear-gradient(
             135deg,
-            transparent 5vw,
-            hsla(197, 62%, 11%, 0.5) 0.5vw,
-            hsla(197, 62%, 11%, 0.5) 1vw,
-            hsla(5, 53%, 63%, 0) 1vw,
-            hsla(5, 53%, 63%, 0) 3.5vw,
-            hsla(5, 53%, 63%, 0.5) 3.5vw,
-            hsla(5, 53%, 63%, 0.5) 4vw,
-            hsla(197, 62%, 11%, 0.5) 4vw,
-            hsla(197, 62%, 11%, 0.5) 5vw,
-            hsla(197, 62%, 11%, 0) 5vw,
-            hsla(197, 62%, 11%, 0) 6vw,
-            hsla(5, 53%, 63%, 0.5) 6vw,
-            hsla(5, 53%, 63%, 0.5) 7vw,
-            hsla(35, 91%, 65%, 0.5) 7vw,
-            hsla(35, 91%, 65%, 0.5) 8vw,
-            hsla(35, 91%, 65%, 0) 8vw,
-            hsla(35, 91%, 65%, 0) 9vw,
-            hsla(5, 53%, 63%, 0.5) 9vw,
-            hsla(5, 53%, 63%, 0.5) 11vw,
-            hsla(5, 53%, 63%, 0) 11vw,
-            hsla(5, 53%, 63%, 0) 14vw,
-            hsla(197, 62%, 11%, 0.5) 14vw,
-            hsla(197, 62%, 11%, 0.5) 1.6vw
+            transparent 5em,
+            hsla(197, 62%, 11%, 0.5) 0.5em,
+            hsla(197, 62%, 11%, 0.5) 1em,
+            hsla(5, 53%, 63%, 0) 1em,
+            hsla(5, 53%, 63%, 0) 3.5em,
+            hsla(5, 53%, 63%, 0.5) 3.5em,
+            hsla(5, 53%, 63%, 0.5) 4em,
+            hsla(197, 62%, 11%, 0.5) 4em,
+            hsla(197, 62%, 11%, 0.5) 5em,
+            hsla(197, 62%, 11%, 0) 5em,
+            hsla(197, 62%, 11%, 0) 6em,
+            hsla(5, 53%, 63%, 0.5) 6em,
+            hsla(5, 53%, 63%, 0.5) 7em,
+            hsla(35, 91%, 65%, 0.5) 7em,
+            hsla(35, 91%, 65%, 0.5) 8em,
+            hsla(35, 91%, 65%, 0) 8em,
+            hsla(35, 91%, 65%, 0) 9em,
+            hsla(5, 53%, 63%, 0.5) 9em,
+            hsla(5, 53%, 63%, 0.5) 11em,
+            hsla(5, 53%, 63%, 0) 11em,
+            hsla(5, 53%, 63%, 0) 14em,
+            hsla(197, 62%, 11%, 0.5) 14em,
+            hsla(197, 62%, 11%, 0.5) 1.6em
         );
     margin: 5%;
     border-radius: 0.25em;
     height: 92%;
     border-color: black;
     border-style: solid;
-    border-width: 0.1vw;
+    border-width: 0.1em;
 }
 
 .suit-♥,

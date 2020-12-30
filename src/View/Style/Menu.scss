@@ -316,9 +316,24 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 .gamemenu {
     z-index: 10000;
     position: absolute;
-    left: 10%;
+    left: 20%;
     right: 10%;
-    width: 80%;
-    top: 10%;
-    bottom: 10%;
+    width: 60%;
+    top: 0;
+}
+
+.gamemenu .innermenu {
+    
+    top: 5.5%;
+    left: 16.66%
+}
+
+.gamemenu .announcement {
+    text-align: center;
+    padding-bottom: 5%;
+    font-size: 1.25em;
+}
+
+.gamemenu .title {
+    font-size: 5em;
 }

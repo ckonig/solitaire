@@ -60,14 +60,14 @@ const Card = (props) => {
 
     const getCardStyle = () => {
         const style = {
-            zIndex: (props.zIndex ? props.zIndex : !!props.offsetTop * 20)+1,
-            top: props.offsetTop ? props.offsetTop / 10 + "vw" : 0,
+            zIndex: (props.zIndex ? props.zIndex : !!props.offsetTop * 20) + 1,
+            top: props.offsetTop ? props.offsetTop / 15 + "em" : 0,
             ...props.model.entropyStyle,
         };
 
         //move to left on waste (triple draw)
         if (props.offsetLeft) {
-            style.left = props.offsetLeft * 4 + "vw";
+            style.left = props.offsetLeft * 2 + "em";
         }
 
         if (!props.model.onClick) {
@@ -90,9 +90,9 @@ const Card = (props) => {
     const split = props.model.source.split("-");
     label += split[0];
     if (split.length > 1) {
-        label += names[split[1]]
+        label += names[split[1]];
     }
-    label += ": "
+    label += ": ";
 
     label += props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face;
 

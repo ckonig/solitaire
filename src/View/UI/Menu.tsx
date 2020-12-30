@@ -86,11 +86,27 @@ const Menu = () => {
         setNavigation({ ...navigation, menu: pos });
     };
 
+    const pause = React.useContext(PauseContext);
+    const remaining = pause.state.allowed - pause.state.pauses.length - 1;
+
+    //@todo proper I18N
+    let announcement = `You can pause the game ${remaining} more times.`;
+    if (remaining == 1) {
+        announcement = `You can pause the game ${remaining} more time.`;
+    }
+    if (remaining == 0) {
+        announcement = "This is the last remaining pause. If you continue, no more pause will be possible.";
+    }
+    if (remaining < 0) [
+        announcement = "The game is not paused."
+    ]
+
     return (
         <div className="gamemenu menu">
             <div className="startscreen-jail">
                 <div className="innermenu">
                     <MenuTitle label="😴" />
+                    <div className="announcement">{announcement}</div>
                     <MenuTree>
                         <MenuButton
                             icon="▶️"

@@ -8,7 +8,8 @@ import GameModes from "./GameModes";
 import { PauseProvider } from "./View/PauseContext";
 import React from "react";
 import Home from "./View/UI/StartScreen/Home";
-import AspectRatio16to9 from "./View/AspectRatio/AspectRatio16to9";
+import AspectRatio from "./View/AspectRatio/AspectRatio";
+import Ratios from "./View/AspectRatio/Ratios";
 
 const App = () => {
     const [started, setStarted] = React.useState<number>(0);
@@ -34,9 +35,9 @@ const App = () => {
         let board = null;
         if (appState.boardMode == "singleplayer") {
             board = (
-                <div className="game-layout-container singleplayer">
+                <AspectRatio ratio={Ratios._4to3}>
                     <BoardWrap player={0} settings={appState} restart={restart} deck={deck} />
-                </div>
+                </AspectRatio>
             );
         }
         if (appState.boardMode == "splitscreen") {
@@ -61,9 +62,9 @@ const App = () => {
     }
 
     return (
-        <AspectRatio16to9>
+        <AspectRatio ratio={Ratios._16to9}>
             <Home start={start} />
-        </AspectRatio16to9>
+        </AspectRatio>
     );
 };
 export default App;

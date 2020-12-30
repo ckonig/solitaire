@@ -15,7 +15,7 @@ const ToggleMenu = () => {
     return (
         <div>
             <button title="Settings" onClick={() => toggleMenu(state.settings.showMenu)}>
-                ⚙️
+            <span className="icon">☰</span>
             </button>
         </div>
     );

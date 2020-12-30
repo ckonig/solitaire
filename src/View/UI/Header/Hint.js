@@ -18,7 +18,7 @@ const Hint = () => {
     return !isVisible(state) ? null : (
         <div>
             <button title="Hint" onClick={() => suggestOnce()} disabled={isDisabled(state)}>
-                💡
+                <span className="icon">💡</span> Hint
             </button>
         </div>
     );

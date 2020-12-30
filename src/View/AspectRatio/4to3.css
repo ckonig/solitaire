@@ -1,31 +1,31 @@
 .appwrapper {
     text-align: center;
 }
-.appwrapper-16-to-9-portrait {
+.appwrapper-4-to-3-portrait {
     margin: auto;
     overflow: none;
     box-sizing: border-box;
     width: 100vw;
     max-height: 100vh;
 }
-.appwrapper-16-to-9-landscape {
+.appwrapper-4-to-3-landscape {
     margin: auto;
     overflow: none;
     box-sizing: border-box;
     width: 100vw;
-    height: 56.25vw; /* height:width ratio = 9/16 = .5625  */
+    height: 75vw; /* height:width ratio = 3/4 = .5625  */
     max-height: 100vh;
-    max-width: 177.78vh; /* 16/9 = 1.778 */
+    max-width: 133.33vh; /* 4/3 = 1.778 */
 }
-.appwrapper-16-to-9-landscape-inner {
+.appwrapper-4-to-3-landscape-inner {
     width: 100%;
-    padding-bottom: 56.25%;
-    font-size: 1.778vh;
+    padding-bottom: 75%;
+    font-size: 1.333vh;
     position: relative;
 }
-.appwrapper-16-to-9-portrait-inner {
+.appwrapper-4-to-3-portrait-inner {
     width: 100%;
-    padding-bottom: 56.25%;
+    padding-bottom: 75%;
     font-size: 1vw;
     position: relative;
 }

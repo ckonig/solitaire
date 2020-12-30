@@ -20,7 +20,7 @@ const Undo = () => {
                 title={"Undo (Penalty:" + Math.pow(2, state.game.rating.multiplicator) + ")"}
                 onClick={undo}
             >
-                ⏪
+                <span className="icon">⏪</span> Undo
             </button>
         </div>
     );

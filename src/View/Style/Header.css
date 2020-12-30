@@ -1,24 +1,26 @@
 .header.singleplayer {
-    font-size: 2vw;
+    font-size: 1em;
 }
 
 .header.splitscreen {
-    font-size: 1.5vw;
-    padding-top:0.25vw;
+    font-size: 1.5em;
+    padding-top: 0em;
 }
 
 .header-clock,
 .header-title {
-    margin-top: 0.25vw;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
     float: left;
 }
 
 .header-clock {
-    margin-left: 1vw;
+    margin-left: 1em;
 }
 
 .header-buttons {
     float: right;
+    padding-right: 0.5em;
 }
 
 .header-buttons > div {
@@ -26,30 +28,37 @@
 }
 
 .icon-container {
-    margin-left: 1vw;
+    margin-left: 0.5em;
     float: left;
     text-align: center;
 }
 
 .heart-container {
-    margin-left: 1vw;
+    margin-left: 0.5em;
     float: left;
     text-align: left;
 }
 
+.header-buttons > div > button:disabled {
+    color: gray;
+}
+.header-buttons > div > button > .icon {
+    font-size: 1.25em;
+}
 .header-buttons > div > button {
-    padding-top: 0vw;
+    font-size: 0.75em;
+    padding-top: 0em;
     border-radius: 0.5em;
     border-color: gray;
     border-style: none;
-
-    margin-top: 0.25vw;
+    color: white;
+    margin-top: 0.25em;
     background-color: transparent;
 }
-.singleplayer  .header-buttons > div > button {
-    width: 5vw;
+.singleplayer .header-buttons > div > button {
+    width: 1.5em;
 }
 
 .splitscreen .header-buttons > div > button {
-    width: 3.5vw;
+    width: 1.5em;
 }
