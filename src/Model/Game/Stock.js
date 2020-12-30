@@ -21,9 +21,9 @@ export default class Stock extends BasicStack {
 
     setOnClick = (onClick) => {
         this.clickEmpty = (p) => onClick(null, p);
-        this.stack.forEach((card,index) => {
-            card.onClick = (p) => onClick({...card}, p);
-            card.canClick = () => index == this.stack.length-1;
+        this.stack.forEach((card, index) => {
+            card.onClick = (p) => onClick({ ...card }, p);
+            card.canClick = () => index == this.stack.length - 1;
         });
     };
 
@@ -42,6 +42,7 @@ export default class Stock extends BasicStack {
     recycle = (waste) => {
         if (waste.length) {
             this.stack = waste.reverse().map(this.setCardProperties);
+            this.stack[this.stack.length - 1].canClick = () => true;
             this.recyclings++;
             return true;
         }

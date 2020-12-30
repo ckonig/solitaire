@@ -123,6 +123,7 @@ export default class Navigator {
         } else {
             this.model.focus.setStack(this.current().source);
         }
+        return true;
     };
 
     current = () => {
@@ -133,6 +134,7 @@ export default class Navigator {
         if (this.model.focus.card && this.model.focus.card.canClick()) {
             return this.model.focus.card.onClick({ isKeyboard: true });
         } else if (this.model.focus.stack) {
+            console.debug("delegating to clickempty")
             return this.current().clickEmpty({ isKeyboard: true });
         } else {
             return (ctx: BusinessModel) => {

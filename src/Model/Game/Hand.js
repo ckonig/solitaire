@@ -60,7 +60,7 @@ export default class Hand {
     getTableauIndex = () => this.source && this.source.substring(8);
 
     static copy = (orig) => {
-        const copy = new Hand(orig.focus);
+        const copy = new Hand();
         copy.stack = Card.copyAll(orig.stack);
         copy.source = orig.source;
         copy.position = orig.position;

@@ -39,7 +39,7 @@ export default class BusinessModel extends Model {
 
     withHandlers = () => {
         const getHandler = (clickHandler: ClickHandler) => new Dispatcher(clickHandler).getHandler(this.hand);
-        this.stock.setOnClick(getHandler(new Stock()));
+        this.stock.setOnClick(getHandler(new Stock(this.navigator)));
         this.waste.setOnClick(getHandler(new Waste()));
         this.foundation.setOnClick(getHandler(new Foundation()));
         this.tableau.setOnClick(getHandler(new Tableau()),getHandler(new TableauHidden()), this.hand);
