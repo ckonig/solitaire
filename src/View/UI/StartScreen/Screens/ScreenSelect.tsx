@@ -31,10 +31,6 @@ const _ScreenSelect = (props: SelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { navigation, setNavigation } = React.useContext(NavigationContext);
-    const increment = () => {
-        props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString());
-        setNavigation({ ...navigation, screen: { x: props.x, y: props.y } });
-    };
 
     return (
         <div className={getScreenElementClassName("togglecontainer", props)}>
@@ -44,7 +40,10 @@ const _ScreenSelect = (props: SelectProps) => {
             <div className="button">
                 <button
                     ref={inputEl}
-                    onClick={increment}
+                    onClick={() => {
+                        props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString());
+                        setNavigation({ ...navigation, screen: { x: props.x, y: props.y } });
+                    }}
                     disabled={!!props.disabled}
                     onFocus={() => {
                         if (!props.hasFocus) {

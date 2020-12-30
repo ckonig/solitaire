@@ -46,7 +46,7 @@ export default class BusinessModel extends Model {
         return this;
     };
 
-    static getInitialState = (launchSettings: AppState, deck: Deck, player: string) => {
+    static getInitialState = (launchSettings: AppState, deck: Deck, player: number) => {
         return new BusinessModel(Model.getInitialState(launchSettings, deck, player));
     };
 

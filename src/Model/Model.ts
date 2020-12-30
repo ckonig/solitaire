@@ -18,7 +18,7 @@ export default class Model {
     game: Game;
     settings: Settings;
     focus: Focus;
-    player: string;
+    player: number;
 
     constructor(obj: any) {
         this.stock = obj.stock;
@@ -32,7 +32,7 @@ export default class Model {
         this.player = obj.player;
     }
 
-    static getInitialState = (launchSettings: AppState, deck: Deck, player: string) => {
+    static getInitialState = (launchSettings: AppState, deck: Deck, player: number) => {
         const settings = new Settings(launchSettings);
         const hand = new Hand();
         const state = {

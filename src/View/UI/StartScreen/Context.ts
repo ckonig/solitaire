@@ -1,5 +1,5 @@
 import React from "react";
-import { EntropySettings, RatingSettings } from "../../../Common";
+import { defaultPlayerSettings, EntropySettings, PlayerSettings, RatingSettings } from "../../../Common";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 import RatingPresets from "./RatingOptions";
 import TouchDetector from "./TouchDetector";
@@ -8,7 +8,8 @@ export interface IStartScreenContext {
     state: StartScreenState;
     setState: (s: StartScreenState) => void;
 }
-export const defaultStartScreenState = {
+
+export const defaultStartScreenState: StartScreenState = {
     ratingSettings: { ...RatingPresets.all[1].settings },
     difficultySettings: 1,
     ratingPreset: 1,
@@ -17,18 +18,8 @@ export const defaultStartScreenState = {
         baseEntropy: TouchDetector() ? 1 : 2,
         interactionEntropy: TouchDetector() ? 1 : 2,
     },
-    menu: {
-        x: 0,
-        y: 0,
-    },
-    screen: {
-        x: 0,
-        y: 0,
-    },
-    focus: "menu",
-    screeen: "",
-    mainMenu: "",
     suggestionMode: SuggestionModes.REGULAR,
+    players: defaultPlayerSettings,
 };
 
 export interface StartScreenState {
@@ -38,6 +29,7 @@ export interface StartScreenState {
     quickDeal: boolean;
     entropySettings: EntropySettings;
     suggestionMode: string;
+    players: PlayerSettings;
 }
 
 export interface NavigationState {
@@ -82,8 +74,8 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         ratingSettings: {},
         entropySettings: {},
         quickDeal: false,
-
         suggestionMode: SuggestionModes.REGULAR,
+        players: defaultPlayerSettings,
     },
     setState: () => {},
 });

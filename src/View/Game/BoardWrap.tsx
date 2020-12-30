@@ -7,11 +7,15 @@ import EndScreen from "../UI/EndScreen";
 import { Provider } from "../Context";
 import React from "react";
 
+export const BoardContext = React.createContext({
+    player: 0,
+});
+const BoardProvider = BoardContext.Provider;
 interface BoardWrapProps {
     settings: AppState;
     restart: () => void;
     deck: Deck;
-    player: string;
+    player: number;
 }
 
 export default class BoardWrap extends React.Component<BoardWrapProps, BusinessModel> {
@@ -51,7 +55,13 @@ export default class BoardWrap extends React.Component<BoardWrapProps, BusinessM
         };
         return (
             <Provider value={context}>
-                <Board mode={this.props.settings.boardMode} />
+                <BoardProvider
+                    value={{
+                        player: this.props.player,
+                    }}
+                >
+                    <Board mode={this.props.settings.boardMode} />
+                </BoardProvider>
                 <EndScreen />
             </Provider>
         );

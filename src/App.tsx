@@ -1,7 +1,7 @@
 import "./View/Style/App.css";
 import "./View/Style/UI.css";
 
-import { AppState } from "./Common";
+import { AppState, defaultPlayerSettings } from "./Common";
 import BoardWrap from "./View/Game/BoardWrap";
 import Deck from "./Model/Deck/Deck";
 import GameModes from "./GameModes";
@@ -12,7 +12,7 @@ import AspectRatio16to9 from "./View/AspectRatio/AspectRatio16to9";
 
 const App = () => {
     const [started, setStarted] = React.useState<number>(0);
-    const defaultState = { boardMode: GameModes.CUSTOM.boardMode, inputMode: "mouse", initialized: false };
+    const defaultState = { boardMode: GameModes.CUSTOM.boardMode, inputMode: "mouse", initialized: false, players: defaultPlayerSettings };
     const [appState, setAppState] = React.useState<AppState>(defaultState);
 
     const restart = () => {
@@ -35,15 +35,25 @@ const App = () => {
         if (appState.boardMode == "singleplayer") {
             board = (
                 <div className="game-layout-container singleplayer">
-                    <BoardWrap player="1" settings={appState} restart={restart} deck={deck} />
+                    <BoardWrap player={0} settings={appState} restart={restart} deck={deck} />
                 </div>
             );
         }
         if (appState.boardMode == "splitscreen") {
             board = (
                 <div className="game-layout-container splitscreen">
-                    <BoardWrap player="1" settings={{ ...appState, inputMode: "gamepad" }} restart={restart} deck={deck.copy()} />
-                    <BoardWrap player="2" settings={{ ...appState, inputMode: "keyboard" }} restart={restart} deck={deck.copy()} />
+                    <BoardWrap
+                        player={0}
+                        settings={{ ...appState, inputMode: appState.players[0].inputMethod }}
+                        restart={restart}
+                        deck={deck.copy()}
+                    />
+                    <BoardWrap
+                        player={1}
+                        settings={{ ...appState, inputMode: appState.players[1].inputMethod }}
+                        restart={restart}
+                        deck={deck.copy()}
+                    />
                 </div>
             );
         }

@@ -6,6 +6,7 @@ const Row = (props: { skip?: boolean; y?: number; navigator?: ScreenNavigator; c
         return null;
     }
     const addElement = (child: any, index: number) => {
+        if (!child) return null;
         const assign = (n: any[]) => {
             n[props.y || 0].buttons[index || 0] = { x: index, y: props.y };
         };

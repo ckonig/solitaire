@@ -39,13 +39,13 @@ const Screen = (props: { screen: string }) => {
         case "controls0":
             return (
                 <Wrap>
-                    <Controls player={0} />
+                    <Controls player={0} closeScreen={closeScreen} />
                 </Wrap>
             );
         case "controls1":
             return (
                 <Wrap>
-                    <Controls player={1} />
+                    <Controls player={1} closeScreen={closeScreen} />
                 </Wrap>
             );
         default:

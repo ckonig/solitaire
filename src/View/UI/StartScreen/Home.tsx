@@ -46,6 +46,7 @@ const Home = (props: { start: (settings: any) => void }) => {
             ...DifficultyOptions[state.difficultySettings].settings,
             ...state.ratingSettings,
             ...state.entropySettings,
+            players: { ...state.players },
             quickDeal: state.quickDeal,
             boardMode: boardMode,
             initialized: true,
