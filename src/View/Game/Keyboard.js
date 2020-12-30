@@ -51,7 +51,7 @@ const Keyboard = (props) => {
             document.removeEventListener("keydown", navListener);
             console.debug('un-registered nav listener')
         };
-    }, [props.onPause]);
+    }, [props]);
     return null;
 };
 export default Keyboard;
