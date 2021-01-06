@@ -9,7 +9,6 @@ const PauseScreen = () => {
     const { state, togglePause } = React.useContext(PauseContext);
     const remaining = state.allowed - state.pauses.length - 1;
 
-    //@todo proper I18N
     let announcement = `You can pause the game ${remaining} more times.`;
     if (remaining == 1) {
         announcement = `You can pause the game ${remaining} more time.`;

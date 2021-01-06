@@ -11,7 +11,6 @@ import PauseContext from "../PauseContext";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import { XY } from "./XY";
-import { useTranslation } from "react-i18next";
 
 const _Menu = () => {
     const [navigation, setNavigation] = React.useState<NavigationState>({
@@ -38,7 +37,6 @@ const _Menu = () => {
     );
 };
 const Menu = () => {
-    const { t } = useTranslation();
     const { state, updateContext, replaceContext, restart } = React.useContext(GlobalContext);
     const { togglePause } = React.useContext(PauseContext);
     const reset = () => {
@@ -94,7 +92,6 @@ const Menu = () => {
     const pause = React.useContext(PauseContext);
     const remaining = pause.state.allowed - pause.state.pauses.length - 1;
 
-    //@todo proper I18N
     let announcement = `You can pause the game ${remaining} more times.`;
     if (remaining == 1) {
         announcement = `You can pause the game ${remaining} more time.`;
@@ -114,7 +111,7 @@ const Menu = () => {
                     <MenuTree>
                         <MenuButton
                             icon="▶️"
-                            title={t("resume")}
+                            title="Resume"
                             onClick={() => {
                                 toggleMenu(state.settings.showMenu);
                             }}

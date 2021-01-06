@@ -8,8 +8,6 @@ import React from "react";
 import StorageManager from "../../StorageManager";
 import VerticalMenu from "./VerticalMenu";
 import { XY } from "../../XY";
-import i18n from "../../../../i18n";
-import { useTranslation } from "react-i18next";
 
 const StartMenu = (props: { start: (boardMode: string) => void }) => {
     const { navigation, setNavigation } = React.useContext(NavigationContext);
@@ -43,23 +41,12 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
 
     const storage = new StorageManager();
 
-    const { t } = useTranslation();
-
-    const changeLanguage = (lng: string) => {
-        i18n.changeLanguage(lng);
-    };
-
     return (
         <VerticalMenu>
             <MenuTitle label="♦ Solitaire" />
 
             <MenuTree>
-                <MenuButton
-                    icon="🎲"
-                    title={t("menu.singleplayer")}
-                    onClick={() => props.start(GameModes.CUSTOM.boardMode)}
-                    onFocus={onfocus}
-                />
+                <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.CUSTOM.boardMode)} onFocus={onfocus} />
                 <MenuButton
                     icon="⚔️"
                     title="Versus"
@@ -111,18 +98,6 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         onFocus={onfocus}
                         toggled={navigation.screeen == "settings"}
                     />
-                </MenuButton>
-                <MenuButton
-                    icon="🌍"
-                    title={"Language: " + i18n.language.toUpperCase()}
-                    onClick={(pos: XY) => toggleMainMenu("language", pos)}
-                    onFocus={onfocus}
-                    toggled={navigation.mainMenu == "language"}
-                >
-                    <MenuButton icon="🇩🇪" onFocus={onfocus} title="Deutsch" onClick={() => changeLanguage("de")} />
-                    <MenuButton icon="🇬🇧" onFocus={onfocus} title="English" onClick={() => changeLanguage("en")} />
-                    <MenuButton icon="🇳🇱" onFocus={onfocus} title="Nederlands" onClick={() => changeLanguage("nl")} />
-                    <MenuButton icon="🇫🇷" onFocus={onfocus} title="Francais" onClick={() => changeLanguage("fr")} />
                 </MenuButton>
                 <MenuButton
                     icon="🍪"

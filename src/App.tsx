@@ -2,17 +2,17 @@ import "./View/Style/App.css";
 import "./View/Style/UI.css";
 
 import { AppState, defaultPlayerSettings } from "./Common";
+
+import AspectRatio from "./View/AspectRatio/AspectRatio";
 import BoardWrap from "./View/Game/BoardWrap";
 import Deck from "./Model/Deck/Deck";
 import GameModes from "./GameModes";
-import { PauseProvider } from "./View/PauseContext";
-import React from "react";
 import Home from "./View/UI/StartScreen/Home";
-import AspectRatio from "./View/AspectRatio/AspectRatio";
+import { PauseProvider } from "./View/PauseContext";
 import Ratios from "./View/AspectRatio/Ratios";
-import { withTranslation, WithTranslation } from "react-i18next";
+import React from "react";
 
-const App: React.FC<WithTranslation> = () => {
+const App = () => {
     const [started, setStarted] = React.useState<number>(0);
     const defaultState = { boardMode: GameModes.CUSTOM.boardMode, inputMode: "mouse", initialized: false, players: defaultPlayerSettings };
     const [appState, setAppState] = React.useState<AppState>(defaultState);
@@ -75,4 +75,4 @@ const App: React.FC<WithTranslation> = () => {
         </AspectRatio>
     );
 };
-export default withTranslation()(App);
+export default App;
