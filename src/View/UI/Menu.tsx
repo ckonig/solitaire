@@ -1,14 +1,16 @@
 import "../Style/Menu.scss";
 
-import React from "react";
+import { NavigationContext, NavigationProvider, NavigationState } from "./StartScreen/Context";
+
+import EntropyLevels from "../../Model/Game/EntropyLevels";
+import GlobalContext from "../Context";
+import MenuButton from "./StartScreen/Menu/MenuButton";
 import MenuTitle from "./StartScreen/Menu/MenuTitle";
 import MenuTree from "./StartScreen/Menu/MenuTree";
-import MenuButton from "./StartScreen/Menu/MenuButton";
-import { NavigationContext, NavigationProvider, NavigationState } from "./StartScreen/Context";
-import { XY } from "./XY";
-import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
-import BusinessModel from "../../Business/BusinessModel";
+import React from "react";
+import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
+import { XY } from "./XY";
 import { useTranslation } from "react-i18next";
 
 const _Menu = () => {
@@ -43,21 +45,11 @@ const Menu = () => {
         togglePause(true, true);
         replaceContext((state) => (state.game.timemachine.previousStates ? state.game.timemachine.previousStates[0] : null));
     };
-    const isVisible = (state: BusinessModel) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
-    const isDisabled = (state: BusinessModel) => state.settings.suggestionMode.isTemporary;
-
-    const suggestOnce = () => {
-        updateContext((state) => {
-            if (isVisible(state) && !isDisabled(state)) {
-                state.settings.enableHint();
-            }
-        });
-    };
 
     //@todo persist game settings in local storage too and use for initialization
-    // const setSuggestionMode = (sm) => updateContext((state) => state.settings.setSuggestionMode(sm));
-    // const setBaseEntropy = (lvl) => updateContext((state) => state.setEntropy(lvl));
-    // const setInteractionEntropy = (lvl) => updateContext((state) => (state.settings.interactionEntropy = lvl));
+    const setSuggestionMode = (sm: string) => updateContext((state) => state.settings.setSuggestionMode(sm));
+    const setBaseEntropy = (lvl: number) => updateContext((state) => state.setEntropy(lvl));
+    const setInteractionEntropy = (lvl: number) => updateContext((state) => (state.settings.interactionEntropy = lvl));
 
     const toggleMenu = (menu: boolean) => {
         togglePause(!state?.settings.showMenu, true);
@@ -80,6 +72,17 @@ const Menu = () => {
     });
 
     const { navigation, setNavigation } = React.useContext(NavigationContext);
+
+    const switchToMenu = (menu: string, pos: XY) =>
+        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
+
+    const toggleMainMenu = (val: string, pos: XY) => {
+        if (navigation.mainMenu !== val) {
+            switchToMenu(val, pos);
+        } else {
+            switchToMenu("", pos);
+        }
+    };
 
     if (!state?.settings.showMenu) {
         return null;
@@ -117,19 +120,43 @@ const Menu = () => {
                             }}
                             onFocus={onfocus}
                         />
-                        <MenuButton icon="⏪" skip={true} title="Undo last move" onClick={() => {}} onFocus={onfocus} />
                         <MenuButton
                             icon="💡"
-                            title="Hint"
-                            onClick={() => suggestOnce()}
+                            title={`Suggestions: ${state.settings.suggestionMode.label}`}
+                            onClick={() => {
+                                setSuggestionMode(SuggestionModes.next(state.settings.suggestionMode).key);
+                            }}
                             onFocus={onfocus}
-                            skip={!isVisible(state)}
-                            disabled={isDisabled(state) || !isVisible(state)}
                         />
-                        <MenuButton icon="💡" skip={true} title="Suggestions" onClick={() => {}} onFocus={onfocus} />
-                        <MenuButton icon="⚙️" skip={true} title="Entropy" onClick={() => {}} onFocus={onfocus}>
-                            <MenuButton icon="⚙️" title="Base Entropy: low" onClick={() => {}} onFocus={onfocus} />
-                            <MenuButton icon="⚙️" title="Action Entropy: low" onClick={() => {}} onFocus={onfocus} />
+                        <MenuButton
+                            icon="🌪️"
+                            title="Entropy"
+                            onClick={(pos: XY) => toggleMainMenu("entropy", pos)}
+                            onFocus={onfocus}
+                            toggled={navigation.mainMenu == "entropy"}
+                        >
+                            <MenuButton
+                                icon="🌪️"
+                                title={`Base Entropy: ${EntropyLevels[state.settings.baseEntropy]}`}
+                                onClick={() => {
+                                    setBaseEntropy(
+                                        state.settings.baseEntropy < EntropyLevels.length - 1 ? state.settings.baseEntropy + 1 : 0
+                                    );
+                                }}
+                                onFocus={onfocus}
+                            />
+                            <MenuButton
+                                icon="🌬️"
+                                title={`Action Entropy: ${EntropyLevels[state.settings.interactionEntropy]}`}
+                                onClick={() => {
+                                    setInteractionEntropy(
+                                        state.settings.interactionEntropy < EntropyLevels.length - 1
+                                            ? state.settings.interactionEntropy + 1
+                                            : 0
+                                    );
+                                }}
+                                onFocus={onfocus}
+                            />
                         </MenuButton>
                         <MenuButton
                             icon="♻️"

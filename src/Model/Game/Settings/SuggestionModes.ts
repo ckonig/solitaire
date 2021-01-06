@@ -52,4 +52,16 @@ export default class SuggestionModes {
     static allSuggestionModes = () => SuggestionModes.all().filter((mode) => !mode.isTemporary);
     static default = () => SuggestionModes.get(SuggestionModes.REGULAR);
     static getHintMode = () => SuggestionModes.get(SuggestionModes.ONCE);
+    static next = (current: SuggestionMode) => {
+        const all = SuggestionModes.allSuggestionModes();
+        if (all[all.length - 1].key == current.key) {
+            return all[0];
+        }
+        for (let i = 0; i < all.length; i++) {
+            if (all[i].key == current.key) {
+                return all[i + 1];
+            }
+        }
+        return all[0];
+    };
 }

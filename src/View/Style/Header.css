@@ -1,5 +1,5 @@
 .header.singleplayer {
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
 .header.splitscreen {
@@ -9,7 +9,7 @@
 
 .header-clock,
 .header-title {
-    margin-top: 0.25em;
+    margin-top: 0.15em;
     margin-bottom: 0.25em;
     float: left;
 }
@@ -42,17 +42,15 @@
 .header-buttons > div > button:disabled {
     color: gray;
 }
-.header-buttons > div > button > .icon {
-    font-size: 1.25em;
-}
 .header-buttons > div > button {
-    font-size: 0.75em;
+   
     padding-top: 0em;
+    margin-left: 0.75em;
     border-radius: 0.5em;
     border-color: gray;
     border-style: none;
     color: white;
-    margin-top: 0.25em;
+    margin-top: 0.15em;
     background-color: transparent;
 }
 .singleplayer .header-buttons > div > button {

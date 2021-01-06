@@ -13,6 +13,10 @@ const Undo = () => {
             return null;
         });
 
+    if (!state.game.timemachine.previousStates.length) {
+        return null;
+    }
+
     return (
         <div>
             <button
@@ -20,7 +24,7 @@ const Undo = () => {
                 title={"Undo (Penalty:" + Math.pow(2, state.game.rating.multiplicator) + ")"}
                 onClick={undo}
             >
-                <span className="icon">⏪</span> Undo
+                <span className="icon">⏪</span>
             </button>
         </div>
     );

@@ -1,16 +1,15 @@
+import { CookieContext } from "../../../Context";
 import GameModes from "../../../../GameModes";
-import { XY } from "../../XY";
-
 import MenuButton from "./MenuButton";
 import MenuTitle from "./MenuTitle";
+import MenuTree from "./MenuTree";
 import { NavigationContext } from "../Context";
 import React from "react";
-import VerticalMenu from "./VerticalMenu";
 import StorageManager from "../../StorageManager";
-import { CookieContext } from "../../../Context";
-import MenuTree from "./MenuTree";
-import { useTranslation } from "react-i18next";
+import VerticalMenu from "./VerticalMenu";
+import { XY } from "../../XY";
 import i18n from "../../../../i18n";
+import { useTranslation } from "react-i18next";
 
 const StartMenu = (props: { start: (boardMode: string) => void }) => {
     const { navigation, setNavigation } = React.useContext(NavigationContext);
