@@ -15,14 +15,25 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
     const { consented, setConsented } = React.useContext(CookieContext);
 
     const switchToScreen = (s: string, pos: XY) =>
-        setNavigation({ ...navigation, focus: "screen", screeen: s, screen: { x: -1, y: -1 }, menu: { ...pos } });
+        setNavigation({
+            ...navigation,
+            focus: "screen",
+            screeen: s,
+            screen: { x: -1, y: -1 },
+            menu: { ...pos },
+        });
 
     const switchToMenu = (menu: string, pos: XY) =>
-        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
+        setNavigation({
+            ...navigation,
+            focus: "menu",
+            screeen: "",
+            mainMenu: menu,
+            menu: { ...pos },
+        });
 
-    const onfocus = (pos: XY) => {
-        setNavigation({ ...navigation, menu: pos });
-    };
+    //@todo move onfocus inside components
+    const onfocus = (pos: XY) => setNavigation({ ...navigation, menu: pos });
 
     const toggleScreen = (s: string, pos: XY) => {
         if (navigation.screeen !== s) {
@@ -32,13 +43,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
         }
     };
 
-    const toggleMainMenu = (val: string, pos: XY) => {
-        if (navigation.mainMenu !== val) {
-            switchToMenu(val, pos);
-        } else {
-            switchToMenu("", pos);
-        }
-    };
+    const toggleMainMenu = (val: string, pos: XY) => switchToMenu(navigation.mainMenu !== val ? val : "", pos);
 
     const storage = new StorageManager();
 
