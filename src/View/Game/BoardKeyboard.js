@@ -16,6 +16,7 @@ const BoardKeyboard = (props) => {
 
     return isKeyboardDriven || isSinglePlayer ? (
         <Keyboard
+            layout={props.layout}
             onLeft={() => props.onLeft && props.onLeft(switchToKeyboard)}
             onRight={() => props.onRight && props.onRight(switchToKeyboard)}
             onUp={() => props.onUp && props.onUp(switchToKeyboard)}

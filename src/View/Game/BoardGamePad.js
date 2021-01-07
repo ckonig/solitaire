@@ -1,7 +1,7 @@
+import { BoardContext } from "./BoardWrap";
 import GamePad from "./GamePad";
 import GlobalContext from "../Context";
 import React from "react";
-import { BoardContext } from "./BoardWrap";
 
 const BoardGamePad = (props) => {
     const { state } = React.useContext(GlobalContext);
@@ -15,9 +15,6 @@ const BoardGamePad = (props) => {
         }
     };
 
-    //@todo pick ID of gamepad dynamically
-    //allow switching PS4 and XBOX layouts
-    //also support splitscreen battle mode
     return isSinglePlayer || isGamePadDriven ? (
         <GamePad
             gamepadIndex={state.settings.launchSettings.players[player].inputLayout}

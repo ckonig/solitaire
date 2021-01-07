@@ -3,43 +3,44 @@ import React from "react";
 const Keyboard = (props) => {
     const navListener = (e) => {
         const evtobj = window.event ? event : e;
-        if (evtobj.keyCode == 27) {
+        const { layout } = props;
+        if (layout.cancel(evtobj)) {
             props.onCancel && props.onCancel();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 37) {
+        if (layout.left(evtobj)) {
             props.onLeft && props.onLeft();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 39) {
+        if (layout.right(evtobj)) {
             props.onRight && props.onRight();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 38) {
+        if (layout.up(evtobj)) {
             props.onUp && props.onUp();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 40) {
+        if (layout.down(evtobj)) {
             props.onDown && props.onDown();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 96) {
+        if (layout.action(evtobj)) {
             props.onAction && props.onAction();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
+        if (layout.undo(evtobj)) {
             props.onUndo && props.onUndo();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 72) {
+        if (layout.hint(evtobj)) {
             props.onHint && props.onHint();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 80) {
+        if (layout.pause(evtobj)) {
             props.onPause && props.onPause();
             e.preventDefault();
         }
-        if (evtobj.keyCode == 77) {
+        if (layout.menu(evtobj)) {
             props.onPause && props.onMenu();
             e.preventDefault();
         }

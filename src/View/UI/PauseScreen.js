@@ -1,5 +1,6 @@
 import "../Style/Screens.scss";
 
+import { Arrows } from "../Game/KeyboardLayouts";
 import GamePad from "../Game/GamePad";
 import Keyboard from "../Game/Keyboard";
 import PauseContext from "../PauseContext";
@@ -34,7 +35,7 @@ const PauseScreen = () => {
                     )}
                 </div>
             </div>
-            <Keyboard onAction={_toggle} onCancel={_toggle} />
+            <Keyboard layout={Arrows} onAction={_toggle} onCancel={_toggle} />
             <GamePad onAction={_toggle} onCancel={_toggle} />
         </div>
     );

@@ -1,5 +1,7 @@
+import { Arrows } from "./KeyboardLayouts";
+import BoardGamePad from "./BoardGamePad";
+import BoardKeyboard from "./BoardKeyboard";
 import GlobalContext from "../Context";
-import Navigator from "../Navigator";
 import PauseContext from "../PauseContext";
 import React from "react";
 
@@ -79,18 +81,33 @@ const BoardNavigator = () => {
     };
 
     return isPaused ? null : (
-        <Navigator
-            onLeft={onLeft}
-            onRight={onRight}
-            onUp={onUp}
-            onDown={onDown}
-            onAction={onAction}
-            onCancel={onCancel}
-            onHint={onHint}
-            onUndo={onUndo}
-            onPause={onPause}
-            onMenu={onMenu}
-        />
+        <>
+            <BoardKeyboard
+                layout={Arrows}
+                onLeft={onLeft}
+                onRight={onRight}
+                onUp={onUp}
+                onDown={onDown}
+                onAction={onAction}
+                onCancel={onCancel}
+                onHint={onHint}
+                onUndo={onUndo}
+                onPause={onPause}
+                onMenu={onMenu}
+            />
+            <BoardGamePad
+                onLeft={onLeft}
+                onRight={onRight}
+                onUp={onUp}
+                onDown={onDown}
+                onAction={onAction}
+                onCancel={onCancel}
+                onHint={onHint}
+                onUndo={onUndo}
+                onPause={onPause}
+                onMenu={onMenu}
+            />
+        </>
     );
 };
 
