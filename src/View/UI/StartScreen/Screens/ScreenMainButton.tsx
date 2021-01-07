@@ -1,5 +1,5 @@
-import React from "react";
 import { NavigationContext } from "../Context";
+import React from "react";
 import { XY } from "../../XY";
 
 interface ScreenMainButtonProps {
@@ -22,12 +22,11 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const { navigation, setNavigation } = React.useContext(NavigationContext);
     const hasFocus = navigation.focus == "screen" && navigation.screen.x == props.x && navigation.screen.y == props.y;
-    const [isClicking, setClicking] = React.useState<boolean>(false);
     React.useEffect(() => {
-        if (hasFocus && !isClicking && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
+        if (hasFocus && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
             inputEl.current.focus();
         }
-    }, [inputEl]);
+    }, [inputEl, hasFocus]);
 
     React.useEffect(() => {
         if (
@@ -39,13 +38,11 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
             navigation.screen.x == -1 &&
             navigation.screen.y == -1
         ) {
-            setClicking(true);
             inputEl.current.focus();
         }
     }, [inputEl]);
     const focus = () => {
-        if (!hasFocus && !isClicking) {
-            setClicking(false);
+        if (!hasFocus) {
             setNavigation({ ...navigation, screen: { x: props.x || 0, y: props.y || 0 } });
         }
     };
@@ -60,7 +57,6 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
             key={props.id}
             disabled={props.disabled}
             className={props.className(pos)}
-            onMouseDown={() => setClicking(true)}
             onClick={click}
         >
             {props.icon}

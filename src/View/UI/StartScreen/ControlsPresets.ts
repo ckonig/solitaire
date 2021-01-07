@@ -1,10 +1,17 @@
-export const ControlPresets = [
+export interface IControlPreset {
+    id: number;
+    icon: string;
+    inputMethod: string;
+    inputLayout: number;
+    lines: string[],
+}
+export const ControlPresets: IControlPreset[] = [
     {
         id: 0,
         icon: "🖱️",
         inputMethod: "mouse",
         inputLayout: 0,
-        lines: ["Mouse"],
+        lines: ["Mouse or", "Touchpad"],
     },
     {
         id: 1,

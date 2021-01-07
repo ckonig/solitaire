@@ -12,52 +12,18 @@ const Screen = (props: { screen: string }) => {
         const prev = { ...navigation.menu };
         setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: prev });
     };
-    const Wrap = (props: { children: any }) => (
+    return (
         <div className="startscreen-layout">
-            <div className="startscreen-jail">{props.children}</div>
+            <div className="startscreen-jail">
+                {props.screen == "rating" ? <Rating closeScreen={closeScreen} /> : null}
+                {props.screen == "difficulty" ? <Difficulty closeScreen={closeScreen} /> : null}
+                {props.screen == "settings" ? <QuickStart closeScreen={closeScreen} /> : null}
+                {props.screen == "suggestions" ? <Suggestions closeScreen={closeScreen} /> : null}
+                {props.screen == "controls0" ? <Controls player={0} closeScreen={closeScreen} /> : null}
+                {props.screen == "controls1" ? <Controls player={1} closeScreen={closeScreen} /> : null}
+            </div>
         </div>
     );
-    //@todo use router instead of switch
-    switch (props.screen) {
-        case "rating":
-            return (
-                <Wrap>
-                    <Rating closeScreen={closeScreen} />
-                </Wrap>
-            );
-        case "difficulty":
-            return (
-                <Wrap>
-                    <Difficulty closeScreen={closeScreen} />
-                </Wrap>
-            );
-        case "settings":
-            return (
-                <Wrap>
-                    <QuickStart closeScreen={closeScreen} />
-                </Wrap>
-            );
-        case "suggestions":
-            return (
-                <Wrap>
-                    <Suggestions closeScreen={closeScreen} />
-                </Wrap>
-        );
-        case "controls0":
-            return (
-                <Wrap>
-                    <Controls player={0} closeScreen={closeScreen} />
-                </Wrap>
-            );
-        case "controls1":
-            return (
-                <Wrap>
-                    <Controls player={1} closeScreen={closeScreen} />
-                </Wrap>
-            );
-        default:
-            return null;
-    }
 };
 
 export default Screen;
