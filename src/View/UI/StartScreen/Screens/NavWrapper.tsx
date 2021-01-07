@@ -1,10 +1,10 @@
-import { Arrows } from "../../../Game/KeyboardLayouts";
 import GamePad from "../../../Game/GamePad";
 import Keyboard from "../../../Game/Keyboard";
 import { NavigationContext } from "../Context";
 import React from "react";
 import { ScreenNavigator } from "./ScreenNavigator";
 import { TreeNavigator } from "../Menu/TreeNavigator";
+import { Universal } from "../../../Game/KeyboardLayouts";
 import { XY } from "../../XY";
 
 const NavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
@@ -38,7 +38,7 @@ const NavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
 
     return navigation.focus == "screen" ? (
         <>
-            <Keyboard layout={Arrows} onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            <Keyboard layout={Universal} onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
             <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
         </>
     ) : null;
@@ -76,7 +76,7 @@ export const TreeNavWrapper = (props: { navigator: TreeNavigator }) => {
 
     return navigation.focus == "menu" ? (
         <>
-            <Keyboard layout={Arrows} onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            <Keyboard layout={Universal} onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
             <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
         </>
     ) : null;

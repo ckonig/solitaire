@@ -1,10 +1,10 @@
 import "../Style/Screens.scss";
 
-import { Arrows } from "../Game/KeyboardLayouts";
 import GamePad from "../Game/GamePad";
 import Keyboard from "../Game/Keyboard";
 import PauseContext from "../PauseContext";
 import React from "react";
+import { Universal } from "../Game/KeyboardLayouts";
 
 const PauseScreen = () => {
     const { state, togglePause } = React.useContext(PauseContext);
@@ -35,7 +35,7 @@ const PauseScreen = () => {
                     )}
                 </div>
             </div>
-            <Keyboard layout={Arrows} onAction={_toggle} onCancel={_toggle} />
+            <Keyboard layout={Universal} onAction={_toggle} onCancel={_toggle} />
             <GamePad onAction={_toggle} onCancel={_toggle} />
         </div>
     );

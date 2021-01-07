@@ -1,9 +1,9 @@
-import { Arrows } from "./KeyboardLayouts";
 import BoardGamePad from "./BoardGamePad";
 import BoardKeyboard from "./BoardKeyboard";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
+import { Universal } from "./KeyboardLayouts";
 
 const BoardNavigator = () => {
     const { state, updateContext, updateGameContext, replaceContext } = React.useContext(GlobalContext);
@@ -83,7 +83,7 @@ const BoardNavigator = () => {
     return isPaused ? null : (
         <>
             <BoardKeyboard
-                layout={Arrows}
+                layout={Universal}
                 onLeft={onLeft}
                 onRight={onRight}
                 onUp={onUp}
