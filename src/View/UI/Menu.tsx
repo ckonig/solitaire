@@ -118,7 +118,7 @@ const Menu = () => {
                             onFocus={onfocus}
                         />
                         <MenuButton
-                            icon="💡"
+                            icon={state.settings.suggestionMode.icon}
                             title={`Suggestions: ${state.settings.suggestionMode.label}`}
                             onClick={() => {
                                 setSuggestionMode(SuggestionModes.next(state.settings.suggestionMode).key);

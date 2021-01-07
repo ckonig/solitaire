@@ -191,8 +191,8 @@
 
 .closer {
     position: absolute;
-    right: 0.5%;
-    top: 0.5%;
+    right: 0.75em;
+    top: 0em;
     overflow: none;
 }
 
@@ -236,6 +236,7 @@
     border-style:dotted;
 }
 .startdetails .content button.disabled.focused  {
+    outline-color: brown;
     border-color: brown;    
 }
 .startdetails .content button.disabled.focused > div {

@@ -1,9 +1,10 @@
 import Controls from "./Controls";
 import Difficulty from "./Difficulty";
+import { NavigationContext } from "../Context";
 import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import React from "react";
-import { NavigationContext } from "../Context";
+import Suggestions from "./Suggestions";
 
 const Screen = (props: { screen: string }) => {
     const { navigation, setNavigation } = React.useContext(NavigationContext);
@@ -36,6 +37,12 @@ const Screen = (props: { screen: string }) => {
                     <QuickStart closeScreen={closeScreen} />
                 </Wrap>
             );
+        case "suggestions":
+            return (
+                <Wrap>
+                    <Suggestions closeScreen={closeScreen} />
+                </Wrap>
+        );
         case "controls0":
             return (
                 <Wrap>

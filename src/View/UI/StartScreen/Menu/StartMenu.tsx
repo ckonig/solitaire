@@ -91,6 +91,13 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         onFocus={onfocus}
                         toggled={navigation.screeen == "rating"}
                     />
+                     <MenuButton
+                        icon="💡"
+                        title="Suggestions"
+                        onClick={(pos: XY) => toggleScreen("suggestions", pos)}
+                        onFocus={onfocus}
+                        toggled={navigation.screeen == "suggestions"}
+                    />
                     <MenuButton
                         icon="🧰"
                         title="Various"

@@ -1,14 +1,16 @@
+import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
+
+import CookieBanner from "./CookieBanner";
+import { CookieContext } from "../../../Context";
 import RatingPresets from "../RatingOptions";
 import { RatingSettings } from "../../../../Common";
 import React from "react";
-import StartScreenContext, { NavigationContext } from "../Context";
-import { XY } from "../../XY";
-import ScreenToggle from "./ScreenToggle";
-import CookieBanner from "./CookieBanner";
-import ScreenMainButton from "./ScreenMainButton";
-import ScreenContent from "./ScreenContent";
 import Row from "./Row";
-import { CookieContext } from "../../../Context";
+import ScreenContent from "./ScreenContent";
+import ScreenMainButton from "./ScreenMainButton";
+import ScreenToggle from "./ScreenToggle";
+import SuggestionModes from "../../../../Model/Game/Settings/SuggestionModes";
+import { XY } from "../../XY";
 
 const Rating = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
@@ -29,6 +31,13 @@ const Rating = (props: { closeScreen: () => void }) => {
         next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
         setState(next);
     };
+    const customizeRating2 = (ratingModifier: (context: RatingSettings) => void, modifier: (context: StartScreenState) => void) => {
+        const next = { ...state };
+        ratingModifier(next.ratingSettings);
+        modifier(next);
+        next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
+        setState(next);
+    };
 
     const setMissPenalty = (value: boolean) =>
         customizeRating((r) => {
@@ -46,9 +55,14 @@ const Rating = (props: { closeScreen: () => void }) => {
         });
 
     const setHintPenalty = (value: boolean) => {
-        customizeRating((r) => {
-            r.hintPenalty = value;
-        });
+        customizeRating2(
+            (r) => {
+                r.hintPenalty = value;
+            },
+            (s) => {
+                s.suggestionMode = value ? SuggestionModes.NONE : SuggestionModes.REGULAR;
+            }
+        );
     };
 
     const { consented } = React.useContext(CookieContext);
@@ -69,7 +83,7 @@ const Rating = (props: { closeScreen: () => void }) => {
                             key={preset.id}
                             icon={preset.icon}
                             id={preset.id}
-                            initialFocus={isActive(preset.id)}
+                            initialFocus={isActive(preset.id)||state.ratingPreset == -1 && preset.id == 0}
                             className={(pos: XY) => getButtonClass(preset.id, pos.y, pos.x)}
                             onClick={() => applyPreset(preset.id)}
                             lines={[preset.label]}

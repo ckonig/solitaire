@@ -4,9 +4,13 @@ class SuggestionMode {
     isTemporary: boolean;
     supportsHints: boolean;
     next: string | undefined;
+    icon: string;
+    description: string;
     constructor(key: string, obj: ISuggestionMode) {
         this.key = key;
         this.label = obj.label;
+        this.icon = obj.icon;
+        this.description = obj.description;
         this.isTemporary = !!obj.isTemporary;
         this.supportsHints = !!obj.supportsHints;
         this.next = obj.next;
@@ -15,6 +19,8 @@ class SuggestionMode {
 
 type ISuggestionMode = {
     label: string;
+    icon: string;
+    description: string;
     isTemporary?: boolean;
     supportsHints?: boolean;
     next?: string;
@@ -30,21 +36,31 @@ export default class SuggestionModes {
     static raw: { [id: string]: ISuggestionMode } = {
         NONE: {
             label: "None",
+            description: 'No distractions. This enables one-time hints.',
             supportsHints: true,
+            icon: "❌",
         },
         SCORED: {
             label: "Scored",
+            description: 'Shows all actions that increase the score.',
+            icon: "🏆",
         },
         REGULAR: {
             label: "Regular",
+            description: 'Shows all possible actions except circular',
+            icon: "💡",
         },
         FULL: {
             label: "Full",
+            description: 'Shows all possible actions, even if they are circular',
+            icon: "🎓",
         },
         ONCE: {
             label: "Single Action",
+            description: 'triggered by manual hint in game',
             isTemporary: true,
             next: "NONE",
+            icon: "⏳",
         },
     };
     static get = (key: string) => new SuggestionMode(key, SuggestionModes.raw[key]);
