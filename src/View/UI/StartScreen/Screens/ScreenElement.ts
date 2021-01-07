@@ -3,7 +3,7 @@ import { XY } from "../../XY";
 
 export interface Focusable {
     hasFocus: boolean;
-    initialFocus?: boolean;
+    autoFocus?: boolean;
 }
 
 export interface MenuInpputElementProps extends Focusable {
@@ -31,7 +31,7 @@ export const useFocusEffect = (props: Focusable, inputEl: React.RefObject<HTMLEl
 export const useInitialFocus = (props: Focusable, inputEl: React.RefObject<HTMLElement>, pos: XY) => {
     React.useEffect(() => {
         if (
-            props.initialFocus &&
+            props.autoFocus &&
             !props.hasFocus &&
             inputEl &&
             inputEl.current &&

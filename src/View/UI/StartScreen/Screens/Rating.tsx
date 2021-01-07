@@ -86,7 +86,7 @@ const Rating = () => {
                             key={preset.id}
                             icon={preset.icon}
                             id={preset.id}
-                            initialFocus={isActive(preset.id) || (state.ratingPreset == -1 && preset.id == 0)}
+                            autoFocus={isActive(preset.id) || (state.ratingPreset == -1 && preset.id == 0)}
                             className={(pos: XY) => getButtonClass(preset.id, pos.y, pos.x)}
                             onClick={() => applyPreset(preset.id)}
                             lines={[preset.label]}

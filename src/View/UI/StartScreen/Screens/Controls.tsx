@@ -94,7 +94,7 @@ const Controls = (props: { player: number }) => {
                             icon={preset.icon}
                             id={preset.id}
                             disabled={blockedByOtherPlayers(preset.id)}
-                            initialFocus={isActive(preset.id)}
+                            autoFocus={isActive(preset.id)}
                             className={(pos: XY) => getButtonClass(preset.id, pos.x, pos.y)}
                             onClick={() => applyPreset(preset.id)}
                             lines={getLines(preset)}
@@ -108,7 +108,7 @@ const Controls = (props: { player: number }) => {
                             icon={preset.icon}
                             id={preset.id}
                             disabled={blockedByOtherPlayers(preset.id)}
-                            initialFocus={isActive(preset.id)}
+                            autoFocus={isActive(preset.id)}
                             className={(pos: XY) => getButtonClass(preset.id, pos.x, pos.y)}
                             onClick={() => applyPreset(preset.id)}
                             lines={preset.lines}

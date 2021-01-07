@@ -10,7 +10,7 @@ interface ScreenMainButtonProps {
     className: (pos: XY) => string;
     lines: string[];
     onClick: () => void;
-    initialFocus: boolean;
+    autoFocus: boolean;
     disabled?: boolean;
 }
 const ScreenMainButton = (props: ScreenMainButtonProps) => {
@@ -30,7 +30,7 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
 
     React.useEffect(() => {
         if (
-            props.initialFocus &&
+            props.autoFocus &&
             !hasFocus &&
             inputEl &&
             inputEl.current &&

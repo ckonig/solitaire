@@ -35,7 +35,7 @@ const Suggestions = () => {
                             callBack={() => setState({ ...state, suggestionMode: mode.key })}
                             description={mode.description}
                             key={index}
-                            initialFocus={isActive(mode.key)}
+                            autoFocus={isActive(mode.key)}
                         />
                     ))}
                 </Row>
@@ -48,7 +48,7 @@ const Suggestions = () => {
                             callBack={() => setState({ ...state, suggestionMode: mode.key })}
                             description={mode.description}
                             key={index}
-                            initialFocus={isActive(mode.key)}
+                            autoFocus={isActive(mode.key)}
                         />
                     ))}
                 </Row>

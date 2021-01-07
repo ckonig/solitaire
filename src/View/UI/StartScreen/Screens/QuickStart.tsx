@@ -69,7 +69,7 @@ const QuickStart = () => {
                             key={i}
                             icon={button.icon}
                             id={i}
-                            initialFocus={isActive(button.quickDeal)}
+                            autoFocus={isActive(button.quickDeal)}
                             className={(pos) => getClassName(button, pos.x, pos.y)}
                             lines={button.lines}
                             onClick={() =>

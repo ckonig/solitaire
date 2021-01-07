@@ -13,7 +13,7 @@ interface StaticScreenToggleProps {
     description: string;
     disabled?: boolean;
     callBack: (s: boolean) => void;
-    initialFocus?: boolean;
+    autoFocus?: boolean;
 }
 
 interface ToggleProps extends StaticScreenToggleProps {
@@ -75,7 +75,7 @@ const ScreenToggle = (props: _ScreenToggleProps) => {
             description={props.description}
             value={props.value}
             callBack={props.callBack}
-            initialFocus={props.initialFocus}
+            autoFocus={props.autoFocus}
         />
     );
 };

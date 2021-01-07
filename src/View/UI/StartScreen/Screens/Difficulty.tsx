@@ -27,7 +27,7 @@ const Difficulty = () => {
             key={button.id}
             icon={button.icon}
             id={button.id}
-            initialFocus={isActive(button.id)}
+            autoFocus={isActive(button.id)}
             className={(pos) => getButtonClass(button.id, pos.y, pos.x)}
             onClick={() => setState({ ...state, difficultySettings: button.id })}
             lines={button.lines}
