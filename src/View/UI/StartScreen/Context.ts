@@ -1,7 +1,8 @@
-import React from "react";
-import { defaultPlayerSettings, EntropySettings, PlayerSettings, RatingSettings } from "../../../Common";
-import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
+import { EntropySettings, PlayerSettings, RatingSettings, defaultPlayerSettings } from "../../../Common";
+
 import RatingPresets from "./RatingOptions";
+import React from "react";
+import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 import TouchDetector from "./TouchDetector";
 
 export interface IStartScreenContext {
@@ -10,7 +11,7 @@ export interface IStartScreenContext {
 }
 
 export const defaultStartScreenState: StartScreenState = {
-    ratingSettings: { ...RatingPresets.all[1].settings },
+    ratingSettings: { ...RatingPresets.REGULAR },
     difficultySettings: 1,
     ratingPreset: 1,
     quickDeal: TouchDetector(),

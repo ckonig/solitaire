@@ -67,4 +67,5 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
     );
 };
 
+
 export default ScreenMainButton;

@@ -15,7 +15,11 @@ import { XY } from "../../XY";
 const Rating = (props: { closeScreen: () => void }) => {
     const { state, setState } = React.useContext(StartScreenContext);
     const { navigation } = React.useContext(NavigationContext);
-    const applyPreset = (id: number) => setState({ ...state, ratingSettings: { ...RatingPresets.all[id].settings }, ratingPreset: id });
+    const applyPreset = (id: number) => {
+        const next = { ...state };
+        RatingPresets.ALL[id].apply(next);
+        setState(next);
+    };
 
     const isActive = (id: number) => state.ratingPreset == id;
 
@@ -78,12 +82,12 @@ const Rating = (props: { closeScreen: () => void }) => {
                     <CookieBanner />
                 </Row>
                 <Row>
-                    {RatingPresets.all.map((preset) => (
+                    {RatingPresets.ALL.map((preset) => (
                         <ScreenMainButton
                             key={preset.id}
                             icon={preset.icon}
                             id={preset.id}
-                            initialFocus={isActive(preset.id)||state.ratingPreset == -1 && preset.id == 0}
+                            initialFocus={isActive(preset.id) || (state.ratingPreset == -1 && preset.id == 0)}
                             className={(pos: XY) => getButtonClass(preset.id, pos.y, pos.x)}
                             onClick={() => applyPreset(preset.id)}
                             lines={[preset.label]}

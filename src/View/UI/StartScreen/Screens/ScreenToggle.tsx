@@ -1,9 +1,11 @@
-import Toggle from "react-toggle";
 import "../../../Style/react-toggle.css";
-import React from "react";
+
+import { getScreenElementClassName, useFocusEffect, useInitialFocus } from "./ScreenElement";
+
 import { NavigationContext } from "../Context";
+import React from "react";
+import Toggle from "react-toggle";
 import { XY } from "../../XY";
-import { getScreenElementClassName, useFocusEffect } from "./ScreenElement";
 
 interface StaticScreenToggleProps {
     value: boolean;
@@ -11,6 +13,7 @@ interface StaticScreenToggleProps {
     description: string;
     disabled?: boolean;
     callBack: (s: boolean) => void;
+    initialFocus?: boolean;
 }
 
 interface ToggleProps extends StaticScreenToggleProps {
@@ -32,6 +35,7 @@ const _ScreenToggle = (props: ToggleProps) => {
         setNavigation({ ...navigation, screen: pos });
         props.callBack(val);
     };
+    useInitialFocus(props, inputEl, navigation.screen);
     return (
         <div className={getScreenElementClassName("togglecontainer", props)}>
             <div className="title">{props.label}</div>
@@ -71,6 +75,7 @@ const ScreenToggle = (props: _ScreenToggleProps) => {
             description={props.description}
             value={props.value}
             callBack={props.callBack}
+            initialFocus={props.initialFocus}
         />
     );
 };

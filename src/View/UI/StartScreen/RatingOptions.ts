@@ -1,49 +1,72 @@
 import { RatingSettings } from "../../../Common";
+import { StartScreenState } from "./Context";
+import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 
 export interface RatingPreset {
-    id:number;
-    icon: string,
+    id: number;
+    icon: string;
     label: string;
     settings: RatingSettings;
+    apply: (s: StartScreenState) => void;
 }
+
+const apply = (after: RatingSettings, s: StartScreenState, id: number) => {
+    if (!s.ratingSettings.hintPenalty && after.hintPenalty) {
+        s.suggestionMode = SuggestionModes.NONE;
+    }
+    //@todo remember which suggestion mode was there before, and reset to that on next change of hint penalty
+    s.ratingSettings = { ...after };
+    s.ratingPreset = id;
+};
+
 export default class RatingPresets {
-    static all: RatingPreset[] = [
+    static CHILL = {
+        timedMode: false,
+        missPenalty: false,
+        undoPenalty: false,
+        hintPenalty: false,
+    };
+
+    static REGULAR = {
+        timedMode: true,
+        missPenalty: false,
+        undoPenalty: true,
+        hintPenalty: false,
+    };
+
+    static COMPETITIVE = {
+        timedMode: true,
+        missPenalty: true,
+        undoPenalty: true,
+        hintPenalty: true,
+    };
+
+    static ALL: RatingPreset[] = [
         {
             id: 0,
             icon: "🌴",
             label: "Chill",
-            settings: {
-                timedMode: false,
-                missPenalty: false,
-                undoPenalty: false,
-                hintPenalty: false,
-            },
+            settings: { ...RatingPresets.CHILL },
+            apply: (s) => apply(RatingPresets.CHILL, s, 0),
         },
         {
             id: 1,
             icon: "⚖️",
             label: "Regular",
-            settings: {
-                timedMode: true,
-                missPenalty: false,
-                undoPenalty: true,
-                hintPenalty: false,
-            },
+            settings: { ...RatingPresets.REGULAR },
+            apply: (s) => apply(RatingPresets.REGULAR, s, 1),
         },
         {
             id: 2,
             icon: "🏆",
             label: "Competitive",
-            settings: {
-                timedMode: true,
-                missPenalty: true,
-                undoPenalty: true,
-                hintPenalty: true,
-            },
+            settings: { ...RatingPresets.COMPETITIVE },
+            apply: (s) => apply(RatingPresets.COMPETITIVE, s, 2),
         },
     ];
+
     static matchPreset = (settings: any) => {
-        const filterd = RatingPresets.all.filter((preset) => RatingPresets.equals(preset.settings, settings));
+        const filterd = RatingPresets.ALL.filter((preset) => RatingPresets.equals(preset.settings, settings));
         if (filterd.length > 0) {
             return filterd[0].id;
         }

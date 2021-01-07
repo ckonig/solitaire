@@ -1,7 +1,9 @@
 import React from "react";
+import { XY } from "../../XY";
 
 export interface Focusable {
     hasFocus: boolean;
+    initialFocus?: boolean;
 }
 
 export interface MenuInpputElementProps extends Focusable {
@@ -25,4 +27,19 @@ export const useFocusEffect = (props: Focusable, inputEl: React.RefObject<HTMLEl
             inputEl.current.focus();
         }
     }, [props.hasFocus, inputEl]);
+};
+export const useInitialFocus = (props: Focusable, inputEl: React.RefObject<HTMLElement>, pos: XY) => {
+    React.useEffect(() => {
+        if (
+            props.initialFocus &&
+            !props.hasFocus &&
+            inputEl &&
+            inputEl.current &&
+            inputEl.current !== document.activeElement &&
+            pos.x == -1 &&
+            pos.y == -1
+        ) {
+            inputEl.current.focus();
+        }
+    }, [inputEl]);
 };

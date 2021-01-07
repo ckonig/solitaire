@@ -1,7 +1,7 @@
-import React from "react";
 import { NavigationContext } from "../Context";
-import { XY } from "../../XY";
+import React from "react";
 import { TreeNavigator } from "./TreeNavigator";
+import { XY } from "../../XY";
 
 interface _MenuButtonProps extends StaticMenuButtonProps {
     //@todo keyboard navigation in a tree

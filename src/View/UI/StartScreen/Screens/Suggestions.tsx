@@ -1,31 +1,18 @@
-import StartScreenContext, { NavigationContext } from "../Context";
-
 import CookieBanner from "./CookieBanner";
 import { CookieContext } from "../../../Context";
 import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
-import ScreenMainButton from "./ScreenMainButton";
+import ScreenToggle from "./ScreenToggle";
+import StartScreenContext from "../Context";
 import SuggestionModes from "../../../../Model/Game/Settings/SuggestionModes";
 
 const Suggestions = (props: { closeScreen: () => void }) => {
     const { consented } = React.useContext(CookieContext);
     const { state, setState } = React.useContext(StartScreenContext);
-    const { navigation } = React.useContext(NavigationContext);
     const all = SuggestionModes.allSuggestionModes();
-
     const isActive = (id: string) => state.suggestionMode == id;
-
     const isDisabled = (id: string) => id !== SuggestionModes.NONE && state.ratingSettings.hintPenalty;
-
-    const getLabel = (mode: any) => [mode.label];
-
-    const getButtonClass = (id: string, index: number, y: number, x: number) => {
-        let name = isActive(id) && !isDisabled(id) ? `active active-${index}` : `inactive-${index}`;
-        name += navigation.screen.x == x && navigation.screen.y == y ? " focused" : "";
-        name += isDisabled(id) ? " disabled" : "";
-        return name;
-    };
     return (
         <div className="suggestions startdetails">
             <div className="closer">
@@ -38,51 +25,29 @@ const Suggestions = (props: { closeScreen: () => void }) => {
                 </Row>
                 <Row>
                     {all.slice(0, 2).map((mode, index) => (
-                        <ScreenMainButton
-                            id={index}
-                            icon={mode.icon}
-                            disabled={mode.key !== SuggestionModes.NONE && state.ratingSettings.hintPenalty}
-                            className={(pos) => getButtonClass(mode.key, 0, pos.y, pos.x)}
-                            onClick={() => {
-                                setState({ ...state, suggestionMode: mode.key });
-                            }}
-                            lines={getLabel(mode)}
-                            initialFocus={isActive(mode.key)}
+                        <ScreenToggle
+                            value={isActive(mode.key)}
+                            disabled={isDisabled(mode.key)}
+                            label={mode.icon + " " + mode.label}
+                            callBack={() => setState({ ...state, suggestionMode: mode.key })}
+                            description={mode.description}
                             key={index}
+                            initialFocus={isActive(mode.key)}
                         />
                     ))}
                 </Row>
                 <Row>
                     {all.slice(2).map((mode, index) => (
-                        <ScreenMainButton
-                            id={index + 2}
-                            icon={mode.icon}
-                            disabled={state.ratingSettings.hintPenalty}
-                            className={(pos) => getButtonClass(mode.key, 0, pos.y, pos.x)}
-                            onClick={() => {
-                                setState({ ...state, suggestionMode: mode.key });
-                            }}
-                            lines={getLabel(mode)}
-                            initialFocus={isActive(mode.key)}
+                        <ScreenToggle
+                            value={isActive(mode.key)}
+                            disabled={isDisabled(mode.key)}
+                            label={mode.icon + " " + mode.label}
+                            callBack={() => setState({ ...state, suggestionMode: mode.key })}
+                            description={mode.description}
                             key={index}
+                            initialFocus={isActive(mode.key)}
                         />
                     ))}
-                </Row>
-                <Row skip={true}>
-                    <div className="togglecontainer">
-                        <div className="title">{SuggestionModes.get(state.suggestionMode).label}</div>
-                        <div className="toggle"></div>
-                        <div className="description">{SuggestionModes.get(state.suggestionMode).description}</div>
-                    </div>
-                    {state.suggestionMode == SuggestionModes.NONE && state.ratingSettings.hintPenalty ? (
-                        <div className="togglecontainer">
-                            <div className="title">NOTE</div>
-                            <div className="toggle"></div>
-                            <div className="description">
-                                All other options are disabled. Disable Rate Penalty to change suggestion mode.
-                            </div>
-                        </div>
-                    ) : null}
                 </Row>
             </ScreenContent>
         </div>
