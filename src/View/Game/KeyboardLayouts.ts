@@ -13,6 +13,13 @@ interface KeyboardLayout {
 
 export default KeyboardLayout;
 
+export const getKeyboardLayout = (id: number) => {
+    if (id == 0) return Wasd;
+    if (id == 1) return Arrows;
+    if (id == 2) return NumPad;
+    throw "Unknown keyboard layout ID";
+};
+
 export const Arrows: KeyboardLayout = {
     up: (e) => e.keyCode == 38,
     down: (e) => e.keyCode == 40,
@@ -36,7 +43,7 @@ export const Wasd: KeyboardLayout = {
     undo: (e) => e.keyCode == 88,
     hint: (e) => e.keyCode == 90,
     pause: (e) => e.keyCode == 999,
-    menu: (e) => e.keyCode == 67,
+    menu: (e) => e.keyCode == 27,
 };
 
 export const NumPad: KeyboardLayout = {

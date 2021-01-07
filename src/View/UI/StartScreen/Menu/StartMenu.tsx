@@ -6,6 +6,7 @@ import MenuTree from "./MenuTree";
 import { NavigationContext } from "../Context";
 import React from "react";
 import StorageManager from "../../StorageManager";
+import { Universal } from "../../../Game/KeyboardLayouts";
 import VerticalMenu from "./VerticalMenu";
 import { XY } from "../../XY";
 
@@ -45,7 +46,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
         <VerticalMenu>
             <MenuTitle label="♦ Solitaire" />
 
-            <MenuTree>
+            <MenuTree keyboardLayout={Universal}>
                 <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.CUSTOM.boardMode)} onFocus={onfocus} />
                 <MenuButton
                     icon="⚔️"
@@ -91,7 +92,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         onFocus={onfocus}
                         toggled={navigation.screeen == "rating"}
                     />
-                     <MenuButton
+                    <MenuButton
                         icon="💡"
                         title="Suggestions"
                         onClick={(pos: XY) => toggleScreen("suggestions", pos)}

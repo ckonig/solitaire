@@ -1,7 +1,9 @@
 import "../Style/Menu.scss";
 
 import { NavigationContext, NavigationProvider, NavigationState } from "./StartScreen/Context";
+import { Universal, getKeyboardLayout } from "../Game/KeyboardLayouts";
 
+import { BoardContext } from "../Game/BoardWrap";
 import EntropyLevels from "../../Model/Game/EntropyLevels";
 import GlobalContext from "../Context";
 import MenuButton from "./StartScreen/Menu/MenuButton";
@@ -38,9 +40,11 @@ const _Menu = () => {
 };
 const Menu = () => {
     const { state, updateContext, replaceContext, restart } = React.useContext(GlobalContext);
-    const { togglePause } = React.useContext(PauseContext);
+    const pause = React.useContext(PauseContext);
+    const { player } = React.useContext(BoardContext);
     const reset = () => {
-        togglePause(true, true);
+        //this is a bad hack?
+        pause.togglePause(true, -1);
         replaceContext((state) => (state.game.timemachine.previousStates ? state.game.timemachine.previousStates[0] : null));
     };
 
@@ -49,25 +53,9 @@ const Menu = () => {
     const setBaseEntropy = (lvl: number) => updateContext((state) => state.setEntropy(lvl));
     const setInteractionEntropy = (lvl: number) => updateContext((state) => (state.settings.interactionEntropy = lvl));
 
-    const toggleMenu = (menu: boolean) => {
-        togglePause(!state?.settings.showMenu, true);
-        updateContext((state) => {
-            if (state.settings.showMenu == menu) {
-                state.settings.showMenu = !state.settings.showMenu;
-            }
-        });
+    const toggleMenu = () => {
+        pause.togglePause(false, -1);
     };
-
-    React.useEffect(() => {
-        if (state?.settings.showMenu) {
-            togglePause(false, true);
-        }
-        return () => {
-            if (!state?.settings.showMenu) {
-                togglePause(true, true);
-            }
-        };
-    });
 
     const { navigation, setNavigation } = React.useContext(NavigationContext);
 
@@ -82,14 +70,16 @@ const Menu = () => {
         }
     };
 
-    if (!state?.settings.showMenu) {
+    if (!pause.state.showMenu) {
+        return null;
+    }
+    if (!state) {
         return null;
     }
     const onfocus = (pos: XY) => {
         setNavigation({ ...navigation, menu: pos });
     };
 
-    const pause = React.useContext(PauseContext);
     const remaining = pause.state.allowed - pause.state.pauses.length - 1;
 
     let announcement = `You can pause the game ${remaining} more times.`;
@@ -101,6 +91,23 @@ const Menu = () => {
     }
     if (remaining < 0) [(announcement = "The game is not paused.")];
 
+    const isSinglePlayer = state.settings.launchSettings.boardMode === "singleplayer";
+    const keyboardLayout = isSinglePlayer ? Universal : getKeyboardLayout(state.settings.launchSettings.players[player].inputLayout);
+
+    if (pause.state.pausedBy !== player) {
+        return (
+            <div className="gamemenu menu">
+                <div className="startscreen-jail">
+                    <div className="innermenu">
+                        <MenuTitle label="😴" />
+                        {pause.state.pausedBy}
+                        <div className="announcement">{announcement}</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="gamemenu menu">
             <div className="startscreen-jail">
@@ -108,12 +115,12 @@ const Menu = () => {
                     <MenuTitle label="😴" />
 
                     <div className="announcement">{announcement}</div>
-                    <MenuTree>
+                    <MenuTree keyboardLayout={keyboardLayout}>
                         <MenuButton
                             icon="▶️"
                             title="Resume"
                             onClick={() => {
-                                toggleMenu(state.settings.showMenu);
+                                toggleMenu();
                             }}
                             onFocus={onfocus}
                         />

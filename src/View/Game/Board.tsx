@@ -5,7 +5,6 @@ import Dealer from "./Dealer";
 import Foundation from "./Foundation";
 import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu";
-import PauseScreen from "../UI/PauseScreen";
 import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
@@ -23,8 +22,6 @@ const Board = (props: any) => (
                 <Foundation.Stacks />
                 <Tableau.Stacks />
             </div>
-
-            <PauseScreen />
         </div>
         <Dealer />
         <BoardNavigator />

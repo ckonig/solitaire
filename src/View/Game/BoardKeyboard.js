@@ -1,11 +1,16 @@
+import { Universal, getKeyboardLayout } from "./KeyboardLayouts";
+
+import { BoardContext } from "./BoardWrap";
 import GlobalContext from "../Context";
 import Keyboard from "./Keyboard";
 import React from "react";
 
 const BoardKeyboard = (props) => {
     const { state } = React.useContext(GlobalContext);
+    const { player } = React.useContext(BoardContext);
     const isKeyboardDriven = state.settings.launchSettings.inputMode === "keyboard";
     const isSinglePlayer = state.settings.launchSettings.boardMode === "singleplayer";
+    const layout = isSinglePlayer ? Universal : getKeyboardLayout(state.settings.launchSettings.players[player].inputLayout);
 
     const switchToKeyboard = (ctx) => {
         ctx.focus.isKeyBoard(true);
@@ -16,7 +21,7 @@ const BoardKeyboard = (props) => {
 
     return isKeyboardDriven || isSinglePlayer ? (
         <Keyboard
-            layout={props.layout}
+            layout={layout}
             onLeft={() => props.onLeft && props.onLeft(switchToKeyboard)}
             onRight={() => props.onRight && props.onRight(switchToKeyboard)}
             onUp={() => props.onUp && props.onUp(switchToKeyboard)}

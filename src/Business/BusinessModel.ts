@@ -42,12 +42,12 @@ export default class BusinessModel extends Model {
         this.stock.setOnClick(getHandler(new Stock(this.navigator)));
         this.waste.setOnClick(getHandler(new Waste()));
         this.foundation.setOnClick(getHandler(new Foundation()));
-        this.tableau.setOnClick(getHandler(new Tableau()),getHandler(new TableauHidden()), this.hand);
+        this.tableau.setOnClick(getHandler(new Tableau()), getHandler(new TableauHidden()), this.hand);
         return this;
     };
 
-    static getInitialState = (launchSettings: AppState, deck: Deck, player: number) => {
-        return new BusinessModel(Model.getInitialState(launchSettings, deck, player));
+    static getInitialState = (launchSettings: AppState, deck: Deck) => {
+        return new BusinessModel(Model.getInitialState(launchSettings, deck));
     };
 
     static copy = (state: Model) => {

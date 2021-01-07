@@ -8,12 +8,14 @@ export interface IPauseState {
     pauseStartedAt: number;
     allowed: number;
     isSilent?: boolean;
+    pausedBy: number;
+    showMenu: boolean;
 }
 export interface IPauseContext {
     state: IPauseState;
-    togglePause: (isPaused: boolean, silend: boolean) => void;
+    togglePause: (isPaused: boolean, pausedBy: number) => void;
 }
-export const defaultPauseState = { started: 0, end: 0, paused: false, pauses: [], pauseStartedAt: 0, allowed: 5 };
+export const defaultPauseState = { started: 0, end: 0, paused: false, pauses: [], pauseStartedAt: 0, allowed: 5, pausedBy: -1, showMenu: false };
 export const defaultPauseContext = {
     state: defaultPauseState,
     togglePause: () => {},
@@ -40,24 +42,32 @@ export const PauseProvider = (props: any) => {
         msec -= ss * 1000;
         return hh ? hh + ":" + padleft(mm) + ":" + padleft(ss) : padleft(mm) + ":" + padleft(ss);
     };
-    const togglePause = (isPaused: boolean, isSilent?: boolean) => {
-        if (paused.paused == isPaused) {
-            if (paused.paused) {
-                setPaused({
-                    ...paused,
-                    pauses: [...paused.pauses, Date.now() - paused.pauseStartedAt],
-                    pauseStartedAt: 0,
-                    paused: false,
-                    isSilent: isSilent,
-                });
-            } else if (paused.pauses.length < paused.allowed) {
-                setPaused({
-                    ...paused,
-                    pauseStartedAt: Date.now(),
-                    paused: true,
-                    isSilent: isSilent,
-                });
-            }
+    const togglePause = (isPaused: boolean, pausedBy: number) => {
+        if (paused.showMenu) {
+            setPaused({
+                ...paused,
+                pausedBy: pausedBy,
+                pauses: [...paused.pauses, Date.now() - paused.pauseStartedAt],
+                pauseStartedAt: 0,
+                paused: false,
+                showMenu: false,
+            });
+        } else if (paused.pauses.length < paused.allowed) {
+            setPaused({
+                ...paused,
+                pausedBy: pausedBy,
+                pauseStartedAt: Date.now(),
+                paused: true,
+                showMenu: true,
+            });
+        } else {
+            setPaused({
+                ...paused,
+                pausedBy: pausedBy,
+                pauseStartedAt: 0,
+                paused: false,
+                showMenu: true,
+            });
         }
     };
     const context = {

@@ -3,7 +3,6 @@ import SuggestionModes from "./Settings/SuggestionModes";
 export default class Settings {
     constructor(launchSettings) {
         this.launchSettings = launchSettings;
-        this.showMenu = false;
 
         this.baseEntropy = launchSettings.baseEntropy;
         this.interactionEntropy = launchSettings.interactionEntropy;

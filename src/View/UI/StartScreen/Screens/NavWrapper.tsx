@@ -1,10 +1,11 @@
+import KeyboardLayout, { Universal } from "../../../Game/KeyboardLayouts";
+
 import GamePad from "../../../Game/GamePad";
 import Keyboard from "../../../Game/Keyboard";
 import { NavigationContext } from "../Context";
 import React from "react";
 import { ScreenNavigator } from "./ScreenNavigator";
 import { TreeNavigator } from "../Menu/TreeNavigator";
-import { Universal } from "../../../Game/KeyboardLayouts";
 import { XY } from "../../XY";
 
 const NavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
@@ -38,14 +39,22 @@ const NavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
 
     return navigation.focus == "screen" ? (
         <>
-            <Keyboard layout={Universal} onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            <Keyboard
+                layout={Universal}
+                onUp={onUp}
+                onDown={onDown}
+                onRight={onRight}
+                onLeft={onLeft}
+                onAction={onAction}
+                onCancel={onCancel}
+            />
             <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
         </>
     ) : null;
 };
 export default NavWrapper;
 
-export const TreeNavWrapper = (props: { navigator: TreeNavigator }) => {
+export const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout: KeyboardLayout }) => {
     const { navigator } = props;
 
     const { navigation, setNavigation } = React.useContext(NavigationContext);
@@ -76,7 +85,15 @@ export const TreeNavWrapper = (props: { navigator: TreeNavigator }) => {
 
     return navigation.focus == "menu" ? (
         <>
-            <Keyboard layout={Universal} onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            <Keyboard
+                layout={props.keyboardLayout}
+                onUp={onUp}
+                onDown={onDown}
+                onRight={onRight}
+                onLeft={onLeft}
+                onAction={onAction}
+                onCancel={onCancel}
+            />
             <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
         </>
     ) : null;

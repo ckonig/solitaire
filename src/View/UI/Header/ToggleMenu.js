@@ -1,21 +1,15 @@
-import GlobalContext from "../../Context";
+import { BoardContext } from "../../Game/BoardWrap";
+import PauseContext from "../../PauseContext";
 import React from "react";
 
 const ToggleMenu = () => {
-    const { state, updateContext } = React.useContext(GlobalContext);
-
-    const toggleMenu = (menu) => {
-        updateContext((state) => {
-            if (state.settings.showMenu == menu) {
-                state.settings.showMenu = !state.settings.showMenu;
-            }
-        });
-    };
+    const paused = React.useContext(PauseContext);
+    const { player } = React.useContext(BoardContext);
 
     return (
         <div>
-            <button title="Settings" onClick={() => toggleMenu(state.settings.showMenu)}>
-            <span className="icon">☰</span>
+            <button title="Settings" onClick={() => paused.togglePause(!paused.state.paused, player)}>
+                <span className="icon">☰</span>
             </button>
         </div>
     );

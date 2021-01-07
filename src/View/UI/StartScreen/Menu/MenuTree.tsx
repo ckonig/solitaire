@@ -1,8 +1,9 @@
+import KeyboardLayout from "../../../Game/KeyboardLayouts";
 import React from "react";
 import { TreeNavWrapper } from "../Screens/NavWrapper";
 import { TreeNavigator } from "./TreeNavigator";
 
-const MenuTree = (props: { children: any[] }) => {
+const MenuTree = (props: { children: any[]; keyboardLayout: KeyboardLayout }) => {
     const navigator = new TreeNavigator();
     navigator.rows = [];
     let index = -1;
@@ -19,7 +20,7 @@ const MenuTree = (props: { children: any[] }) => {
     return (
         <>
             {props.children.map(addItem)}
-            <TreeNavWrapper navigator={navigator} />
+            <TreeNavWrapper navigator={navigator} keyboardLayout={props.keyboardLayout} />
         </>
     );
 };
