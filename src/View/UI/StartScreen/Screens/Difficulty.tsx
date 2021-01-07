@@ -1,16 +1,20 @@
 import DifficultyOptions, { DifficultyOption } from "../DifficultyOptions";
-import React from "react";
 import StartScreenContext, { NavigationContext } from "../Context";
-import ScreenMainButton from "./ScreenMainButton";
+
+import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
+import { CookieContext } from "../../../Context";
+import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
-import { CookieContext } from "../../../Context";
+import ScreenMainButton from "./ScreenMainButton";
 
-const Difficulty = (props: { closeScreen: () => void }) => {
+const Difficulty = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     const { navigation } = React.useContext(NavigationContext);
+
     const isActive = (id: number) => state.difficultySettings == id;
+    
     const getButtonClass = (index: number, y: number, x: number) => {
         const hasFocus = navigation.screen.x == x && navigation.screen.y == y;
         let name = isActive(index) ? `active active-${index}` : `inactive-${index}`;
@@ -34,9 +38,7 @@ const Difficulty = (props: { closeScreen: () => void }) => {
 
     return (
         <div className="difficulty startdetails">
-            <div className="closer">
-                <button onClick={props.closeScreen}>🗙</button>
-            </div>
+            <CloseButton />
             <div className="title">Difficulty</div>
             <ScreenContent id="difficulty">
                 <Row skip={consented}>

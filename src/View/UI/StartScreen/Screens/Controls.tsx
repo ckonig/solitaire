@@ -1,6 +1,7 @@
 import { ControlPresets, IControlPreset } from "../ControlsPresets";
 import StartScreenContext, { NavigationContext } from "../Context";
 
+import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
 import { CookieContext } from "../../../Context";
 import GamePad from "../../../Game/GamePad";
@@ -10,7 +11,7 @@ import ScreenContent from "./ScreenContent";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../../XY";
 
-const Controls = (props: { player: number; closeScreen: () => void }) => {
+const Controls = (props: { player: number }) => {
     const { state, setState } = React.useContext(StartScreenContext);
     const { navigation } = React.useContext(NavigationContext);
 
@@ -80,9 +81,7 @@ const Controls = (props: { player: number; closeScreen: () => void }) => {
 
     return (
         <div className="controls startdetails">
-            <div className="closer">
-                <button onClick={props.closeScreen}>🗙</button>
-            </div>
+            <CloseButton />
             <div className="title">{player.name}</div>
             <ScreenContent id="settings">
                 <Row skip={consented}>
@@ -118,22 +117,14 @@ const Controls = (props: { player: number; closeScreen: () => void }) => {
                 </Row>
                 <Row skip={true}>
                     <div className="togglecontainer">
-                        <div className="title">Layout</div>
+                        <div className="title">@todo</div>
                         <div className="toggle"></div>
-                        <div className="description">
-                            <div>Navigate: W,A,S,D</div>
-                            <div>Action: Q</div>
-                            <div>Cancel: E</div>
-                        </div>
+                        <div className="description">Describe Layout of currently selected input method</div>
                     </div>
                     <div className="togglecontainer">
-                        <div className="title">Layout</div>
+                        <div className="title">@todo</div>
                         <div className="toggle"></div>
-                        <div className="description">
-                            <div>Hint: Z</div>
-                            <div>Undo: X</div>
-                            <div>Menu: ESC</div>
-                        </div>
+                        <div className="description">Describe Layout of currently selected input method</div>
                     </div>
                 </Row>
             </ScreenContent>

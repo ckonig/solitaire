@@ -8,14 +8,11 @@ const MenuTree = (props: { children: any[]; keyboardLayout: KeyboardLayout }) =>
     navigator.rows = [];
     let index = -1;
     const addItem = (child: any) => {
-        const assign = () => {
-            navigator.rows[index] = { x: index, y: 0, ...child.props, buttons: [] };
-        };
         if (!child.props.skip) {
             index++;
-            assign();
+            navigator.rows[index] = { x: index, y: 0, ...child.props, buttons: [] };
         }
-        return React.cloneElement(child, { x: index, y: 0, navigator: navigator });
+        return React.cloneElement(child, { key: index, x: index, y: 0, navigator: navigator });
     };
     return (
         <>

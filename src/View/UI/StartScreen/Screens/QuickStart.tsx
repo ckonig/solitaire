@@ -1,13 +1,15 @@
+import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
+
+import CloseButton from "./CloseButton";
+import CookieBanner from "./CookieBanner";
+import { CookieContext } from "../../../Context";
 import EntropyLevels from "../../../../Model/Game/EntropyLevels";
 import React from "react";
-import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
+import Row from "./Row";
+import ScreenContent from "./ScreenContent";
+import ScreenMainButton from "./ScreenMainButton";
 import ScreenSelect from "./ScreenSelect";
 import ScreenToggle from "./ScreenToggle";
-import CookieBanner from "./CookieBanner";
-import ScreenMainButton from "./ScreenMainButton";
-import ScreenContent from "./ScreenContent";
-import Row from "./Row";
-import { CookieContext } from "../../../Context";
 
 interface OptimizeOption {
     entropy: number;
@@ -31,9 +33,11 @@ const optimizeOptions: (state: StartScreenState) => OptimizeOption[] = (state: S
     },
 ];
 
-const QuickStart = (props: { closeScreen: () => void }) => {
+const QuickStart = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     const { navigation } = React.useContext(NavigationContext);
+    const { consented } = React.useContext(CookieContext);
+
     const isActive = (val: boolean) => state.quickDeal == val;
 
     const setBaseEntropy = (value: string) =>
@@ -42,9 +46,7 @@ const QuickStart = (props: { closeScreen: () => void }) => {
     const setInteractionEntropy = (value: string) =>
         setState({ ...state, entropySettings: { ...state.entropySettings, interactionEntropy: parseInt(value) } });
 
-    const setQuickDeal = (value: boolean) => {
-        setState({ ...state, quickDeal: value });
-    };
+    const setQuickDeal = (value: boolean) => setState({ ...state, quickDeal: value });
 
     const getClassName = (button: OptimizeOption, y: number, x: number) => {
         const hasFocus = navigation.screen.x == x && navigation.screen.y == y;
@@ -53,13 +55,9 @@ const QuickStart = (props: { closeScreen: () => void }) => {
         return name;
     };
 
-    const { consented } = React.useContext(CookieContext);
-
     return (
         <div className="quickstart startdetails">
-            <div className="closer">
-                <button onClick={props.closeScreen}>🗙</button>
-            </div>
+            <CloseButton />
             <div className="title">Various</div>
             <ScreenContent id="settings">
                 <Row skip={consented}>

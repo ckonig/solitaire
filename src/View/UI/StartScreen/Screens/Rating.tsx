@@ -1,5 +1,6 @@
 import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
 
+import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
 import { CookieContext } from "../../../Context";
 import RatingPresets from "../RatingOptions";
@@ -12,7 +13,7 @@ import ScreenToggle from "./ScreenToggle";
 import SuggestionModes from "../../../../Model/Game/Settings/SuggestionModes";
 import { XY } from "../../XY";
 
-const Rating = (props: { closeScreen: () => void }) => {
+const Rating = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     const { navigation } = React.useContext(NavigationContext);
     const applyPreset = (id: number) => {
@@ -73,9 +74,7 @@ const Rating = (props: { closeScreen: () => void }) => {
 
     return (
         <div className="rating startdetails">
-            <div className="closer">
-                <button onClick={props.closeScreen}>🗙</button>
-            </div>
+            <CloseButton />
             <div className="title">Penalties</div>
             <ScreenContent id="penalties">
                 <Row skip={consented}>

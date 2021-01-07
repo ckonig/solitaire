@@ -1,3 +1,4 @@
+import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
 import { CookieContext } from "../../../Context";
 import React from "react";
@@ -7,24 +8,26 @@ import ScreenToggle from "./ScreenToggle";
 import StartScreenContext from "../Context";
 import SuggestionModes from "../../../../Model/Game/Settings/SuggestionModes";
 
-const Suggestions = (props: { closeScreen: () => void }) => {
+const Suggestions = () => {
     const { consented } = React.useContext(CookieContext);
     const { state, setState } = React.useContext(StartScreenContext);
-    const all = SuggestionModes.allSuggestionModes();
+
+    const suggestionModes = SuggestionModes.allSuggestionModes();
+
     const isActive = (id: string) => state.suggestionMode == id;
+
     const isDisabled = (id: string) => id !== SuggestionModes.NONE && state.ratingSettings.hintPenalty;
+
     return (
         <div className="suggestions startdetails">
-            <div className="closer">
-                <button onClick={props.closeScreen}>🗙</button>
-            </div>
+            <CloseButton />
             <div className="title">Suggestions</div>
             <ScreenContent id="settings">
                 <Row skip={consented}>
                     <CookieBanner />
                 </Row>
                 <Row>
-                    {all.slice(0, 2).map((mode, index) => (
+                    {suggestionModes.slice(0, 2).map((mode, index) => (
                         <ScreenToggle
                             value={isActive(mode.key)}
                             disabled={isDisabled(mode.key)}
@@ -37,7 +40,7 @@ const Suggestions = (props: { closeScreen: () => void }) => {
                     ))}
                 </Row>
                 <Row>
-                    {all.slice(2).map((mode, index) => (
+                    {suggestionModes.slice(2).map((mode, index) => (
                         <ScreenToggle
                             value={isActive(mode.key)}
                             disabled={isDisabled(mode.key)}

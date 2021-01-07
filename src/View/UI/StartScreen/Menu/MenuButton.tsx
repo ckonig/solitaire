@@ -38,11 +38,11 @@ const MenuButton = (props: _MenuButtonProps) => {
 
     const addItem = (child: any, index: number) => {
         const assign = (n: any[]) => {
-            n[props.x || 0].buttons[index + 1] = { ...props };
+            n[props.x || 0].buttons[index + 1] = { ...props, x: props.x, y: index + 1 };
         };
         assign(props.navigator?.rows || []);
 
-        return React.cloneElement(child, { x: props.x, y: index + 1, navigator: props.navigator });
+        return React.cloneElement(child, { key: index, x: props.x, y: index + 1, navigator: props.navigator });
     };
 
     return (

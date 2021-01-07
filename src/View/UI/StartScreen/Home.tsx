@@ -1,26 +1,21 @@
-import { defaultStartScreenState, NavigationProvider, NavigationState, Provider, StartScreenState } from "./Context";
+import { NavigationProvider, NavigationState, Provider, StartScreenState, defaultStartScreenState } from "./Context";
+
+import { CookieContextProvider } from "../../Context";
+import DifficultyOptions from "./DifficultyOptions";
 import React from "react";
 import Screen from "./Screens/Screen";
-import StorageManager from "../StorageManager";
-import { CookieContextProvider } from "../../Context";
 import StartMenu from "./Menu/StartMenu";
-import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
-import DifficultyOptions from "./DifficultyOptions";
+import StorageManager from "../StorageManager";
 
 const Home = (props: { start: (settings: any) => void }) => {
     const storage = new StorageManager();
     const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
     const previous = storage.getPreviousState();
     const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
+    const startPos = { x: 0, y: 0 };
     const [navigation, setNavigation] = React.useState<NavigationState>({
-        menu: {
-            x: 0,
-            y: 0,
-        },
-        screen: {
-            x: 0,
-            y: 0,
-        },
+        menu: { ...startPos },
+        screen: { ...startPos },
         focus: "menu",
         mainMenu: "",
         screeen: "",
@@ -50,7 +45,7 @@ const Home = (props: { start: (settings: any) => void }) => {
             quickDeal: state.quickDeal,
             boardMode: boardMode,
             initialized: true,
-            suggestionMode: state.ratingSettings.hintPenalty ? SuggestionModes.NONE : state.suggestionMode,
+            suggestionMode: state.suggestionMode,
         };
         props.start(settings);
     };
