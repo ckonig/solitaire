@@ -1,17 +1,23 @@
-import SuggestionModes from "./Settings/SuggestionModes";
+import SuggestionModes, { SuggestionMode } from "./Settings/SuggestionModes";
+
+import LaunchSettings from "./Settings/LaunchSettings";
 
 export default class Settings {
-    constructor(launchSettings) {
-        this.launchSettings = launchSettings;
+    launchSettings: LaunchSettings;
+    baseEntropy: number;
+    interactionEntropy: number;
+    suggestionModes: SuggestionMode[];
+    suggestionMode: SuggestionMode;
 
+    constructor(launchSettings: LaunchSettings) {
+        this.launchSettings = launchSettings;
         this.baseEntropy = launchSettings.baseEntropy;
         this.interactionEntropy = launchSettings.interactionEntropy;
-
         this.suggestionModes = SuggestionModes.allSuggestionModes();
         this.suggestionMode = SuggestionModes.get(launchSettings.suggestionMode);
     }
 
-    setSuggestionMode = (sm) => {
+    setSuggestionMode = (sm: string) => {
         if (this.suggestionMode.key !== sm) {
             this.suggestionMode = SuggestionModes.get(sm);
         }
@@ -29,12 +35,11 @@ export default class Settings {
         return false;
     };
 
-    static copy = (orig) => {
+    static copy = (orig: Settings) => {
         const copy = new Settings(orig.launchSettings);
         copy.suggestionMode = orig.suggestionMode;
         copy.baseEntropy = orig.baseEntropy;
         copy.interactionEntropy = orig.interactionEntropy;
-        copy.hintMode = orig.hintMode;
         return copy;
     };
 }

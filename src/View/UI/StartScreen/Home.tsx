@@ -2,12 +2,13 @@ import { NavigationProvider, NavigationState, Provider, StartScreenState, defaul
 
 import { CookieContextProvider } from "../../Context";
 import DifficultyOptions from "./DifficultyOptions";
+import LaunchSettings from "../../../Model/Game/Settings/LaunchSettings";
 import React from "react";
 import Screen from "./Screens/Screen";
 import StartMenu from "./Menu/StartMenu";
 import StorageManager from "../StorageManager";
 
-const Home = (props: { start: (settings: any) => void }) => {
+const Home = (props: { start: (settings: LaunchSettings) => void }) => {
     const storage = new StorageManager();
     const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
     const previous = storage.getPreviousState();
@@ -40,12 +41,14 @@ const Home = (props: { start: (settings: any) => void }) => {
         const settings = {
             ...DifficultyOptions[state.difficultySettings].settings,
             ...state.ratingSettings,
-            ...state.entropySettings,
+            baseEntropy: state.entropySettings.baseEntropy || 0,
+            interactionEntropy: state.entropySettings.interactionEntropy || 0,
             players: { ...state.players },
             quickDeal: state.quickDeal,
             boardMode: boardMode,
             initialized: true,
             suggestionMode: state.suggestionMode,
+            inputMode: "",
         };
         props.start(settings);
     };

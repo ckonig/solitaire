@@ -6,13 +6,13 @@ export default class Game {
         this.settings = settings;
         this.rating = new Rating(settings);
         this.timemachine = new TimeMachine();
+        //@todo move to context:
         this.started = 0;
         this.isEnded = false;
         this.end = 0;
     }
 
     registerMove = (target, source) => {
-        this.rating.registerHint(this.settings.disableHint());
         this.rating.registerMove(target, source);
         this.timemachine.registerMove(target, source);
         return true;
@@ -24,14 +24,12 @@ export default class Game {
     };
 
     registerRecycle = () => {
-        this.rating.registerHint(this.settings.disableHint());
         this.rating.registerRecycle();
         this.timemachine.registerRecycle();
         return true;
     };
 
     registerUncover = () => {
-        this.rating.registerHint(this.settings.disableHint());
         this.rating.registerUncover();
         this.timemachine.registerUncover();
         return true;
@@ -50,6 +48,4 @@ export default class Game {
         copy.paused = orig.paused;
         return copy;
     };
-
-    
 }

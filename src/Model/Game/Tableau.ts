@@ -34,7 +34,7 @@ export default class Tableau {
         this.stacks.forEach((stack, index) => {
             stack.clickEmpty = (p: any) => onClick(null, p, index);
             stack.stack.forEach((card, sindex) => {
-                const click = card.isHidden && sindex == stack.stack.length-1 ? onClickhidden : onClick;
+                const click = card.isHidden && sindex == stack.stack.length - 1 ? onClickhidden : onClick;
                 card.onClick = (p: any) => click({ ...card }, p, index);
                 card.canClick = () => !card.isHidden || this.canUncover(index, card);
             });
@@ -46,7 +46,7 @@ export default class Tableau {
 
     wouldAcceptHand = (index: number) => this.canPutDown(this.getTop(index), this.hand, index);
 
-    putDownHand = (index: number) => this.add(index, this.hand.putDown()); 
+    putDownHand = (index: number) => this.add(index, this.hand.putDown());
 
     canPutDown = (card: Card, hand: Hand, index: number) =>
         (card && card.isHidden && hand.isFromCurrentSource(card)) ||

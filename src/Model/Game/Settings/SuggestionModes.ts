@@ -1,4 +1,4 @@
-class SuggestionMode {
+export class SuggestionMode {
     key: string;
     label: string;
     isTemporary: boolean;
@@ -17,7 +17,7 @@ class SuggestionMode {
     }
 }
 
-type ISuggestionMode = {
+export type ISuggestionMode = {
     label: string;
     icon: string;
     description: string;

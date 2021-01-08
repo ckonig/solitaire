@@ -4,11 +4,13 @@ import Focus from "./Game/Focus";
 import Foundation from "./Game/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
+import LaunchSettings from "./Game/Settings/LaunchSettings";
 import Settings from "./Game/Settings";
 import Stock from "./Game/Stock";
 import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 
+export interface LaunchState extends AppState, LaunchSettings {}
 export default class Model {
     stock: Stock;
     waste: Waste;
@@ -30,7 +32,7 @@ export default class Model {
         this.focus = obj.focus;
     }
 
-    static getInitialState = (launchSettings: AppState, deck: Deck) => {
+    static getInitialState = (launchSettings: LaunchState, deck: Deck) => {
         const settings = new Settings(launchSettings);
         const hand = new Hand();
         const state = {

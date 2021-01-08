@@ -1,7 +1,6 @@
 import BusinessModel from "./Business/BusinessModel";
 import Card from "./Model/Deck/Card";
 
-
 export type StateReplacer = (state: BusinessModel) => BusinessModel | null;
 export type StateUpdater = (state: BusinessModel) => void;
 export type StateReplaceFunction = (modifier: StateReplacer) => void;
@@ -36,8 +35,8 @@ export interface PlayerSettings {
 export interface AppState extends RatingSettings {
     inputMode: string;
     initialized?: boolean;
-    drawMode?: string;
-    recyclingMode?: string;
+    drawMode: string;
+    recyclingMode: string;
     boardMode: string;
     players: PlayerSettings;
 }

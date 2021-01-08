@@ -1,12 +1,11 @@
+import Model, { LaunchState } from "../Model/Model";
 import Tableau, { TableauHidden } from "./Tableau";
 
-import { AppState } from "../Common";
 import { ClickHandler } from "../Common";
 import Dealer from "./Dealer";
 import Deck from "../Model/Deck/Deck";
 import Dispatcher from "./Dispatcher";
 import Foundation from "./Foundation";
-import Model from "../Model/Model";
 import Navigator from "./Navigator";
 import Stock from "./Stock";
 import Suggestions from "./Suggestions";
@@ -46,7 +45,7 @@ export default class BusinessModel extends Model {
         return this;
     };
 
-    static getInitialState = (launchSettings: AppState, deck: Deck) => {
+    static getInitialState = (launchSettings: LaunchState, deck: Deck) => {
         return new BusinessModel(Model.getInitialState(launchSettings, deck));
     };
 

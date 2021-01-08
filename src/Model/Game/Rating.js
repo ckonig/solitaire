@@ -6,6 +6,7 @@ export default class Rating {
     }
 
     registerMove = (target, source) => {
+        this.registerHint(this.settings.disableHint());
         const currentMove = {
             source: source,
             target: target,
@@ -14,6 +15,7 @@ export default class Rating {
     };
 
     registerRecycle = () => {
+        this.registerHint(this.settings.disableHint());
         if (this.settings.launchSettings.drawMode == "single" && this.settings.launchSettings.recyclingMode == "infinite") {
             if (this.points > 0) {
                 if (this.points < 100) {
@@ -27,6 +29,7 @@ export default class Rating {
     };
 
     registerUncover = () => {
+        this.registerHint(this.settings.disableHint());
         this.points += 5;
         console.debug("RATING: add 5 points for UNCOVER");
     };

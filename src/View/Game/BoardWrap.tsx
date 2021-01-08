@@ -1,9 +1,10 @@
-import { AppState, StateReplacer, StateUpdater } from "../../Common";
+import { StateReplacer, StateUpdater } from "../../Common";
 
 import Board from "./Board";
 import BusinessModel from "../../Business/BusinessModel";
 import Deck from "../../Model/Deck/Deck";
 import EndScreen from "../UI/EndScreen";
+import { LaunchState } from "../../Model/Model";
 import { Provider } from "../Context";
 import React from "react";
 
@@ -12,7 +13,7 @@ export const BoardContext = React.createContext({
 });
 const BoardProvider = BoardContext.Provider;
 interface BoardWrapProps {
-    settings: AppState;
+    settings: LaunchState;
     restart: () => void;
     deck: Deck;
     player: number;

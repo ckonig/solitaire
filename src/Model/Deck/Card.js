@@ -6,6 +6,9 @@ export default class Card {
         this.entropyStyle = {};
         this.source = "";
         this.suggestion = false;
+        this.canClick = () => {};
+        // eslint-disable-next-line no-unused-vars
+        this.onClick = (_p) => {};
     }
 
     causeEntropy = (lvl) => {

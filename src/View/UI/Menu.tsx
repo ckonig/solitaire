@@ -4,7 +4,7 @@ import { NavigationContext, NavigationProvider, NavigationState } from "./StartS
 import { Universal, getKeyboardLayout } from "../Game/KeyboardLayouts";
 
 import { BoardContext } from "../Game/BoardWrap";
-import EntropyLevels from "../../Model/Game/EntropyLevels";
+import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
 import GlobalContext from "../Context";
 import MenuButton from "./StartScreen/Menu/MenuButton";
 import MenuTitle from "./StartScreen/Menu/MenuTitle";

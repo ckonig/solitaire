@@ -3,7 +3,7 @@ import StartScreenContext, { NavigationContext, StartScreenState } from "../Cont
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
 import { CookieContext } from "../../../Context";
-import EntropyLevels from "../../../../Model/Game/EntropyLevels";
+import EntropyLevels from "../../../../Model/Game/Settings/EntropyLevels";
 import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
