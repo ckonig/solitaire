@@ -1,5 +1,6 @@
 import React from "react";
 import ReactGamePad from "react-gamepad";
+import RenderAfter from "./RenderAfter";
 
 const GamePad = (props) => {
     const buttonHandler = (e) => {
@@ -47,14 +48,16 @@ const GamePad = (props) => {
     };
 
     return (
-        <ReactGamePad
-            gamepadIndex={props.gamepadIndex}
-            onButtonDown={buttonHandler}
-            onConnect={connectHandler}
-            onDisconnect={disconnectHandler}
-        >
-            <span></span>
-        </ReactGamePad>
+        <RenderAfter delay={125}>
+            <ReactGamePad
+                gamepadIndex={props.gamepadIndex}
+                onButtonDown={buttonHandler}
+                onConnect={connectHandler}
+                onDisconnect={disconnectHandler}
+            >
+                <span></span>
+            </ReactGamePad>
+        </RenderAfter>
     );
 };
 
