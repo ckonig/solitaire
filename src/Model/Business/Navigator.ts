@@ -1,7 +1,6 @@
-import BusinessModel from "./BusinessModel";
-import Card from "../Model/Deck/Card";
-import { IStack } from "../Model/Game/IStack";
-import Model from "../Model/Model";
+import Card from "../Deck/Card";
+import { IStack } from "../Game/IStack";
+import Model from "../Model";
 
 interface NavIndex {
     x: number;
@@ -134,10 +133,10 @@ export default class Navigator {
         if (this.model.focus.card && this.model.focus.card.canClick()) {
             return this.model.focus.card.onClick({ isKeyboard: true });
         } else if (this.model.focus.stack) {
-            console.debug("delegating to clickempty")
+            console.debug("delegating to clickempty");
             return this.current().clickEmpty({ isKeyboard: true });
         } else {
-            return (ctx: BusinessModel) => {
+            return (ctx: Model) => {
                 ctx.navigator.finishNav();
                 ctx.game.timemachine.modified = true;
             };

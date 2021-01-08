@@ -1,5 +1,5 @@
-import BusinessModel from "./BusinessModel";
-import SuggestionModes from "../Model/Game/Settings/SuggestionModes";
+import Model from "../Model";
+import SuggestionModes from "../Game/Settings/SuggestionModes";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
 
@@ -12,7 +12,7 @@ export default class Suggestions {
         this.waste = new Waste();
     }
 
-    evaluateOptions = (state: BusinessModel) => {
+    evaluateOptions = (state: Model) => {
         this.disableAllSuggestions(state);
         if (
             state.settings.suggestionMode.key !== SuggestionModes.NONE &&
@@ -27,7 +27,7 @@ export default class Suggestions {
         }
     };
 
-    getPutdownSuggestions = (state: BusinessModel, onlyUseful?: boolean) => {
+    getPutdownSuggestions = (state: Model, onlyUseful?: boolean) => {
         if (!state.hand.isHoldingCard() || state.settings.suggestionMode.key == SuggestionModes.NONE) {
             return 0;
         }
@@ -90,9 +90,9 @@ export default class Suggestions {
         return accepted.length;
     };
 
-    getPickupOptions = (state: BusinessModel) => {
+    getPickupOptions = (state: Model) => {
         let foundAny = false;
-        const wasteState = BusinessModel.copy(state);
+        const wasteState = Model.copy(state);
         this.waste.dispatchPickup(wasteState.waste.getTop(), null, wasteState);
         if (wasteState.game.timemachine.modified) {
             if (this.getPutdownSuggestions(wasteState, true) > (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)) {
@@ -106,7 +106,7 @@ export default class Suggestions {
                 .map((card, cardIndex) => ({ cardIndex, card }))
                 .filter(({ card }) => !card.isHidden)
                 .forEach(({ card, cardIndex }) => {
-                    const tableauState = BusinessModel.copy(state);
+                    const tableauState = Model.copy(state);
                     this.tableau.dispatchPickup(card, null, tableauState, index);
                     if (tableauState.game.timemachine.modified) {
                         if (this.getPutdownSuggestions(tableauState, true) > (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)) {
@@ -119,7 +119,7 @@ export default class Suggestions {
         return foundAny;
     };
 
-    getUncoverOptions = (state: BusinessModel) => {
+    getUncoverOptions = (state: Model) => {
         if (!state.hand.isHoldingCard()) {
             const filtered = state.tableau.stacks
                 .map((_stack, index) => index)
@@ -133,7 +133,7 @@ export default class Suggestions {
         return 0;
     };
 
-    disableAllSuggestions = (state: BusinessModel) => {
+    disableAllSuggestions = (state: Model) => {
         const disableSuggestion = (obj: any) => {
             obj.suggestion = false;
             obj.stack && obj.stack.forEach(disableSuggestion);

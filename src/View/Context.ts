@@ -1,10 +1,10 @@
 import { StateReplaceFunction, StateUpdateFunction } from "../Common";
 
-import BusinessModel from "../Business/BusinessModel";
+import Model from "../Model/Model";
 import React from "react";
 
 interface IGlobalContext {
-    state: BusinessModel | null;
+    state: Model | null;
     replaceContext: StateReplaceFunction;
     updateContext: StateUpdateFunction;
     updateGameContext: StateUpdateFunction;

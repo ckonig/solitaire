@@ -1,8 +1,8 @@
-import { BlinkFunction, ClickHandler } from "../Common";
+import { BlinkFunction, ClickHandler } from "../../Common";
 
 import Blinker from "./Blinker";
-import BusinessModel from "./BusinessModel";
-import Card from "../Model/Deck/Card";
+import Card from "../Deck/Card";
+import Model from "../Model";
 import Navigator from "./Navigator";
 
 export default class Stock implements ClickHandler {
@@ -11,19 +11,19 @@ export default class Stock implements ClickHandler {
         this.navigator = navigator;
     }
 
-    blink: BlinkFunction = (state: BusinessModel) => new Blinker().startBlink((s: BusinessModel) => s.stock, state);
+    blink: BlinkFunction = (state: Model) => new Blinker().startBlink((s: Model) => s.stock, state);
 
-    dispatchPutDown = (_card: Card, _position: any, state: BusinessModel) => this.blink(state, 0);
+    dispatchPutDown = (_card: Card, _position: any, state: Model) => this.blink(state, 0);
 
-    dispatchPickup = (card: Card, _position: any, state: BusinessModel) => {
+    dispatchPickup = (card: Card, _position: any, state: Model) => {
         return card != null ? this.moveToWaste(card, state) : this.recycleWaste(card, state);
     };
 
-    moveToWaste = (card: Card, state: BusinessModel) => {
+    moveToWaste = (card: Card, state: Model) => {
         return state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock");
     };
 
-    recycleWaste = (_card: Card, state: BusinessModel) => {
+    recycleWaste = (_card: Card, state: Model) => {
         if (!state.stock.getTop()) {
             return (
                 (!!state.waste.getTop() &&

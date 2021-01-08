@@ -1,8 +1,8 @@
-import BusinessModel from "./Business/BusinessModel";
 import Card from "./Model/Deck/Card";
+import Model from "./Model/Model";
 
-export type StateReplacer = (state: BusinessModel) => BusinessModel | null;
-export type StateUpdater = (state: BusinessModel) => void;
+export type StateReplacer = (state: Model) => Model | null;
+export type StateUpdater = (state: Model) => void;
 export type StateReplaceFunction = (modifier: StateReplacer) => void;
 export type StateUpdateFunction = (modifier: StateUpdater) => void;
 
@@ -42,11 +42,11 @@ export interface AppState extends RatingSettings {
 }
 
 export interface ClickHandler {
-    dispatchPutDown: (card: Card, position: any, state: BusinessModel, index: number) => void;
-    dispatchPickup: (card: Card, position: any, state: BusinessModel, index: number) => void;
+    dispatchPutDown: (card: Card, position: any, state: Model, index: number) => void;
+    dispatchPickup: (card: Card, position: any, state: Model, index: number) => void;
 }
 
-export type BlinkFunction = (state: BusinessModel, index: number) => void;
+export type BlinkFunction = (state: Model, index: number) => void;
 
 export interface RatingSettings {
     undoPenalty?: boolean;

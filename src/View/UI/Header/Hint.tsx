@@ -1,13 +1,13 @@
-import BusinessModel from "../../../Business/BusinessModel";
 import GlobalContext from "../../Context";
+import Model from "../../../Model/Model";
 import React from "react";
 
 const Hint = () => {
     const { state, updateContext } = React.useContext(GlobalContext);
     if (!state) return null;
-    const isVisible = (state: BusinessModel) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
+    const isVisible = (state: Model) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
 
-    const isDisabled = (state: BusinessModel) => state.settings.suggestionMode.isTemporary;
+    const isDisabled = (state: Model) => state.settings.suggestionMode.isTemporary;
 
     const suggestOnce = () =>
         updateContext((state) => {

@@ -1,14 +1,23 @@
-import { AppState } from "../Common";
+import { AppState, ClickHandler } from "../Common";
+import TableauHandler, { TableauHidden } from "./Business/Tableau";
+
+import Dealer from "./Business/Dealer";
 import Deck from "./Deck/Deck";
+import Dispatcher from "./Business/Dispatcher";
 import Focus from "./Game/Focus";
 import Foundation from "./Game/Foundation";
+import FoundationHandler from "./Business/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
 import LaunchSettings from "./Game/Settings/LaunchSettings";
+import Navigator from "./Business/Navigator";
 import Settings from "./Game/Settings";
 import Stock from "./Game/Stock";
+import StockHandler from "./Business/Stock";
+import Suggestions from "./Business/Suggestions";
 import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
+import WasteHandler from "./Business/Waste";
 
 export interface LaunchState extends AppState, LaunchSettings {}
 export default class Model {
@@ -20,6 +29,9 @@ export default class Model {
     game: Game;
     settings: Settings;
     focus: Focus;
+    suggestor: Suggestions;
+    dealer: Dealer;
+    navigator: Navigator;
 
     constructor(obj: any) {
         this.stock = obj.stock;
@@ -30,7 +42,32 @@ export default class Model {
         this.game = obj.game;
         this.settings = obj.settings;
         this.focus = obj.focus;
+        this.suggestor = new Suggestions();
+        this.dealer = new Dealer();
+        this.navigator = new Navigator(this);
     }
+
+    withSuggestions = () => {
+        this.suggestor.evaluateOptions(this);
+        return this;
+    };
+
+    setEntropy = (lvl: number) => {
+        this.settings.baseEntropy = lvl;
+        this.stock.setEntropy(lvl);
+        this.waste.setEntropy(lvl);
+        this.foundation.setEntropy(lvl);
+        this.tableau.setEntropy(lvl);
+    };
+
+    withHandlers = () => {
+        const getHandler = (clickHandler: ClickHandler) => new Dispatcher(clickHandler).getHandler(this.hand);
+        this.stock.setOnClick(getHandler(new StockHandler(this.navigator)));
+        this.waste.setOnClick(getHandler(new WasteHandler()));
+        this.foundation.setOnClick(getHandler(new FoundationHandler()));
+        this.tableau.setOnClick(getHandler(new TableauHandler()), getHandler(new TableauHidden()), this.hand);
+        return this;
+    };
 
     static getInitialState = (launchSettings: LaunchState, deck: Deck) => {
         const settings = new Settings(launchSettings);
@@ -45,12 +82,12 @@ export default class Model {
             settings: settings,
             focus: new Focus(settings),
         };
-        return state;
+        return new Model(state);
     };
 
     static copy = (state: Model) => {
         const hand = Hand.copy(state.hand);
-        return {
+        return new Model({
             stock: Stock.copy(state.stock),
             waste: Waste.copy(state.waste, hand),
             foundation: Foundation.copy(state.foundation, hand),
@@ -59,6 +96,6 @@ export default class Model {
             game: Game.copy(state.game),
             settings: Settings.copy(state.settings),
             focus: state.focus,
-        };
+        });
     };
 }

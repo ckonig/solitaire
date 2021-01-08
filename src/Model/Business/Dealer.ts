@@ -1,6 +1,6 @@
-import BusinessModel from "./BusinessModel";
-import Stock from "../Model/Game/Stock";
-import Tableau from "../Model/Game/Tableau";
+import Model from "../Model";
+import Stock from "../Game/Stock";
+import Tableau from "../Game/Tableau";
 
 export default class Dealer {
     dealt: number;
@@ -13,7 +13,7 @@ export default class Dealer {
         this.isDealt = false;
     }
 
-    dealOne = (dealt: number, callback: any) => (state: BusinessModel) => {
+    dealOne = (dealt: number, callback: any) => (state: Model) => {
         if (dealt != state.dealer.dealt) {
             return null;
         }
@@ -30,7 +30,7 @@ export default class Dealer {
         return state;
     };
 
-    dealAll = () => (state: BusinessModel) => {
+    dealAll = () => (state: Model) => {
         if (this.dealt != state.dealer.dealt) {
             return null;
         }

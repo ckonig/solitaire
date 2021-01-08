@@ -1,17 +1,18 @@
+import Model, { LaunchState } from "../../Model/Model";
 import { StateReplacer, StateUpdater } from "../../Common";
 
 import Board from "./Board";
-import BusinessModel from "../../Business/BusinessModel";
 import Deck from "../../Model/Deck/Deck";
 import EndScreen from "../UI/EndScreen";
-import { LaunchState } from "../../Model/Model";
 import { Provider } from "../Context";
 import React from "react";
 
 export const BoardContext = React.createContext({
     player: 0,
 });
+
 const BoardProvider = BoardContext.Provider;
+
 interface BoardWrapProps {
     settings: LaunchState;
     restart: () => void;
@@ -19,24 +20,27 @@ interface BoardWrapProps {
     player: number;
 }
 
-export default class BoardWrap extends React.Component<BoardWrapProps, BusinessModel> {
+export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
     constructor(props: BoardWrapProps) {
         super(props);
-        this.state = BusinessModel.getInitialState(props.settings, props.deck);
+        this.state = Model.getInitialState(props.settings, props.deck);
     }
 
+    //replacecontext is hard replacement, for restart and undo
     replaceContext = (modifier: StateReplacer) => this.setState(modifier);
 
+    //updatecontext is soft replacement used for navigation.
     updateContext = (modifier: StateUpdater) =>
         this.replaceContext((state) => {
             modifier(state);
             return state;
         });
 
+    //updateGameContext is for undo-able game actions
     updateGameContext = (modifier: StateUpdater) =>
         this.replaceContext((state) => {
             state.game.timemachine.modified = false;
-            const previous = BusinessModel.copy(state);
+            const previous = Model.copy(state);
             modifier(state);
             if (state.game.timemachine.modified) {
                 state.game.timemachine.pushPreviousState(previous);
