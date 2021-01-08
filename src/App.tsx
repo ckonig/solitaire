@@ -16,7 +16,7 @@ import SuggestionModes from "./Model/Game/Settings/SuggestionModes";
 const App = () => {
     const [started, setStarted] = React.useState<number>(0);
     const defaultState = {
-        boardMode: GameModes.CUSTOM.boardMode,
+        boardMode: GameModes.SINGLEPLAYER,
         inputMode: "mouse",
         initialized: false,
         players: defaultPlayerSettings,
@@ -43,7 +43,7 @@ const App = () => {
     if (launchState?.initialized) {
         const BoardWrap = React.lazy(() => import("./View/Game/BoardWrap"));
         let board = null;
-        if (launchState.boardMode == "singleplayer") {
+        if (launchState.boardMode == GameModes.SINGLEPLAYER) {
             board = (
                 <AspectRatio ratio={Ratios._4to3}>
                     <div className={"layout-grid-container singleplayer"}>
@@ -52,7 +52,7 @@ const App = () => {
                 </AspectRatio>
             );
         }
-        if (launchState.boardMode == "splitscreen") {
+        if (launchState.boardMode == GameModes.VERSUS) {
             board = (
                 <div className="game-layout-container splitscreen">
                     <div className={"layout-grid-container " + launchState.boardMode}>

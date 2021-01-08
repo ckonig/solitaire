@@ -1,6 +1,7 @@
 import { Universal, getKeyboardLayout } from "./KeyboardLayouts";
 
 import { BoardContext } from "./BoardWrap";
+import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import Keyboard from "./Keyboard";
 import React from "react";
@@ -9,7 +10,7 @@ const BoardKeyboard = (props) => {
     const { state } = React.useContext(GlobalContext);
     const { player } = React.useContext(BoardContext);
     const isKeyboardDriven = state.settings.launchSettings.inputMode === "keyboard";
-    const isSinglePlayer = state.settings.launchSettings.boardMode === "singleplayer";
+    const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
     const layout = isSinglePlayer ? Universal : getKeyboardLayout(state.settings.launchSettings.players[player].inputLayout);
 
     const switchToKeyboard = (ctx) => {

@@ -54,7 +54,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
             <MenuTitle label="♦ Solitaire" />
 
             <MenuTree keyboardLayout={Universal}>
-                <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.CUSTOM.boardMode)} onFocus={onfocus} />
+                <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} onFocus={onfocus} />
                 <MenuButton
                     icon="⚔️"
                     title="Versus"
@@ -76,7 +76,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         onFocus={onfocus}
                         toggled={navigation.screeen == "controls1"}
                     />
-                    <MenuButton icon="🎲" title="Start" onClick={() => props.start(GameModes.VERSUS.boardMode)} onFocus={onfocus} />
+                    <MenuButton icon="🎲" title="Start" onClick={() => props.start(GameModes.VERSUS)} onFocus={onfocus} />
                 </MenuButton>
                 <MenuButton
                     icon="⚙️"

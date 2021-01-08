@@ -5,6 +5,7 @@ import { Universal, getKeyboardLayout } from "../Game/KeyboardLayouts";
 
 import { BoardContext } from "../Game/BoardWrap";
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
+import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import MenuButton from "./StartScreen/Menu/MenuButton";
 import MenuTitle from "./StartScreen/Menu/MenuTitle";
@@ -91,7 +92,7 @@ const Menu = () => {
     }
     if (remaining < 0) [(announcement = "The game is not paused.")];
 
-    const isSinglePlayer = state.settings.launchSettings.boardMode === "singleplayer";
+    const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
     const keyboardLayout = isSinglePlayer ? Universal : getKeyboardLayout(state.settings.launchSettings.players[player].inputLayout);
 
     if (pause.state.pausedBy !== player) {

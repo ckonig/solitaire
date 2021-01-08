@@ -1,3 +1,4 @@
+import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
@@ -8,7 +9,7 @@ const Card = (props) => {
     const inputEl = React.useRef(null);
     const isFocused = state.focus.hasCard(props.model);
     React.useEffect(() => {
-        if (isFocused && state.settings.launchSettings.boardMode == "singleplayer") {
+        if (isFocused && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
         }
     }, [isFocused, state.focus.card]);
@@ -33,7 +34,7 @@ const Card = (props) => {
                 y: rect.y,
             },
         };
-        const isSinglePlayer = state.settings.launchSettings.boardMode === "singleplayer";
+        const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
         //@todo A11Y allow keyboard actions in singleplayer
         if (props.model.onClick && !position.isKeyBoard) {
             updateGameContext((context) => {

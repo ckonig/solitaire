@@ -1,3 +1,4 @@
+import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import React from "react";
 
@@ -6,7 +7,7 @@ const StackBase = (props) => {
     const inputEl = React.useRef(null);
     const { state, updateGameContext } = React.useContext(GlobalContext);
     React.useEffect(() => {
-        if (state.focus.hasStack(props.model.parent) && state.settings.launchSettings.boardMode == "singleplayer") {
+        if (state.focus.hasStack(props.model.parent) && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
         }
     });

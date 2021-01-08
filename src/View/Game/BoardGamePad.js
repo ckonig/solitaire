@@ -1,4 +1,5 @@
 import { BoardContext } from "./BoardWrap";
+import GameModes from "../../GameModes";
 import GamePad from "./GamePad";
 import GlobalContext from "../Context";
 import React from "react";
@@ -7,7 +8,7 @@ const BoardGamePad = (props) => {
     const { state } = React.useContext(GlobalContext);
     const { player } = React.useContext(BoardContext);
     const isGamePadDriven = state.settings.launchSettings.inputMode == "gamepad";
-    const isSinglePlayer = state.settings.launchSettings.boardMode === "singleplayer";
+    const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
     const switchToGamePad = (ctx) => {
         ctx.focus.isKeyBoard(true);
         if (isSinglePlayer) {
