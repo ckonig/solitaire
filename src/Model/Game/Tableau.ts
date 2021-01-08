@@ -6,6 +6,7 @@ import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 class TableauStack extends HandHoldingStack implements IStack {
+    //@todo move to IStack, make boolean
     blinkFor = 0;
     id = 0;
     // eslint-disable-next-line no-unused-vars
