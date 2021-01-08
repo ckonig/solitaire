@@ -1,16 +1,18 @@
 import Card from "../Deck/Card";
 import Hand from "./Hand";
-import { HandHoldingStack } from "./BasicStack";
+import HandHoldingStack from "./HandHoldingStack";
+import { IStack } from "./IStack";
 import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
 
-class TableauStack extends HandHoldingStack {
+class TableauStack extends HandHoldingStack implements IStack {
     blinkFor = 0;
     id = 0;
     // eslint-disable-next-line no-unused-vars
-    onClick = (a: any, b: any) => {};
+    onClick = (a: any) => {};
     // eslint-disable-next-line no-unused-vars
-    clickEmpty = (a: any, b: any) => {};
+    clickEmpty = (a: any) => {};
+    setOnClick = () => {};
 }
 export default class Tableau {
     stacks: TableauStack[];
@@ -53,7 +55,7 @@ export default class Tableau {
         this.accepts(index, hand.currentCard()) ||
         (!card && hand.isFromTableau(index));
 
-    accepts = (index: number, current: Card) => {
+    accepts = (index: number, current?: Card | null) => {
         const top = this.getTop(index);
         if (!top) {
             return current && current.face === "K";
@@ -62,9 +64,9 @@ export default class Tableau {
             return false;
         }
         const range = [...getTableauOrder()];
-        const currentIndex = range.indexOf(current.face);
+        const currentIndex = range.indexOf(current?.face);
         const topIndex = range.indexOf(top.face);
-        return currentIndex + 1 == topIndex && current.type.color !== top.type.color && top.face !== "A";
+        return currentIndex + 1 == topIndex && current?.type.color !== top.type.color && top.face !== "A";
     };
 
     getCard = (index: number, card: Card) => {

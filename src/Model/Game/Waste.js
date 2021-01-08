@@ -1,5 +1,5 @@
 import Card from "../Deck/Card";
-import { HandHoldingStack } from "./BasicStack";
+import HandHoldingStack from "./HandHoldingStack";
 
 export default class Waste extends HandHoldingStack {
     constructor(settings, hand) {
@@ -13,10 +13,10 @@ export default class Waste extends HandHoldingStack {
     setOnClick = (onClick) => {
         this.clickEmpty = (p) => onClick(null, p);
         this.stack.forEach((card, index) => {
-            card.onClick = (p) => onClick({...card}, p);
-            card.canClick = () => index == this.stack.length-1;
+            card.onClick = (p) => onClick({ ...card }, p);
+            card.canClick = () => index == this.stack.length - 1;
         });
-        this.hand.setOnClick(this);  
+        this.hand.setOnClick(this);
     };
 
     putDownHand = () => this.addAll(this.hand.putDown());

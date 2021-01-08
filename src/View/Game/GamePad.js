@@ -3,6 +3,8 @@ import ReactGamePad from "react-gamepad";
 
 const GamePad = (props) => {
     const buttonHandler = (e) => {
+        //@todo use layout abstraction like in keyboard
+        //@todo make layouts configurable (for visuals allow switching PS4 and XBOX layouts)
         console.debug(e);
         if (e == "DPadLeft") {
             props.onLeft && props.onLeft();
@@ -35,15 +37,15 @@ const GamePad = (props) => {
             props.onPause && props.onMenu();
         }
     };
+
     const connectHandler = (e) => {
         console.debug("connected", e);
     };
+
     const disconnectHandler = (e) => {
         console.debug("disconnected", e);
     };
 
-    //@todo pick ID of gamepad dynamically?
-    //allow switching PS4 and XBOX layouts
     return (
         <ReactGamePad
             gamepadIndex={props.gamepadIndex}

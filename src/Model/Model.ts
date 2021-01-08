@@ -1,4 +1,4 @@
-import { AppState, ClickHandler } from "../Common";
+import { ClickHandler, LaunchSettings } from "../Common";
 import TableauHandler, { TableauHidden } from "./Business/Tableau";
 
 import Dealer from "./Business/Dealer";
@@ -9,7 +9,6 @@ import Foundation from "./Game/Foundation";
 import FoundationHandler from "./Business/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
-import LaunchSettings from "./Game/Settings/LaunchSettings";
 import Navigator from "./Business/Navigator";
 import Settings from "./Game/Settings";
 import Stock from "./Game/Stock";
@@ -19,7 +18,6 @@ import Tableau from "./Game/Tableau";
 import Waste from "./Game/Waste";
 import WasteHandler from "./Business/Waste";
 
-export interface LaunchState extends AppState, LaunchSettings {}
 export default class Model {
     stock: Stock;
     waste: Waste;
@@ -69,7 +67,7 @@ export default class Model {
         return this;
     };
 
-    static getInitialState = (launchSettings: LaunchState, deck: Deck) => {
+    static getInitialState = (launchSettings: LaunchSettings, deck: Deck) => {
         const settings = new Settings(launchSettings);
         const hand = new Hand();
         const state = {

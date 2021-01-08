@@ -1,3 +1,5 @@
+//@todo deprecate
+
 export interface GameMode {
     key: string;
     title: string;

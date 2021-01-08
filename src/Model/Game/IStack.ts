@@ -6,5 +6,5 @@ export interface IStack {
     getTop: () => Card;
     getClickable: () => Card[];
     setOnClick: () => void;
-    clickEmpty: (p: any) => {};
+    clickEmpty: (p: any) => void;
 }

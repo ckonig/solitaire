@@ -1,6 +1,6 @@
 import SuggestionModes, { SuggestionMode } from "./Settings/SuggestionModes";
 
-import LaunchSettings from "./Settings/LaunchSettings";
+import { LaunchSettings } from "../../Common";
 
 export default class Settings {
     launchSettings: LaunchSettings;

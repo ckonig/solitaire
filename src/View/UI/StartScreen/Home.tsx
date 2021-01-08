@@ -2,7 +2,7 @@ import { NavigationProvider, NavigationState, Provider, StartScreenState, defaul
 
 import { CookieContextProvider } from "../../Context";
 import DifficultyOptions from "./DifficultyOptions";
-import LaunchSettings from "../../../Model/Game/Settings/LaunchSettings";
+import { LaunchSettings } from "../../../Common";
 import React from "react";
 import Screen from "./Screens/Screen";
 import StartMenu from "./Menu/StartMenu";

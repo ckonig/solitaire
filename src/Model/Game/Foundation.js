@@ -1,5 +1,5 @@
 import Card from "../Deck/Card";
-import { HandHoldingStack } from "./BasicStack";
+import HandHoldingStack from "./HandHoldingStack";
 import Suits from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 

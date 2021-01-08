@@ -1,18 +1,17 @@
 import "./View/Style/App.css";
 import "./View/Style/UI.css";
 
-import { AppState, defaultPlayerSettings } from "./Common";
+import { LaunchSettings, defaultPlayerSettings } from "./Common";
 
 import AspectRatio from "./View/AspectRatio/AspectRatio";
 import BoardWrap from "./View/Game/BoardWrap";
 import Deck from "./Model/Deck/Deck";
 import GameModes from "./GameModes";
 import Home from "./View/UI/StartScreen/Home";
-import LaunchSettings from "./Model/Game/Settings/LaunchSettings";
-import { LaunchState } from "./Model/Model";
 import { PauseProvider } from "./View/PauseContext";
 import Ratios from "./View/AspectRatio/Ratios";
 import React from "react";
+import SuggestionModes from "./Model/Game/Settings/SuggestionModes";
 
 const App = () => {
     const [started, setStarted] = React.useState<number>(0);
@@ -23,27 +22,27 @@ const App = () => {
         players: defaultPlayerSettings,
         drawMode: "",
         recyclingMode: "",
+        interactionEntropy: 0,
+        baseEntropy: 0,
+        suggestionMode: SuggestionModes.NONE,
     };
-    const [appState, setAppState] = React.useState<AppState>(defaultState);
-    const [launchState, setLaunchState] = React.useState<LaunchState | null>(null);
+
+    const [launchState, setLaunchState] = React.useState<LaunchSettings>(defaultState);
 
     const restart = () => {
-        setAppState(defaultState);
+        setLaunchState(defaultState);
     };
 
     const deck = new Deck().shuffle();
     const start = (settings: LaunchSettings) => {
         deck.shuffle();
-        setLaunchState({
-            ...appState,
-            ...settings,
-        });
+        setLaunchState({ ...settings });
         setStarted(Date.now());
     };
 
     if (launchState?.initialized) {
         let board = null;
-        if (appState.boardMode == "singleplayer") {
+        if (launchState.boardMode == "singleplayer") {
             board = (
                 <AspectRatio ratio={Ratios._4to3}>
                     <div className={"layout-grid-container singleplayer"}>
@@ -52,22 +51,22 @@ const App = () => {
                 </AspectRatio>
             );
         }
-        if (appState.boardMode == "splitscreen") {
+        if (launchState.boardMode == "splitscreen") {
             board = (
                 <div className="game-layout-container splitscreen">
-                    <div className={"layout-grid-container " + appState.boardMode}>
+                    <div className={"layout-grid-container " + launchState.boardMode}>
                         <BoardWrap
                             player={0}
-                            settings={{ ...launchState, inputMode: appState.players[0].inputMethod }}
+                            settings={{ ...launchState, inputMode: launchState.players[0].inputMethod }}
                             restart={restart}
                             deck={deck.copy()}
                         />
                     </div>
 
-                    <div className={"layout-grid-container " + appState.boardMode}>
+                    <div className={"layout-grid-container " + launchState.boardMode}>
                         <BoardWrap
                             player={1}
-                            settings={{ ...launchState, inputMode: appState.players[1].inputMethod }}
+                            settings={{ ...launchState, inputMode: launchState.players[1].inputMethod }}
                             restart={restart}
                             deck={deck.copy()}
                         />

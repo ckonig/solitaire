@@ -1,13 +1,18 @@
 import Card from "../Deck/Card";
+import { IStack } from "./IStack";
+import { XY } from "../../View/UI/XY";
 
 export default class Hand {
+    stack: Card[];
+    source: string;
+    position: XY | null;
     constructor() {
         this.stack = [];
-        this.source = null;
+        this.source = "";
         this.position = null;
     }
 
-    pickUp = (stack, source, position) => {
+    pickUp = (stack: Card[], source: string, position: XY) => {
         if (stack && stack[0]) {
             this.stack = stack.map((c) => {
                 c.suggestion = false;
@@ -21,12 +26,12 @@ export default class Hand {
     };
 
     putDown = () => {
-        this.source = null;
+        this.source = "";
         const result = this.stack.splice(0, this.stack.length);
         return result;
     };
 
-    setOnClick = (model) => {
+    setOnClick = (model: IStack) => {
         if (this.source && this.source == model.source) {
             let _onClick = model.clickEmpty;
             if (model.stack.length) {
@@ -41,25 +46,25 @@ export default class Hand {
 
     isHoldingCard = () => !!this.stack.length;
 
-    isHoldingKing = () => this.isHoldingCard() && this.currentCard().face == "K";
+    isHoldingKing = () => this.isHoldingCard() && this.currentCard() && this.currentCard()?.face == "K";
 
-    currentCard = () => this.isHoldingCard() && this.stack[0];
+    currentCard: () => Card | null = () => (this.isHoldingCard() && this.stack[0]) || null;
 
     hasMoreThanOneCard = () => this.stack.length > 1;
 
-    isFromCurrentSource = (card) => this.source && card.source == this.source;
+    isFromCurrentSource = (card: Card) => (this.source && card.source == this.source) || null;
 
     isFromWaste = () => this.source && this.source == "waste";
 
-    isFromFoundation = (index) => this.source && this.source == `foundation-${index}`;
+    isFromFoundation = (index: number) => this.source && this.source == `foundation-${index}`;
 
-    isFromTableau = (index) => this.source && this.source == `tableau-${index}`;
+    isFromTableau = (index: number) => this.source && this.source == `tableau-${index}`;
 
     isFromAnyTableau = () => this.source && this.source.substring(0, 8) == "tableau-";
 
-    getTableauIndex = () => this.source && this.source.substring(8);
+    getTableauIndex: () => number = () => (this.source && parseInt(this.source.substring(8))) || 0;
 
-    static copy = (orig) => {
+    static copy = (orig: Hand) => {
         const copy = new Hand();
         copy.stack = Card.copyAll(orig.stack);
         copy.source = orig.source;

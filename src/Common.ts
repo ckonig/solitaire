@@ -32,13 +32,16 @@ export interface PlayerSettings {
     [id: number]: PlayerSetting;
 }
 
-export interface AppState extends RatingSettings {
-    inputMode: string;
-    initialized?: boolean;
-    drawMode: string;
+export interface LaunchSettings {
     recyclingMode: string;
-    boardMode: string;
+    drawMode: string;
+    inputMode: string;
+    interactionEntropy: number;
+    baseEntropy: number;
+    suggestionMode: string;
     players: PlayerSettings;
+    boardMode: string;
+    initialized?: boolean;
 }
 
 export interface ClickHandler {
