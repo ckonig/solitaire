@@ -2,6 +2,7 @@ import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
+import getStackLabel from "./StackDescription";
 
 const Card = (props) => {
     const { state, updateGameContext } = React.useContext(GlobalContext);
@@ -86,13 +87,7 @@ const Card = (props) => {
         return {};
     };
 
-    const names = [0, 1, 2, 3, 4, 5, 6].map((id) => " stack " + (id + 1));
-    let label = "";
-    const split = props.model.source.split("-");
-    label += split[0];
-    if (split.length > 1) {
-        label += names[split[1]];
-    }
+    let label = getStackLabel(props.model.source);
     label += ": ";
 
     label += props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face;

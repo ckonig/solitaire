@@ -35,6 +35,7 @@ export interface PlayerSettings {
 export interface LaunchSettings {
     recyclingMode: string;
     drawMode: string;
+    //@todo remove, this is contained in playersettings
     inputMode: string;
     interactionEntropy: number;
     baseEntropy: number;

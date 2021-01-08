@@ -8,7 +8,7 @@ const EndScreen = () => {
     const { state, restart } = React.useContext(GlobalContext);
     const pause = React.useContext(PauseContext);
     //@todo show launch settings (draw mode, recycling mode)
-    return !state.game.isEnded ? null : (
+    return state.game.isEnded ? null : (
         <div className="ui neutral endscreen">
             <div className="title">🥳</div>
             <div className="content">

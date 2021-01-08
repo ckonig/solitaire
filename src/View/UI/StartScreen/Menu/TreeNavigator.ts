@@ -1,23 +1,9 @@
-import { XY } from "../../XY";
+import AbstractNavigator from "../AbstractNavigator";
 import { NavHandler } from "../../NavHandler";
+import { XY } from "../../XY";
 
-export class TreeNavigator implements NavHandler {
-    rows: any[];
-    constructor() {
-        this.rows = [];
-    }
-    getRows = () => this.rows;
-    getRow = (x: number) => this.getRows()[x];
-    goToRow = (pos: XY) => {
-        const rows = this.getRows();
-        const row = rows[pos.y];
-        if (row.buttons.length - 1 < pos.x) {
-            return { ...pos, x: row.buttons.length - 1 };
-        }
-
-        return pos;
-    };
-    moveUp: (x: number, y: number) => XY = (x: number, y: number) => {
+export class TreeNavigator extends AbstractNavigator implements NavHandler {
+    moveUp: (x: number, y: number) => XY = (x, y) => {
         if (x == 0) {
             return { x: this.rows.length - 1, y: 0 };
         }
@@ -36,7 +22,7 @@ export class TreeNavigator implements NavHandler {
 
         return { x: x - 1, y: y };
     };
-    moveDown: (x: number, y: number) => XY = (x: number, y: number) => {
+    moveDown: (x: number, y: number) => XY = (x, y) => {
         const row = this.getRow(x);
         if (y == 0 && row.toggled) {
             return { x: x, y: 1 };
@@ -56,10 +42,10 @@ export class TreeNavigator implements NavHandler {
 
         return { x: 0, y: 0 };
     };
-    moveLeft: (x: number, y: number) => XY = (x: number, y: number) => {
+    moveLeft: (x: number, y: number) => XY = (x, y) => {
         return { x: x, y: y };
     };
-    moveRight: (x: number, y: number) => XY = (x: number, y: number) => {
+    moveRight: (x: number, y: number) => XY = (x, y) => {
         return { x: x, y: y };
     };
     action: (xy: XY) => void = () => {

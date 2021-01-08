@@ -22,33 +22,20 @@ const NavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
         }
     };
 
-    const onCancel = () =>
-        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: { ...navigation.menu } });
-
-    const onUp = () => assignState(navigator.moveUp(navigation.screen.x, navigation.screen.y));
-
-    const onDown = () => assignState(navigator.moveDown(navigation.screen.x, navigation.screen.y));
-
-    const onLeft = () => assignState(navigator.moveLeft(navigation.screen.x, navigation.screen.y));
-
-    const onRight = () => assignState(navigator.moveRight(navigation.screen.x, navigation.screen.y));
-
-    const onAction = () => {
-        navigator.action(navigation.screen);
+    const inputHandlers = {
+        onCancel: () =>
+            setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: { ...navigation.menu } }),
+        onUp: () => assignState(navigator.moveUp(navigation.screen.x, navigation.screen.y)),
+        onDown: () => assignState(navigator.moveDown(navigation.screen.x, navigation.screen.y)),
+        onLeft: () => assignState(navigator.moveLeft(navigation.screen.x, navigation.screen.y)),
+        onRight: () => assignState(navigator.moveRight(navigation.screen.x, navigation.screen.y)),
+        onAction: () => navigator.action(navigation.screen),
     };
 
     return navigation.focus == "screen" ? (
         <>
-            <Keyboard
-                layout={Universal}
-                onUp={onUp}
-                onDown={onDown}
-                onRight={onRight}
-                onLeft={onLeft}
-                onAction={onAction}
-                onCancel={onCancel}
-            />
-            <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            <Keyboard layout={Universal} {...inputHandlers} />
+            <GamePad {...inputHandlers} />
         </>
     ) : null;
 };
@@ -68,33 +55,20 @@ export const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout
         }
     };
 
-    const onCancel = () =>
-        setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: { ...navigation.menu } });
-
-    const onUp = () => assignState(navigator.moveUp(navigation.menu.x, navigation.menu.y));
-
-    const onDown = () => assignState(navigator.moveDown(navigation.menu.x, navigation.menu.y));
-
-    const onLeft = () => assignState(navigator.moveLeft(navigation.menu.x, navigation.menu.y));
-
-    const onRight = () => assignState(navigator.moveRight(navigation.menu.x, navigation.menu.y));
-
-    const onAction = () => {
-        navigator.action(navigation.menu);
+    const inputHandlers = {
+        onCancel: () =>
+            setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: navigation.mainMenu, menu: { ...navigation.menu } }),
+        onUp: () => assignState(navigator.moveUp(navigation.menu.x, navigation.menu.y)),
+        onDown: () => assignState(navigator.moveDown(navigation.menu.x, navigation.menu.y)),
+        onLeft: () => assignState(navigator.moveLeft(navigation.menu.x, navigation.menu.y)),
+        onRight: () => assignState(navigator.moveRight(navigation.menu.x, navigation.menu.y)),
+        onAction: () => navigator.action(navigation.menu),
     };
 
     return navigation.focus == "menu" ? (
         <>
-            <Keyboard
-                layout={props.keyboardLayout}
-                onUp={onUp}
-                onDown={onDown}
-                onRight={onRight}
-                onLeft={onLeft}
-                onAction={onAction}
-                onCancel={onCancel}
-            />
-            <GamePad onUp={onUp} onDown={onDown} onRight={onRight} onLeft={onLeft} onAction={onAction} onCancel={onCancel} />
+            <Keyboard layout={props.keyboardLayout} {...inputHandlers} />
+            <GamePad {...inputHandlers} />
         </>
     ) : null;
 };
