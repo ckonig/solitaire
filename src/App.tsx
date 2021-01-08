@@ -77,7 +77,9 @@ const App = () => {
         }
         return (
             <PauseProvider started={started}>
-                <DelayedSuspense>{board}</DelayedSuspense>
+                <DelayedSuspense delay={500} fallback={<h3>Loading...</h3>}>
+                    {board}
+                </DelayedSuspense>
             </PauseProvider>
         );
     }

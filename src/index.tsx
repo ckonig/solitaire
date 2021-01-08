@@ -6,7 +6,7 @@ const App = React.lazy(() => import("./App"));
 
 ReactDOM.render(
     <React.StrictMode>
-        <DelayedSuspense>
+        <DelayedSuspense delay={500} fallback={<h3>Initializing...</h3>}>
             <App />
         </DelayedSuspense>
     </React.StrictMode>,

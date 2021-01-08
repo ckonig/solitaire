@@ -10,7 +10,7 @@ const RenderAfter = (props: { children: ReactNode | ReactNode[] | null; delay: n
         return () => clearTimeout(timeout);
     }, []);
     if (hidden) return null;
-    return props.children;
+    return <>{props.children}</>;
 };
 
 export default RenderAfter;
