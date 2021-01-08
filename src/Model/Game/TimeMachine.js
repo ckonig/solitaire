@@ -49,9 +49,11 @@ export default class TimeMachine {
         return true;
     };
 
-    registerBlink() {
-        this.modified = true;
-        this.memorable = false;
+    registerBlink(on) {
+        if (on) {
+            this.modified = true;
+            this.memorable = false;
+        }
     }
 
     stackEquals = (a, b) => {

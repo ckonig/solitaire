@@ -42,8 +42,8 @@
 .header-buttons > div > button:disabled {
     color: gray;
 }
+
 .header-buttons > div > button {
-   
     padding-top: 0em;
     margin-left: 0.75em;
     border-radius: 0.5em;
@@ -53,6 +53,7 @@
     margin-top: 0.15em;
     background-color: transparent;
 }
+
 .singleplayer .header-buttons > div > button {
     width: 1.5em;
 }

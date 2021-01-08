@@ -1,6 +1,6 @@
 import KeyboardLayout from "../../../Game/KeyboardLayouts";
 import React from "react";
-import { TreeNavWrapper } from "../Screens/NavWrapper";
+import TreeNavWrapper from "./TreeNavWrapper";
 import { TreeNavigator } from "./TreeNavigator";
 
 const MenuTree = (props: { children: any[]; keyboardLayout: KeyboardLayout }) => {

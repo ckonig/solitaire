@@ -10,6 +10,7 @@ import ScreenContent from "./ScreenContent";
 import ScreenMainButton from "./ScreenMainButton";
 import ScreenSelect from "./ScreenSelect";
 import ScreenToggle from "./ScreenToggle";
+import { XY } from "../../XY";
 
 interface OptimizeOption {
     entropy: number;
@@ -48,8 +49,8 @@ const QuickStart = () => {
 
     const setQuickDeal = (value: boolean) => setState({ ...state, quickDeal: value });
 
-    const getClassName = (button: OptimizeOption, y: number, x: number) => {
-        const hasFocus = navigation.screen.x == x && navigation.screen.y == y;
+    const getClassName = (button: OptimizeOption, pos: XY) => {
+        const hasFocus = navigation.screen.x == pos.x && navigation.screen.y == pos.y;
         let name = isActive(button.quickDeal) ? "active active-0" : "inactive-0";
         name += hasFocus ? " focused" : "";
         return name;
@@ -70,7 +71,7 @@ const QuickStart = () => {
                             icon={button.icon}
                             id={i}
                             autoFocus={isActive(button.quickDeal)}
-                            className={(pos) => getClassName(button, pos.x, pos.y)}
+                            className={(pos) => getClassName(button, pos)}
                             lines={button.lines}
                             onClick={() =>
                                 setState({

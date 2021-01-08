@@ -43,6 +43,7 @@ export interface LaunchSettings {
     players: PlayerSettings;
     boardMode: string;
     initialized?: boolean;
+    quickDeal?: boolean;
 }
 
 export interface ClickHandler {

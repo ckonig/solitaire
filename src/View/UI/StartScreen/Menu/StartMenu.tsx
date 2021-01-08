@@ -34,9 +34,6 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
             menu: { ...pos },
         });
 
-    //@todo move onfocus inside components
-    const onfocus = (pos: XY) => setNavigation({ ...navigation, menu: pos });
-
     const toggleScreen = (s: string, pos: XY) => {
         if (navigation.screeen !== s) {
             switchToScreen(s, pos);
@@ -47,6 +44,22 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
 
     const toggleMainMenu = (val: string, pos: XY) => switchToMenu(navigation.mainMenu !== val ? val : "", pos);
 
+    const toggleConsent = consented
+        ? () => {
+              const revoke = storage.revokeConsent();
+              if (confirm(revoke.prompt)) {
+                  revoke.confirm();
+                  setConsented(false);
+              }
+          }
+        : () => {
+              const consent = storage.giveConsent();
+              if (confirm(consent.prompt)) {
+                  consent.confirm();
+                  setConsented(true);
+              }
+          };
+
     const storage = new StorageManager();
 
     return (
@@ -54,89 +67,59 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
             <MenuTitle label="♦ Solitaire" />
 
             <MenuTree keyboardLayout={Universal}>
-                <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} onFocus={onfocus} />
+                <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} />
                 <MenuButton
                     icon="⚔️"
                     title="Versus"
                     onClick={(pos: XY) => toggleMainMenu("versus", pos)}
-                    onFocus={onfocus}
                     toggled={navigation.mainMenu == "versus"}
                 >
                     <MenuButton
                         icon="🎮"
                         title="Player 1"
                         onClick={(pos: XY) => toggleScreen("controls0", pos)}
-                        onFocus={onfocus}
                         toggled={navigation.screeen == "controls0"}
                     />
                     <MenuButton
                         icon="🎮"
                         title="Player 2"
                         onClick={(pos: XY) => toggleScreen("controls1", pos)}
-                        onFocus={onfocus}
                         toggled={navigation.screeen == "controls1"}
                     />
-                    <MenuButton icon="🎲" title="Start" onClick={() => props.start(GameModes.VERSUS)} onFocus={onfocus} />
+                    <MenuButton icon="🎲" title="Start" onClick={() => props.start(GameModes.VERSUS)} />
                 </MenuButton>
                 <MenuButton
                     icon="⚙️"
                     title="Options"
                     onClick={(pos: XY) => toggleMainMenu("custom", pos)}
-                    onFocus={onfocus}
                     toggled={navigation.mainMenu == "custom"}
                 >
                     <MenuButton
                         icon="💪"
                         title="Difficulty"
                         onClick={(pos: XY) => toggleScreen("difficulty", pos)}
-                        onFocus={onfocus}
                         toggled={navigation.screeen == "difficulty"}
                     />
                     <MenuButton
                         icon="⚖️"
                         title="Penalties"
                         onClick={(pos: XY) => toggleScreen("rating", pos)}
-                        onFocus={onfocus}
                         toggled={navigation.screeen == "rating"}
                     />
                     <MenuButton
                         icon="💡"
                         title="Suggestions"
                         onClick={(pos: XY) => toggleScreen("suggestions", pos)}
-                        onFocus={onfocus}
                         toggled={navigation.screeen == "suggestions"}
                     />
                     <MenuButton
                         icon="🧰"
                         title="Various"
                         onClick={(pos: XY) => toggleScreen("settings", pos)}
-                        onFocus={onfocus}
                         toggled={navigation.screeen == "settings"}
                     />
                 </MenuButton>
-                <MenuButton
-                    icon="🍪"
-                    title={consented ? "Delete Cookie" : "Allow Cookie"}
-                    onClick={
-                        consented
-                            ? () => {
-                                  const revoke = storage.revokeConsent();
-                                  if (confirm(revoke.prompt)) {
-                                      revoke.confirm();
-                                      setConsented(false);
-                                  }
-                              }
-                            : () => {
-                                  const consent = storage.giveConsent();
-                                  if (confirm(consent.prompt)) {
-                                      consent.confirm();
-                                      setConsented(true);
-                                  }
-                              }
-                    }
-                    onFocus={onfocus}
-                    toggled={false}
-                />
+                <MenuButton icon="🍪" title={consented ? "Delete Cookie" : "Allow Cookie"} onClick={toggleConsent} toggled={false} />
             </MenuTree>
         </VerticalMenu>
     );

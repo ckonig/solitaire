@@ -59,9 +59,9 @@ const Controls = (props: { player: number }) => {
         setState({ ...state, players: nextPlayer });
     };
 
-    const getButtonClass = (id: number, x: number, y: number) => {
-        let className = x + "" + y + " " + navigation.screen.x + "" + navigation.screen.y + " ";
-        className += navigation.screen.x == x && navigation.screen.y == y ? " focused" : "";
+    const getButtonClass = (id: number, pos: XY) => {
+        let className = pos.x + "" + pos.y + " " + navigation.screen.x + "" + navigation.screen.y + " ";
+        className += navigation.screen.x == pos.x && navigation.screen.y == pos.y ? " focused" : "";
         className += isActive(id) ? " active-0" : " inactive-0";
         className += blockedByOtherPlayers(id) ? " disabled" : "";
         return className;
@@ -95,7 +95,7 @@ const Controls = (props: { player: number }) => {
                             id={preset.id}
                             disabled={blockedByOtherPlayers(preset.id)}
                             autoFocus={isActive(preset.id)}
-                            className={(pos: XY) => getButtonClass(preset.id, pos.x, pos.y)}
+                            className={(pos: XY) => getButtonClass(preset.id, pos)}
                             onClick={() => applyPreset(preset.id)}
                             lines={getLines(preset)}
                         />
@@ -109,7 +109,7 @@ const Controls = (props: { player: number }) => {
                             id={preset.id}
                             disabled={blockedByOtherPlayers(preset.id)}
                             autoFocus={isActive(preset.id)}
-                            className={(pos: XY) => getButtonClass(preset.id, pos.x, pos.y)}
+                            className={(pos: XY) => getButtonClass(preset.id, pos)}
                             onClick={() => applyPreset(preset.id)}
                             lines={preset.lines}
                         />

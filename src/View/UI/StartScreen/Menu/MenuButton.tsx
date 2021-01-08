@@ -4,7 +4,6 @@ import { TreeNavigator } from "./TreeNavigator";
 import { XY } from "../../XY";
 
 interface _MenuButtonProps extends StaticMenuButtonProps {
-    //@todo keyboard navigation in a tree
     x?: number;
     y?: number;
     navigator?: TreeNavigator;
@@ -14,7 +13,6 @@ export interface StaticMenuButtonProps {
     icon: string;
     title: string;
     onClick: (pos: XY) => void;
-    onFocus: (pos: XY) => void;
     toggled?: boolean;
     children?: any[];
     disabled?: boolean;
@@ -28,13 +26,16 @@ interface MenuButtonProps extends StaticMenuButtonProps {
     menuFocus: string;
     active: boolean;
     toggled: boolean;
+    onFocus: (pos: XY) => void;
 }
 const MenuButton = (props: _MenuButtonProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
         return null;
     }
 
-    const { navigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = React.useContext(NavigationContext);
+
+    const onFocus = (pos: XY) => setNavigation({ ...navigation, menu: pos });
 
     const addItem = (child: any, index: number) => {
         const assign = (n: any[]) => {
@@ -56,7 +57,7 @@ const MenuButton = (props: _MenuButtonProps) => {
             menuFocus={navigation.focus}
             disabled={props.disabled}
             active={false}
-            onFocus={props.onFocus}
+            onFocus={onFocus}
             onClick={props.onClick}
             toggled={!!props.toggled}
             skip={props.skip}

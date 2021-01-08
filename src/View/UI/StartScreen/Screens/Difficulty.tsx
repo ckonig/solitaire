@@ -8,15 +8,16 @@ import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
 import ScreenMainButton from "./ScreenMainButton";
+import { XY } from "../../XY";
 
 const Difficulty = () => {
     const { state, setState } = React.useContext(StartScreenContext);
     const { navigation } = React.useContext(NavigationContext);
 
     const isActive = (id: number) => state.difficultySettings == id;
-    
-    const getButtonClass = (index: number, y: number, x: number) => {
-        const hasFocus = navigation.screen.x == x && navigation.screen.y == y;
+
+    const getButtonClass = (index: number, pos: XY) => {
+        const hasFocus = navigation.screen.x == pos.x && navigation.screen.y == pos.y;
         let name = isActive(index) ? `active active-${index}` : `inactive-${index}`;
         name += hasFocus ? " focused" : "";
         return name;
@@ -28,7 +29,7 @@ const Difficulty = () => {
             icon={button.icon}
             id={button.id}
             autoFocus={isActive(button.id)}
-            className={(pos) => getButtonClass(button.id, pos.y, pos.x)}
+            className={(pos) => getButtonClass(button.id, pos)}
             onClick={() => setState({ ...state, difficultySettings: button.id })}
             lines={button.lines}
         />

@@ -22,11 +22,9 @@ button {
 
 .game-layout-container.singleplayer {
     position: absolute;
-    
 }
 
 .layout-grid-container.singleplayer {
-    
     width: 100%;
     display: grid;
     grid-template-areas:
@@ -59,7 +57,7 @@ button {
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 0.25em;
     color: white;
-    z-index:3000;
+    z-index: 3000;
     height: 1.75em;
 }
 
@@ -75,12 +73,13 @@ button {
         "tableau tableau tableau tableau tableau tableau tableau";
     background-color: "darkgreen";
 }
+
 .board-grid-container.singleplayer {
-    margin-top:1.25em;
+    margin-top: 1.25em;
 }
+
 .board-grid-container.splitscreen {
     width: 100%;
-  
 }
 
 .board-field {

@@ -1,5 +1,5 @@
-import NavWrapper from "./NavWrapper";
 import React from "react";
+import ScreenNavWrapper from "./ScreenNavWrapper";
 import { ScreenNavigator } from "./ScreenNavigator";
 
 const ScreenContent = (props: { id: string; children: any[] }) => {
@@ -17,7 +17,7 @@ const ScreenContent = (props: { id: string; children: any[] }) => {
     return (
         <div className="content">
             {props.children.map((child) => addRow(child))}
-            <NavWrapper navigator={navigator} screen="rating" />
+            <ScreenNavWrapper navigator={navigator} screen="rating" />
         </div>
     );
 };

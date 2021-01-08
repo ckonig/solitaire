@@ -10,6 +10,7 @@ export class ScreenNavigator extends AbstractNavigator implements NavHandler {
         }
         return this.goToRow({ x: x, y: y - 1 });
     };
+
     moveDown: (x: number, y: number) => XY = (x, y) => {
         const rows = this.getRows();
         if (y == rows.length - 1) {
@@ -17,6 +18,7 @@ export class ScreenNavigator extends AbstractNavigator implements NavHandler {
         }
         return this.goToRow({ x: x, y: y + 1 });
     };
+
     moveLeft: (x: number, y: number) => XY = (x, y) => {
         const row = this.getRow(y);
         if (x == 0) {
@@ -24,6 +26,7 @@ export class ScreenNavigator extends AbstractNavigator implements NavHandler {
         }
         return { x: x - 1, y: y };
     };
+
     moveRight: (x: number, y: number) => XY = (x, y) => {
         const row = this.getRow(y);
         if (x == row.buttons.length - 1) {
@@ -31,6 +34,7 @@ export class ScreenNavigator extends AbstractNavigator implements NavHandler {
         }
         return { x: x + 1, y: y };
     };
+
     action: (xy: XY) => void = () => {
         const activeElement: any = document.activeElement;
         activeElement && activeElement.click();

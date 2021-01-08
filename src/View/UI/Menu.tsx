@@ -77,9 +77,6 @@ const Menu = () => {
     if (!state) {
         return null;
     }
-    const onfocus = (pos: XY) => {
-        setNavigation({ ...navigation, menu: pos });
-    };
 
     const remaining = pause.state.allowed - pause.state.pauses.length - 1;
 
@@ -123,7 +120,6 @@ const Menu = () => {
                             onClick={() => {
                                 toggleMenu();
                             }}
-                            onFocus={onfocus}
                         />
                         <MenuButton
                             icon={state.settings.suggestionMode.icon}
@@ -131,13 +127,11 @@ const Menu = () => {
                             onClick={() => {
                                 setSuggestionMode(SuggestionModes.next(state.settings.suggestionMode).key);
                             }}
-                            onFocus={onfocus}
                         />
                         <MenuButton
                             icon="🌪️"
                             title="Entropy"
                             onClick={(pos: XY) => toggleMainMenu("entropy", pos)}
-                            onFocus={onfocus}
                             toggled={navigation.mainMenu == "entropy"}
                         >
                             <MenuButton
@@ -148,7 +142,6 @@ const Menu = () => {
                                         state.settings.baseEntropy < EntropyLevels.length - 1 ? state.settings.baseEntropy + 1 : 0
                                     );
                                 }}
-                                onFocus={onfocus}
                             />
                             <MenuButton
                                 icon="🌬️"
@@ -160,17 +153,15 @@ const Menu = () => {
                                             : 0
                                     );
                                 }}
-                                onFocus={onfocus}
                             />
                         </MenuButton>
                         <MenuButton
                             icon="♻️"
                             title="Restart Game"
                             onClick={() => reset()}
-                            onFocus={onfocus}
                             skip={!state.game.timemachine.previousStates.length}
                         />
-                        <MenuButton icon="🗑️" title="Quit Game" onClick={() => restart()} onFocus={onfocus} />
+                        <MenuButton icon="🗑️" title="Quit Game" onClick={() => restart()} />
                     </MenuTree>
                 </div>
             </div>

@@ -1,8 +1,16 @@
 import Rating from "./Rating";
+import Settings from "./Settings";
 import TimeMachine from "./TimeMachine";
 
 export default class Game {
-    constructor(settings) {
+    settings: Settings;
+    rating: Rating;
+    timemachine: TimeMachine;
+    started: number;
+    isEnded: boolean;
+    end: number;
+    paused: any;
+    constructor(settings: Settings) {
         this.settings = settings;
         this.rating = new Rating(settings);
         this.timemachine = new TimeMachine();
@@ -12,7 +20,7 @@ export default class Game {
         this.end = 0;
     }
 
-    registerMove = (target, source) => {
+    registerMove = (target: string, source: string) => {
         this.rating.registerMove(target, source);
         this.timemachine.registerMove(target, source);
         return true;
@@ -35,13 +43,13 @@ export default class Game {
         return true;
     };
 
-    registerBlink(on) {
+    registerBlink(on: boolean) {
         this.rating.registerBlink(on);
         this.timemachine.registerBlink(on);
         return true;
     }
 
-    static copy = (orig) => {
+    static copy = (orig: Game) => {
         const copy = new Game(orig.settings);
         copy.timemachine = TimeMachine.copy(orig.timemachine);
         copy.rating = Rating.copy(orig.rating);

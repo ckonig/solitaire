@@ -1,16 +1,17 @@
 import GlobalContext from "../Context";
 import React from "react";
 
-const Dealer = () => {
+const Dealer: () => any = () => {
     const { state, replaceContext } = React.useContext(GlobalContext);
-    const timeouts = [];
+    if (!state) return null;
+    const timeouts: any[] = [];
 
     if (state.settings.launchSettings.quickDeal) {
         if (state && state.dealer && !state.dealer.isDealt) {
-            replaceContext(state.dealer.dealAll(state));
+            replaceContext(state.dealer.dealAll());
         }
     } else {
-        const deal = (dealt) => {
+        const deal = (dealt: number) => {
             timeouts.push(
                 setTimeout(() => {
                     if (state && state.dealer && !state.dealer.isDealt) {

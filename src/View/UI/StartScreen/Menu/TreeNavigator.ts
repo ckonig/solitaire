@@ -7,6 +7,7 @@ export class TreeNavigator extends AbstractNavigator implements NavHandler {
         if (x == 0) {
             return { x: this.rows.length - 1, y: 0 };
         }
+
         if (y > 0) {
             return { x: x, y: y - 1 };
         }
@@ -22,6 +23,7 @@ export class TreeNavigator extends AbstractNavigator implements NavHandler {
 
         return { x: x - 1, y: y };
     };
+
     moveDown: (x: number, y: number) => XY = (x, y) => {
         const row = this.getRow(x);
         if (y == 0 && row.toggled) {
@@ -42,12 +44,11 @@ export class TreeNavigator extends AbstractNavigator implements NavHandler {
 
         return { x: 0, y: 0 };
     };
-    moveLeft: (x: number, y: number) => XY = (x, y) => {
-        return { x: x, y: y };
-    };
-    moveRight: (x: number, y: number) => XY = (x, y) => {
-        return { x: x, y: y };
-    };
+
+    moveLeft: (x: number, y: number) => XY = (x, y) => ({ x: x, y: y });
+
+    moveRight: (x: number, y: number) => XY = (x, y) => ({ x: x, y: y });
+
     action: (xy: XY) => void = () => {
         const activeElement: any = document.activeElement;
         activeElement && activeElement.click();
