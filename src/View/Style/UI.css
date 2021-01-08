@@ -2,38 +2,6 @@
     z-index: 2000;
 }
 
-.ui > .content > .section {
-    font-size: 1vw;
-    margin-bottom: 8vw;
-}
-
-.ui > .content > .section:last-child {
-    margin-bottom: 0vw;
-}
-
-.ui > .content > .section > .title {
-    font-size: 1.5vw;
-    width: 25vw;
-    float: left;
-}
-
-.ui > .content > .section > .row > select {
-    float: right;
-    margin-left: 2vw;
-    width: 8vw;
-    font-size: 1vw;
-}
-
-.ui > .content > .section > .row > .label {
-    float: left;
-    width: 15vw;
-    font-size: 1w;
-    color: lightgray;
-}
-
-.ui > .content > .section > .row {
-    clear: both;
-}
 
 .ui.neutral {
     background-color: rgba(0, 0, 0, 0.95);

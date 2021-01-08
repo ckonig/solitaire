@@ -4,8 +4,8 @@ import "./View/Style/UI.css";
 import { LaunchSettings, defaultPlayerSettings } from "./Common";
 
 import AspectRatio from "./View/AspectRatio/AspectRatio";
-import BoardWrap from "./View/Game/BoardWrap";
 import Deck from "./Model/Deck/Deck";
+import DelayedSuspense from "./DelayedSuspense";
 import GameModes from "./GameModes";
 import Home from "./View/UI/StartScreen/Home";
 import { PauseProvider } from "./View/PauseContext";
@@ -41,6 +41,7 @@ const App = () => {
     };
 
     if (launchState?.initialized) {
+        const BoardWrap = React.lazy(() => import("./View/Game/BoardWrap"));
         let board = null;
         if (launchState.boardMode == "singleplayer") {
             board = (
@@ -74,7 +75,11 @@ const App = () => {
                 </div>
             );
         }
-        return <PauseProvider started={started}>{board}</PauseProvider>;
+        return (
+            <PauseProvider started={started}>
+                <DelayedSuspense>{board}</DelayedSuspense>
+            </PauseProvider>
+        );
     }
 
     return (
