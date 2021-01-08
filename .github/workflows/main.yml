@@ -25,10 +25,10 @@ jobs:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
 
-            - name: Set up Node.js ${{ matrix.node-version }}
+            - name: Set up Node.js 15
               uses: actions/setup-node@v1
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version: '15'
 
             - name: Install dependencies
               run: npm install
