@@ -8,7 +8,7 @@ import React from "react";
 import ToggleMenu from "./ToggleMenu";
 import Undo from "./Undo";
 
-const Header = (props) => (
+const Header = (props: {mode: string}) => (
     <div className={"header " + props.mode}>
         <div className="header-title">
             <Hearts />

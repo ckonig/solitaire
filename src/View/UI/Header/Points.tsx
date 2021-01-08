@@ -6,7 +6,7 @@ const Points = () => {
 
     return (
         <>
-            <div className="icon-container">🏆</div> {state.game.rating.points}
+            <div className="icon-container">🏆</div> {state?.game.rating.points}
         </>
     );
 };

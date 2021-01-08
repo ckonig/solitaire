@@ -3,7 +3,7 @@ import React from "react";
 
 const Clock = () => {
     const { state, getElapsed } = React.useContext(PauseContext);
-    const [elapsed, setElapsed] = React.useState(0);
+    const [elapsed, setElapsed] = React.useState("");
     React.useEffect(() => {
         const interval = setInterval(() => {
             if (state.started && !state.paused) {
@@ -14,7 +14,7 @@ const Clock = () => {
         return () => clearInterval(interval);
     }, [state.started, state.paused]);
 
-    return !state.started || elapsed <= 0 ? null : (
+    return !state.started || !elapsed ? null : (
         <div className="header-clock">
             <div className="icon-container">🕒</div>
             {elapsed}

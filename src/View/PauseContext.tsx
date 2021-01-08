@@ -14,11 +14,22 @@ export interface IPauseState {
 export interface IPauseContext {
     state: IPauseState;
     togglePause: (isPaused: boolean, pausedBy: number) => void;
+    getElapsed: () => string,
 }
-export const defaultPauseState = { started: 0, end: 0, paused: false, pauses: [], pauseStartedAt: 0, allowed: 5, pausedBy: -1, showMenu: false };
+export const defaultPauseState = {
+    started: 0,
+    end: 0,
+    paused: false,
+    pauses: [],
+    pauseStartedAt: 0,
+    allowed: 5,
+    pausedBy: -1,
+    showMenu: false,
+};
 export const defaultPauseContext = {
     state: defaultPauseState,
     togglePause: () => {},
+    getElapsed: () => "",
 };
 
 const PauseContext = React.createContext<IPauseContext>(defaultPauseContext);

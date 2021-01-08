@@ -1,6 +1,6 @@
 import React from "react";
 
-const VerticalMenu = (props) => {
+const VerticalMenu = (props: any) => {
     return (
         <div className="ui menu">
             <div className="startscreen-jail">

@@ -3,6 +3,8 @@ import React from "react";
 
 const Undo = () => {
     const { state, replaceContext } = React.useContext(GlobalContext);
+    if (!state) return null;
+
     const undo = () =>
         replaceContext((_state) => {
             const previous = _state.game.timemachine.popPreviousState(state.game.timemachine.previousStates.length - 1, state);

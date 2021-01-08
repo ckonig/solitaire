@@ -3,17 +3,18 @@ import React from "react";
 
 const Hearts = () => {
     const { state } = React.useContext(GlobalContext);
+    if (!state) return null;
     const getHearts = () => {
         if (state.settings.launchSettings.recyclingMode == "infinite") {
             return "🖤";
         }
 
         if (state.settings.launchSettings.recyclingMode == "1-pass") {
-            return state.game.passes > 0 ? "❤️" : "💔";
+            return state.stock.passes > 0 ? "❤️" : "💔";
         }
 
         if (state.settings.launchSettings.recyclingMode == "3-pass") {
-            const createString = (length, icon) =>
+            const createString = (length: number, icon: string) =>
                 Array.from(new Array(length).keys())
                     .map(() => icon)
                     .join("");
