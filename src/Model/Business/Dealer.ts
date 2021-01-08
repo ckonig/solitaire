@@ -46,17 +46,19 @@ export default class Dealer {
             const stack = tableau.stacks[i].stack;
             if (stack.length <= tableau.stacks.length - i - 1) {
                 const newCard = stock.popOne();
-                newCard.source = tableau.stacks[i].source;
-                if (stack.length == tableau.stacks.length - 1 - i) {
-                    newCard.isHidden = false;
+                if (newCard) {
+                    newCard.source = tableau.stacks[i].source;
+                    if (stack.length == tableau.stacks.length - 1 - i) {
+                        newCard.isHidden = false;
+                    }
+                    tableau.deal(newCard, i);
+                    this.dealt++;
+                    this.dealingAt++;
+                    if (this.dealingAt == tableau.stacks.length) {
+                        this.dealingAt = 0;
+                    }
+                    this.isDealt = false;
                 }
-                tableau.deal(newCard, i);
-                this.dealt++;
-                this.dealingAt++;
-                if (this.dealingAt == tableau.stacks.length) {
-                    this.dealingAt = 0;
-                }
-                this.isDealt = false;
                 return;
             } else {
                 const isFirst = this.dealingAt == 0;

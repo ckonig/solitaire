@@ -1,11 +1,16 @@
+import Settings from "./Settings";
+
 export default class Rating {
-    constructor(settings) {
+    settings: Settings;
+    points: number;
+    multiplicator: number;
+    constructor(settings: Settings) {
         this.settings = settings;
         this.points = 0;
         this.multiplicator = 1;
     }
 
-    registerMove = (target, source) => {
+    registerMove = (target: string, source: string) => {
         this.registerHint(this.settings.disableHint());
         const currentMove = {
             source: source,
@@ -34,14 +39,14 @@ export default class Rating {
         console.debug("RATING: add 5 points for UNCOVER");
     };
 
-    registerBlink(on) {
+    registerBlink(on: boolean) {
         if (on && this.settings.launchSettings.missPenalty) {
             this.points -= 10;
             console.debug("RATING: subtract 10 points for invalid action");
         }
     }
 
-    penalize = (other) => {
+    penalize = (other: Rating) => {
         if (this.settings.launchSettings.undoPenalty) {
             const penalty = Math.pow(2, other.multiplicator);
             console.debug(`RATING: applying penalty of ${penalty} points for UNDO`);
@@ -50,16 +55,16 @@ export default class Rating {
         }
     };
 
-    registerHint = (done) => {
+    registerHint = (done: boolean) => {
         if (done && this.settings.launchSettings.hintPenalty) {
             this.points -= 10;
             console.debug(`RATING: applying penalty of 10 points for HINT`);
         }
     };
 
-    rateMove(move) {
-        const isTableau = (obj) => obj.substr(0, 7) == "tableau";
-        const isFoundation = (obj) => obj.substr(0, 10) == "foundation";
+    rateMove(move: { source: string; target: string }) {
+        const isTableau = (obj: string) => obj.substr(0, 7) == "tableau";
+        const isFoundation = (obj: string) => obj.substr(0, 10) == "foundation";
         if (isTableau(move.source)) {
             if (isFoundation(move.target)) {
                 console.debug("RATING: add 10 points for MOVE tableau -> foundation");
@@ -84,12 +89,12 @@ export default class Rating {
         return 0;
     }
 
-    getTimePenalty = (start, end) => {
+    getTimePenalty = (start: number, end: number) => {
         const secondsToFinish = (end - start) / 1000;
         return Math.trunc(secondsToFinish / 5) * -2;
     };
 
-    getBonusPoints = (start, end) => {
+    getBonusPoints = (start: number, end: number) => {
         const secondsToFinish = (end - start) / 1000;
         if (secondsToFinish < 30) {
             return 0;
@@ -97,11 +102,11 @@ export default class Rating {
         return Math.round((20000 / secondsToFinish) * 35);
     };
 
-    getTotal = (start, end) => {
+    getTotal = (start: number, end: number) => {
         return this.points + this.getBonusPoints(start, end) - this.getTimePenalty(start, end);
-    }
+    };
 
-    static copy = (orig) => {
+    static copy = (orig: Rating) => {
         const copy = new Rating(orig.settings);
         copy.points = orig.points;
         copy.multiplicator = orig.multiplicator;

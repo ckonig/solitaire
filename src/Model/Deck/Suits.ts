@@ -1,4 +1,9 @@
-const Suits = {
+interface Suit {
+    icon: string;
+    color: string;
+}
+
+const Suits: { [id: string]: Suit } = {
     heart: {
         icon: "♥",
         color: "red",

@@ -32,7 +32,7 @@ export interface PlayerSettings {
     [id: number]: PlayerSetting;
 }
 
-export interface LaunchSettings {
+export interface LaunchSettings extends RatingSettings {
     recyclingMode: string;
     drawMode: string;
     //@todo remove, this is contained in playersettings
@@ -48,7 +48,7 @@ export interface LaunchSettings {
 
 export interface ClickHandler {
     dispatchPutDown: (card: Card, position: any, state: Model, index: number) => void;
-    dispatchPickup: (card: Card, position: any, state: Model, index: number) => void;
+    dispatchPickup: (card: Card | null, position: any, state: Model, index: number) => void;
 }
 
 export type BlinkFunction = (state: Model, index: number) => void;

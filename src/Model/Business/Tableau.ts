@@ -16,7 +16,7 @@ export default class Tableau implements ClickHandler {
         }
     };
 
-    dispatchPickup = (card: Card, position: any, state: Model, index: number) => {
+    dispatchPickup = (card: Card | null, position: any, state: Model, index: number) => {
         if (card) {
             state.hand.pickUp(state.tableau.popWithFollowing(card, index), card.source, position) && state.game.registerPickup();
         } else if (!card) {
@@ -26,7 +26,7 @@ export default class Tableau implements ClickHandler {
 }
 
 export class TableauHidden extends Tableau {
-    dispatchPickup = (card: Card, position: any, state: Model, index: number) => {
+    dispatchPickup = (card: Card | null, position: any, state: Model, index: number) => {
         if (card) {
             this.tryUncover(card, index, state);
         }

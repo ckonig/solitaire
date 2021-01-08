@@ -1,9 +1,10 @@
 import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
+import { IStack } from "./IStack";
 import Settings from "./Settings";
 import { XY } from "../../View/UI/XY";
 
-export default class Stock extends BasicStack {
+export default class Stock extends BasicStack implements IStack {
     settings: Settings;
     recyclings: number;
     passes: number;
@@ -69,9 +70,10 @@ export default class Stock extends BasicStack {
     isOnTop = (card: Card) => card && card.equals(this.getTop());
 
     popTop = () => {
-        let result = [];
+        let result: Card[] = [];
         if (this.settings.launchSettings.drawMode == "single") {
-            result = [this.stack.pop()];
+            const top = this.stack.pop();
+            if (top) result = [top];
         }
         if (this.settings.launchSettings.drawMode == "triple") {
             result = this.stack.splice(this.stack.length - 3);

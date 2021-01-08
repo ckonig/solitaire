@@ -1,13 +1,18 @@
 import Card from "../Deck/Card";
+import { IStack } from "./IStack";
+import Model from "../Model";
 
 export default class TimeMachine {
+    previousStates: any[];
+    memorable: boolean;
+    modified: boolean;
     constructor() {
         this.previousStates = [];
         this.memorable = true;
         this.modified = false;
     }
 
-    registerMove = (target, source) => {
+    registerMove = (target: string, source: string) => {
         this.memorable = true;
         this.modified = true;
 
@@ -16,7 +21,7 @@ export default class TimeMachine {
         }
     };
 
-    pushPreviousState = (state) => {
+    pushPreviousState = (state: any) => {
         const previous = this.previousStates[this.previousStates.length - 1];
         if (!previous || !this.modelEquals(state, previous)) {
             this.previousStates.push(state);
@@ -28,7 +33,7 @@ export default class TimeMachine {
         this.memorable = false;
     };
 
-    popPreviousState = (id, current) => {
+    popPreviousState = (id: number, current: any) => {
         const isRequested = this.previousStates.length - 1 == id;
         const popPrevious = () => isRequested && this.previousStates && this.previousStates.pop();
         let previous = popPrevious();
@@ -49,22 +54,22 @@ export default class TimeMachine {
         return true;
     };
 
-    registerBlink(on) {
+    registerBlink(on: boolean) {
         if (on) {
             this.modified = true;
             this.memorable = false;
         }
     }
 
-    stackEquals = (a, b) => {
+    stackEquals = (a: IStack, b: IStack) => {
         return a.stack.every((card, i) => Card.equals(card, b.stack[i]) && card.isHidden == b.stack[i].isHidden);
     };
 
-    stacksEqual = (a, b) => {
+    stacksEqual = (a: { stacks: IStack[] }, b: { stacks: IStack[] }) => {
         return a.stacks.every((stack, i) => this.stackEquals(stack, b.stacks[i]));
     };
 
-    modelEquals = (a, b) => {
+    modelEquals = (a: Model, b: Model) => {
         return (
             this.stackEquals(a.stock, b.stock) &&
             this.stackEquals(a.waste, b.waste) &&
@@ -73,7 +78,7 @@ export default class TimeMachine {
         );
     };
 
-    static copy = (orig) => {
+    static copy = (orig: TimeMachine) => {
         const copy = new TimeMachine();
         copy.previousStates = [...orig.previousStates];
         copy.memorable = orig.memorable;

@@ -1,24 +1,42 @@
 import Card from "../Deck/Card";
+import Hand from "./Hand";
 import HandHoldingStack from "./HandHoldingStack";
+import { IStack } from "./IStack";
+import Settings from "./Settings";
 import Suits from "../Deck/Suits";
+import { XY } from "../../View/UI/XY";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
+class FoundationStack extends HandHoldingStack implements IStack {
+    setOnClick: () => void = () => {};
+    acceptedCards: string[] = [];
+    usedCards: any[] = [];
+    icon: string = "";
+    color: string = "";
+    blinkFor: number = 0;
+    clickEmpty: (p: any) => any = () => {};
+}
 export default class Foundation {
-    constructor(settings, hand) {
+    settings: Settings;
+    hand: Hand;
+    stacks: FoundationStack[];
+    blinkFor: number;
+    unblink: () => void;
+    constructor(settings: Settings, hand: Hand) {
         this.settings = settings;
         this.hand = hand;
-        const template = (index) => {
-            const s = new HandHoldingStack("foundation-" + index, hand);
+        const template = (index: number) => {
+            const s = new FoundationStack("foundation-" + index, hand);
             s.stack = [];
             s.acceptedCards = [...getFoundationOrder()];
             s.usedCards = [];
-            s.icon = null;
-            s.color = null;
+            s.icon = "";
+            s.color = "";
             s.blinkFor = 0;
             return s;
         };
         const stacks = Object.keys(Suits)
-            .map((key) => Suits[key])
+            .map((key: string) => Suits[key])
             .map((suit, index) => ({ ...template(index), ...suit }));
         this.stacks = [...stacks];
         // eslint-disable-next-line no-unused-vars
@@ -26,32 +44,33 @@ export default class Foundation {
         this.unblink = () => {};
     }
 
-    setOnClick = (onClick) => {
+    setOnClick = (onClick: (c: any, p: XY, index: number) => void) => {
         this.stacks.forEach((stack, index) => {
             stack.clickEmpty = (p) => onClick(null, p, index);
             stack.stack.forEach((card, sindex) => {
-                card.onClick = (p) => onClick({ ...card }, p, index);
+                card.onClick = (p: XY) => onClick({ ...card }, p, index);
                 card.canClick = () => sindex == stack.stack.length - 1;
             });
             this.hand.setOnClick(stack);
         });
     };
 
-    getCurrentAccepted = (index) => {
+    getCurrentAccepted = (index: number) => {
         const currentFoundation = this.stacks[index].acceptedCards;
         return currentFoundation[currentFoundation.length - 1];
     };
 
-    wouldAcceptHand = (index) => !this.hand.hasMoreThanOneCard() && this.accepts(index, this.hand.currentCard());
+    wouldAcceptHand = (index: number) => !this.hand.hasMoreThanOneCard() && this.accepts(index, this.hand.currentCard());
 
-    putDownHand = (index) => this.add(index, this.hand.putDown());
+    putDownHand = (index: number) => this.add(index, this.hand.putDown());
 
-    accepts = (index, card) => {
+    accepts = (index: number, card: Card | null) => {
+        if (!card) return false;
         const currentAccepted = this.getCurrentAccepted(index);
         return this.stacks[index].icon == card.type.icon && currentAccepted == card.face;
     };
 
-    add = (index, cards) => {
+    add = (index: number, cards: Card[]) => {
         const card = cards[0];
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 3));
         card.source = this.stacks[index].source;
@@ -59,21 +78,21 @@ export default class Foundation {
         return this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
     };
 
-    remove = (index, card) => {
+    remove = (index: number, card: Card) => {
         this.stacks[index].acceptedCards.push(this.stacks[index].usedCards.pop());
         return card && card.equals(this.getTop(index)) && this.stacks[index].stack.pop();
     };
 
-    getPreviousUsed = (index) => [...this.stacks[index].usedCards].pop();
+    getPreviousUsed = (index: number) => [...this.stacks[index].usedCards].pop();
 
-    countCards = () => this.stacks.map((f) => parseInt(f.stack.length)).reduce((a, b) => a + b, 0);
+    countCards = () => this.stacks.map((f) => f.stack.length).reduce((a, b) => a + b, 0);
 
-    getTop = (index) => this.stacks[index].stack[this.stacks[index].stack.length - 1];
+    getTop = (index: number) => this.stacks[index].stack[this.stacks[index].stack.length - 1];
 
-    static copy = (orig, hand) => {
+    static copy = (orig: Foundation, hand: Hand) => {
         const copy = new Foundation(orig.settings, hand);
         copy.stacks = orig.stacks.map((origStack) => {
-            const s = new HandHoldingStack(origStack.source, hand);
+            const s = new FoundationStack(origStack.source, hand);
             s.stack = Card.copyAll(origStack.stack);
             s.acceptedCards = [...origStack.acceptedCards];
             s.usedCards = [...origStack.usedCards];
@@ -84,7 +103,7 @@ export default class Foundation {
         return copy;
     };
 
-    setEntropy = (lvl) => {
+    setEntropy = (lvl: number) => {
         this.stacks.forEach((stack) => stack.stack.forEach((element) => element.causeEntropy(Math.min(3, lvl))));
         return this;
     };

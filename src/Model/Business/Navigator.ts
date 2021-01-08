@@ -11,7 +11,7 @@ interface NavIndex {
 export default class Navigator {
     model: Model;
     currentIndex: NavIndex;
-    rows: IStack[][];
+    rows: (IStack | undefined)[][];
     constructor(model: Model) {
         this.model = model;
         this.currentIndex = { x: 0, y: 0, z: 0 };
@@ -66,10 +66,11 @@ export default class Navigator {
             return;
         }
         direction();
-        if (this.current() == undefined) {
+        const current = this.current();
+        if (current == undefined) {
             this.move(this.currentIndex, direction);
         } else {
-            this.currentIndex.z = this.current().getClickable().length - 1;
+            this.currentIndex.z = current.getClickable().length - 1;
             this.finishNav();
         }
     };
@@ -78,8 +79,8 @@ export default class Navigator {
         if (!this.valid(pos)) {
             return;
         }
-        const clickable = this.current().getClickable();
-        if (clickable.length && this.currentIndex.z > 0) {
+        const clickable = this.current()?.getClickable();
+        if (clickable && clickable.length && this.currentIndex.z > 0) {
             this.currentIndex.z--;
             this.finishNav();
         } else {
@@ -91,8 +92,8 @@ export default class Navigator {
         if (!this.valid(pos)) {
             return;
         }
-        const clickable = this.current().getClickable();
-        if (clickable.length && this.currentIndex.z < clickable.length - 1) {
+        const clickable = this.current()?.getClickable();
+        if (clickable && clickable.length && this.currentIndex.z < clickable.length - 1) {
             this.currentIndex.z++;
             this.finishNav();
         } else {
@@ -106,9 +107,10 @@ export default class Navigator {
         } else {
             this.currentIndex.y = 0;
         }
-        const last = this.current() ? this.current().getClickable().length - 1 : 0;
+        const current = this.current();
+        const last: number = current ? current.getClickable().length - 1 : 0;
         this.currentIndex.z = pickLast ? last : 0;
-        if (this.current() == undefined) {
+        if (!current) {
             this.moveLeft(this.currentIndex);
         } else {
             this.finishNav();
@@ -116,11 +118,11 @@ export default class Navigator {
     };
 
     finishNav = () => {
-        const clickable = this.current().getClickable();
+        const clickable = this.current()?.getClickable();
         if (clickable && clickable[this.currentIndex.z]) {
             this.model.focus.setCard(clickable[this.currentIndex.z]);
         } else {
-            this.model.focus.setStack(this.current().source);
+            this.model.focus.setStack(this.current()?.source || "");
         }
         return true;
     };
@@ -133,8 +135,7 @@ export default class Navigator {
         if (this.model.focus.card && this.model.focus.card.canClick()) {
             return this.model.focus.card.onClick({ isKeyboard: true });
         } else if (this.model.focus.stack) {
-            console.debug("delegating to clickempty");
-            return this.current().clickEmpty({ isKeyboard: true });
+            return this.current()?.clickEmpty({ isKeyboard: true });
         } else {
             return (ctx: Model) => {
                 ctx.navigator.finishNav();

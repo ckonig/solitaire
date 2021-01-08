@@ -1,7 +1,9 @@
 import BasicStack from "./BasicStack";
+import Hand from "./Hand";
 
 export default class HandHoldingStack extends BasicStack {
-    constructor(source, hand) {
+    hand: Hand;
+    constructor(source: string, hand: Hand) {
         super(source);
         this.hand = hand;
     }
