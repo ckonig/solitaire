@@ -12,6 +12,10 @@ export default class Card {
     }
 
     causeEntropy = (lvl) => {
+        if (lvl == 0) {
+            this.entropyStyle = {};
+            return;
+        }
         const level = lvl * 2;
         const random = () => Math.random() < 0.5;
         const randomInt = (min, max) => Math.random() * (max - min) + min;
