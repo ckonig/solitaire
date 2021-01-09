@@ -2,13 +2,13 @@ import "./View/Style/App.css";
 
 import { LaunchSettings, defaultPlayerSettings } from "./Common";
 
-import AspectRatio from "./View/AspectRatio/AspectRatio";
+import AspectRatio from "./common/AspectRatio/AspectRatio";
 import Deck from "./Model/Deck/Deck";
-import DelayedSuspense from "./DelayedSuspense";
+import DelayedSuspense from "./common/DelayedSuspense";
 import GameModes from "./GameModes";
 import Home from "./View/UI/StartScreen/Home";
 import { PauseProvider } from "./View/PauseContext";
-import Ratios from "./View/AspectRatio/Ratios";
+import Ratios from "./common/AspectRatio/Ratios";
 import React from "react";
 import SuggestionModes from "./Model/Game/Settings/SuggestionModes";
 

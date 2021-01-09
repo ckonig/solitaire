@@ -10,9 +10,9 @@ class TableauStack extends HandHoldingStack implements IStack {
     blinkFor = 0;
     id = 0;
     // eslint-disable-next-line no-unused-vars
-    onClick = (a: any) => {};
+    onClick = (a: any) => (s: any) => {};
     // eslint-disable-next-line no-unused-vars
-    clickEmpty = (a: any) => {};
+    clickEmpty = (a: any) => (s: any) => {};
     setOnClick = () => {};
 }
 export default class Tableau {
@@ -33,7 +33,11 @@ export default class Tableau {
         this.settings = settings;
     }
 
-    setOnClick = (onClick: (a: any, b: any, index: number) => void, onClickhidden: (a: any, b: any, index: number) => void, hand: Hand) => {
+    setOnClick = (
+        onClick: (a: any, b: any, index: number) => (s: any) => void,
+        onClickhidden: (a: any, b: any, index: number) => (s: any) => void,
+        hand: Hand
+    ) => {
         this.stacks.forEach((stack, index) => {
             stack.clickEmpty = (p: any) => onClick(null, p, index);
             stack.stack.forEach((card, sindex) => {

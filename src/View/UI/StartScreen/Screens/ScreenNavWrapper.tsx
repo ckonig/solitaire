@@ -1,9 +1,9 @@
-import GamePad from "../../../Game/GamePad";
-import Keyboard from "../../../Game/Keyboard";
+import GamePad from "../../../../common/GamePad";
+import Keyboard from "../../../../common/Keyboard";
 import { NavigationContext } from "../Context";
 import React from "react";
 import { ScreenNavigator } from "./ScreenNavigator";
-import { Universal } from "../../../Game/KeyboardLayouts";
+import { Universal } from "../../../../common/KeyboardLayouts";
 import { XY } from "../../XY";
 
 const ScreenNavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {

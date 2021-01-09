@@ -1,7 +1,12 @@
+import { InputProps } from "./InputProps";
+import KeyboardLayout from "./KeyboardLayouts";
 import React from "react";
 
-const Keyboard = (props) => {
-    const navListener = (e) => {
+interface KeyboardProps extends InputProps {
+    layout: KeyboardLayout;
+}
+const Keyboard = (props: KeyboardProps) => {
+    const navListener = (e: any) => {
         const evtobj = window.event ? event : e;
         const { layout } = props;
         if (layout.cancel(evtobj)) {
@@ -41,7 +46,7 @@ const Keyboard = (props) => {
             e.preventDefault();
         }
         if (layout.menu(evtobj)) {
-            props.onPause && props.onMenu();
+            props.onMenu && props.onMenu();
             e.preventDefault();
         }
     };

@@ -4,7 +4,7 @@ import StartScreenContext, { NavigationContext } from "../Context";
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
 import { CookieContext } from "../../../Context";
-import GamePad from "../../../Game/GamePad";
+import GamePad from "../../../../common/GamePad";
 import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
@@ -31,11 +31,6 @@ const Controls = (props: { player: number }) => {
             buttonPressed: false,
         },
     ]);
-
-    const connect = (i: number) => {
-        pads[i].found = true;
-        setPads({ ...pads });
-    };
 
     const press = (i: number) => {
         pads[i].found = true;
@@ -130,7 +125,6 @@ const Controls = (props: { player: number }) => {
             </ScreenContent>
             <GamePad
                 gamepadIndex={0}
-                onConnect={() => connect(0)}
                 onUp={() => press(0)}
                 onDown={() => press(0)}
                 onRight={() => press(0)}
@@ -139,7 +133,6 @@ const Controls = (props: { player: number }) => {
             />
             <GamePad
                 gamepadIndex={1}
-                onConnect={() => connect(1)}
                 onUp={() => press(1)}
                 onDown={() => press(1)}
                 onRight={() => press(1)}

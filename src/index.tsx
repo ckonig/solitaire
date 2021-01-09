@@ -1,4 +1,4 @@
-import DelayedSuspense from "./DelayedSuspense";
+import DelayedSuspense from "./common/DelayedSuspense";
 import React from "react";
 import ReactDOM from "react-dom";
 

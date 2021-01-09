@@ -1,6 +1,6 @@
 import "../Style/Board.scss";
 
-import BoardNavigator from "./BoardNavigator";
+import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
 import Foundation from "./Foundation";
 import Header from "../UI/Header/Header";

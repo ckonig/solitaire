@@ -1,7 +1,7 @@
 import "../Style/Menu.scss";
 
 import { NavigationContext, NavigationProvider, NavigationState } from "./StartScreen/Context";
-import { Universal, getKeyboardLayout } from "../Game/KeyboardLayouts";
+import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
 
 import { BoardContext } from "../Game/BoardWrap";
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";

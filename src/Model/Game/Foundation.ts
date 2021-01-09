@@ -44,7 +44,7 @@ export default class Foundation {
         this.unblink = () => {};
     }
 
-    setOnClick = (onClick: (c: any, p: XY, index: number) => void) => {
+    setOnClick = (onClick: (c: any, p: XY, index: number) => (s:any) => void) => {
         this.stacks.forEach((stack, index) => {
             stack.clickEmpty = (p) => onClick(null, p, index);
             stack.stack.forEach((card, sindex) => {

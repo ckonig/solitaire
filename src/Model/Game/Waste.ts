@@ -8,17 +8,17 @@ export default class Waste extends HandHoldingStack {
     settings: Settings;
     blinkFor: number;
     unblink: () => void;
-    clickEmpty: (p: any) => void;
+    clickEmpty: (p: any) => (s: any) => void;
     constructor(settings: Settings, hand: Hand) {
         super("waste", hand);
         this.settings = settings;
         // eslint-disable-next-line no-unused-vars
         this.blinkFor = 0;
         this.unblink = () => {};
-        this.clickEmpty = () => {};
+        this.clickEmpty = () => () => {};
     }
 
-    setOnClick = (onClick: (c: any, p: XY, i: any) => void) => {
+    setOnClick = (onClick: (c: any, p: XY, i: any) => (s: any) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
         this.stack.forEach((card, index) => {
             card.onClick = (p: XY) => onClick({ ...card }, p, null);
@@ -44,7 +44,7 @@ export default class Waste extends HandHoldingStack {
 
     canAdd = (card: Card | null) => card && (!this.getTop() || !card.equals(this.getTop()));
 
-    popTop = (card: Card) => card && card.equals(this.getTop()) && this.stack.pop() || null;
+    popTop = (card: Card) => (card && card.equals(this.getTop()) && this.stack.pop()) || null;
 
     recycle = () => this.stack.splice(0, this.stack.length);
 

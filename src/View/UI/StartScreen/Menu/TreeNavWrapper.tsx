@@ -1,6 +1,6 @@
-import GamePad from "../../../Game/GamePad";
-import Keyboard from "../../../Game/Keyboard";
-import KeyboardLayout from "../../../Game/KeyboardLayouts";
+import GamePad from "../../../../common/GamePad";
+import Keyboard from "../../../../common/Keyboard";
+import KeyboardLayout from "../../../../common/KeyboardLayouts";
 import { NavigationContext } from "../Context";
 import React from "react";
 import { TreeNavigator } from "../Menu/TreeNavigator";

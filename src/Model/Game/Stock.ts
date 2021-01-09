@@ -10,7 +10,7 @@ export default class Stock extends BasicStack implements IStack {
     passes: number;
     blinkFor: number;
     unblink: () => void;
-    clickEmpty: (p: any) => void;
+    clickEmpty: (p: any) => (s: any) => void;
     constructor(stack: Card[], settings: Settings) {
         super("stock");
         this.settings = settings;
@@ -20,7 +20,7 @@ export default class Stock extends BasicStack implements IStack {
         // eslint-disable-next-line no-unused-vars
         this.blinkFor = 0;
         this.unblink = () => {};
-        this.clickEmpty = () => {};
+        this.clickEmpty = () => () => {};
         if (this.settings.launchSettings.recyclingMode == "1-pass") {
             this.passes = 1;
         }
@@ -29,7 +29,7 @@ export default class Stock extends BasicStack implements IStack {
         }
     }
 
-    setOnClick = (onClick: (c: any, p: XY, i: any) => void) => {
+    setOnClick = (onClick: (c: any, p: XY, i: any) => (s: any) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
         this.stack.forEach((card, index) => {
             card.onClick = (p: XY) => onClick({ ...card }, p, null);

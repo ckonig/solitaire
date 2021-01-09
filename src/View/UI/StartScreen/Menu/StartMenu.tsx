@@ -8,7 +8,7 @@ import MenuTree from "./MenuTree";
 import { NavigationContext } from "../Context";
 import React from "react";
 import StorageManager from "../../StorageManager";
-import { Universal } from "../../../Game/KeyboardLayouts";
+import { Universal } from "../../../../common/KeyboardLayouts";
 import VerticalMenu from "./VerticalMenu";
 import { XY } from "../../XY";
 

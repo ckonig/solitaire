@@ -50,8 +50,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
             return null;
         });
 
-        //on every render, we refresh the click handlers in the model and the suggestions
-        //this is heavy - could it be done in updateGameContext? (and undo, and initial, and restart, and pause/unpause, well)
+    //on every render, we refresh the click handlers in the model and the suggestions
     render = () => {
         const context = {
             state: this.state.withHandlers().withSuggestions(),
@@ -62,11 +61,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
         };
         return (
             <Provider value={context}>
-                <BoardProvider
-                    value={{
-                        player: this.props.player,
-                    }}
-                >
+                <BoardProvider value={{ player: this.props.player }}>
                     <Board mode={this.props.settings.boardMode} />
                 </BoardProvider>
                 <EndScreen />

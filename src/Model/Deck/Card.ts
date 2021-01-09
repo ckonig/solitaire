@@ -8,7 +8,7 @@ export default class Card {
     source: string;
     suggestion: boolean;
     canClick: () => void;
-    onClick: (_p: any) => void;
+    onClick: (_p: any) => (s: any) => void;
     constructor(face: string, type: Suit, isHidden: boolean) {
         this.face = face;
         this.type = type;
@@ -18,7 +18,7 @@ export default class Card {
         this.suggestion = false;
         this.canClick = () => {};
         // eslint-disable-next-line no-unused-vars
-        this.onClick = (_p) => {};
+        this.onClick = (_p) => (s: any) => {};
     }
 
     causeEntropy = (lvl: number) => {
@@ -41,7 +41,7 @@ export default class Card {
         this.entropyStyle["transform"] = "rotate(" + randomInt(level * -1, level) + "deg)";
     };
 
-    equals = (other: Card| null) => {
+    equals = (other: Card | null) => {
         return other && Card.equals(this, other);
     };
 

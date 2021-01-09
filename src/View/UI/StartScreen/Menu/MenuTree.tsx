@@ -1,4 +1,4 @@
-import KeyboardLayout from "../../../Game/KeyboardLayouts";
+import KeyboardLayout from "../../../../common/KeyboardLayouts";
 import React from "react";
 import TreeNavWrapper from "./TreeNavWrapper";
 import { TreeNavigator } from "./TreeNavigator";
