@@ -1,3 +1,5 @@
+import TableauModel, { TableauStack } from "../../Model/Game/Tableau";
+
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
 import GlobalContext from "../Context";
@@ -5,13 +7,16 @@ import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 
-export default class Tableau extends BlinkingComponent {
-    constructor(props) {
-        super((s) => s.tableau.stacks[props.index]);
+type TableauProps = { index: number; model: TableauStack; parent: TableauModel };
+
+export default class Tableau extends BlinkingComponent<TableauProps> {
+    constructor(props: TableauProps) {
+        super(props, (s) => s.tableau.stacks[props.index]);
     }
 
     static Stacks = () => {
         const { state } = React.useContext(GlobalContext);
+        if (!state) return null;
         return (
             <>
                 {state.tableau.stacks.map((tableau, index) => (
@@ -24,7 +29,7 @@ export default class Tableau extends BlinkingComponent {
     render() {
         const props = this.props;
         let offset = 1;
-        const getOffset = (index) => {
+        const getOffset = (index: number) => {
             for (let i = 0; i <= index; i++) {
                 if (props.model.stack[i] && !props.model.stack[i].isHidden) {
                     offset = i * 12 + (index - i) * 24;
@@ -47,7 +52,7 @@ export default class Tableau extends BlinkingComponent {
                         offsetTop={getOffset(index)}
                     />
                 ))}
-                <Hand parentModel={props.model} stack={props.model.stack} offsetTop={getOffset(props.model.stack.length)} />
+                <Hand parentModel={props.model} offsetTop={getOffset(props.model.stack.length)} />
             </div>
         );
     }

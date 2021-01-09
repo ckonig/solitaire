@@ -1,17 +1,21 @@
 import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
+import { FoundationStack } from "../../Model/Game/Foundation";
 import GlobalContext from "../Context";
 import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 
-export default class Foundation extends BlinkingComponent {
-    constructor(props) {
-        super((s) => s.foundation.stacks[props.index]);
+type FoundationProps = { index: number; model: FoundationStack };
+
+export default class Foundation extends BlinkingComponent<FoundationProps> {
+    constructor(props: FoundationProps) {
+        super(props, (s) => s.foundation.stacks[props.index]);
     }
 
     static Stacks = () => {
         const { state } = React.useContext(GlobalContext);
+        if (!state) return null;
         return (
             <>
                 {state.foundation.stacks.map((foundation, index) => (
@@ -36,11 +40,7 @@ export default class Foundation extends BlinkingComponent {
                         isSuggested={model.suggestion && model.stack.length - 1 == index}
                     />
                 ))}
-                <Hand
-                    parentModel={model}
-                    //onClick={(c, p) => onClick(model.stack[model.stack.length - 1], p, this.props.index)}
-                    stack={model.stack}
-                />
+                <Hand parentModel={model} />
             </div>
         );
     }

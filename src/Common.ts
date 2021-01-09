@@ -44,6 +44,7 @@ export interface LaunchSettings extends RatingSettings {
     boardMode: string;
     initialized?: boolean;
     quickDeal?: boolean;
+    speed?: boolean;
 }
 
 export interface ClickHandler {

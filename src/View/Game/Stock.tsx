@@ -4,33 +4,29 @@ import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
 import StackBase from "./StackBase";
+import usePrevious from "./usePrevious";
 
-const usePrevious = (value) => {
-    const ref = React.useRef();
-    React.useEffect(() => {
-        ref.current = value;
-    });
-    return ref.current;
-};
-
-const Renderer = (props) => {
+const Renderer = (props: { length: number }) => {
     const { state } = React.useContext(PauseContext);
     const { paused, started } = state;
     return <InnerRenderer length={props.length} paused={paused} started={started} />;
 };
 
-const InnerRenderer = (props) => {
+const InnerRenderer = (props: { length: number; paused: boolean; started: number }) => {
     const context = React.useContext(GlobalContext);
+
     const { length, started, paused } = props;
     const previous = usePrevious({ length, paused, started });
     React.useEffect(() => {
-        let timeout = null;
+        let timeout: any = null;
         if (
+            context &&
+            context.state &&
             context.state.settings.launchSettings.speed &&
-            previous &&
             started &&
             !paused &&
-            (previous.length != length || previous.started != started || previous.paused != paused)
+            previous &&
+            (previous?.length != length || previous?.started != started || previous?.paused != paused)
         ) {
             timeout = setTimeout(() => {
                 context.updateContext((state) => {
@@ -54,6 +50,8 @@ const InnerRenderer = (props) => {
         return () => clearTimeout(timeout);
     }, [length, paused, started]);
 
+    if (!context || !context.state) return null;
+
     return (
         <div className="board-field stock">
             <StackBase model={context.state.stock} />
@@ -63,17 +61,17 @@ const InnerRenderer = (props) => {
                     model={card}
                     offsetTop={(index / 2) * -1}
                     zIndex={index}
-                    blink={context.state.stock.blinkFor}
-                    isSuggested={context.state.stock.suggestion && index == context.state.stock.stack.length - 1}
+                    blink={context?.state?.stock.blinkFor}
+                    isSuggested={context?.state?.stock.suggestion && index == context.state.stock.stack.length - 1}
                 />
             ))}
         </div>
     );
 };
 //Can't use multiple contexts in one React class, need two renderer functions to feed two contexts into props for reliable detection of changes
-export default class Stock extends BlinkingComponent {
-    constructor() {
-        super((s) => s.stock);
+export default class Stock extends BlinkingComponent<{}> {
+    constructor(props: {}) {
+        super(props, (s) => s.stock);
     }
 
     render() {

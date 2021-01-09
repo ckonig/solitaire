@@ -1,9 +1,14 @@
 import { Component } from "react";
 import GlobalContext from "../Context";
+import { IStack } from "../../Model/Game/IStack";
+import Model from "../../Model/Model";
 
-export default class BlinkingComponent extends Component {
-    constructor(selector) {
-        super();
+export type _selector = (model: Model) => IStack;
+export default class BlinkingComponent<T> extends Component<T> {
+    timeout: any;
+    selector: _selector;
+    constructor(props: T, selector: _selector) {
+        super(props);
         this.timeout = null;
         this.selector = selector;
     }
@@ -14,7 +19,7 @@ export default class BlinkingComponent extends Component {
         if (this.selector(this.context.state).blinkFor) {
             this.timeout = setTimeout(
                 () =>
-                    this.context.updateGameContext((state) => {
+                    this.context.updateGameContext((state: Model) => {
                         this.selector(state).unblink(state);
                     }),
                 200

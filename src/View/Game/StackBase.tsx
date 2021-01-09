@@ -1,15 +1,18 @@
 import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
+import { IStack } from "../../Model/Game/IStack";
 import React from "react";
 import getStackLabel from "./StackDescription";
 
-const StackBase = (props) => {
+const StackBase = (props: { model: IStack; children?: any|null }) => {
     let classname = "card-base socket";
-    const inputEl = React.useRef(null);
+    const inputEl = React.useRef<HTMLButtonElement>(null);
     const { state, updateGameContext } = React.useContext(GlobalContext);
+    if (!state) return null;
     React.useEffect(() => {
-        if (state.focus.hasStack(props.model.parent) && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
-            inputEl && inputEl.current && inputEl.current.focus();
+        if (state.focus.hasStack(props.model.source) && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
+            const current = inputEl && inputEl.current ? inputEl.current : null;
+            current && current.focus();
         }
     });
     if (!props.model.stack.length) {
@@ -28,7 +31,7 @@ const StackBase = (props) => {
         classname += " socket-suggested";
     }
 
-    const onClick = (e) => {
+    const onClick = (e: any) => {
         e.preventDefault();
         const isKeyBoard = e.clientX == 0 && e.clientY == 0;
         if (!isKeyBoard) {
@@ -37,7 +40,7 @@ const StackBase = (props) => {
     };
 
     let label = getStackLabel(props.model.source);
-    label += ": empty socket"
+    label += ": empty socket";
 
     return (
         <button
@@ -52,11 +55,10 @@ const StackBase = (props) => {
             ref={inputEl}
             className={classname}
             onClick={onClick}
-            disabled={props.model.stack.length}
+            disabled={!!props.model.stack.length}
             tabIndex={!props.model.stack.length ? 0 : -1}
             aria-label={label}
             title={label}
-
         >
             {props.children}
         </button>

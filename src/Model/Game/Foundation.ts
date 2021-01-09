@@ -7,7 +7,7 @@ import Suits from "../Deck/Suits";
 import { XY } from "../../View/UI/XY";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
-class FoundationStack extends HandHoldingStack implements IStack {
+export class FoundationStack extends HandHoldingStack implements IStack {
     setOnClick: () => void = () => {};
     acceptedCards: string[] = [];
     usedCards: any[] = [];

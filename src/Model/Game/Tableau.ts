@@ -5,7 +5,7 @@ import { IStack } from "./IStack";
 import Settings from "./Settings";
 import { getTableauOrder } from "../Deck/DeckSize";
 
-class TableauStack extends HandHoldingStack implements IStack {
+export class TableauStack extends HandHoldingStack implements IStack {
     //@todo move to IStack, make boolean
     blinkFor = 0;
     id = 0;
@@ -43,7 +43,7 @@ export default class Tableau {
             stack.stack.forEach((card, sindex) => {
                 const click = card.isHidden && sindex == stack.stack.length - 1 ? onClickhidden : onClick;
                 card.onClick = (p: any) => click({ ...card }, p, index);
-                card.canClick = () => !card.isHidden || this.canUncover(index, card);
+                card.canClick = () => !card.isHidden || this.canUncover(index, card) || false;
             });
             hand.setOnClick(stack);
         });
