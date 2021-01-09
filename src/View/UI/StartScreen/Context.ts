@@ -3,7 +3,7 @@ import { EntropySettings, PlayerSettings, RatingSettings, defaultPlayerSettings 
 import RatingPresets from "./RatingOptions";
 import React from "react";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
-import TouchDetector from "./TouchDetector";
+import TouchDetector from "../../../common/TouchDetector";
 
 export interface IStartScreenContext {
     state: StartScreenState;

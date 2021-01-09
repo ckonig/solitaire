@@ -1,4 +1,5 @@
-const TouchDetector = ()  => {
+//credit https://stackoverflow.com/a/60312025/1216242
+const TouchDetector = () => {
     try {
         const prefixes = " -webkit- -moz- -o- -ms- ".split(" ");
 
@@ -13,6 +14,6 @@ const TouchDetector = ()  => {
         console.error("(Touch detect failed)", e);
         return false;
     }
-}
+};
 
 export default TouchDetector;

@@ -12,6 +12,7 @@ export default class StorageManager {
             localStorage.setItem("consent", "1");
         },
     });
+    
     revokeConsent = () => ({
         prompt: "Delete all local stored data? All settings will be lost.",
         confirm: () => {
