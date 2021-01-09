@@ -1,5 +1,15 @@
+import { Suit } from "./Suits";
+
 export default class Card {
-    constructor(face, type, isHidden) {
+    face: string;
+    type: Suit;
+    isHidden: boolean;
+    entropyStyle: any;
+    source: string;
+    suggestion: boolean;
+    canClick: () => void;
+    onClick: (_p: any) => void;
+    constructor(face: string, type: Suit, isHidden: boolean) {
         this.face = face;
         this.type = type;
         this.isHidden = isHidden;
@@ -11,14 +21,14 @@ export default class Card {
         this.onClick = (_p) => {};
     }
 
-    causeEntropy = (lvl) => {
+    causeEntropy = (lvl: number) => {
         if (lvl == 0) {
             this.entropyStyle = {};
             return;
         }
         const level = lvl * 2;
         const random = () => Math.random() < 0.5;
-        const randomInt = (min, max) => Math.random() * (max - min) + min;
+        const randomInt = (min: number, max: number) => Math.random() * (max - min) + min;
         //shift
         if (random()) {
             if (random()) {
@@ -31,15 +41,15 @@ export default class Card {
         this.entropyStyle["transform"] = "rotate(" + randomInt(level * -1, level) + "deg)";
     };
 
-    equals = (other) => {
-        return Card.equals(this, other);
+    equals = (other: Card| null) => {
+        return other && Card.equals(this, other);
     };
 
-    static equals(card, otherCard) {
+    static equals(card: Card, otherCard: Card) {
         return (!card && !otherCard) || (card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon);
     }
 
-    static copy = (orig) => {
+    static copy = (orig: Card) => {
         const copy = new Card(orig.face, orig.type, orig.isHidden);
         copy.source = orig.source;
         copy.entropyStyle = { ...orig.entropyStyle };
@@ -48,5 +58,5 @@ export default class Card {
         return copy;
     };
 
-    static copyAll = (cards) => cards.map((card) => Card.copy(card));
+    static copyAll = (cards: Card[]) => cards.map((card) => Card.copy(card));
 }

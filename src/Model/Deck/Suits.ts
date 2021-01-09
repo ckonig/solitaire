@@ -1,4 +1,4 @@
-interface Suit {
+export interface Suit {
     icon: string;
     color: string;
 }

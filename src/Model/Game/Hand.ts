@@ -12,9 +12,13 @@ export default class Hand {
         this.position = null;
     }
 
-    pickUp = (stack: Card[], source: string, position: XY) => {
+    filter: (stack: any[]) => Card[] = (stack) => {
+        return stack.filter((c) => c);
+    };
+
+    pickUp = (stack: (Card | null)[], source: string, position: XY) => {
         if (stack && stack[0]) {
-            this.stack = stack.map((c) => {
+            this.stack = this.filter(stack).map((c) => {
                 c.suggestion = false;
                 return c;
             });

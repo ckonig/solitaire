@@ -44,7 +44,7 @@ export default class Waste extends HandHoldingStack {
 
     canAdd = (card: Card | null) => card && (!this.getTop() || !card.equals(this.getTop()));
 
-    popTop = (card: Card) => card && card.equals(this.getTop()) && this.stack.pop();
+    popTop = (card: Card) => card && card.equals(this.getTop()) && this.stack.pop() || null;
 
     recycle = () => this.stack.splice(0, this.stack.length);
 

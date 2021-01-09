@@ -65,7 +65,7 @@ export default class Tableau {
             return false;
         }
         const range = [...getTableauOrder()];
-        const currentIndex = range.indexOf(current?.face);
+        const currentIndex = current ? range.indexOf(current.face) : 0;
         const topIndex = range.indexOf(top.face);
         return currentIndex + 1 == topIndex && current?.type.color !== top.type.color && top.face !== "A";
     };
