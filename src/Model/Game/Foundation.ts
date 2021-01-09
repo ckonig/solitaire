@@ -80,7 +80,7 @@ export default class Foundation {
 
     remove = (index: number, card: Card) => {
         this.stacks[index].acceptedCards.push(this.stacks[index].usedCards.pop());
-        return card && card.equals(this.getTop(index)) && this.stacks[index].stack.pop();
+        return (card && card.equals(this.getTop(index)) && this.stacks[index].stack.pop()) || null;
     };
 
     getPreviousUsed = (index: number) => [...this.stacks[index].usedCards].pop();
