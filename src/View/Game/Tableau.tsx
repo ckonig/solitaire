@@ -33,10 +33,14 @@ const Tableau = (props: TableauProps) => {
             props.model.clickEmpty({ isKeyboard: false });
         },
     });
+
+    const { state } = React.useContext(GlobalContext);
+    const cards = state?.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
+
     let offset = 1;
     const getOffset = (index: number) => {
         for (let i = 0; i <= index; i++) {
-            if (props.model.stack[i] && !props.model.stack[i].isHidden) {
+            if (cards[i] && !cards[i].isHidden) {
                 offset = i * 12 + (index - i) * 24;
                 return offset;
             }
@@ -44,9 +48,6 @@ const Tableau = (props: TableauProps) => {
         offset = index * 12;
         return offset;
     };
-
-    const { state } = React.useContext(GlobalContext);
-    const cards = state?.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
 
     return (
         <div className="board-field" ref={drop}>
