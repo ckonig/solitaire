@@ -12,4 +12,5 @@ export interface IStack {
     blinkFor: number;
     unblink: (model: Model) => void;
     suggestion: boolean;
+    accepts: (card: Card | null) => boolean;
 }

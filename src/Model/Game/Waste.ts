@@ -42,6 +42,8 @@ export default class Waste extends HandHoldingStack {
 
     wouldAcceptHand = () => this.hand.isFromWaste() && this.canAdd(this.hand.currentCard());
 
+    accepts = (card: Card | null) => this.canAdd(card) || false;
+
     canAdd = (card: Card | null) => card && (!this.getTop() || !card.equals(this.getTop()));
 
     popTop = (card: Card) => (card && card.equals(this.getTop()) && this.stack.pop()) || null;

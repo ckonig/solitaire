@@ -28,10 +28,11 @@ const Foundation = (props: FoundationProps) => {
     const model = props.model;
     const [, drop] = useDrop({
         accept: "card",
+        canDrop: (item: any) => {
+            return props.model.accepts(item.model);
+        },
         drop: () => {
-            console.log("dropping", drop);
             updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
-            props.model.clickEmpty({ isKeyboard: false });
         },
     });
     const { state } = React.useContext(GlobalContext);

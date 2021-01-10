@@ -14,6 +14,20 @@ export class TableauStack extends HandHoldingStack implements IStack {
     // eslint-disable-next-line no-unused-vars
     clickEmpty = (a: any) => (s: any) => {};
     setOnClick = () => {};
+    accepts = (current: Card | null) => {
+        const top = this.getTop();
+        if (!top) {
+            return (current && current.face === "K") || false;
+        }
+        if (this.source == current?.source) return true;
+        if (top.isHidden) {
+            return false;
+        }
+        const range = [...getTableauOrder()];
+        const currentIndex = current ? range.indexOf(current.face) : 0;
+        const topIndex = range.indexOf(top.face);
+        return currentIndex + 1 == topIndex && current?.type.color !== top.type.color && top.face !== "A";
+    };
 }
 export default class Tableau {
     stacks: TableauStack[];
@@ -61,17 +75,8 @@ export default class Tableau {
         (!card && hand.isFromTableau(index));
 
     accepts = (index: number, current?: Card | null) => {
-        const top = this.getTop(index);
-        if (!top) {
-            return current && current.face === "K";
-        }
-        if (top.isHidden) {
-            return false;
-        }
-        const range = [...getTableauOrder()];
-        const currentIndex = current ? range.indexOf(current.face) : 0;
-        const topIndex = range.indexOf(top.face);
-        return currentIndex + 1 == topIndex && current?.type.color !== top.type.color && top.face !== "A";
+        if (!current) return false;
+        return this.stacks[index].accepts(current);
     };
 
     getCard = (index: number, card: Card) => {

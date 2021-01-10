@@ -25,13 +25,17 @@ export default TableauStacks;
 
 const Tableau = (props: TableauProps) => {
     useBlinkEffect((s) => s.tableau.stacks[props.index]);
+    const [accepting, setAccepting] = React.useState<boolean>(false);
     const { updateGameContext } = React.useContext(GlobalContext);
     const [, drop] = useDrop({
         accept: "card",
+        canDrop: (item: any) => {
+            const accepts = props.model.accepts(item.model);
+            setAccepting(accepts);
+            return accepts;
+        },
         drop: () => {
-            console.log("dropping", drop);
             updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
-            props.model.clickEmpty({ isKeyboard: false });
         },
     });
 
@@ -56,6 +60,7 @@ const Tableau = (props: TableauProps) => {
             <Card
                 index={0}
                 key={0}
+                accepting={accepting}
                 models={cards}
                 blink={props.model.blinkFor}
                 isSuggested={(index) => props.model.suggestion && props.model.stack.length - 1 == index}

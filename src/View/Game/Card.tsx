@@ -9,6 +9,7 @@ import { useDrag } from "react-dnd";
 
 type CardProps = {
     index: number;
+    accepting?: boolean;
     models: CardModel[];
     isSuggested?: (index: number) => boolean | undefined;
     isSelected?: (index: number) => boolean;
@@ -46,7 +47,7 @@ const Card = (props: CardProps) => {
     const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
     const _isDrag = props.isDrag || isDrag;
     const [{ opacity }, dragRef, preview] = useDrag({
-        item: { type: "card", text: "some text", render: ReRender() },
+        item: { type: "card", model: model, render: ReRender() },
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
         },
@@ -126,6 +127,7 @@ const Card = (props: CardProps) => {
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion && !isFocused ? " card-suggested" : "";
         className += isFocused ? " card-focused" : "";
+        className += props.accepting ? " card-accepts" : "";
         return className;
     };
 

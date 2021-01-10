@@ -36,6 +36,7 @@ export default class Stock extends BasicStack implements IStack {
             card.canClick = () => index == this.stack.length - 1;
         });
     };
+    accepts = () => false;
 
     popOne = () => {
         const result = this.stack.pop();

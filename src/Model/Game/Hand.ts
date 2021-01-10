@@ -58,7 +58,7 @@ export default class Hand {
 
     isFromCurrentSource = (card: Card) => (this.source && card.source == this.source) || null;
 
-    isFromWaste = () => this.source && this.source == "waste";
+    isFromWaste = () => this.source && this.source == "waste" || false;
 
     isFromFoundation = (index: number) => this.source && this.source == `foundation-${index}`;
 

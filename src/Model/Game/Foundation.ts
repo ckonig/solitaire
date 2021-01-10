@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
+
+import Suits, { Suit } from "../Deck/Suits";
+
 import Card from "../Deck/Card";
 import Hand from "./Hand";
 import HandHoldingStack from "./HandHoldingStack";
 import { IStack } from "./IStack";
 import Settings from "./Settings";
-import Suits from "../Deck/Suits";
 import { XY } from "../../View/UI/XY";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
@@ -15,6 +18,14 @@ export class FoundationStack extends HandHoldingStack implements IStack {
     color: string = "";
     blinkFor: number = 0;
     clickEmpty: (p: any) => any = () => {};
+    getCurrentAccepted = () => {
+        return this.acceptedCards[this.acceptedCards.length - 1];
+    };
+    accepts = (card: Card | null) => {
+        if (!card) return false;
+        const currentAccepted = this.getCurrentAccepted();
+        return this.icon == card.type.icon && currentAccepted == card.face;
+    };
 }
 export default class Foundation {
     settings: Settings;
@@ -25,26 +36,26 @@ export default class Foundation {
     constructor(settings: Settings, hand: Hand) {
         this.settings = settings;
         this.hand = hand;
-        const template = (index: number) => {
+        const template = (index: number, suit: Suit) => {
             const s = new FoundationStack("foundation-" + index, hand);
             s.stack = [];
             s.acceptedCards = [...getFoundationOrder()];
             s.usedCards = [];
-            s.icon = "";
-            s.color = "";
+            s.icon = suit.icon;
+            s.color = suit.color;
             s.blinkFor = 0;
             return s;
         };
         const stacks = Object.keys(Suits)
             .map((key: string) => Suits[key])
-            .map((suit, index) => ({ ...template(index), ...suit }));
+            .map((suit, index) => (template(index, suit)));
         this.stacks = [...stacks];
         // eslint-disable-next-line no-unused-vars
         this.blinkFor = 0;
         this.unblink = () => {};
     }
 
-    setOnClick = (onClick: (c: any, p: XY, index: number) => (s:any) => void) => {
+    setOnClick = (onClick: (c: any, p: XY, index: number) => (s: any) => void) => {
         this.stacks.forEach((stack, index) => {
             stack.clickEmpty = (p) => onClick(null, p, index);
             stack.stack.forEach((card, sindex) => {
@@ -56,8 +67,7 @@ export default class Foundation {
     };
 
     getCurrentAccepted = (index: number) => {
-        const currentFoundation = this.stacks[index].acceptedCards;
-        return currentFoundation[currentFoundation.length - 1];
+        return this.stacks[index].getCurrentAccepted();
     };
 
     wouldAcceptHand = (index: number) => !this.hand.hasMoreThanOneCard() && this.accepts(index, this.hand.currentCard());
@@ -65,9 +75,7 @@ export default class Foundation {
     putDownHand = (index: number) => this.add(index, this.hand.putDown());
 
     accepts = (index: number, card: Card | null) => {
-        if (!card) return false;
-        const currentAccepted = this.getCurrentAccepted(index);
-        return this.stacks[index].icon == card.type.icon && currentAccepted == card.face;
+        return this.stacks[index].accepts(card);
     };
 
     add = (index: number, cards: Card[]) => {
