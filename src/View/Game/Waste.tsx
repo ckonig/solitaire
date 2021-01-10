@@ -1,5 +1,4 @@
 import Card from "./Card";
-import CardModel from "../../Model/Deck/Card";
 import GlobalContext from "../Context";
 import React from "react";
 import StackBase from "./StackBase";
@@ -31,17 +30,16 @@ const Waste = () => {
     return (
         <div className="board-field">
             <StackBase model={state.waste} />
-            {cards.map((card: CardModel, index: number) => (
-                <Card
-                    key={index}
-                    model={card}
-                    offsetTop={(index / 2) * -1}
-                    offsetLeft={getOffset(index)}
-                    blink={state.waste.blinkFor}
-                    isSuggested={state.waste.suggestion && index == state.waste.stack.length - 1}
-                    isSelected={index > state.waste.stack.length - 1}
-                />
-            ))}
+            <Card
+                index={0}
+                key={0}
+                models={cards}
+                offsetTop={(index) => (index / 2) * -1}
+                offsetLeft={(index) => getOffset(index)}
+                blink={state.waste.blinkFor}
+                isSuggested={(index) => state.waste.suggestion && index == state.waste.stack.length - 1}
+                isSelected={(index) => index > state.waste.stack.length - 1}
+            />
         </div>
     );
 };

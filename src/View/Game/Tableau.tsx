@@ -1,6 +1,7 @@
 import TableauModel, { TableauStack } from "../../Model/Game/Tableau";
 
 import Card from "./Card";
+import CardModel from "../../Model/Deck/Card";
 import GlobalContext from "../Context";
 import React from "react";
 import StackBase from "./StackBase";
@@ -38,7 +39,7 @@ const Tableau = (props: TableauProps) => {
     const cards = state?.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
 
     let offset = 1;
-    const getOffset = (index: number) => {
+    const getOffset = (index: number, cards: CardModel[]) => {
         for (let i = 0; i <= index; i++) {
             if (cards[i] && !cards[i].isHidden) {
                 offset = i * 12 + (index - i) * 24;
@@ -52,16 +53,15 @@ const Tableau = (props: TableauProps) => {
     return (
         <div className="board-field" ref={drop}>
             <StackBase model={props.model} />
-            {cards.map((card, index) => (
-                <Card
-                    key={index}
-                    model={card}
-                    blink={props.model.blinkFor}
-                    isSuggested={props.model.suggestion && props.model.stack.length - 1 == index}
-                    offsetTop={getOffset(index)}
-                    isSelected={index > props.model.stack.length - 1}
-                />
-            ))}
+            <Card
+                index={0}
+                key={0}
+                models={cards}
+                blink={props.model.blinkFor}
+                isSuggested={(index) => props.model.suggestion && props.model.stack.length - 1 == index}
+                offsetTop={(index, models) => getOffset(index, models)}
+                isSelected={(index) => index > props.model.stack.length - 1}
+            />
         </div>
     );
 };

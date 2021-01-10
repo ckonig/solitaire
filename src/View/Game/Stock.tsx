@@ -49,16 +49,15 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
     return (
         <div className="board-field stock">
             <StackBase model={context.state.stock} />
-            {context.state.stock.stack.map((card, index) => (
-                <Card
-                    key={index}
-                    model={card}
-                    offsetTop={(index / 2) * -1}
-                    zIndex={index}
-                    blink={context?.state?.stock.blinkFor}
-                    isSuggested={context?.state?.stock.suggestion && index == context.state.stock.stack.length - 1}
-                />
-            ))}
+            <Card
+                index={0} 
+                key={0}
+                models={context.state.stock.stack}
+                offsetTop={(index) => (index / 2) * -1}
+                zIndex={0}
+                blink={context?.state?.stock.blinkFor}
+                isSuggested={(index) => context?.state?.stock.suggestion && index == context.state.stock.stack.length - 1}
+            />
         </div>
     );
 };

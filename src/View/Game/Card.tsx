@@ -7,37 +7,42 @@ import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
 
 type CardProps = {
-    model: CardModel;
-    isSuggested?: boolean;
-    isSelected?: boolean;
+    index: number;
+    models: CardModel[];
+    isSuggested?: (index: number) => boolean | undefined;
+    isSelected?: (index: number) => boolean;
     blink?: number;
     zIndex?: number;
-    offsetTop?: number;
-    offsetLeft?: number;
+    offsetTop?: (index: number, models: CardModel[]) => number;
+    offsetLeft?: (index: number) => number;
 };
 
 const Card = (props: CardProps) => {
-    const ReRender = () => <Card {...{ ...props, offsetTop: 0, offsetLeft: 0 }} />;
+    const ReRender = () => <Card {...{ ...props, models: props.models.slice(props.index, props.models.length), offsetLeft: () => 0, index: 0 }} />;
+    if (!props.models.length) {
+        return null;
+    }
+    const model = props.models[props.index];
     ReRender.displayName = "ReRender";
     //@todo for proper drag & drop of stacks, we need each card to render the following ones
     const { state, updateGameContext } = React.useContext(GlobalContext);
     if (!state) return null;
     const pause = React.useContext(PauseContext);
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    const isFocused = state.focus.hasCard(props.model);
+    const isFocused = state.focus.hasCard(model);
     const [isDrag, setDrag] = React.useState<boolean>(false);
     const [{ opacity }, dragRef] = useDrag({
         item: { type: "card", text: "some text", render: ReRender },
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
         },
-        canDrag: () => props.model.canClick() && (state.hand.currentCard() == null || props.model.equals(state.hand.currentCard())),
+        canDrag: () => model.canClick() && (state.hand.currentCard() == null || model.equals(state.hand.currentCard())),
         begin: (monitor) => {
             console.log(monitor);
             setDrag(true);
-            if (props.model.onClick && !props.isSelected) {
+            if (model.onClick && (!props.isSelected || !props.isSelected(props.index))) {
                 updateGameContext((context) => {
-                    props.model.onClick({ isKeyboard: false })(context);
+                    model.onClick({ isKeyboard: false })(context);
                 });
             }
         },
@@ -45,13 +50,13 @@ const Card = (props: CardProps) => {
             setDrag(false);
             if (!monitor.didDrop()) {
                 updateGameContext((context) => {
-                    props.model.onClick({ isKeyboard: false })(context);
+                    model.onClick({ isKeyboard: false })(context);
                 });
             }
         },
     });
 
-    const getRef = () => (props.model.canClick() ? dragRef : inputEl);
+    const getRef = () => (model.canClick() ? dragRef : inputEl);
     React.useEffect(() => {
         if (isFocused && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
@@ -80,9 +85,9 @@ const Card = (props: CardProps) => {
         };
         const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
         //@todo A11Y allow keyboard actions in singleplayer
-        if (props.model.onClick && !position.isKeyBoard) {
+        if (model.onClick && !position.isKeyBoard) {
             updateGameContext((context) => {
-                props.model.onClick(position)(context);
+                model.onClick(position)(context);
                 if (isSinglePlayer) {
                     context.settings.launchSettings.inputMode = "mouse";
                 }
@@ -91,12 +96,13 @@ const Card = (props: CardProps) => {
     };
 
     const getClassName = () => {
-        const hasSuggestion = props.isSuggested || props.model.suggestion;
-        let className = `card card-base suit-${props.model.type.icon}`;
-        className += !props.isSelected && !isFocused && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
-        className += props.isSelected && !isDrag ? " card-selected" : "";
+        const hasSuggestion = (props.isSuggested && props.isSuggested(props.index)) || model.suggestion;
+        let className = `card card-base suit-${model.type.icon}`;
+        className +=
+            (!props.isSelected || !props.isSelected(props.index)) && !isFocused && !hasSuggestion ? ` card-stack-${model.source}` : "";
+        className += props.isSelected && props.isSelected(props.index) && !isDrag ? " card-selected" : "";
         className += props.blink ? " blink" : "";
-        className += props.model.canClick() ? " clickable" : "";
+        className += model.canClick() ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion && !isFocused ? " card-suggested" : "";
         className += isFocused ? " card-focused" : "";
@@ -106,17 +112,17 @@ const Card = (props: CardProps) => {
     const getCardStyle = () => {
         const style = {
             opacity,
-            zIndex: (props.zIndex ? props.zIndex : (props.offsetTop ? 1 : 0) * 20) + 1,
-            top: props.offsetTop ? props.offsetTop / 15 + "em" : 0,
-            ...props.model.entropyStyle,
+            zIndex: (props.zIndex ? props.zIndex : (props.offsetTop && props.offsetTop(props.index, props.models) > 0 ? 1 : 0) * 20) + 1,
+            top: props.offsetTop ? props.offsetTop(props.index, props.models) / 15 + "em" : 0,
+            ...model.entropyStyle,
         };
 
         //move to left on waste (triple draw)
         if (props.offsetLeft) {
-            style.left = props.offsetLeft * 2 + "em";
+            style.left = props.offsetLeft(props.index) * 2 + "em";
         }
 
-        if (!props.model.onClick) {
+        if (!model.onClick) {
             style.pointerEvents = "none";
         }
 
@@ -124,75 +130,78 @@ const Card = (props: CardProps) => {
     };
 
     const getStackbaseStyle: () => React.CSSProperties = () => {
-        if (!props.model.onClick) {
+        if (!model.onClick) {
             return { pointerEvents: "none" };
         }
 
         return {};
     };
 
-    let label = getStackLabel(props.model.source);
+    let label = getStackLabel(model.source);
     label += ": ";
 
-    label += props.model.isHidden ? "hidden card" : props.model.type.icon + props.model.face;
+    label += model.isHidden ? "hidden card" : model.type.icon + model.face;
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
 
     return (
-        <div style={getStackbaseStyle()} className="stack-base">
-            <button
-                onFocus={() => {
-                    // updateContext((ctx) => {
-                    //     ctx.navigator.update(props.model.source, props.model);
-                    // });
-                }}
-                onBlur={() => {
-                    //updateContext((ctx) => ctx.focus.unsetCard(props.model));
-                }}
-                style={getCardStyle()}
-                // ref={inputEl}
-                ref={getRef()}
-                className={getClassName()}
-                onClick={onClick}
-                disabled={!props.model.canClick() || pause.state.paused}
-                tabIndex={props.model.canClick() ? 0 : -1}
-                aria-label={label}
-                title={label}
-            >
-                <div className="card-content">
-                    {props.model.isHidden || pause.state.paused ? (
-                        <div className="card-back">&nbsp;</div>
-                    ) : (
-                        <div className="card-grid-container">
-                            <div>
-                                <div className="align-center">{props.model.type.icon}</div>
+        <>
+            <div style={getStackbaseStyle()} className="stack-base">
+                <button
+                    onFocus={() => {
+                        // updateContext((ctx) => {
+                        //     ctx.navigator.update(model.source, props.model);
+                        // });
+                    }}
+                    onBlur={() => {
+                        //updateContext((ctx) => ctx.focus.unsetCard(props.model));
+                    }}
+                    style={getCardStyle()}
+                    // ref={inputEl}
+                    ref={getRef()}
+                    className={getClassName()}
+                    onClick={onClick}
+                    disabled={!model.canClick() || pause.state.paused}
+                    tabIndex={model.canClick() ? 0 : -1}
+                    aria-label={label}
+                    title={label}
+                >
+                    <div className="card-content">
+                        {model.isHidden || pause.state.paused ? (
+                            <div className="card-back">&nbsp;</div>
+                        ) : (
+                            <div className="card-grid-container">
+                                <div>
+                                    <div className="align-center">{model.type.icon}</div>
+                                </div>
+                                <div>
+                                    <div className="align-left">{model.face}</div>
+                                </div>
+                                <div>&nbsp;</div>
+                                <div>
+                                    <div className="align-center">{model.type.icon}</div>
+                                </div>
+                                <div className="mainface">
+                                    <div className="align-center">{model.face}</div>
+                                </div>
+                                <div>
+                                    <div className="align-center">{model.type.icon}</div>
+                                </div>
+                                <div>&nbsp;</div>
+                                <div>
+                                    <div className="align-right">{model.face}</div>
+                                </div>
+                                <div>
+                                    <div className="align-center">{model.type.icon}</div>
+                                </div>
                             </div>
-                            <div>
-                                <div className="align-left">{props.model.face}</div>
-                            </div>
-                            <div>&nbsp;</div>
-                            <div>
-                                <div className="align-center">{props.model.type.icon}</div>
-                            </div>
-                            <div className="mainface">
-                                <div className="align-center">{props.model.face}</div>
-                            </div>
-                            <div>
-                                <div className="align-center">{props.model.type.icon}</div>
-                            </div>
-                            <div>&nbsp;</div>
-                            <div>
-                                <div className="align-right">{props.model.face}</div>
-                            </div>
-                            <div>
-                                <div className="align-center">{props.model.type.icon}</div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </button>
-        </div>
+                        )}
+                    </div>
+                </button>
+            </div>
+            {props.models.length - 1 > props.index && <Card {...props} index={props.index + 1} />}
+        </>
     );
 };
 

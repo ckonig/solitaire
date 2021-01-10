@@ -41,15 +41,14 @@ const Foundation = (props: FoundationProps) => {
             <StackBase model={model}>
                 <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>
             </StackBase>
-            {cards.map((card, index) => (
-                <Card
-                    key={index}
-                    model={card}
-                    blink={model.blinkFor}
-                    isSuggested={model.suggestion && model.stack.length - 1 == index}
-                    isSelected={index > model.stack.length - 1}
-                />
-            ))}
+            <Card
+                index={0}
+                key={0}
+                models={cards}
+                blink={model.blinkFor}
+                isSuggested={(index) => model.suggestion && model.stack.length - 1 == index}
+                isSelected={(index) => index > model.stack.length - 1}
+            />
         </div>
     );
 };
