@@ -137,9 +137,10 @@ export default class Navigator {
         } else if (this.model.focus.stack) {
             return this.current()?.clickEmpty({ isKeyboard: true });
         } else {
-            //trying to hack around navigation here when doing stock -> waste movement 
-            //but it only works in strict mode
-            //@bug in production, the focus moves with the card
+            //trying to hack around navigation here
+            //but it's not good
+            //@bug in prod, on stack->waste moves the focus moves with the card
+            //@bug in dev, when previous action was not on stack, recycling loses focus
             return (ctx: Model) => {
                 ctx.navigator.finishNav();
                 ctx.game.timemachine.modified = true;
