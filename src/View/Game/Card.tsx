@@ -46,7 +46,7 @@ const Card = (props: CardProps) => {
     const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
     const _isDrag = props.isDrag || isDrag;
     const [{ opacity }, dragRef, preview] = useDrag({
-        item: { type: "card", text: "some text", render: ReRender },
+        item: { type: "card", text: "some text", render: ReRender()},
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
         },
