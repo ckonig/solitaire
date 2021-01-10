@@ -17,24 +17,40 @@ type CardProps = {
 };
 
 const Card = (props: CardProps) => {
+    const ReRender = () => <Card {...{ ...props, offsetTop: 0, offsetLeft: 0 }} />;
+    ReRender.displayName = "ReRender";
     //@todo for proper drag & drop of stacks, we need each card to render the following ones
     const { state, updateGameContext } = React.useContext(GlobalContext);
     if (!state) return null;
     const pause = React.useContext(PauseContext);
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const isFocused = state.focus.hasCard(props.model);
-    const [, dragRef] = useDrag({
-        item: { type: "card", text: "some text" },
-
+    const [isDrag, setDrag] = React.useState<boolean>(false);
+    const [{ opacity }, dragRef] = useDrag({
+        item: { type: "card", text: "some text", render: ReRender },
+        collect: (monitor) => {
+            return { opacity: monitor.isDragging() ? 1 : 1 };
+        },
+        canDrag: () => props.model.canClick() && (state.hand.currentCard() == null || props.model.equals(state.hand.currentCard())),
         begin: (monitor) => {
             console.log(monitor);
-            if (props.model.onClick) {
+            setDrag(true);
+            if (props.model.onClick && !props.isSelected) {
+                updateGameContext((context) => {
+                    props.model.onClick({ isKeyboard: false })(context);
+                });
+            }
+        },
+        end: (_item, monitor) => {
+            setDrag(false);
+            if (!monitor.didDrop()) {
                 updateGameContext((context) => {
                     props.model.onClick({ isKeyboard: false })(context);
                 });
             }
         },
     });
+
     const getRef = () => (props.model.canClick() ? dragRef : inputEl);
     React.useEffect(() => {
         if (isFocused && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
@@ -78,7 +94,7 @@ const Card = (props: CardProps) => {
         const hasSuggestion = props.isSuggested || props.model.suggestion;
         let className = `card card-base suit-${props.model.type.icon}`;
         className += !props.isSelected && !isFocused && !hasSuggestion ? ` card-stack-${props.model.source}` : "";
-        className += props.isSelected ? " card-selected" : "";
+        className += props.isSelected && !isDrag ? " card-selected" : "";
         className += props.blink ? " blink" : "";
         className += props.model.canClick() ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
@@ -89,6 +105,7 @@ const Card = (props: CardProps) => {
 
     const getCardStyle = () => {
         const style = {
+            opacity,
             zIndex: (props.zIndex ? props.zIndex : (props.offsetTop ? 1 : 0) * 20) + 1,
             top: props.offsetTop ? props.offsetTop / 15 + "em" : 0,
             ...props.model.entropyStyle,
