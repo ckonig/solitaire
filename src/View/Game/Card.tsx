@@ -23,11 +23,9 @@ const Card = (props: CardProps) => {
     const pause = React.useContext(PauseContext);
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const isFocused = state.focus.hasCard(props.model);
-    const [{ opacity }, dragRef] = useDrag({
+    const [, dragRef] = useDrag({
         item: { type: "card", text: "some text" },
-        collect: (monitor) => ({
-            opacity: monitor.isDragging() ? 0.5 : 1,
-        }),
+
         begin: (monitor) => {
             console.log(monitor);
             if (props.model.onClick) {
@@ -37,7 +35,7 @@ const Card = (props: CardProps) => {
             }
         },
     });
-    const getRef=() => props.model.canClick() ? dragRef : inputEl;
+    const getRef = () => (props.model.canClick() ? dragRef : inputEl);
     React.useEffect(() => {
         if (isFocused && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
@@ -91,7 +89,6 @@ const Card = (props: CardProps) => {
 
     const getCardStyle = () => {
         const style = {
-            opacity,
             zIndex: (props.zIndex ? props.zIndex : (props.offsetTop ? 1 : 0) * 20) + 1,
             top: props.offsetTop ? props.offsetTop / 15 + "em" : 0,
             ...props.model.entropyStyle,

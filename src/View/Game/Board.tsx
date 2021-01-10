@@ -10,11 +10,13 @@ import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
 import TableauStacks from "./Tableau";
+import { TouchBackend } from "react-dnd-touch-backend";
+import TouchDetector from "../../common/TouchDetector";
 import Waste from "./Waste";
 
 type BoardProps = { mode: string };
 const Board = (props: BoardProps) => (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={TouchDetector() ? TouchBackend : HTML5Backend}>
         <Menu />
         <Header mode={props.mode} />
         <div className={"board-jail " + props.mode}>
