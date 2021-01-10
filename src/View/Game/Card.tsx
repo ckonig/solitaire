@@ -46,7 +46,7 @@ const Card = (props: CardProps) => {
     const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
     const _isDrag = props.isDrag || isDrag;
     const [{ opacity }, dragRef, preview] = useDrag({
-        item: { type: "card", text: "some text", render: ReRender()},
+        item: { type: "card", text: "some text", render: ReRender() },
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
         },
@@ -54,6 +54,7 @@ const Card = (props: CardProps) => {
         begin: (monitor) => {
             console.log(monitor);
             setDrag(true);
+            //@todo if other card is still selected, drop it first.
             if (model.onClick && (!props.isSelected || !props.isSelected(props.index))) {
                 updateGameContext((context) => {
                     model.onClick({ isKeyboard: false })(context);
@@ -70,6 +71,7 @@ const Card = (props: CardProps) => {
         },
     });
 
+    //Deactivate native dnd preview - it's fast but it's not working on mobile.
     React.useEffect(() => {
         preview(getEmptyImage(), { captureDraggingState: true });
     }, []);
