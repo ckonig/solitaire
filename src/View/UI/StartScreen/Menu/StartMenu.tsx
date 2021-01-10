@@ -47,6 +47,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
     const toggleConsent = consented
         ? () => {
               const revoke = storage.revokeConsent();
+              //@todo use custom confirm dialog to support gamepad
               if (confirm(revoke.prompt)) {
                   revoke.confirm();
                   setConsented(false);
@@ -54,6 +55,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
           }
         : () => {
               const consent = storage.giveConsent();
+              //@todo use custom confirm dialog to support gamepad
               if (confirm(consent.prompt)) {
                   consent.confirm();
                   setConsented(true);

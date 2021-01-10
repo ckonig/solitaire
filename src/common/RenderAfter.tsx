@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 
-//@todo move to universal package
 const RenderAfter = (props: { children: ReactNode | ReactNode[] | null; delay: number }) => {
     const [hidden, setHidden] = React.useState(true);
     React.useEffect(() => {

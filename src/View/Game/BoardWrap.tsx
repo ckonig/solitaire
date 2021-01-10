@@ -20,6 +20,7 @@ interface BoardWrapProps {
     player: number;
 }
 
+//We use class component here because setState allows partial updates 
 export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
     constructor(props: BoardWrapProps) {
         super(props);

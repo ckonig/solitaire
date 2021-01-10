@@ -2,15 +2,16 @@ import "../Style/Board.scss";
 
 import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
-import Foundation from "./Foundation";
+import FoundationStacks from "./Foundation";
 import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
-import Tableau from "./Tableau";
+import TableauStacks from "./Tableau";
 import Waste from "./Waste";
 
-const Board = (props: any) => (
+type BoardProps = { mode: string };
+const Board = (props: BoardProps) => (
     <>
         <Menu />
         <Header mode={props.mode} />
@@ -19,8 +20,8 @@ const Board = (props: any) => (
                 <Stock />
                 <Waste />
                 <div className="spacer">&nbsp;</div>
-                <Foundation.Stacks />
-                <Tableau.Stacks />
+                <FoundationStacks />
+                <TableauStacks />
             </div>
         </div>
         <Dealer />

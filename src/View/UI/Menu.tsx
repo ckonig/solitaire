@@ -49,7 +49,7 @@ const Menu = () => {
         replaceContext((state) => (state.game.timemachine.previousStates ? state.game.timemachine.previousStates[0] : null));
     };
 
-    //@todo persist game settings in local storage too and use for initialization
+    //@todo persist game settings in local storage too if consented and use for initialization
     const setSuggestionMode = (sm: string) => updateContext((state) => state.settings.setSuggestionMode(sm));
     const setBaseEntropy = (lvl: number) => updateContext((state) => state.setEntropy(lvl));
     const setInteractionEntropy = (lvl: number) => updateContext((state) => (state.settings.interactionEntropy = lvl));

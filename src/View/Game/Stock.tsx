@@ -1,18 +1,12 @@
-import BlinkingComponent from "./BlinkingComponent";
 import Card from "./Card";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
 import StackBase from "./StackBase";
+import useBlinkEffect from "./useBlinkEffect";
 import usePrevious from "./usePrevious";
 
-const Renderer = (props: { length: number }) => {
-    const { state } = React.useContext(PauseContext);
-    const { paused, started } = state;
-    return <InnerRenderer length={props.length} paused={paused} started={started} />;
-};
-
-const InnerRenderer = (props: { length: number; paused: boolean; started: number }) => {
+const Renderer = (props: { length: number; paused: boolean; started: number }) => {
     const context = React.useContext(GlobalContext);
 
     const { length, started, paused } = props;
@@ -68,13 +62,14 @@ const InnerRenderer = (props: { length: number; paused: boolean; started: number
         </div>
     );
 };
-//Can't use multiple contexts in one React class, need two renderer functions to feed two contexts into props for reliable detection of changes
-export default class Stock extends BlinkingComponent<{}> {
-    constructor(props: {}) {
-        super(props, (s) => s.stock);
-    }
 
-    render() {
-        return <Renderer length={this.context.state.stock.stack.length} />;
-    }
-}
+const Stock = () => {
+    const { state } = React.useContext(GlobalContext);
+    if (!state) return null;
+    useBlinkEffect((model) => model.stock);
+    const pause = React.useContext(PauseContext);
+    const { paused, started } = pause.state;
+    return <Renderer length={state.stock.stack.length} paused={paused} started={started} />;
+};
+
+export default Stock;
