@@ -2,10 +2,10 @@ import TableauModel, { TableauStack } from "../../Model/Game/Tableau";
 
 import Card from "./Card";
 import GlobalContext from "../Context";
-import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
+import { useDrop } from "react-dnd";
 
 type TableauProps = { index: number; model: TableauStack; parent: TableauModel };
 
@@ -24,7 +24,15 @@ export default TableauStacks;
 
 const Tableau = (props: TableauProps) => {
     useBlinkEffect((s) => s.tableau.stacks[props.index]);
-
+    const { updateGameContext } = React.useContext(GlobalContext);
+    const [, drop] = useDrop({
+        accept: "card",
+        drop: () => {
+            console.log("dropping", drop);
+            updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
+            props.model.clickEmpty({ isKeyboard: false });
+        },
+    });
     let offset = 1;
     const getOffset = (index: number) => {
         for (let i = 0; i <= index; i++) {
@@ -37,19 +45,22 @@ const Tableau = (props: TableauProps) => {
         return offset;
     };
 
+    const { state } = React.useContext(GlobalContext);
+    const cards = state?.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
+
     return (
-        <div className="board-field">
+        <div className="board-field" ref={drop}>
             <StackBase model={props.model} />
-            {props.model.stack.map((card, index) => (
+            {cards.map((card, index) => (
                 <Card
                     key={index}
                     model={card}
                     blink={props.model.blinkFor}
                     isSuggested={props.model.suggestion && props.model.stack.length - 1 == index}
                     offsetTop={getOffset(index)}
+                    isSelected={index > props.model.stack.length - 1}
                 />
             ))}
-            <Hand parentModel={props.model} offsetTop={getOffset(props.model.stack.length)} />
         </div>
     );
 };

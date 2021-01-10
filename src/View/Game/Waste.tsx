@@ -1,7 +1,6 @@
 import Card from "./Card";
 import CardModel from "../../Model/Deck/Card";
 import GlobalContext from "../Context";
-import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
@@ -27,10 +26,12 @@ const Waste = () => {
         return ((index - length - 2) % 3) + additionalOffset;
     };
 
+    const cards = state?.hand.source == state.waste.source ? [...state.waste.stack, ...state.hand.stack] : [...state.waste.stack];
+
     return (
         <div className="board-field">
             <StackBase model={state.waste} />
-            {state.waste.stack.map((card: CardModel, index: number) => (
+            {cards.map((card: CardModel, index: number) => (
                 <Card
                     key={index}
                     model={card}
@@ -38,13 +39,9 @@ const Waste = () => {
                     offsetLeft={getOffset(index)}
                     blink={state.waste.blinkFor}
                     isSuggested={state.waste.suggestion && index == state.waste.stack.length - 1}
+                    isSelected={index > state.waste.stack.length - 1}
                 />
             ))}
-            <Hand
-                offsetTop={(state.waste.stack.length / 2) * -1}
-                offsetLeft={getOffset(state.waste.stack.length)}
-                parentModel={state.waste}
-            />
         </div>
     );
 };

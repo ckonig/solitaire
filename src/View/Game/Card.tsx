@@ -4,6 +4,7 @@ import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
 import getStackLabel from "./StackDescription";
+import { useDrag } from "react-dnd";
 
 type CardProps = {
     model: CardModel;
@@ -16,11 +17,27 @@ type CardProps = {
 };
 
 const Card = (props: CardProps) => {
+    //@todo for proper drag & drop of stacks, we need each card to render the following ones
     const { state, updateGameContext } = React.useContext(GlobalContext);
     if (!state) return null;
     const pause = React.useContext(PauseContext);
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const isFocused = state.focus.hasCard(props.model);
+    const [{ opacity }, dragRef] = useDrag({
+        item: { type: "card", text: "some text" },
+        collect: (monitor) => ({
+            opacity: monitor.isDragging() ? 0.5 : 1,
+        }),
+        begin: (monitor) => {
+            console.log(monitor);
+            if (props.model.onClick) {
+                updateGameContext((context) => {
+                    props.model.onClick({ isKeyboard: false })(context);
+                });
+            }
+        },
+    });
+    const getRef=() => props.model.canClick() ? dragRef : inputEl;
     React.useEffect(() => {
         if (isFocused && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
@@ -74,6 +91,7 @@ const Card = (props: CardProps) => {
 
     const getCardStyle = () => {
         const style = {
+            opacity,
             zIndex: (props.zIndex ? props.zIndex : (props.offsetTop ? 1 : 0) * 20) + 1,
             top: props.offsetTop ? props.offsetTop / 15 + "em" : 0,
             ...props.model.entropyStyle,
@@ -119,7 +137,8 @@ const Card = (props: CardProps) => {
                     //updateContext((ctx) => ctx.focus.unsetCard(props.model));
                 }}
                 style={getCardStyle()}
-                ref={inputEl}
+                // ref={inputEl}
+                ref={getRef()}
                 className={getClassName()}
                 onClick={onClick}
                 disabled={!props.model.canClick() || pause.state.paused}

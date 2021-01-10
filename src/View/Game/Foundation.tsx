@@ -1,10 +1,10 @@
 import Card from "./Card";
 import { FoundationStack } from "../../Model/Game/Foundation";
 import GlobalContext from "../Context";
-import Hand from "./Hand";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
+import { useDrop } from "react-dnd";
 
 type FoundationProps = { index: number; model: FoundationStack };
 
@@ -24,16 +24,32 @@ export default FoundationStacks;
 
 const Foundation = (props: FoundationProps) => {
     useBlinkEffect((model) => model.foundation.stacks[props.index]);
+    const { updateGameContext } = React.useContext(GlobalContext);
     const model = props.model;
+    const [, drop] = useDrop({
+        accept: "card",
+        drop: () => {
+            console.log("dropping", drop);
+            updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
+            props.model.clickEmpty({ isKeyboard: false });
+        },
+    });
+    const { state } = React.useContext(GlobalContext);
+    const cards = state?.hand.source == model.source ? [...model.stack, ...state.hand.stack] : [...model.stack];
     return (
-        <div className="board-field" key={props.index}>
+        <div className="board-field" key={props.index} ref={drop}>
             <StackBase model={model}>
                 <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>
             </StackBase>
-            {model.stack.map((card, index) => (
-                <Card key={index} model={card} blink={model.blinkFor} isSuggested={model.suggestion && model.stack.length - 1 == index} />
+            {cards.map((card, index) => (
+                <Card
+                    key={index}
+                    model={card}
+                    blink={model.blinkFor}
+                    isSuggested={model.suggestion && model.stack.length - 1 == index}
+                    isSelected={index > model.stack.length - 1}
+                />
             ))}
-            <Hand parentModel={model} />
         </div>
     );
 };
