@@ -4,7 +4,7 @@ import { IStack } from "../../Model/Game/IStack";
 import React from "react";
 import getStackLabel from "./StackDescription";
 
-const StackBase = (props: { model: IStack; children?: any|null }) => {
+const StackBase = (props: { model: IStack; children?: any | null }) => {
     let classname = "card-base socket";
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const { state, updateGameContext } = React.useContext(GlobalContext);

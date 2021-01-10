@@ -8,7 +8,7 @@ export interface IStack {
     getTop: () => Card | null;
     getClickable: () => Card[];
     setOnClick: (onClick: (c: any, p: XY, i: any) => (s: any) => void) => void;
-    clickEmpty: (p: any) => (s: any) =>void;
+    clickEmpty: (p: any) => (s: any) => void;
     blinkFor: number;
     //@todo this is broken
     unblink: (model: Model) => void;

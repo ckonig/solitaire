@@ -19,7 +19,7 @@ export default class BlinkingComponent<T> extends Component<T> {
         if (this.selector(this.context.state).blinkFor) {
             this.timeout = setTimeout(
                 () =>
-                    this.context.updateGameContext((state: Model) => {
+                    this.context.updateContext((state: Model) => {
                         this.selector(state).unblink(state);
                     }),
                 200
