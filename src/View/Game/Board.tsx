@@ -40,7 +40,7 @@ const Board = (props: BoardProps) => {
                     <Stock />
                     <Waste />
                     <div className="spacer" ref={ref}>
-                        <div className="board-field">{TouchDetector() && <TouchPreview reff={ref.current} />}</div>
+                        <div className="board-field">{<TouchPreview reff={ref.current} />}</div>
                     </div>
                     <FoundationStacks />
                     <TableauStacks />

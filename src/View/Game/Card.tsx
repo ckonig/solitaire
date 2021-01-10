@@ -3,6 +3,7 @@ import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
+import { getEmptyImage } from "react-dnd-html5-backend";
 import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
 
@@ -15,10 +16,22 @@ type CardProps = {
     zIndex?: number;
     offsetTop?: (index: number, models: CardModel[]) => number;
     offsetLeft?: (index: number) => number;
+    isDrag?: boolean;
 };
 
 const Card = (props: CardProps) => {
-    const ReRender = () => <Card {...{ ...props, models: props.models.slice(props.index, props.models.length), offsetLeft: () => 0, index: 0 }} />;
+    const ReRender = () => (
+        <Card
+            {...{
+                ...props,
+                models: props.models.slice(props.index, props.models.length),
+                offsetLeft: () => 0,
+                isSelected: () => false,
+                index: 0,
+                isDrag: isDrag,
+            }}
+        />
+    );
     if (!props.models.length) {
         return null;
     }
@@ -30,13 +43,14 @@ const Card = (props: CardProps) => {
     const pause = React.useContext(PauseContext);
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const isFocused = state.focus.hasCard(model);
-    const [isDrag, setDrag] = React.useState<boolean>(false);
-    const [{ opacity }, dragRef] = useDrag({
+    const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
+    const _isDrag = props.isDrag || isDrag;
+    const [{ opacity }, dragRef, preview] = useDrag({
         item: { type: "card", text: "some text", render: ReRender },
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
         },
-        canDrag: () => model.canClick() && (state.hand.currentCard() == null || model.equals(state.hand.currentCard())),
+        canDrag: () => model.canClick() && !model.isHidden && (state.hand.currentCard() == null || model.equals(state.hand.currentCard())),
         begin: (monitor) => {
             console.log(monitor);
             setDrag(true);
@@ -55,6 +69,10 @@ const Card = (props: CardProps) => {
             }
         },
     });
+
+    React.useEffect(() => {
+        preview(getEmptyImage(), { captureDraggingState: true });
+    }, []);
 
     const getRef = () => (model.canClick() ? dragRef : inputEl);
     React.useEffect(() => {
@@ -100,7 +118,7 @@ const Card = (props: CardProps) => {
         let className = `card card-base suit-${model.type.icon}`;
         className +=
             (!props.isSelected || !props.isSelected(props.index)) && !isFocused && !hasSuggestion ? ` card-stack-${model.source}` : "";
-        className += props.isSelected && props.isSelected(props.index) && !isDrag ? " card-selected" : "";
+        className += !_isDrag && props.isSelected && props.isSelected(props.index) && !_isDrag ? " card-selected" : "";
         className += props.blink ? " blink" : "";
         className += model.canClick() ? " clickable" : "";
         //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
@@ -111,7 +129,7 @@ const Card = (props: CardProps) => {
 
     const getCardStyle = () => {
         const style = {
-            opacity,
+            opacity: _isDrag ? 0 : opacity,
             zIndex: (props.zIndex ? props.zIndex : (props.offsetTop && props.offsetTop(props.index, props.models) > 0 ? 1 : 0) * 20) + 1,
             top: props.offsetTop ? props.offsetTop(props.index, props.models) / 15 + "em" : 0,
             ...model.entropyStyle,
@@ -183,7 +201,7 @@ const Card = (props: CardProps) => {
                                     <div className="align-center">{model.type.icon}</div>
                                 </div>
                                 <div className="mainface">
-                                    <div className="align-center">{model.face}</div>
+                                    <div className="align-center">{model.face} </div>
                                 </div>
                                 <div>
                                     <div className="align-center">{model.type.icon}</div>
@@ -200,7 +218,7 @@ const Card = (props: CardProps) => {
                     </div>
                 </button>
             </div>
-            {props.models.length - 1 > props.index && <Card {...props} index={props.index + 1} />}
+            {props.models.length - 1 > props.index && <Card {...props} isDrag={_isDrag} index={props.index + 1} />}
         </>
     );
 };
