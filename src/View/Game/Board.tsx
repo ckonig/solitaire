@@ -1,6 +1,8 @@
 import "../Style/Board.scss";
 import "react-toastify/dist/ReactToastify.min.css";
 
+import { Slide, ToastContainer } from "react-toastify";
+
 import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
 import { DndProvider } from "react-dnd-multi-backend";
@@ -12,7 +14,6 @@ import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
 import TableauStacks from "./Tableau";
-import { ToastContainer } from "react-toastify";
 import Waste from "./Waste";
 import { usePreview } from "react-dnd-preview";
 
@@ -53,9 +54,11 @@ const Board = (props: BoardProps) => {
                 style={{ zIndex: 8888 }}
                 position="top-center"
                 closeOnClick={false}
+                newestOnTop={true}
                 limit={1}
                 pauseOnFocusLoss={false}
                 draggable={false}
+                transition={Slide}
             />
             <div className={"board-jail " + props.mode}>
                 <div className={"board-grid-container " + props.mode}>

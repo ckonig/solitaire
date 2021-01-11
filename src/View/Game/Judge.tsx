@@ -63,6 +63,7 @@ const Evaluator = (props: { token: number }) => {
 
             if (full > 0 && regular > 0) {
                 if (noFullSince >= 0) {
+                    //@todo we need full blown menu here, not just a toast.
                     toast.error(
                         (props: ToastContentProps) => (
                             <div>
