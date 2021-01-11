@@ -6,6 +6,7 @@ import { DndProvider } from "react-dnd-multi-backend";
 import FoundationStacks from "./Foundation";
 import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
 import Header from "../UI/Header/Header";
+import Judge from "./Judge";
 import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
@@ -59,6 +60,7 @@ const Board = (props: BoardProps) => {
             </div>
             <Dealer />
             <BoardNavigator />
+            <Judge />
         </DndProvider>
     );
 };

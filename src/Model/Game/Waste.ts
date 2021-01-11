@@ -18,7 +18,7 @@ export default class Waste extends HandHoldingStack {
         this.clickEmpty = () => () => {};
     }
 
-    //@todo include hand logic
+    //@todo include hand content for proper canClick
     setOnClick = (onClick: (c: any, p: XY, i: any) => (s: any) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
         this.stack.forEach((card, index) => {

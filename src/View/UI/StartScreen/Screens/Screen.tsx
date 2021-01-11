@@ -8,6 +8,7 @@ import ScreenContext from "./Context";
 import Suggestions from "./Suggestions";
 
 const Screen = (props: { screen: string }) => {
+    //@todo load this screen after 1st selection incl. toggles and gamepads as asynchronous components
     const { navigation, setNavigation } = React.useContext(NavigationContext);
     const closeScreen = () =>
         setNavigation({
@@ -18,6 +19,7 @@ const Screen = (props: { screen: string }) => {
             menu: { ...navigation.menu },
         });
 
+    //@todo add credits page
     return (
         <ScreenContext.Provider value={{ closeScreen: () => closeScreen() }}>
             <div className="startscreen-layout">

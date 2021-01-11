@@ -47,6 +47,7 @@ export default class Tableau {
         this.settings = settings;
     }
 
+    //@todo include hand content for proper canClick
     setOnClick = (
         onClick: (a: any, b: any, index: number) => (s: any) => void,
         onClickhidden: (a: any, b: any, index: number) => (s: any) => void,
