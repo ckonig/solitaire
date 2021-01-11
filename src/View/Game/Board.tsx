@@ -39,6 +39,9 @@ const Preview = (props: { reff: any }) => {
 type BoardProps = { mode: string };
 const Board = (props: BoardProps) => {
     const ref = React.useRef<HTMLDivElement>(null);
+    //@todo when board lives too long, restart game will lead to duplicate dndprovider error
+    //@todo use different IDs for draggable/droppable elements per user
+    //then have central provider that lives forever
     return (
         <DndProvider options={HTML5toTouch}>
             <Menu />
