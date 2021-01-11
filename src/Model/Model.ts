@@ -30,6 +30,7 @@ export default class Model {
     suggestor: Suggestions;
     dealer: Dealer;
     navigator: Navigator;
+    token: number;
 
     constructor(obj: any) {
         this.stock = obj.stock;
@@ -43,11 +44,27 @@ export default class Model {
         this.suggestor = new Suggestions();
         this.dealer = new Dealer();
         this.navigator = new Navigator(this);
+        this.token = obj.token;
     }
+
+    setToken = (token: number) => {
+        this.token = token;
+    };
 
     withSuggestions = () => {
         this.suggestor.evaluateOptions(this);
         return this;
+    };
+
+    hasSuggestions = () => {
+        const _hasSuggestion = (obj: any) => {
+            if (obj.suggestion) {
+                console.log('suggested: ', obj)
+            }
+            return obj.suggestion || (obj.stack && obj.stack.some(_hasSuggestion)) || (obj.stacks && obj.stacks.some(_hasSuggestion));
+        };
+
+        return _hasSuggestion(this.waste) || _hasSuggestion(this.stock) || _hasSuggestion(this.tableau) || _hasSuggestion(this.foundation);
     };
 
     setEntropy = (lvl: number) => {
@@ -79,6 +96,7 @@ export default class Model {
             game: new Game(settings),
             settings: settings,
             focus: new Focus(settings),
+            token: 0,
         };
         return new Model(state);
     };
@@ -94,6 +112,7 @@ export default class Model {
             game: Game.copy(state.game),
             settings: Settings.copy(state.settings),
             focus: state.focus,
+            token: state.token,
         });
     };
 }

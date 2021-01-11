@@ -45,6 +45,7 @@ export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
             modifier(state);
             if (state.game.timemachine.modified) {
                 state.game.timemachine.pushPreviousState(previous);
+                state.setToken(Math.random());
                 return state;
             }
 
