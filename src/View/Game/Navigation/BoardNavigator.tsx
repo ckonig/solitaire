@@ -14,6 +14,7 @@ const BoardNavigator = () => {
     const paused = React.useContext(PauseContext);
     const { player } = React.useContext(BoardContext);
     const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };
+    const beforeFocused = { card: state.focus.card, stack: state.focus.stack };
     const isPaused = !!paused.state.paused;
 
     const isVisible = (state: Model) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
@@ -47,8 +48,9 @@ const BoardNavigator = () => {
         onAction: (modifier: _mod) =>
             updateGameContext((ctx) => {
                 modifier(ctx);
-                const handler = state?.navigator?.pressCurrent();
+                const handler = state?.navigator?.pressCurrent(beforeFocused);
                 handler && handler(ctx);
+                ctx.navigator.finishNav();
             }),
 
         onCancel: (modifier: _mod) =>

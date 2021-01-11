@@ -131,26 +131,27 @@ export default class Navigator {
         return this.rows[this.currentIndex.y][this.currentIndex.x];
     };
 
-    pressCurrent = () => {
-        if (this.model.focus.card && this.model.focus.card.canClick()) {
+    pressCurrent = (before: { card: Card | null; stack: string }) => {
+        const clickable = this.current()?.getClickable();
+        if (
+            this.model.focus.card &&
+            this.model.focus.card.canClick() &&
+            clickable &&
+            clickable[this.currentIndex.z] &&
+            clickable[this.currentIndex.z].face == this.model.focus.card.face &&
+            clickable[this.currentIndex.z].type.icon == this.model.focus.card.type.icon
+        ) {
             return (ctx: Model) => {
-                if (this.model.focus.card) {
-                    ctx.navigator.finishNav();
+                if (this.model.focus.card && this.model.focus.card.equals(before.card)) {
                     this.model.focus.card.onClick({ isKeyboard: true })(ctx);
                 }
             };
-        } else if (this.model.focus.stack) {
+        } else if (this.model.focus.stack && this.model.focus.stack == before.stack) {
             return (ctx: Model) => {
-                if (this.model.focus.card) {
-                    ctx.navigator.finishNav();
-                    return this.current()?.clickEmpty({ isKeyboard: true })(ctx);
-                }
+                this.current()?.clickEmpty({ isKeyboard: true })(ctx);
             };
         } else {
-            //trying to hack around navigation here
-            //but it's not good
-            //@bug in prod, on stack->waste moves the focus moves with the card
-            //@bug in dev, when previous action was not on stack, recycling loses focus
+            //this is the entry point in case user starts keyboard nav with action button
             return (ctx: Model) => {
                 ctx.navigator.finishNav();
                 ctx.game.timemachine.modified = true;
