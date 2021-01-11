@@ -56,15 +56,28 @@ export default class Model {
         return this;
     };
 
-    hasSuggestions = () => {
-        const _hasSuggestion = (obj: any) => {
-            if (obj.suggestion) {
-                console.log('suggested: ', obj)
-            }
-            return obj.suggestion || (obj.stack && obj.stack.some(_hasSuggestion)) || (obj.stacks && obj.stacks.some(_hasSuggestion));
-        };
+    _hasSuggestion = (obj: any) => {
+        if (obj.suggestion) {
+            console.log("suggested: ", obj);
+        }
+        return obj.suggestion || (obj.stack && obj.stack.some(this._hasSuggestion)) || (obj.stacks && obj.stacks.some(this._hasSuggestion));
+    };
 
-        return _hasSuggestion(this.waste) || _hasSuggestion(this.stock) || _hasSuggestion(this.tableau) || _hasSuggestion(this.foundation);
+    hasSuggestions = () => {
+        return (
+            this._hasSuggestion(this.waste) ||
+            this._hasSuggestion(this.stock) ||
+            this._hasSuggestion(this.tableau) ||
+            this._hasSuggestion(this.foundation)
+        );
+    };
+
+    canAutoSolve = () => {
+        return (
+            this.waste.stack.length == 0 &&
+            this.stock.stack.length == 0 &&
+            this.tableau.stacks.every((s) => s.stack.every((c) => !c.isHidden))
+        );
     };
 
     setEntropy = (lvl: number) => {

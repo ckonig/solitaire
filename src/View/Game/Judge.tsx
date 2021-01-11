@@ -25,8 +25,58 @@ const Judge = () => {
         <>
             <Evaluator token={state.token} />
             <RatingNotifier />
+            <AutoSolve canAutosolve={state.canAutoSolve()} />
         </>
     );
+};
+
+const AutoSolve = (props: { canAutosolve: boolean }) => {
+    const [solving, setSolving] = React.useState(false);
+    React.useEffect(() => {
+        if (props.canAutosolve) {
+            setSolving(true);
+        }
+    }, [props.canAutosolve]);
+    return !solving ? <Solver /> : <Solver />;
+};
+
+const Solver = () => {
+    const { state, updateGameContext } = React.useContext(GlobalContext);
+    if (!state) return null;
+    React.useEffect(() => {
+        const timeout = setTimeout(() => {
+            const copy = Model.copy(state).withHandlers();
+            if (copy.hand.currentCard()) {
+                copy.settings.suggestionMode = SuggestionModes.get(SuggestionModes.SCORED);
+                copy.suggestor.evaluateOptions(copy);
+                if (copy._hasSuggestion(copy.foundation)) {
+                    const suggestedFoundations = copy.foundation.stacks.filter((s) => copy._hasSuggestion(s));
+                    if (suggestedFoundations.length) {
+                        const suggestedFoundation = suggestedFoundations[0];
+                        updateGameContext(suggestedFoundation.clickEmpty({ isKeyboard: false }));
+                    }
+                }
+            } else {
+                copy.settings.suggestionMode = SuggestionModes.get(SuggestionModes.SCORED);
+                copy.suggestor.evaluateOptions(copy);
+                if (copy._hasSuggestion(copy.tableau)) {
+                    const suggestedTableaus = copy.tableau.stacks.filter((s) => copy._hasSuggestion(s));
+                    if (suggestedTableaus.length) {
+                        const suggestedTableau = suggestedTableaus[0];
+                        const suggestedCards = suggestedTableau.stack.filter((c) => c.suggestion);
+                        if (suggestedCards.length) {
+                            const suggestedCard = suggestedCards[0];
+                            console.log("would like to click on ", suggestedCard);
+                            updateGameContext(suggestedCard.onClick({ isKeyboard: false }));
+                        }
+                    }
+                }
+            }
+        }, 200);
+
+        return () => clearTimeout(timeout);
+    });
+    return null;
 };
 
 const useEvaluation: (mode: string, token: number) => [number, () => void] = (mode, token) => {
