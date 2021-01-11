@@ -36,6 +36,7 @@ const Rating = () => {
         next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
         setState(next);
     };
+    
     const customizeRating2 = (ratingModifier: (context: RatingSettings) => void, modifier: (context: StartScreenState) => void) => {
         const next = { ...state };
         ratingModifier(next.ratingSettings);

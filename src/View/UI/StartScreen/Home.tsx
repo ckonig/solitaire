@@ -10,9 +10,8 @@ import StorageManager from "../StorageManager";
 
 const Home = (props: { start: (settings: LaunchSettings) => void }) => {
     const storage = new StorageManager();
-    const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
-    const previous = storage.getPreviousState();
-    const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
+
+    //@todo wrap into custom hook
     const startPos = { x: 0, y: 0 };
     const [navigation, setNavigation] = React.useState<NavigationState>({
         menu: { ...startPos },
@@ -21,6 +20,14 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
         mainMenu: "",
         screeen: "",
     });
+    const navigationContext = {
+        navigation,
+        setNavigation,
+    };
+
+    //@todo wrap into custom hook
+    const previous = storage.getPreviousState();
+    const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
     const startScreenContext = {
         state,
         setState: (s: StartScreenState) => {
@@ -28,15 +35,15 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
             storage.store(s);
         },
     };
-    const navigationContext = {
-        navigation,
-        setNavigation,
-    };
+    
+    //@todo wrap into custom hook
+    const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
     const cookieContext = {
         consented,
         setConsented,
     };
 
+    //@todo start() can be defined in StartScreenContext
     const start = (boardMode: string) => {
         const settings = {
             ...DifficultyOptions[state.difficultySettings].settings,

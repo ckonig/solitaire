@@ -26,7 +26,7 @@ export default TableauStacks;
 const Tableau = (props: TableauProps) => {
     useBlinkEffect((s) => s.tableau.stacks[props.index]);
     const [accepting, setAccepting] = React.useState<boolean>(false);
-    const { updateGameContext } = React.useContext(GlobalContext);
+    const { updateGameContext, state } = React.useContext(GlobalContext);
     const [, drop] = useDrop({
         accept: "card",
         canDrop: (item: any) => {
@@ -39,7 +39,6 @@ const Tableau = (props: TableauProps) => {
         },
     });
 
-    const { state } = React.useContext(GlobalContext);
     const cards = state?.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
 
     let offset = 1;

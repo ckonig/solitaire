@@ -28,6 +28,7 @@ export const useFocusEffect = (props: Focusable, inputEl: React.RefObject<HTMLEl
         }
     }, [props.hasFocus, inputEl]);
 };
+
 export const useInitialFocus = (props: Focusable, inputEl: React.RefObject<HTMLElement>, pos: XY) => {
     React.useEffect(() => {
         if (

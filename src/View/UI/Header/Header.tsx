@@ -1,4 +1,4 @@
-import "../../Style/Header.css";
+import "./Header.css";
 
 import Clock from "./Clock";
 import Hearts from "./Hearts";

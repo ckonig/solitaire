@@ -1,4 +1,4 @@
-import "../Style/Menu.scss";
+import "./StartScreen/Menu.scss";
 
 import { NavigationContext, NavigationProvider, NavigationState } from "./StartScreen/Context";
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";

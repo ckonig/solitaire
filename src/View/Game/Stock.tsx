@@ -50,7 +50,7 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
         <div className="board-field stock">
             <StackBase model={context.state.stock} />
             <Card
-                index={0} 
+                index={0}
                 key={0}
                 models={context.state.stock.stack}
                 offsetTop={(index) => (index / 2) * -1}

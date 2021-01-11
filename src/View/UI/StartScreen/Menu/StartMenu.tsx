@@ -1,4 +1,4 @@
-import "../../../Style/Menu.scss";
+import "../Menu.scss";
 
 import { CookieContext } from "../../../Context";
 import GameModes from "../../../../GameModes";

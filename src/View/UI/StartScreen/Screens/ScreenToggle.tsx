@@ -1,4 +1,4 @@
-import "../../../Style/react-toggle.css";
+import "./react-toggle.css";
 
 import { getScreenElementClassName, useFocusEffect, useInitialFocus } from "./ScreenElement";
 

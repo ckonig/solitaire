@@ -1,4 +1,4 @@
-import "../Style/Screens.scss";
+import "./Screens.scss";
 
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";

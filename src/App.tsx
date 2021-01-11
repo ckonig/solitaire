@@ -1,4 +1,4 @@
-import "./View/Style/App.css";
+import "./App.css";
 
 import { LaunchSettings, defaultPlayerSettings } from "./Common";
 

@@ -8,8 +8,10 @@ import ScreenContext from "./Context";
 import Suggestions from "./Suggestions";
 
 const Screen = (props: { screen: string }) => {
+    //@todo screen can be taken from navigation context, passed to innner renderer here
     //@todo load this screen after 1st selection incl. toggles and gamepads as asynchronous components
     const { navigation, setNavigation } = React.useContext(NavigationContext);
+    //@todo closeScreen can be defined in navigationContext
     const closeScreen = () =>
         setNavigation({
             ...navigation,

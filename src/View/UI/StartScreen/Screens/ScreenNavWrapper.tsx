@@ -14,9 +14,6 @@ const ScreenNavWrapper = (props: { navigator: ScreenNavigator; screen: string })
         if (navigation.focus == "screen") {
             setNavigation({ ...navigation, screen: result });
         }
-        if (navigation.focus == "menu") {
-            throw "Invalid navigation action";
-        }
     };
 
     const inputHandlers = {

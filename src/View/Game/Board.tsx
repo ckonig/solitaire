@@ -1,4 +1,4 @@
-import "../Style/Board.scss";
+import "./Board.scss";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import { Slide, ToastContainer } from "react-toastify";
@@ -17,6 +17,7 @@ import TableauStacks from "./Tableau";
 import Waste from "./Waste";
 import { usePreview } from "react-dnd-preview";
 
+//@todo move elsewhere
 const Preview = (props: { reff: any }) => {
     // eslint-disable-next-line no-unused-vars
     const { display, _itemType, item, style } = usePreview();

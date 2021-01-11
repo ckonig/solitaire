@@ -1,6 +1,6 @@
 body {
     background-color: #013b0e;
-    background-image: url("./felt.png");
+    background-image: url("./resources/felt.png");
     /*https://www.transparenttextures.com/felt.html This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
     margin: 0;
     padding: 0;

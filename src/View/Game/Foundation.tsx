@@ -24,7 +24,7 @@ export default FoundationStacks;
 
 const Foundation = (props: FoundationProps) => {
     useBlinkEffect((model) => model.foundation.stacks[props.index]);
-    const { updateGameContext } = React.useContext(GlobalContext);
+    const { updateGameContext, state } = React.useContext(GlobalContext);
     const model = props.model;
     const [, drop] = useDrop({
         accept: "card",
@@ -35,7 +35,6 @@ const Foundation = (props: FoundationProps) => {
             updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
         },
     });
-    const { state } = React.useContext(GlobalContext);
     const cards = state?.hand.source == model.source ? [...model.stack, ...state.hand.stack] : [...model.stack];
     return (
         <div className="board-field" key={props.index} ref={drop}>

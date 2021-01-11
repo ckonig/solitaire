@@ -14,9 +14,6 @@ const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout: Keybo
         if (navigation.focus == "menu") {
             setNavigation({ ...navigation, menu: result });
         }
-        if (navigation.focus == "screen") {
-            throw "Invalid navigation action";
-        }
     };
 
     const inputHandlers = {
