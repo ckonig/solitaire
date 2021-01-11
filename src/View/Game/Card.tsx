@@ -241,6 +241,9 @@ const FireworkWatcher = (props: { model: CardModel }) => {
         y: 0,
     };
     //@todo position also depends on slitscreen or singleplayer
+    // firework on every success is too much.
+    // make achievements instead, let player earn badges (good for toasts too).
+    // also, use fireworks when auto solving and winning
     if (props.model.source.substring(0, 11) == "foundation-") {
         const foundationIndex = parseInt(props.model.source.substring(11));
         origin.y = 0.2;

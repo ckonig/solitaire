@@ -1,22 +1,38 @@
 # Solitaire React App
 
-An implementation of the classic Solitaire (Klondike) game.\
-Serves as general playground for JavaScript, TypeScript, React and CSS.
+![CICD Workflow](https://github.com/ckonig/solitaire/workflows/CI/badge.svg?branch=master)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
-Rules of the game were implemented according to [this](https://en.wikipedia.org/wiki/Klondike_(solitaire)) Wikipedia page
+An implementation of the classic Solitaire game.\
+Serves as general playground for JavaScript, TypeScript, React and (S)CSS.
+
+[Try it out](https://ckonig.github.io/solitaire)
+
+## Development
+
+```bash
+git clone git@github.com:ckonig/solitaire.git
+cd solitaire
+npm install
+npm start
+```
 
 ## Available Scripts
-
-In the project directory, you can run:
 
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+### `npm run predeploy`
+
+Builds the latest version of the game.
+
+### `npm run analyze`
+
+Analyze the dependencies, module sizes and code splitting.
+
 ### `npm run deploy`
 
-Builds the latest versio of the game and deploys it to the [github page](https://ckonig.github.io/solitaire/).
+Builds the latest version of the game and deploys it to the [github page](https://ckonig.github.io/solitaire/).
 
 Enabled by [gh-pages](https://www.npmjs.com/package/gh-pages).

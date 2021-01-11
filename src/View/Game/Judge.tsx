@@ -178,6 +178,9 @@ const RatingToast = (props: { rating: AppliedRating }) => {
     );
 };
 const RatingToastProps: ToastOptions = { autoClose: 2000, hideProgressBar: true, position: "bottom-center" };
+//todo allow opt out
+//showing this all the time is too much
+//use toasts for badges/achievements instead
 const RatingNotifier = () => {
     const { state, updateContext } = React.useContext(GlobalContext);
     React.useEffect(() => {
