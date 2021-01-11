@@ -240,6 +240,7 @@ const FireworkWatcher = (props: { model: CardModel }) => {
         x: 0,
         y: 0,
     };
+    //@todo position also depends on slitscreen or singleplayer
     if (props.model.source.substring(0, 11) == "foundation-") {
         const foundationIndex = parseInt(props.model.source.substring(11));
         origin.y = 0.2;

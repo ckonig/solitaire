@@ -24,7 +24,7 @@ const Judge = () => {
     return (
         <>
             <Evaluator token={state.token} />
-            {false && <RatingNotifier />}
+            <RatingNotifier />
             <AutoSolve canAutosolve={state.canAutoSolve()} />
         </>
     );
@@ -41,8 +41,8 @@ const AutoSolve = (props: { canAutosolve: boolean }) => {
 };
 
 //@todo auto-uncover as feature, in which case action is not undoable
-
 //@todo when auto-solving until the end, disable all visible hints!
+//@todo also start general confetti firework elements when autosolving
 
 const Solver = () => {
     const { state, updateGameContext } = React.useContext(GlobalContext);
