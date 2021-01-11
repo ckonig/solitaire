@@ -133,9 +133,19 @@ export default class Navigator {
 
     pressCurrent = () => {
         if (this.model.focus.card && this.model.focus.card.canClick()) {
-            return this.model.focus.card.onClick({ isKeyboard: true });
+            return (ctx: Model) => {
+                if (this.model.focus.card) {
+                    ctx.navigator.finishNav();
+                    this.model.focus.card.onClick({ isKeyboard: true })(ctx);
+                }
+            };
         } else if (this.model.focus.stack) {
-            return this.current()?.clickEmpty({ isKeyboard: true });
+            return (ctx: Model) => {
+                if (this.model.focus.card) {
+                    ctx.navigator.finishNav();
+                    return this.current()?.clickEmpty({ isKeyboard: true })(ctx);
+                }
+            };
         } else {
             //trying to hack around navigation here
             //but it's not good
