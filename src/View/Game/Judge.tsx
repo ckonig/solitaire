@@ -40,6 +40,8 @@ const AutoSolve = (props: { canAutosolve: boolean }) => {
     return !solving ? null : <Solver />;
 };
 
+//@todo auto-uncover as feature, in which case action is not undoable
+
 const Solver = () => {
     const { state, updateGameContext } = React.useContext(GlobalContext);
     if (!state) return null;
