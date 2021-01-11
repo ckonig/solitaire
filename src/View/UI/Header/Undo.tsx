@@ -2,6 +2,7 @@ import GlobalContext from "../../Context";
 import React from "react";
 
 const Undo = () => {
+    //@todo use gamestate token to avoid double processing
     const { state, replaceContext } = React.useContext(GlobalContext);
     if (!state) return null;
 

@@ -3,7 +3,7 @@ import { IStack } from "./IStack";
 import Model from "../Model";
 
 export default class TimeMachine {
-    previousStates: any[];
+    previousStates: Model[];
     memorable: boolean;
     modified: boolean;
     constructor() {

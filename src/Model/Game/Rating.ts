@@ -1,14 +1,43 @@
 import Settings from "./Settings";
 
+export interface AppliedRating {
+    points: number;
+    text: string;
+    notified?: boolean;
+}
+
+export interface AppliedRatingWithId extends AppliedRating {
+    id: number;
+}
+
 export default class Rating {
     settings: Settings;
     points: number;
     multiplicator: number;
+    ratings: AppliedRating[];
     constructor(settings: Settings) {
         this.settings = settings;
         this.points = 0;
         this.multiplicator = 1;
+        this.ratings = [];
     }
+
+    hasNotifications = () => {
+        return this.ratings.filter((r) => !r.notified).length > 0;
+    };
+
+    getNextNotification = () => {
+        return this.ratings.map((r, id) => ({ ...r, id })).filter((r) => !r.notified)[0];
+    };
+
+    setNotified = (n: number) => {
+        this.ratings[n].notified = true;
+    };
+
+    applyRating = (points: number, text: string) => {
+        console.debug("RATING:", text);
+        this.ratings.push({ points, text });
+    };
 
     registerMove = (target: string, source: string) => {
         this.registerHint(this.settings.disableHint());
@@ -23,33 +52,36 @@ export default class Rating {
         this.registerHint(this.settings.disableHint());
         if (this.settings.launchSettings.drawMode == "single" && this.settings.launchSettings.recyclingMode == "infinite") {
             if (this.points > 0) {
+                let diff = 0;
                 if (this.points < 100) {
+                    diff = this.points * -1;
                     this.points = 0;
                 } else {
                     this.points -= 100;
+                    diff = -100;
                 }
+                this.applyRating(diff, `subtract ${diff} (max 100 points) for RECYCLE`);
             }
-            console.debug("RATING: subtract (max) 100 points for RECYCLE");
         }
     };
 
     registerUncover = () => {
         this.registerHint(this.settings.disableHint());
         this.points += 5;
-        console.debug("RATING: add 5 points for UNCOVER");
+        this.applyRating(5, "add 5 points for UNCOVER");
     };
 
     registerBlink(on: boolean) {
         if (on && this.settings.launchSettings.missPenalty) {
             this.points -= 10;
-            console.debug("RATING: subtract 10 points for invalid action");
+            this.applyRating(-10, "subtract 10 points for invalid action");
         }
     }
 
     penalize = (other: Rating) => {
         if (this.settings.launchSettings.undoPenalty) {
             const penalty = Math.pow(2, other.multiplicator);
-            console.debug(`RATING: applying penalty of ${penalty} points for UNDO`);
+            this.applyRating(penalty * -1, `applying penalty of ${penalty} points for UNDO`);
             this.points = Math.min(this.points, other.points) - penalty;
             this.multiplicator = other.multiplicator + 1;
         }
@@ -58,7 +90,7 @@ export default class Rating {
     registerHint = (done: boolean) => {
         if (done && this.settings.launchSettings.hintPenalty) {
             this.points -= 10;
-            console.debug(`RATING: applying penalty of 10 points for HINT`);
+            this.applyRating(-10, `applying penalty of 10 points for HINT`);
         }
     };
 
@@ -67,21 +99,21 @@ export default class Rating {
         const isFoundation = (obj: string) => obj.substr(0, 10) == "foundation";
         if (isTableau(move.source)) {
             if (isFoundation(move.target)) {
-                console.debug("RATING: add 10 points for MOVE tableau -> foundation");
+                this.applyRating(10, "add 10 points for MOVE tableau -> foundation");
                 return 10;
             }
         } else if (move.source == "waste") {
             if (isFoundation(move.target)) {
-                console.debug("RATING: add 10 points for MOVE waste -> foundation");
+                this.applyRating(10, "add 10 points for MOVE waste -> foundation");
                 return 10;
             }
             if (isTableau(move.target)) {
-                console.debug("RATING: add 5 points for MOVE waste -> tableau");
+                this.applyRating(5, "add 5 points for MOVE waste -> tableau");
                 return 5;
             }
         } else if (isFoundation(move.source)) {
             if (isTableau(move.target)) {
-                console.debug("RATING: subtract 15 points for MOVE foundation -> tableau");
+                this.applyRating(-15, "subtract 15 points for MOVE foundation -> tableau");
                 return -15;
             }
         }
@@ -110,6 +142,7 @@ export default class Rating {
         const copy = new Rating(orig.settings);
         copy.points = orig.points;
         copy.multiplicator = orig.multiplicator;
+        copy.ratings = [...orig.ratings];
         return copy;
     };
 }

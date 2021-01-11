@@ -1,4 +1,5 @@
 import "../Style/Board.scss";
+import "react-toastify/dist/ReactToastify.min.css";
 
 import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
@@ -11,6 +12,7 @@ import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
 import TableauStacks from "./Tableau";
+import { ToastContainer } from "react-toastify";
 import Waste from "./Waste";
 import { usePreview } from "react-dnd-preview";
 
@@ -47,6 +49,14 @@ const Board = (props: BoardProps) => {
         <DndProvider options={HTML5toTouch}>
             <Menu />
             <Header mode={props.mode} />
+            <ToastContainer
+                style={{ zIndex: 8888 }}
+                position="top-center"
+                closeOnClick={false}
+                limit={1}
+                pauseOnFocusLoss={false}
+                draggable={false}
+            />
             <div className={"board-jail " + props.mode}>
                 <div className={"board-grid-container " + props.mode}>
                     <Stock />
