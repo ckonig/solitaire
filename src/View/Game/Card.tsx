@@ -3,7 +3,6 @@ import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
-import { XY } from "../UI/XY";
 import confetti from "canvas-confetti";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import getStackLabel from "./StackDescription";
@@ -54,8 +53,7 @@ const Card = (props: CardProps) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
         },
         canDrag: () => model.canClick() && !model.isHidden && (state.hand.currentCard() == null || model.equals(state.hand.currentCard())),
-        begin: (monitor) => {
-            console.log(monitor);
+        begin: () => {
             setDrag(true);
             //@todo if other card is still selected, drop it first.
             if (model.onClick && (!props.isSelected || !props.isSelected(props.index))) {
@@ -86,51 +84,6 @@ const Card = (props: CardProps) => {
         }
     }, [isFocused, state.focus.card]);
 
-    const FireWork = (pos: XY) => {
-        console.log(pos.x / (window.innerWidth / 100) / 100, pos.y / (window.innerHeight / 100) / 100);
-        const count = 200;
-        const defaults = {
-            ticks: 50,
-            origin: { y: pos.y / (window.innerHeight / 100) / 100, x: pos.x / (window.innerWidth / 100) / 100 },
-        };
-
-        const fire = (particleRatio: any, opts: any) => {
-            confetti(
-                Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio),
-                })
-            );
-        };
-
-        fire(0.25, {
-            spread: 48,
-            startVelocity: 55,
-        });
-        fire(0.2, {
-            spread: 120,
-        });
-        fire(0.35, {
-            spread: 160,
-            decay: 0.91,
-            scalar: 0.8,
-        });
-        fire(0.1, {
-            spread: 200,
-            startVelocity: 25,
-            decay: 0.92,
-            scalar: 1.2,
-        });
-        fire(0.1, {
-            spread: 240,
-            startVelocity: 45,
-        });
-        fire(0.1, {
-            spread: 359,
-            startVelocity: 45,
-        });
-        return null;
-    };
-
     const onClick = (e: any) => {
         e.preventDefault();
         const isKeyBoard = e.clientX == 0 && e.clientY == 0;
@@ -153,9 +106,7 @@ const Card = (props: CardProps) => {
                 y: rect.y,
             },
         };
-        if (model.isHidden && model.source !== "stock") {
-            FireWork(position.isKeyBoard ? position.element : position.click);
-        }
+
         const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
         //@todo A11Y allow keyboard actions in singleplayer
         if (model.onClick && !position.isKeyBoard) {
@@ -222,6 +173,7 @@ const Card = (props: CardProps) => {
     return (
         <>
             <div style={getStackbaseStyle()} className="stack-base">
+                <FireworkWatcher model={model} />
                 <button
                     onFocus={() => {
                         // updateContext((ctx) => {
@@ -280,3 +232,74 @@ const Card = (props: CardProps) => {
 };
 
 export default Card;
+
+const FireworkWatcher = (props: { model: CardModel }) => {
+    const { state, updateContext } = React.useContext(GlobalContext);
+    if (!state) return null;
+    const origin = {
+        x: 0,
+        y: 0,
+    };
+    if (props.model.source.substring(0, 11) == "foundation-") {
+        const foundationIndex = parseInt(props.model.source.substring(11));
+        origin.y = 0.2;
+        origin.x = (foundationIndex + 3) / (7 / 100) / 100;
+    }
+    if (props.model.source.substring(0, 8) == "tableau-") {
+        const tableauIndex = parseInt(props.model.source.substring(8));
+        origin.y = 0.7;
+        origin.x = tableauIndex / (7 / 100) / 100;
+    }
+
+    React.useEffect(() => {
+        if (props.model.success) {
+            FireWork();
+            const timeout = setTimeout(() => updateContext((ctx) => ctx.clearSuccess(props.model)), 25);
+            return () => clearTimeout(timeout);
+        }
+    }, [state?.token, props.model.success]);
+    const FireWork = () => {
+        const count = 200;
+        const defaults = {
+            ticks: 50,
+            origin,
+        };
+
+        const fire = (particleRatio: any, opts: any) => {
+            confetti(
+                Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio),
+                })
+            );
+        };
+
+        fire(0.25, {
+            spread: 48,
+            startVelocity: 55,
+        });
+        fire(0.2, {
+            spread: 120,
+        });
+        fire(0.35, {
+            spread: 160,
+            decay: 0.91,
+            scalar: 0.8,
+        });
+        fire(0.1, {
+            spread: 200,
+            startVelocity: 25,
+            decay: 0.92,
+            scalar: 1.2,
+        });
+        fire(0.1, {
+            spread: 240,
+            startVelocity: 45,
+        });
+        fire(0.1, {
+            spread: 359,
+            startVelocity: 45,
+        });
+        return null;
+    };
+    return null;
+};

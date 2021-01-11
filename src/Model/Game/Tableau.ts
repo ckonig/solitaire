@@ -68,7 +68,7 @@ export default class Tableau {
 
     wouldAcceptHand = (index: number) => this.canPutDown(this.getTop(index), this.hand, index);
 
-    putDownHand = (index: number) => this.add(index, this.hand.putDown());
+    putDownHand = (index: number) => this.add(index, this.hand.source, this.hand.putDown());
 
     canPutDown = (card: Card, hand: Hand, index: number) =>
         (card && card.isHidden && hand.isFromCurrentSource(card)) ||
@@ -114,6 +114,7 @@ export default class Tableau {
         const top = this.getTop(index);
         if (this.canUncover(index, card)) {
             top.isHidden = false;
+            top.success = true;
             this.stackEntropy(index);
             return true;
         }
@@ -133,14 +134,19 @@ export default class Tableau {
         }
     };
 
-    add = (index: number, cards: Card[]) => {
-        this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
+    add = (index: number, source: string, cards: Card[]) => {
+        let success = false;
+        if (source == "waste") {
+            success = true;
+        }
+        this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index, success)));
         this.stackEntropy(index);
         return cards;
     };
 
-    setCardProperties = (card: Card, index: number) => {
+    setCardProperties = (card: Card, index: number, success: boolean) => {
         card.source = this.stacks[index].source;
+        card.success = success;
         return card;
     };
 

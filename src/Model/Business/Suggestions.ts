@@ -109,7 +109,10 @@ export default class Suggestions {
                     const tableauState = Model.copy(state);
                     this.tableau.dispatchPickup(card, null, tableauState, index);
                     if (tableauState.game.timemachine.modified) {
-                        if (this.getPutdownSuggestions(tableauState, true) > (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)) {
+                        if (
+                            this.getPutdownSuggestions(tableauState, true) >
+                            (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)
+                        ) {
                             tableau.stack[cardIndex].suggestion = true;
                             foundAny = true;
                         }

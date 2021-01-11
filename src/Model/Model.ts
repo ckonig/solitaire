@@ -1,6 +1,7 @@
 import { ClickHandler, LaunchSettings } from "../Common";
 import TableauHandler, { TableauHidden } from "./Business/Tableau";
 
+import Card from "./Deck/Card";
 import Dealer from "./Business/Dealer";
 import Deck from "./Deck/Deck";
 import Dispatcher from "./Business/Dispatcher";
@@ -9,6 +10,7 @@ import Foundation from "./Game/Foundation";
 import FoundationHandler from "./Business/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
+import { IStack } from "./Game/IStack";
 import Navigator from "./Business/Navigator";
 import Settings from "./Game/Settings";
 import Stock from "./Game/Stock";
@@ -57,9 +59,6 @@ export default class Model {
     };
 
     _hasSuggestion = (obj: any) => {
-        if (obj.suggestion) {
-            console.log("suggested: ", obj);
-        }
         return obj.suggestion || (obj.stack && obj.stack.some(this._hasSuggestion)) || (obj.stacks && obj.stacks.some(this._hasSuggestion));
     };
 
@@ -86,6 +85,20 @@ export default class Model {
         this.waste.setEntropy(lvl);
         this.foundation.setEntropy(lvl);
         this.tableau.setEntropy(lvl);
+    };
+
+    clearSuccess = (card: Card) => {
+        const clear = (c: Card, s: IStack) => {
+            s.stack.forEach((_c) => {
+                if (_c.equals(c)) {
+                    _c.success = false;
+                }
+            });
+        };
+        clear(card, this.stock);
+        clear(card, this.waste);
+        this.foundation.stacks.forEach((s) => clear(card, s));
+        this.tableau.stacks.forEach((s) => clear(card, s));
     };
 
     withHandlers = () => {

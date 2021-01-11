@@ -24,7 +24,7 @@ const Judge = () => {
     return (
         <>
             <Evaluator token={state.token} />
-            <RatingNotifier />
+            {false && <RatingNotifier />}
             <AutoSolve canAutosolve={state.canAutoSolve()} />
         </>
     );
@@ -41,6 +41,8 @@ const AutoSolve = (props: { canAutosolve: boolean }) => {
 };
 
 //@todo auto-uncover as feature, in which case action is not undoable
+
+//@todo when auto-solving until the end, disable all visible hints!
 
 const Solver = () => {
     const { state, updateGameContext } = React.useContext(GlobalContext);
@@ -68,13 +70,12 @@ const Solver = () => {
                         const suggestedCards = suggestedTableau.stack.filter((c) => c.suggestion);
                         if (suggestedCards.length) {
                             const suggestedCard = suggestedCards[0];
-                            console.log("would like to click on ", suggestedCard);
                             updateGameContext(suggestedCard.onClick({ isKeyboard: false }));
                         }
                     }
                 }
             }
-        }, 200);
+        }, 150);
 
         return () => clearTimeout(timeout);
     });
@@ -97,7 +98,6 @@ const useEvaluation: (mode: string, token: number) => [number, () => void] = (mo
         } else {
             setFalseResults(falseResults + 1);
         }
-        console.log("failed to evaluated options x times in mode:", mode, falseResults);
     }, [token]);
     return [falseResults, reset];
 };
@@ -164,7 +164,6 @@ const Evaluator = (props: { token: number }) => {
                 resetRegular();
 
                 setNoRegularSince(noRegularSince + 1);
-                console.log("no regular suggestion since", noRegularSince);
             }
         }
     }, [full, regular, state.hand.currentCard()]);

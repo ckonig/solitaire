@@ -7,6 +7,7 @@ export default class Card {
     entropyStyle: any;
     source: string;
     suggestion: boolean;
+    success: boolean;
     canClick: () => boolean;
     onClick: (_p: any) => (s: any) => void;
     constructor(face: string, type: Suit, isHidden: boolean) {
@@ -16,6 +17,7 @@ export default class Card {
         this.entropyStyle = {};
         this.source = "";
         this.suggestion = false;
+        this.success = false;
         this.canClick = () => false;
         // eslint-disable-next-line no-unused-vars
         this.onClick = (_p) => (s: any) => {};
