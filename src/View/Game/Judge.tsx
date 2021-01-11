@@ -37,7 +37,7 @@ const AutoSolve = (props: { canAutosolve: boolean }) => {
             setSolving(true);
         }
     }, [props.canAutosolve]);
-    return !solving ? <Solver /> : <Solver />;
+    return !solving ? null : <Solver />;
 };
 
 const Solver = () => {
