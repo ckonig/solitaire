@@ -7,16 +7,12 @@ import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 
 const Judge = () => {
-    //@todo split in three components
     //- one checks a context from outside for final status
     //  - check if other player won
     //  - check if other player gave up
     //- the other analyses the game and reports to context
     //  - check if current player won
     //  - check if there are no more valid options and offer to give up
-    //- auto-resolver
-    //  - check if the board can auto-resolve and offer to complete automatically
-    //  - auto-complete becomes button in header and option in menu
 
     const { state } = React.useContext(GlobalContext);
     if (!state) return null;
@@ -30,18 +26,25 @@ const Judge = () => {
     );
 };
 
+//- auto-resolver
+//  - check if the board can auto-resolve and offer to complete automatically
+//  - auto-complete becomes button in header and option in menu
+
 const AutoSolve = (props: { canAutosolve: boolean }) => {
     const [solving, setSolving] = React.useState(false);
+    const { state, updateGameContext } = React.useContext(GlobalContext);
+    if (!state) return null;
     React.useEffect(() => {
         if (props.canAutosolve) {
+            updateGameContext((ctx) => (ctx.settings.suggestionMode = SuggestionModes.get(SuggestionModes.NONE)));
             setSolving(true);
         }
     }, [props.canAutosolve]);
-    return !solving ? null : <Solver />;
+    const canSolve = solving && state?.settings.suggestionMode.key == SuggestionModes.NONE;
+    return !canSolve ? null : <Solver />;
 };
 
 //@todo auto-uncover as feature, in which case action is not undoable
-//@todo when auto-solving until the end, disable all visible hints!
 //@todo also start general confetti firework elements when autosolving
 
 const Solver = () => {
