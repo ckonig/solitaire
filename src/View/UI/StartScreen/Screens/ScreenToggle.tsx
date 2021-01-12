@@ -43,7 +43,7 @@ const _ScreenToggle = (props: ToggleProps) => {
                 <Toggle
                     ref={inputEl}
                     disabled={!!props.disabled}
-                    autoFocus={props.hasFocus}
+                    autoFocus={props.autoFocus}
                     onFocus={() => {
                         if (!props.hasFocus) {
                             setNavigation({ ...navigation, screen: { x: props.x, y: props.y } });

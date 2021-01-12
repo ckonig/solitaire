@@ -4,6 +4,7 @@ import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import React from "react";
 import Suggestions from "./Suggestions";
+import Support from "./Support";
 import useNavigationContext from "../NavigationContext";
 
 const Screen = () => {
@@ -21,6 +22,7 @@ const _Screen = (props: { screen: string }) => {
                 {props.screen == "difficulty" ? <Difficulty /> : null}
                 {props.screen == "settings" ? <QuickStart /> : null}
                 {props.screen == "suggestions" ? <Suggestions /> : null}
+                {props.screen == "support" ? <Support /> : null}
                 {props.screen == "controls0" ? <Controls player={0} /> : null}
                 {props.screen == "controls1" ? <Controls player={1} /> : null}
             </div>

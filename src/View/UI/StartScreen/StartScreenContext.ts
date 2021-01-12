@@ -15,6 +15,9 @@ export const defaultStartScreenState: StartScreenState = {
     difficultySettings: 1,
     ratingPreset: 1,
     quickDeal: TouchDetector(),
+    autoResolve: true,
+    autoUncover: false,
+    speed: false,
     entropySettings: {
         baseEntropy: TouchDetector() ? 1 : 2,
         interactionEntropy: TouchDetector() ? 1 : 2,
@@ -28,6 +31,9 @@ export interface StartScreenState {
     difficultySettings: number;
     ratingPreset: number;
     quickDeal: boolean;
+    autoResolve: boolean;
+    autoUncover: boolean;
+    speed: boolean;
     entropySettings: EntropySettings;
     suggestionMode: string;
     players: PlayerSettings;
@@ -40,6 +46,9 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         ratingSettings: {},
         entropySettings: {},
         quickDeal: false,
+        autoResolve: true,
+        autoUncover: false,
+        speed: false,
         suggestionMode: SuggestionModes.REGULAR,
         players: defaultPlayerSettings,
     },

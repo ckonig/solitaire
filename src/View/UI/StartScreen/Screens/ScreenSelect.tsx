@@ -15,6 +15,7 @@ interface StaticSelectProps {
     label: string;
     description: string;
     callBack: (s: string) => void;
+    autoFocus?: boolean;
 }
 
 interface ScreenSelectProps extends StaticSelectProps {
@@ -40,6 +41,7 @@ const _ScreenSelect = (props: ScreenSelectProps) => {
             </div>
             <div className="button">
                 <button
+                    autoFocus={props.autoFocus}
                     ref={inputEl}
                     onClick={() => {
                         props.callBack((props.value + 1 < props.values.length ? props.value + 1 : 0).toString());
@@ -78,6 +80,7 @@ const ScreenSelect = (props: _ScreenSelectProps) => {
             value={props.value}
             values={props.values}
             callBack={props.callBack}
+            autoFocus={props.autoFocus}
         />
     );
 };

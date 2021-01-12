@@ -114,9 +114,15 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         onClick={(pos: XY) => toggleScreen("suggestions", pos)}
                         toggled={navigation.screeen == "suggestions"}
                     />
+                     <MenuButton
+                        icon="🤖"
+                        title="Support"
+                        onClick={(pos: XY) => toggleScreen("support", pos)}
+                        toggled={navigation.screeen == "support"}
+                    />
                     <MenuButton
-                        icon="🧰"
-                        title="Various"
+                        icon="🌪️"
+                        title="Entropy"
                         onClick={(pos: XY) => toggleScreen("settings", pos)}
                         toggled={navigation.screeen == "settings"}
                     />
