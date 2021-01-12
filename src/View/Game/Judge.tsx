@@ -24,7 +24,7 @@ const Judge = () => {
     return (
         <>
             <Evaluator token={state.token} />
-            <RatingNotifier />
+            {false && <RatingNotifier />}
             <AutoSolve canAutosolve={state.canAutoSolve()} />
         </>
     );
