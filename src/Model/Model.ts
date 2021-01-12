@@ -62,6 +62,14 @@ export default class Model {
         return obj.suggestion || (obj.stack && obj.stack.some(this._hasSuggestion)) || (obj.stacks && obj.stacks.some(this._hasSuggestion));
     };
 
+    hasNonStockSuggestions = () => {
+        return (
+            this._hasSuggestion(this.waste) ||
+            this._hasSuggestion(this.tableau) ||
+            this._hasSuggestion(this.foundation)
+        );
+    }
+
     hasSuggestions = () => {
         return (
             this._hasSuggestion(this.waste) ||
