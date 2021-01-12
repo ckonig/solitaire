@@ -10,7 +10,7 @@ import Foundation from "./Game/Foundation";
 import FoundationHandler from "./Business/Foundation";
 import Game from "./Game/Game";
 import Hand from "./Game/Hand";
-import { IStack } from "./Game/IStack";
+import { IStack } from "./Game/Stack";
 import Navigator from "./Business/Navigator";
 import Settings from "./Game/Settings";
 import Stock from "./Game/Stock";

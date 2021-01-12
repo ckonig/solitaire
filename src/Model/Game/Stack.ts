@@ -1,6 +1,17 @@
 import Card from "../Deck/Card";
-import { IStack } from "./IStack";
 import Model from "../Model";
+
+export interface IStack {
+    source: string;
+    stack: Card[];
+    getTop: () => Card | null;
+    getClickable: () => Card[];
+    clickEmpty: (p: any) => (s: any) => void;
+    blinkFor: number;
+    unblink: (model: Model) => void;
+    suggestion: boolean;
+    accepts: (card: Card | null) => boolean;
+}
 
 abstract class BasicStack implements IStack {
     source: string;

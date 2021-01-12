@@ -1,5 +1,5 @@
 import Card from "../Deck/Card";
-import { IStack } from "./IStack";
+import { IStack } from "./Stack";
 import Model from "../Model";
 
 export default class TimeMachine {

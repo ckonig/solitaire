@@ -1,4 +1,4 @@
-import BasicStack from "./BasicStack";
+import BasicStack from "./Stack";
 import Hand from "./Hand";
 
 abstract class HandHoldingStack extends BasicStack {

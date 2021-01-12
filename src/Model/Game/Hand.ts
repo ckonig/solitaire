@@ -1,5 +1,5 @@
 import Card from "../Deck/Card";
-import { IStack } from "./IStack";
+import { IStack } from "./Stack";
 import { XY } from "../../View/UI/XY";
 
 export default class Hand {

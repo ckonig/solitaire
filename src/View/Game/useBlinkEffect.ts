@@ -1,5 +1,5 @@
 import GlobalContext from "../Context";
-import { IStack } from "../../Model/Game/IStack";
+import { IStack } from "../../Model/Game/Stack";
 import Model from "../../Model/Model";
 import React from "react";
 

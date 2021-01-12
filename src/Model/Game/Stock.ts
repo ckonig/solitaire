@@ -1,4 +1,4 @@
-import BasicStack from "./BasicStack";
+import BasicStack from "./Stack";
 import Card from "../Deck/Card";
 import Settings from "./Settings";
 

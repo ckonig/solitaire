@@ -1,5 +1,5 @@
 import Card from "../Deck/Card";
-import { IStack } from "../Game/IStack";
+import { IStack } from "../Game/Stack";
 import Model from "../Model";
 
 interface NavIndex {

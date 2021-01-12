@@ -1,6 +1,6 @@
 import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
-import { IStack } from "../../Model/Game/IStack";
+import { IStack } from "../../Model/Game/Stack";
 import React from "react";
 import getStackLabel from "./StackDescription";
 
