@@ -69,7 +69,7 @@ export default class Tableau {
     wouldAcceptHand = (index: number) => this.canPutDown(this.getTop(index), this.hand, index);
 
     //@todo when putting back hand, no entropy is observed
-    
+
     putDownHand = (index: number) => this.add(index, this.hand.source, this.hand.putDown());
 
     canPutDown = (card: Card, hand: Hand, index: number) =>
@@ -116,7 +116,6 @@ export default class Tableau {
         const top = this.getTop(index);
         if (this.canUncover(index, card)) {
             top.isHidden = false;
-            top.success = true;
             this.stackEntropy(index);
             return true;
         }
@@ -137,18 +136,13 @@ export default class Tableau {
     };
 
     add = (index: number, source: string, cards: Card[]) => {
-        let success = false;
-        if (source == "waste") {
-            success = true;
-        }
-        this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index, success)));
+        this.stacks[index].stack = this.stacks[index].stack.concat(cards.map((c) => this.setCardProperties(c, index)));
         this.stackEntropy(index);
         return cards;
     };
 
-    setCardProperties = (card: Card, index: number, success: boolean) => {
+    setCardProperties = (card: Card, index: number) => {
         card.source = this.stacks[index].source;
-        card.success = success;
         return card;
     };
 

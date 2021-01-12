@@ -20,7 +20,7 @@ export default class Stock implements ClickHandler {
     };
 
     moveToWaste = (card: Card, state: Model) => {
-        return state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock");
+        return state.stock.isOnTop(card) && state.waste.addAll(state.stock.popTop()) && state.game.registerMove("waste", "stock", state.waste.getTop());
     };
 
     recycleWaste = (state: Model) => {

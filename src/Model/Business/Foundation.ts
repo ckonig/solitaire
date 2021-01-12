@@ -10,7 +10,7 @@ export default class Foundation implements ClickHandler {
     dispatchPutDown = (card: Card, position: any, state: Model, index: number) => {
         if (state.foundation.wouldAcceptHand(index)) {
             const src = state.hand.source;
-            state.foundation.putDownHand(index) && state.game.registerMove("foundation-" + index, src);
+            state.foundation.putDownHand(index) && state.game.registerMove("foundation-" + index, src, state.foundation.getTop(index));
             this.tryDetectEnd(state);
         } else {
             this.blink(state, index);

@@ -1,3 +1,4 @@
+import Card from "../Deck/Card";
 import Rating from "./Rating";
 import Settings from "./Settings";
 import TimeMachine from "./TimeMachine";
@@ -20,8 +21,8 @@ export default class Game {
         this.end = 0;
     }
 
-    registerMove = (target: string, source: string) => {
-        this.rating.registerMove(target, source);
+    registerMove = (target: string, source: string, card: Card | null) => {
+        this.rating.registerMove(target, source, card);
         this.timemachine.registerMove(target, source);
         return true;
     };
@@ -37,8 +38,8 @@ export default class Game {
         return true;
     };
 
-    registerUncover = () => {
-        this.rating.registerUncover();
+    registerUncover = (card: Card | null) => {
+        this.rating.registerUncover(card);
         this.timemachine.registerUncover();
         return true;
     };

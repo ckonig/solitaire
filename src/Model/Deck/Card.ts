@@ -7,7 +7,7 @@ export default class Card {
     entropyStyle: any;
     source: string;
     suggestion: boolean;
-    success: boolean;
+    success: number;
     canClick: () => boolean;
     onClick: (_p: any) => (s: any) => void;
     constructor(face: string, type: Suit, isHidden: boolean) {
@@ -17,10 +17,14 @@ export default class Card {
         this.entropyStyle = {};
         this.source = "";
         this.suggestion = false;
-        this.success = false;
+        this.success = 0;
         this.canClick = () => false;
         // eslint-disable-next-line no-unused-vars
         this.onClick = (_p) => (s: any) => {};
+    }
+
+    setSuccess = (s : number) => {
+        this.success = s;
     }
 
     causeEntropy = (lvl: number) => {

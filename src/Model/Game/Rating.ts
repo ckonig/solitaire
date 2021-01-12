@@ -1,3 +1,4 @@
+import Card from "../Deck/Card";
 import Settings from "./Settings";
 
 export interface AppliedRating {
@@ -39,13 +40,13 @@ export default class Rating {
         this.ratings.push({ points, text });
     };
 
-    registerMove = (target: string, source: string) => {
+    registerMove = (target: string, source: string, card: Card | null) => {
         this.registerHint(this.settings.disableHint());
         const currentMove = {
             source: source,
             target: target,
         };
-        this.points += this.rateMove(currentMove);
+        this.points += this.rateMove(currentMove, card);
     };
 
     registerRecycle = () => {
@@ -65,8 +66,9 @@ export default class Rating {
         }
     };
 
-    registerUncover = () => {
+    registerUncover = (card: Card | null) => {
         this.registerHint(this.settings.disableHint());
+        card && card.setSuccess(5);
         this.points += 5;
         this.applyRating(5, "add 5 points for UNCOVER");
     };
@@ -94,21 +96,24 @@ export default class Rating {
         }
     };
 
-    rateMove(move: { source: string; target: string }) {
+    rateMove(move: { source: string; target: string }, card: Card | null) {
         const isTableau = (obj: string) => obj.substr(0, 7) == "tableau";
         const isFoundation = (obj: string) => obj.substr(0, 10) == "foundation";
         if (isTableau(move.source)) {
             if (isFoundation(move.target)) {
                 this.applyRating(10, "add 10 points for MOVE tableau -> foundation");
+                card && card.setSuccess(10);
                 return 10;
             }
         } else if (move.source == "waste") {
             if (isFoundation(move.target)) {
                 this.applyRating(10, "add 10 points for MOVE waste -> foundation");
+                card && card.setSuccess(10);
                 return 10;
             }
             if (isTableau(move.target)) {
                 this.applyRating(5, "add 5 points for MOVE waste -> tableau");
+                card && card.setSuccess(5);
                 return 5;
             }
         } else if (isFoundation(move.source)) {

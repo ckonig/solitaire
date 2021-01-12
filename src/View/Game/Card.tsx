@@ -1,9 +1,9 @@
+import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
 import PauseContext from "../PauseContext";
 import React from "react";
-import confetti from "canvas-confetti";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
@@ -167,12 +167,10 @@ const Card = (props: CardProps) => {
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
-    const canvasRef = React.createRef<HTMLCanvasElement>();
+
     return (
         <>
             <div style={getStackbaseStyle()} className="stack-base">
-                
-                <FireworkWatcher model={model} reff={canvasRef} />
                 <button
                     onFocus={() => {
                         // updateContext((ctx) => {
@@ -191,7 +189,8 @@ const Card = (props: CardProps) => {
                     tabIndex={model.canClick() ? 0 : -1}
                     aria-label={label}
                     title={label}
-                ><canvas ref={canvasRef}></canvas>
+                >
+                    <CardFirework model={model} />
                     <div className="card-content">
                         {model.isHidden || pause.state.paused ? (
                             <div className="card-back">&nbsp;</div>
@@ -231,74 +230,3 @@ const Card = (props: CardProps) => {
 };
 
 export default Card;
-
-const FireworkWatcher = (props: { model: CardModel; reff: any }) => {
-    const { state, updateContext } = React.useContext(GlobalContext);
-    if (!state) return null;
-    const origin = {
-        x: 0.5,
-        y: 0.33,
-    };
-    //@todo position also depends on slitscreen or singleplayer
-    // firework on every success is too much.
-    // make achievements instead, let player earn badges (good for toasts too).
-    // also, use fireworks when auto solving and winning
-   
-
-    React.useEffect(() => {
-        if (props.model.success) {
-            FireWork();
-            const timeout = setTimeout(() => updateContext((ctx) => ctx.clearSuccess(props.model)), 25);
-            return () => clearTimeout(timeout);
-        }
-    }, [state?.token, props.model.success]);
-    const FireWork = () => {
-        const count = 150;
-        const defaults = {
-            ticks: 50,
-            origin,
-            particleCount: 40,
-            startVelocity: 20,
-            decay: 0.8,
-            spread: 360,
-        };
-        const localConfetti = confetti.create(props.reff.current, {resize: true});
-
-        const fire = (particleRatio: any, opts: any) => {
-            localConfetti(
-                Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio),
-                })
-            );
-        };
-
-        fire(0.25, {
-            //spread: 48,
-            startVelocity: 55,
-        });
-        fire(0.2, {
-            //spread: 120,
-        });
-        fire(0.35, {
-            // spread: 160,
-            decay: 0.91,
-            scalar: 0.8,
-        });
-        fire(0.1, {
-            //spread: 200,
-            startVelocity: 25,
-            decay: 0.92,
-            scalar: 1.2,
-        });
-        fire(0.1, {
-            //spread: 240,
-            startVelocity: 45,
-        });
-        fire(0.1, {
-            //spread: 359,
-            startVelocity: 45,
-        });
-        return null;
-    };
-    return null;
-};

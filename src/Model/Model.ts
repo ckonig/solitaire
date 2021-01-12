@@ -91,7 +91,7 @@ export default class Model {
         const clear = (c: Card, s: IStack) => {
             s.stack.forEach((_c) => {
                 if (_c.equals(c)) {
-                    _c.success = false;
+                    _c.success = 0;
                 }
             });
         };

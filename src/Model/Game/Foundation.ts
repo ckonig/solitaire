@@ -83,7 +83,6 @@ export default class Foundation {
         const card = cards[0];
         card.causeEntropy(Math.min(this.settings.interactionEntropy, 3));
         card.source = this.stacks[index].source;
-        card.success = true;
         this.stacks[index].stack.push(card);
         return this.stacks[index].usedCards.push(this.stacks[index].acceptedCards.pop());
     };

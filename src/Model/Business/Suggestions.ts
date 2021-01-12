@@ -36,7 +36,7 @@ export default class Suggestions {
         if (state.waste.wouldAcceptHand()) {
             if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromWaste()) {
                 const move = { target: "waste", source: state.hand.source };
-                if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
+                if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move, null) > 0) {
                     accepted.push(move);
                     state.waste.suggestion = true;
                 }
@@ -47,7 +47,7 @@ export default class Suggestions {
             if (state.foundation.wouldAcceptHand(index)) {
                 if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromFoundation(index)) {
                     const move = { target: stack.source, source: state.hand.source };
-                    if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
+                    if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move, null) > 0) {
                         accepted.push(move);
                         stack.suggestion = true;
                     }
@@ -78,7 +78,7 @@ export default class Suggestions {
 
                     if (!onlyUseful || state.settings.suggestionMode.key === SuggestionModes.FULL || isNotLoop) {
                         const move = { target: stack.source, source: state.hand.source };
-                        if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move) > 0) {
+                        if (state.settings.suggestionMode.key !== SuggestionModes.SCORED || state.game.rating.rateMove(move, null) > 0) {
                             accepted.push(move);
                             stack.suggestion = true;
                         }
