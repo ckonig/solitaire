@@ -8,7 +8,7 @@ import AutoUncoverer from "./AutoUncoverer";
 import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
 import DndPreview from "../../common/DndPreview";
-import Evaluator from "./Evaluator";
+import FailDetector from "./FailDetector";
 import Foundation from "./Foundation";
 import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu";
@@ -16,6 +16,7 @@ import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
+import WinDetector from "./WinDetector";
 
 type BoardProps = { mode: string };
 const Board = (props: BoardProps) => {
@@ -48,8 +49,9 @@ const Board = (props: BoardProps) => {
             <Dealer />
             <BoardNavigator />
             <AutoSolver />
+            <WinDetector />
+            <FailDetector />
             <AutoUncoverer />
-            <Evaluator />
         </>
     );
 };

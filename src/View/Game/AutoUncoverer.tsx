@@ -2,19 +2,6 @@ import GameContext from "./GameContext";
 import React from "react";
 import useGlobalContext from "../GlobalContext";
 
-const _AutoUncoverer = (props: { canUncover: boolean }) => {
-    const [solving, setSolving] = React.useState(false);
-    const { gameState } = React.useContext(GameContext);
-
-    React.useEffect(() => {
-        if (props.canUncover && gameState.started) {
-            setSolving(true);
-        }
-    }, [props.canUncover, gameState]);
-    const canSolve = solving;
-    return !canSolve ? null : <Uncoverer />;
-};
-
 const Uncoverer = () => {
     const { state, updateGameContext } = useGlobalContext();
     React.useEffect(() => {
@@ -31,7 +18,8 @@ const Uncoverer = () => {
 
 const AutoUncoverer = () => {
     const { state } = useGlobalContext();
-    return <_AutoUncoverer canUncover={!!state.settings.launchSettings.autoUncover} />;
+    const { gameState } = React.useContext(GameContext);
+    return !!state.settings.launchSettings.autoUncover && !!gameState.started && <Uncoverer /> || null;
 };
 
 export default AutoUncoverer;

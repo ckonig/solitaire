@@ -1,4 +1,4 @@
-import { ToastContentProps, toast } from "react-toastify";
+// import { ToastContentProps, toast } from "react-toastify";
 
 import Model from "../../Model/Model";
 import React from "react";
@@ -47,28 +47,28 @@ const _Evaluator = (props: { token: number }) => {
 
             if (full > 0 && regular > 0) {
                 if (noFullSince >= 0) {
-                    //@todo we need full blown menu here, not just a toast.
-                    toast.error(
-                        (props: ToastContentProps) => (
-                            <div>
-                                <div>😢 looks like the game is over</div>
-                                <div></div>
-                                <div>
-                                    <button
-                                        onClick={() => {
-                                            setNoFullSince(-3);
-                                            props.closeToast && props.closeToast();
-                                        }}
-                                    >
-                                        Keep trying
-                                    </button>
-                                    <button onClick={() => alert("@todo")}>Restart</button>
-                                    <button onClick={() => alert("@todo")}>Give up</button>
-                                </div>
-                            </div>
-                        ),
-                        { autoClose: false, closeButton: false }
-                    );
+                    // //@todo we need full blown menu here, not just a toast.
+                    // toast.error(
+                    //     (props: ToastContentProps) => (
+                    //         <div>
+                    //             <div>😢 looks like the game is over</div>
+                    //             <div></div>
+                    //             <div>
+                    //                 <button
+                    //                     onClick={() => {
+                    //                         setNoFullSince(-3);
+                    //                         props.closeToast && props.closeToast();
+                    //                     }}
+                    //                 >
+                    //                     Keep trying
+                    //                 </button>
+                    //                 <button onClick={() => alert("@todo")}>Restart</button>
+                    //                 <button onClick={() => alert("@todo")}>Give up</button>
+                    //             </div>
+                    //         </div>
+                    //     ),
+                    //     { autoClose: false, closeButton: false }
+                    // );
                 }
                 setNoFullSince(noFullSince + 1);
                 resetFull();
@@ -102,9 +102,9 @@ const _Evaluator = (props: { token: number }) => {
     return null;
 };
 
-const Evaluator = () => {
+const FailDetector = () => {
     const { state } = useGlobalContext();
     return <_Evaluator token={state.token} />;
 };
 
-export default Evaluator;
+export default FailDetector;
