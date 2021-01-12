@@ -106,7 +106,7 @@ export default class Model {
         this.stock.setOnClick(getHandler(new StockHandler(this.navigator)));
         this.waste.setOnClick(getHandler(new WasteHandler()));
         this.foundation.setOnClick(getHandler(new FoundationHandler()));
-        this.tableau.setOnClick(getHandler(new TableauHandler()), getHandler(new TableauHidden()), this.hand);
+        this.tableau.setOnClick(getHandler(new TableauHandler()), getHandler(new TableauHidden()));
         return this;
     };
 

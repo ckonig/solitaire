@@ -21,11 +21,12 @@ export class FoundationStack extends HandHoldingStack {
         const currentAccepted = this.getCurrentAccepted();
         return this.icon == card.type.icon && currentAccepted == card.face;
     };
-    setOnClick = (onClick: (c: any, p: any) => (s: any) => void) => {
+    setOnClick = (onClick: (c: any, p: any) => (s: any) => void, hand: Hand) => {
         this.clickEmpty = (p) => onClick(null, p);
-        this.stack.forEach((card, sindex) => {
+        const cards = this.source == hand.source ? [...this.stack, ...hand.stack] : this.stack;
+        cards.forEach((card, sindex) => {
             card.onClick = (p: any) => onClick({ ...card }, p);
-            card.canClick = () => sindex == this.stack.length - 1;
+            card.canClick = () => sindex == cards.length - 1;
         });
         this.hand.setOnClick(this);
     };
@@ -53,10 +54,9 @@ export default class Foundation {
         this.stacks = [...stacks];
     }
 
-    //@todo include hand content for proper canClick
     setOnClick = (onClick: (c: any, p: any, index: number) => (s: any) => void) => {
         this.stacks.forEach((stack, index) => {
-            stack.setOnClick((c: any, p: any) => onClick(c, p, index));
+            stack.setOnClick((c: any, p: any) => onClick(c, p, index), this.hand);
         });
     };
 

@@ -25,14 +25,15 @@ export class TableauStack extends HandHoldingStack {
         const top = this.getTop();
         return top.isHidden && card && card.equals(this.getTop());
     };
-    setOnClick = (onClick: (a: any, b: any) => (s: any) => void, onClickhidden: (a: any, b: any) => (s: any) => void, hand: Hand) => {
+    setOnClick = (onClick: (a: any, b: any) => (s: any) => void, onClickhidden: (a: any, b: any) => (s: any) => void) => {
         this.clickEmpty = (p: any) => onClick(null, p);
-        this.stack.forEach((card, sindex) => {
-            const click = card.isHidden && sindex == this.stack.length - 1 ? onClickhidden : onClick;
+        const cards = this.source == this.hand.source ? [...this.stack, ...this.hand.stack] : this.stack;
+        cards.forEach((card, sindex) => {
+            const click = card.isHidden && sindex == cards.length - 1 ? onClickhidden : onClick;
             card.onClick = (p: any) => click({ ...card }, p);
-            card.canClick = () => !card.isHidden || this.canUncover(card) || false;
+            card.canClick = () => !card.isHidden || (this.canUncover(card) && !this.hand.currentCard()) || false;
         });
-        hand.setOnClick(this);
+        this.hand.setOnClick(this);
     };
     static copy = (orig: TableauStack) => {
         const s = new TableauStack(orig.source, orig.hand);
@@ -57,17 +58,14 @@ export default class Tableau {
         this.settings = settings;
     }
 
-    //@todo include hand content for proper canClick
     setOnClick = (
         onClick: (a: any, b: any, index: number) => (s: any) => void,
-        onClickhidden: (a: any, b: any, index: number) => (s: any) => void,
-        hand: Hand
+        onClickhidden: (a: any, b: any, index: number) => (s: any) => void
     ) => {
         this.stacks.forEach((stack, index) => {
             stack.setOnClick(
                 (a: any, b: any) => onClick(a, b, index),
-                (a: any, b: any) => onClickhidden(a, b, index),
-                hand
+                (a: any, b: any) => onClickhidden(a, b, index)
             );
         });
     };

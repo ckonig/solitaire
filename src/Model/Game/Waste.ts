@@ -10,12 +10,12 @@ export default class Waste extends HandHoldingStack {
         this.settings = settings;
     }
 
-    //@todo include hand content for proper canClick
     setOnClick = (onClick: (c: any, p: any, i: any) => (s: any) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
-        this.stack.forEach((card, index) => {
+        const cards = this.source == this.hand.source ? [...this.stack, ...this.hand.stack] : this.stack;
+        cards.forEach((card, index) => {
             card.onClick = (p: any) => onClick({ ...card }, p, null);
-            card.canClick = () => index == this.stack.length - 1;
+            card.canClick = () => index == cards.length - 1;
         });
         this.hand.setOnClick(this);
     };
