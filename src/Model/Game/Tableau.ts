@@ -68,6 +68,8 @@ export default class Tableau {
 
     wouldAcceptHand = (index: number) => this.canPutDown(this.getTop(index), this.hand, index);
 
+    //@todo when putting back hand, no entropy is observed
+    
     putDownHand = (index: number) => this.add(index, this.hand.source, this.hand.putDown());
 
     canPutDown = (card: Card, hand: Hand, index: number) =>

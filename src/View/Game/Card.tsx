@@ -169,11 +169,12 @@ const Card = (props: CardProps) => {
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
-
+    const canvasRef = React.createRef<HTMLCanvasElement>();
     return (
         <>
             <div style={getStackbaseStyle()} className="stack-base">
-                <FireworkWatcher model={model} />
+                
+                <FireworkWatcher model={model} reff={canvasRef} />
                 <button
                     onFocus={() => {
                         // updateContext((ctx) => {
@@ -192,7 +193,7 @@ const Card = (props: CardProps) => {
                     tabIndex={model.canClick() ? 0 : -1}
                     aria-label={label}
                     title={label}
-                >
+                ><canvas ref={canvasRef}></canvas>
                     <div className="card-content">
                         {model.isHidden || pause.state.paused ? (
                             <div className="card-back">&nbsp;</div>
@@ -233,27 +234,18 @@ const Card = (props: CardProps) => {
 
 export default Card;
 
-const FireworkWatcher = (props: { model: CardModel }) => {
+const FireworkWatcher = (props: { model: CardModel; reff: any }) => {
     const { state, updateContext } = React.useContext(GlobalContext);
     if (!state) return null;
     const origin = {
-        x: 0,
-        y: 0,
+        x: 0.5,
+        y: 0.33,
     };
     //@todo position also depends on slitscreen or singleplayer
     // firework on every success is too much.
     // make achievements instead, let player earn badges (good for toasts too).
     // also, use fireworks when auto solving and winning
-    if (props.model.source.substring(0, 11) == "foundation-") {
-        const foundationIndex = parseInt(props.model.source.substring(11));
-        origin.y = 0.2;
-        origin.x = (foundationIndex + 3) / (7 / 100) / 100;
-    }
-    if (props.model.source.substring(0, 8) == "tableau-") {
-        const tableauIndex = parseInt(props.model.source.substring(8));
-        origin.y = 0.7;
-        origin.x = tableauIndex / (7 / 100) / 100;
-    }
+   
 
     React.useEffect(() => {
         if (props.model.success) {
@@ -263,25 +255,24 @@ const FireworkWatcher = (props: { model: CardModel }) => {
         }
     }, [state?.token, props.model.success]);
     const FireWork = () => {
-        const count = 100;
+        const count = 150;
         const defaults = {
             ticks: 50,
             origin,
             particleCount: 40,
             startVelocity: 20,
-            decay:0.8,
+            decay: 0.8,
             spread: 360,
         };
+        const localConfetti = confetti.create(props.reff.current, {resize: true});
 
         const fire = (particleRatio: any, opts: any) => {
-            confetti(
+            localConfetti(
                 Object.assign({}, defaults, opts, {
                     particleCount: Math.floor(count * particleRatio),
                 })
             );
         };
-
- 
 
         fire(0.25, {
             //spread: 48,
@@ -291,7 +282,7 @@ const FireworkWatcher = (props: { model: CardModel }) => {
             //spread: 120,
         });
         fire(0.35, {
-           // spread: 160,
+            // spread: 160,
             decay: 0.91,
             scalar: 0.8,
         });
