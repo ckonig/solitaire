@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { Slide, ToastContainer } from "react-toastify";
 
 import AutoSolver from "./AutoSolver";
+import AutoUncoverer from "./AutoUncoverer";
 import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
 import DndPreview from "../../common/DndPreview";
@@ -47,6 +48,7 @@ const Board = (props: BoardProps) => {
             <Dealer />
             <BoardNavigator />
             <AutoSolver />
+            <AutoUncoverer />
             <Evaluator />
         </>
     );

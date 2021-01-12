@@ -45,6 +45,7 @@ export interface LaunchSettings extends RatingSettings {
     initialized?: boolean;
     quickDeal?: boolean;
     speed?: boolean;
+    autoUncover?: boolean;
 }
 
 export interface ClickHandler {
