@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import Card from "../Deck/Card";
 import FoundationStack from "./FoundationStack";
 import Hand from "./Hand";
