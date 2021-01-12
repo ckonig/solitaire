@@ -56,7 +56,7 @@ const GamePad = (props: GamePadProps) => {
     return (
         <RenderAfter delay={125}>
             <ReactGamePad gamepadIndex={props.gamepadIndex} {...handlers}>
-                <span></span>
+                <React.Fragment />
             </ReactGamePad>
         </RenderAfter>
     );
