@@ -39,7 +39,6 @@ const Card = (props: CardProps) => {
     }
     const model = props.models[props.index];
     ReRender.displayName = "ReRender";
-    //@todo for proper drag & drop of stacks, we need each card to render the following ones
     const { state, updateGameContext } = React.useContext(GlobalContext);
     if (!state) return null;
     const pause = React.useContext(PauseContext);
@@ -127,7 +126,6 @@ const Card = (props: CardProps) => {
         className += !_isDrag && props.isSelected && props.isSelected(props.index) && !_isDrag ? " card-selected" : "";
         className += props.blink ? " blink" : "";
         className += model.canClick() ? " clickable" : "";
-        //@todo onhover, trigger highlight of suggested target card/stack (preview what happens if picked up)
         className += hasSuggestion && !isFocused ? " card-suggested" : "";
         className += isFocused ? " card-focused" : "";
         className += props.accepting ? " card-accepts" : "";
