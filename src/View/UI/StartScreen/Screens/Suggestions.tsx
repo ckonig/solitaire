@@ -2,16 +2,16 @@ import SuggestionModes, { SuggestionMode } from "../../../../Model/Game/Settings
 
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
-import { CookieContext } from "../../../Context";
 import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
 import ScreenToggle from "./ScreenToggle";
-import StartScreenContext from "../Context";
+import useCookieContext from "../../CookieContext";
+import useStartScreenContext from "../StartScreenContext";
 
 const Suggestions = () => {
-    const { consented } = React.useContext(CookieContext);
-    const { state, setState } = React.useContext(StartScreenContext);
+    const { consented } = useCookieContext();
+    const { state, setState } = useStartScreenContext();
 
     const suggestionModes = SuggestionModes.allSuggestionModes();
 

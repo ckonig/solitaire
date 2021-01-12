@@ -1,18 +1,17 @@
 import Card from "./Card";
 import CardModel from "../../Model/Deck/Card";
-import GlobalContext from "../Context";
 import React from "react";
 import StackBase from "./StackBase";
 import TableauModel from "../../Model/Game/Tableau";
 import TableauStack from "../../Model/Game/TableauStack";
 import useBlinkEffect from "./useBlinkEffect";
 import { useDrop } from "react-dnd";
+import useGlobalContext from "../GlobalContext";
 
 type TableauProps = { index: number; model: TableauStack; parent: TableauModel };
 
 const TableauStacks = () => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
     return (
         <>
             {state.tableau.stacks.map((tableau, index) => (
@@ -26,7 +25,7 @@ export default TableauStacks;
 const Tableau = (props: TableauProps) => {
     useBlinkEffect((s) => s.tableau.stacks[props.index]);
     const [accepting, setAccepting] = React.useState<boolean>(false);
-    const { updateGameContext, state } = React.useContext(GlobalContext);
+    const { updateGameContext, state } = useGlobalContext();
     const [, drop] = useDrop({
         accept: "card",
         canDrop: (item: any) => {
@@ -39,7 +38,7 @@ const Tableau = (props: TableauProps) => {
         },
     });
 
-    const cards = state?.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
+    const cards = state.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
 
     let offset = 1;
     const getOffset = (index: number, cards: CardModel[]) => {

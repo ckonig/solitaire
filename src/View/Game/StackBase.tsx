@@ -1,14 +1,13 @@
 import GameModes from "../../GameModes";
-import GlobalContext from "../Context";
 import { IStack } from "../../Model/Game/Stack";
 import React from "react";
 import getStackLabel from "./StackDescription";
+import useGlobalContext from "../GlobalContext";
 
 const StackBase = (props: { model: IStack; children?: any | null }) => {
     let classname = "card-base socket";
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    const { state, updateGameContext } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state, updateGameContext } = useGlobalContext();
     React.useEffect(() => {
         if (state.focus.hasStack(props.model.source) && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
             const current = inputEl && inputEl.current ? inputEl.current : null;

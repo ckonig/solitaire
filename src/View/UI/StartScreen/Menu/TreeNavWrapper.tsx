@@ -1,14 +1,14 @@
 import GamePad from "../../../../common/GamePad";
 import Keyboard from "../../../../common/Keyboard";
 import KeyboardLayout from "../../../../common/KeyboardLayouts";
-import { NavigationContext } from "../Context";
 import React from "react";
 import { TreeNavigator } from "../Menu/TreeNavigator";
 import { XY } from "../../XY";
+import useNavigationContext from "../NavigationContext";
 
 const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout: KeyboardLayout }) => {
     const { navigator } = props;
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
 
     const assignState = (result: XY) => {
         if (navigation.focus == "menu") {

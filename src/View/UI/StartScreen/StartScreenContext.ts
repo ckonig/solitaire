@@ -33,43 +33,6 @@ export interface StartScreenState {
     players: PlayerSettings;
 }
 
-export interface NavigationState {
-    menu: {
-        x: number;
-        y: number;
-    };
-    screen: {
-        x: number;
-        y: number;
-    };
-    focus: string;
-    mainMenu: string;
-    screeen: string;
-}
-interface INavigationContext {
-    navigation: NavigationState;
-    setNavigation: (n: NavigationState) => void;
-}
-
-export const NavigationContext = React.createContext<INavigationContext>({
-    navigation: {
-        menu: {
-            x: 0,
-            y: 0,
-        },
-        screen: {
-            x: 0,
-            y: 0,
-        },
-        focus: "menu",
-        mainMenu: "",
-        screeen: "",
-    },
-    setNavigation: () => {
-        console.log("todo implement");
-    },
-});
-
 const StartScreenContext = React.createContext<IStartScreenContext>({
     state: {
         difficultySettings: 0,
@@ -80,11 +43,10 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         suggestionMode: SuggestionModes.REGULAR,
         players: defaultPlayerSettings,
     },
-    setState: () => {
-        console.log("todo implement");
-    },
+    setState: () => {},
 });
 
 export const Provider = StartScreenContext.Provider;
-export const NavigationProvider = NavigationContext.Provider;
-export default StartScreenContext;
+
+const useStartScreenContext = () => React.useContext(StartScreenContext);
+export default useStartScreenContext;

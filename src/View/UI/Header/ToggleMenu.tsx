@@ -1,5 +1,5 @@
 import { BoardContext } from "../../Game/BoardContext";
-import PauseContext from "../../PauseContext";
+import PauseContext from "../../Game/PauseContext";
 import React from "react";
 
 const ToggleMenu = () => {

@@ -2,13 +2,12 @@ import { BoardContext } from "../BoardContext";
 import { CustomInputProps } from "./CustomInputProps";
 import GameModes from "../../../GameModes";
 import GamePad from "../../../common/GamePad";
-import GlobalContext from "../../Context";
 import Model from "../../../Model/Model";
 import React from "react";
+import useGlobalContext from "../../GlobalContext";
 
 const BoardGamePad = (props: CustomInputProps) => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
     const { player } = React.useContext(BoardContext);
     const isGamePadDriven = state.settings.launchSettings.inputMode == "gamepad";
     const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;

@@ -5,7 +5,7 @@ import {BoardProvider} from "./BoardContext";
 import Deck from "../../Model/Deck/Deck";
 import EndScreen from "../UI/EndScreen";
 import Model from "../../Model/Model";
-import { Provider } from "../Context";
+import { Provider } from "../GlobalContext";
 import React from "react";
 
 interface BoardWrapProps {

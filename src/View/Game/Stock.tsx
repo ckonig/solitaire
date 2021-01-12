@@ -1,21 +1,19 @@
 import Card from "./Card";
-import GlobalContext from "../Context";
-import PauseContext from "../PauseContext";
+import PauseContext from "./PauseContext";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
+import useGlobalContext from "../GlobalContext";
 import usePrevious from "./usePrevious";
 
 const Renderer = (props: { length: number; paused: boolean; started: number }) => {
-    const context = React.useContext(GlobalContext);
+    const context = useGlobalContext();
 
     const { length, started, paused } = props;
     const previous = usePrevious({ length, paused, started });
     React.useEffect(() => {
         let timeout: any = null;
         if (
-            context &&
-            context.state &&
             context.state.settings.launchSettings.speed &&
             started &&
             !paused &&
@@ -63,8 +61,7 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
 };
 
 const Stock = () => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
     useBlinkEffect((model) => model.stock);
     const pause = React.useContext(PauseContext);
     const { paused, started } = pause.state;

@@ -1,7 +1,7 @@
-import { NavigationContext } from "../Context";
 import React from "react";
 import { TreeNavigator } from "./TreeNavigator";
 import { XY } from "../../XY";
+import useNavigationContext from "../NavigationContext";
 
 interface _MenuButtonProps extends StaticMenuButtonProps {
     x?: number;
@@ -33,7 +33,7 @@ const MenuButton = (props: _MenuButtonProps) => {
         return null;
     }
 
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
 
     const onFocus = (pos: XY) => setNavigation({ ...navigation, menu: pos });
 

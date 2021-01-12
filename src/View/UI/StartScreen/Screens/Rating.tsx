@@ -1,8 +1,7 @@
-import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
+import useStartScreenContext, { StartScreenState } from "../StartScreenContext";
 
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
-import { CookieContext } from "../../../Context";
 import RatingPresets from "../RatingOptions";
 import { RatingSettings } from "../../../../Common";
 import React from "react";
@@ -12,10 +11,12 @@ import ScreenMainButton from "./ScreenMainButton";
 import ScreenToggle from "./ScreenToggle";
 import SuggestionModes from "../../../../Model/Game/Settings/SuggestionModes";
 import { XY } from "../../XY";
+import useCookieContext from "../../CookieContext";
+import useNavigationContext from "../NavigationContext";
 
 const Rating = () => {
-    const { state, setState } = React.useContext(StartScreenContext);
-    const { navigation } = React.useContext(NavigationContext);
+    const { state, setState } = useStartScreenContext();
+    const { navigation } = useNavigationContext();
     const applyPreset = (id: number) => {
         const next = { ...state };
         RatingPresets.ALL[id].apply(next);
@@ -36,7 +37,7 @@ const Rating = () => {
         next.ratingPreset = RatingPresets.matchPreset(next.ratingSettings);
         setState(next);
     };
-    
+
     const customizeRating2 = (ratingModifier: (context: RatingSettings) => void, modifier: (context: StartScreenState) => void) => {
         const next = { ...state };
         ratingModifier(next.ratingSettings);
@@ -71,7 +72,7 @@ const Rating = () => {
         );
     };
 
-    const { consented } = React.useContext(CookieContext);
+    const { consented } = useCookieContext();
 
     return (
         <div className="rating startdetails">

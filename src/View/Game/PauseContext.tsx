@@ -14,7 +14,7 @@ export interface IPauseState {
 export interface IPauseContext {
     state: IPauseState;
     togglePause: (isPaused: boolean, pausedBy: number) => void;
-    getElapsed: () => string,
+    getElapsed: () => string;
 }
 export const defaultPauseState = {
     started: 0,
@@ -33,7 +33,6 @@ export const defaultPauseContext = {
 };
 
 const PauseContext = React.createContext<IPauseContext>(defaultPauseContext);
-const PauseContextProvider = PauseContext.Provider;
 
 export const PauseProvider = (props: any) => {
     const [paused, setPaused] = React.useState<IPauseState>({ ...defaultPauseState });
@@ -87,7 +86,7 @@ export const PauseProvider = (props: any) => {
         getElapsed,
     };
 
-    return <PauseContextProvider value={context}>{props.children}</PauseContextProvider>;
+    return <PauseContext.Provider value={context}>{props.children}</PauseContext.Provider>;
 };
 
 export default PauseContext;

@@ -2,10 +2,10 @@ import "./react-toggle.css";
 
 import { getScreenElementClassName, useFocusEffect, useInitialFocus } from "./ScreenElement";
 
-import { NavigationContext } from "../Context";
 import React from "react";
 import Toggle from "react-toggle";
 import { XY } from "../../XY";
+import useNavigationContext from "../NavigationContext";
 
 interface StaticScreenToggleProps {
     value: boolean;
@@ -30,7 +30,7 @@ interface _ScreenToggleProps extends StaticScreenToggleProps {
 const _ScreenToggle = (props: ToggleProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
     const change = (val: boolean, pos: XY) => {
         setNavigation({ ...navigation, screen: pos });
         props.callBack && props.callBack(val);
@@ -62,7 +62,7 @@ const ScreenToggle = (props: _ScreenToggleProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
         return null;
     }
-    const { navigation } = React.useContext(NavigationContext);
+    const { navigation } = useNavigationContext();
     const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (

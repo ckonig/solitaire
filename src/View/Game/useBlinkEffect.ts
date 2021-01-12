@@ -1,13 +1,12 @@
-import GlobalContext from "../Context";
 import { IStack } from "../../Model/Game/Stack";
 import Model from "../../Model/Model";
 import React from "react";
+import useGlobalContext from "../GlobalContext";
 
 type _selector = (model: Model) => IStack;
 
 const useBlinkEffect = (selector: _selector) => {
-    const { updateContext, state } = React.useContext(GlobalContext);
-    if (!state) return;
+    const { updateContext, state } = useGlobalContext();
     const model = selector(state);
     let timeout: any = null;
     React.useEffect(() => {

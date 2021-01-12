@@ -1,19 +1,19 @@
 import "./StartScreen/Menu.scss";
 
-import { NavigationContext, NavigationProvider, NavigationState } from "./StartScreen/Context";
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
+import useNavigationContext, { NavigationProvider, NavigationState } from "./StartScreen/NavigationContext";
 
 import { BoardContext } from "../Game/BoardContext";
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
 import GameModes from "../../GameModes";
-import GlobalContext from "../Context";
 import MenuButton from "./StartScreen/Menu/MenuButton";
 import MenuTitle from "./StartScreen/Menu/MenuTitle";
 import MenuTree from "./StartScreen/Menu/MenuTree";
-import PauseContext from "../PauseContext";
+import PauseContext from "../Game/PauseContext";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import { XY } from "./XY";
+import useGlobalContext from "../GlobalContext";
 
 const _Menu = () => {
     const [navigation, setNavigation] = React.useState<NavigationState>({
@@ -40,7 +40,7 @@ const _Menu = () => {
     );
 };
 const Menu = () => {
-    const { state, updateContext, replaceContext, restart } = React.useContext(GlobalContext);
+    const { state, updateContext, replaceContext, restart } = useGlobalContext();
     const pause = React.useContext(PauseContext);
     const { player } = React.useContext(BoardContext);
     const reset = () => {
@@ -58,7 +58,7 @@ const Menu = () => {
         pause.togglePause(false, -1);
     };
 
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
 
     const switchToMenu = (menu: string, pos: XY) =>
         setNavigation({ ...navigation, focus: "menu", screeen: "", mainMenu: menu, menu: { ...pos } });
@@ -72,9 +72,6 @@ const Menu = () => {
     };
 
     if (!pause.state.showMenu) {
-        return null;
-    }
-    if (!state) {
         return null;
     }
 

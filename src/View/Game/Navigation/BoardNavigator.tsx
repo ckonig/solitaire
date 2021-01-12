@@ -1,16 +1,15 @@
 import { BoardContext } from "../BoardContext";
 import BoardGamePad from "./BoardGamePad";
 import BoardKeyboard from "./BoardKeyboard";
-import GlobalContext from "../../Context";
 import Model from "../../../Model/Model";
-import PauseContext from "../../PauseContext";
+import PauseContext from "../PauseContext";
 import React from "react";
+import useGlobalContext from "../../GlobalContext";
 
 type _mod = (state: Model) => void;
 
 const BoardNavigator = () => {
-    const { state, updateContext, updateGameContext, replaceContext } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state, updateContext, updateGameContext, replaceContext } = useGlobalContext();
     const paused = React.useContext(PauseContext);
     const { player } = React.useContext(BoardContext);
     const before = { x: state.navigator.currentIndex.x, y: state.navigator.currentIndex.y, z: state.navigator.currentIndex.z };

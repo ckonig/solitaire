@@ -1,7 +1,8 @@
-import { NavigationProvider, NavigationState, Provider, StartScreenState, defaultStartScreenState } from "./Context";
+import { NavigationProvider, NavigationState } from "./NavigationContext";
+import { Provider, StartScreenState, defaultStartScreenState } from "./StartScreenContext";
 
 import AspectRatio from "../../../common/AspectRatio/AspectRatio";
-import { CookieContextProvider } from "../../Context";
+import { CookieContextProvider } from "../CookieContext";
 import DifficultyOptions from "./DifficultyOptions";
 import { LaunchSettings } from "../../../Common";
 import Ratios from "../../../common/AspectRatio/Ratios";

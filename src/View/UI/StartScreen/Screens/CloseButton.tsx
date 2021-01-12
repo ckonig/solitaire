@@ -1,5 +1,5 @@
 import React from "react";
-import ScreenContext from "./Context";
+import ScreenContext from "./ScreenContext";
 
 const CloseButton = () => {
     const { closeScreen } = React.useContext(ScreenContext);

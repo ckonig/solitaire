@@ -11,6 +11,22 @@ interface IGlobalContext {
     restart: () => void;
 }
 
+interface XGlobalContext {
+    state: Model;
+    replaceContext: StateReplaceFunction;
+    updateContext: StateUpdateFunction;
+    updateGameContext: StateUpdateFunction;
+    restart: () => void;
+}
+
+const useGlobalContext: () => XGlobalContext = () => {
+    const ctx = React.useContext(GlobalContext);
+    if (!ctx.state) {
+        throw "no state present";
+    }
+    return { ...ctx, state: ctx.state };
+};
+
 const defaultValue = {
     state: null,
     replaceContext: () => {},
@@ -23,11 +39,4 @@ const GlobalContext = React.createContext<IGlobalContext>(defaultValue);
 
 export const Provider = GlobalContext.Provider;
 
-export default GlobalContext;
-
-export interface ICookieContext {
-    consented: boolean;
-    setConsented: (c: boolean) => void;
-}
-export const CookieContext = React.createContext<ICookieContext>({ consented: false, setConsented: () => {} });
-export const CookieContextProvider = CookieContext.Provider;
+export default useGlobalContext;

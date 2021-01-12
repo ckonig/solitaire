@@ -7,18 +7,11 @@ export default class Game {
     settings: Settings;
     rating: Rating;
     timemachine: TimeMachine;
-    started: number;
-    isEnded: boolean;
-    end: number;
     paused: any;
     constructor(settings: Settings) {
         this.settings = settings;
         this.rating = new Rating(settings);
         this.timemachine = new TimeMachine();
-        //@todo move to context:
-        this.started = 0;
-        this.isEnded = false;
-        this.end = 0;
     }
 
     registerMove = (target: string, source: string, card: Card | null) => {

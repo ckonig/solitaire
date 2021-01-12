@@ -1,18 +1,19 @@
 import DifficultyOptions, { DifficultyOption } from "../DifficultyOptions";
-import StartScreenContext, { NavigationContext } from "../Context";
 
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
-import { CookieContext } from "../../../Context";
 import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../../XY";
+import useCookieContext from "../../CookieContext";
+import useNavigationContext from "../NavigationContext";
+import useStartScreenContext from "../StartScreenContext";
 
 const Difficulty = () => {
-    const { state, setState } = React.useContext(StartScreenContext);
-    const { navigation } = React.useContext(NavigationContext);
+    const { state, setState } = useStartScreenContext();
+    const { navigation } = useNavigationContext();
 
     const isActive = (id: number) => state.difficultySettings == id;
 
@@ -35,7 +36,7 @@ const Difficulty = () => {
         />
     );
 
-    const { consented } = React.useContext(CookieContext);
+    const { consented } = useCookieContext();
 
     return (
         <div className="difficulty startdetails">

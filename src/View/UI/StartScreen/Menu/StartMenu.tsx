@@ -1,20 +1,20 @@
 import "../Menu.scss";
 
-import { CookieContext } from "../../../Context";
 import GameModes from "../../../../GameModes";
 import MenuButton from "./MenuButton";
 import MenuTitle from "./MenuTitle";
 import MenuTree from "./MenuTree";
-import { NavigationContext } from "../Context";
 import React from "react";
 import StorageManager from "../../StorageManager";
 import { Universal } from "../../../../common/KeyboardLayouts";
 import VerticalMenu from "./VerticalMenu";
 import { XY } from "../../XY";
+import useCookieContext from "../../CookieContext";
+import useNavigationContext from "../NavigationContext";
 
 const StartMenu = (props: { start: (boardMode: string) => void }) => {
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
-    const { consented, setConsented } = React.useContext(CookieContext);
+    const { navigation, setNavigation } = useNavigationContext();
+    const { consented, setConsented } = useCookieContext();
 
     const switchToScreen = (s: string, pos: XY) =>
         setNavigation({

@@ -1,16 +1,15 @@
 import Card from "./Card";
 import FoundationStack from "../../Model/Game/FoundationStack";
-import GlobalContext from "../Context";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
 import { useDrop } from "react-dnd";
+import useGlobalContext from "../GlobalContext";
 
 type FoundationProps = { index: number; model: FoundationStack };
 
 const FoundationStacks = () => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
     return (
         <>
             {state.foundation.stacks.map((foundation, index) => (
@@ -24,7 +23,7 @@ export default FoundationStacks;
 
 const Foundation = (props: FoundationProps) => {
     useBlinkEffect((model) => model.foundation.stacks[props.index]);
-    const { updateGameContext, state } = React.useContext(GlobalContext);
+    const { updateGameContext, state } = useGlobalContext();
     const model = props.model;
     const [, drop] = useDrop({
         accept: "card",
@@ -35,7 +34,7 @@ const Foundation = (props: FoundationProps) => {
             updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
         },
     });
-    const cards = state?.hand.source == model.source ? [...model.stack, ...state.hand.stack] : [...model.stack];
+    const cards = state.hand.source == model.source ? [...model.stack, ...state.hand.stack] : [...model.stack];
     return (
         <div className="board-field" key={props.index} ref={drop}>
             <StackBase model={model}>

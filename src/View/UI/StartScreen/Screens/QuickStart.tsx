@@ -1,8 +1,7 @@
-import StartScreenContext, { NavigationContext, StartScreenState } from "../Context";
+import useStartScreenContext, { StartScreenState } from "../StartScreenContext";
 
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
-import { CookieContext } from "../../../Context";
 import EntropyLevels from "../../../../Model/Game/Settings/EntropyLevels";
 import React from "react";
 import Row from "./Row";
@@ -11,6 +10,8 @@ import ScreenMainButton from "./ScreenMainButton";
 import ScreenSelect from "./ScreenSelect";
 import ScreenToggle from "./ScreenToggle";
 import { XY } from "../../XY";
+import useCookieContext from "../../CookieContext";
+import useNavigationContext from "../NavigationContext";
 
 interface OptimizeOption {
     entropy: number;
@@ -35,9 +36,9 @@ const optimizeOptions: (state: StartScreenState) => OptimizeOption[] = (state: S
 ];
 
 const QuickStart = () => {
-    const { state, setState } = React.useContext(StartScreenContext);
-    const { navigation } = React.useContext(NavigationContext);
-    const { consented } = React.useContext(CookieContext);
+    const { state, setState } = useStartScreenContext();
+    const { navigation } = useNavigationContext();
+    const { consented } = useCookieContext();
 
     const isActive = (val: boolean) => state.quickDeal == val;
 

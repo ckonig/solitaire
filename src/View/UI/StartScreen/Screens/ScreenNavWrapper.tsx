@@ -1,14 +1,14 @@
 import GamePad from "../../../../common/GamePad";
 import Keyboard from "../../../../common/Keyboard";
-import { NavigationContext } from "../Context";
 import React from "react";
 import { ScreenNavigator } from "./ScreenNavigator";
 import { Universal } from "../../../../common/KeyboardLayouts";
 import { XY } from "../../XY";
+import useNavigationContext from "../NavigationContext";
 
 const ScreenNavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
     const { navigator } = props;
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
 
     const assignState = (result: XY) => {
         if (navigation.focus == "screen") {

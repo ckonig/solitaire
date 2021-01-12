@@ -1,11 +1,11 @@
 import "./Screens.scss";
 
-import GlobalContext from "../Context";
-import PauseContext from "../PauseContext";
+import PauseContext from "../Game/PauseContext";
 import React from "react";
+import useGlobalContext from "../GlobalContext";
 
 const EndScreen = () => {
-    const { state, restart } = React.useContext(GlobalContext);
+    const { state, restart } = useGlobalContext();
     const pause = React.useContext(PauseContext);
     //@todo show launch settings (draw mode, recycling mode)
     return !state.game.isEnded ? null : (

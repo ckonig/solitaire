@@ -1,6 +1,7 @@
-import React from "react";
-import { NavigationContext } from "../Context";
 import { getScreenElementClassName, useFocusEffect } from "./ScreenElement";
+
+import React from "react";
+import useNavigationContext from "../NavigationContext";
 
 export type SelectItem = {
     label: string;
@@ -30,7 +31,7 @@ interface _ScreenSelectProps extends StaticSelectProps {
 const _ScreenSelect = (props: SelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
 
     return (
         <div className={getScreenElementClassName("togglecontainer", props)}>
@@ -63,7 +64,7 @@ const ScreenSelect = (props: _ScreenSelectProps) => {
     if (typeof props.x == "undefined" || typeof props.y == "undefined") {
         return null;
     }
-    const { navigation } = React.useContext(NavigationContext);
+    const { navigation } = useNavigationContext();
     const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (

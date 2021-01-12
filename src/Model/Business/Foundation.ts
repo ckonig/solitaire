@@ -11,7 +11,6 @@ export default class Foundation implements ClickHandler {
         if (state.foundation.wouldAcceptHand(index)) {
             const src = state.hand.source;
             state.foundation.putDownHand(index) && state.game.registerMove("foundation-" + index, src, state.foundation.getTop(index));
-            this.tryDetectEnd(state);
         } else {
             this.blink(state, index);
         }
@@ -25,13 +24,4 @@ export default class Foundation implements ClickHandler {
             this.blink(state, index);
         }
     };
-
-    //@todo move this to a generic place, also detect failure
-    tryDetectEnd(state: Model) {
-        const nrofCards = state.foundation.countCards();
-        if (nrofCards === 52) {
-            state.game.isEnded = true;
-            state.game.end = Date.now();
-        }
-    }
 }

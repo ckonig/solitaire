@@ -1,9 +1,8 @@
-import GlobalContext from "../../Context";
 import React from "react";
+import useGlobalContext from "../../GlobalContext";
 
 const Hearts = () => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
     const getHearts = () => {
         if (state.settings.launchSettings.recyclingMode == "infinite") {
             return "🖤";

@@ -1,4 +1,4 @@
-import { StartScreenState } from "./StartScreen/Context";
+import { StartScreenState } from "./StartScreen/StartScreenContext";
 
 export default class StorageManager {
     hasConsent = () => {

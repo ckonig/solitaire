@@ -1,10 +1,9 @@
-import GlobalContext from "../../Context";
 import Model from "../../../Model/Model";
 import React from "react";
+import useGlobalContext from "../../GlobalContext";
 
 const Hint = () => {
-    const { state, updateContext } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state, updateContext } = useGlobalContext();
     const isVisible = (state: Model) => state.settings.suggestionMode.supportsHints || state.settings.suggestionMode.isTemporary;
 
     const isDisabled = (state: Model) => state.settings.suggestionMode.isTemporary;

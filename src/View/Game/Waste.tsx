@@ -1,13 +1,12 @@
 import Card from "./Card";
-import GlobalContext from "../Context";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
 import { useDrop } from "react-dnd";
+import useGlobalContext from "../GlobalContext";
 
 const Waste = () => {
-    const { state, updateGameContext } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state, updateGameContext } = useGlobalContext();
     useBlinkEffect((model) => model.waste);
     const getOffset = (index: number) => {
         if (state.settings.launchSettings.drawMode == "single") {

@@ -1,19 +1,12 @@
 import { ToastContentProps, toast } from "react-toastify";
 
-import GlobalContext from "../Context";
 import Model from "../../Model/Model";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
+import useGlobalContext from "../GlobalContext";
 
 const useEvaluation: (mode: string, token: number) => [number, () => void] = (mode, token) => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state)
-        return [
-            0,
-            () => {
-                throw "no state";
-            },
-        ];
+    const { state } = useGlobalContext();
     const [falseResults, setFalseResults] = React.useState<number>(0);
     const reset = () => setFalseResults(0);
     React.useEffect(() => {
@@ -32,12 +25,21 @@ const useEvaluation: (mode: string, token: number) => [number, () => void] = (mo
 };
 
 const Evaluator = (props: { token: number }) => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
     const [full, resetFull] = useEvaluation(SuggestionModes.FULL, props.token);
     const [regular, resetRegular] = useEvaluation(SuggestionModes.REGULAR, props.token);
     const [noRegularSince, setNoRegularSince] = React.useState<number>(0);
     const [noFullSince, setNoFullSince] = React.useState<number>(0);
+    //@todo move this to a generic place, also detect failure
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // const tryDetectEnd = (state: Model) => {
+    //     const nrofCards = state.foundation.countCards();
+    //     if (nrofCards === 52) {
+    //         state.game.isEnded = true;
+    //         state.game.end = Date.now();
+    //     }
+    // };
     React.useEffect(() => {
         if (!state.hand.currentCard()) {
             console.log(full, regular);

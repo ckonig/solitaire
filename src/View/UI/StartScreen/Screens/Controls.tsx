@@ -1,19 +1,20 @@
 import { ControlPresets, IControlPreset } from "../ControlsPresets";
-import StartScreenContext, { NavigationContext } from "../Context";
 
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
-import { CookieContext } from "../../../Context";
 import GamePad from "../../../../common/GamePad";
 import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
 import ScreenMainButton from "./ScreenMainButton";
 import { XY } from "../../XY";
+import useCookieContext from "../../CookieContext";
+import useNavigationContext from "../NavigationContext";
+import useStartScreenContext from "../StartScreenContext";
 
 const Controls = (props: { player: number }) => {
-    const { state, setState } = React.useContext(StartScreenContext);
-    const { navigation } = React.useContext(NavigationContext);
+    const { state, setState } = useStartScreenContext();
+    const { navigation } = useNavigationContext();
 
     const player = state.players[props.player];
 
@@ -39,7 +40,7 @@ const Controls = (props: { player: number }) => {
         console.log(pads);
     };
 
-    const { consented } = React.useContext(CookieContext);
+    const { consented } = useCookieContext();
 
     const playerHasSettings = (id: number, playerId: number) =>
         state.players[playerId].inputLayout == ControlPresets[id].inputLayout &&

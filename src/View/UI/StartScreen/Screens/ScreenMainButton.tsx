@@ -1,6 +1,6 @@
-import { NavigationContext } from "../Context";
 import React from "react";
 import { XY } from "../../XY";
+import useNavigationContext from "../NavigationContext";
 
 interface ScreenMainButtonProps {
     x?: number;
@@ -20,7 +20,7 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
 
     const pos = { x: props.x, y: props.y };
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
     const hasFocus = navigation.focus == "screen" && navigation.screen.x == props.x && navigation.screen.y == props.y;
     React.useEffect(() => {
         if (hasFocus && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
@@ -51,14 +51,7 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
         setNavigation({ ...navigation, screen: { x: props.x || 0, y: props.y || 0 } });
     };
     return (
-        <button
-            onFocus={focus}
-            ref={inputEl}
-            key={props.id}
-            disabled={props.disabled}
-            className={props.className(pos)}
-            onClick={click}
-        >
+        <button onFocus={focus} ref={inputEl} key={props.id} disabled={props.disabled} className={props.className(pos)} onClick={click}>
             {props.icon}
             {props.lines.map((line: string, index: number) => (
                 <div key={index}>{line}</div>
@@ -66,6 +59,5 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
         </button>
     );
 };
-
 
 export default ScreenMainButton;

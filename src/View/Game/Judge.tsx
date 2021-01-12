@@ -1,7 +1,7 @@
 import AutoSolve from "./AutoSolve";
 import Evaluator from "./Evaluator";
-import GlobalContext from "../Context";
 import React from "react";
+import useGlobalContext from "../GlobalContext";
 
 const Judge = () => {
     //- one checks a context from outside for final status
@@ -11,8 +11,7 @@ const Judge = () => {
     //  - check if current player won
     //  - check if there are no more valid options and offer to give up
 
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
 
     return (
         <>

@@ -19,9 +19,6 @@ export default class Dealer {
         }
 
         state.dealer.deal(state.stock, state.tableau);
-        if (state.dealer.isDealt) {
-            state.game.started = Date.now();
-        }
 
         if (!state.dealer.isDealt) {
             callback(state.dealer.dealt);
@@ -37,7 +34,6 @@ export default class Dealer {
         while (!state.dealer.isDealt) {
             state.dealer.deal(state.stock, state.tableau);
         }
-        state.game.started = Date.now();
         return state;
     };
 

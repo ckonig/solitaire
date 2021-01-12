@@ -1,5 +1,5 @@
 import { RatingSettings } from "../../../Common";
-import { StartScreenState } from "./Context";
+import { StartScreenState } from "./StartScreenContext";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 
 export interface RatingPreset {

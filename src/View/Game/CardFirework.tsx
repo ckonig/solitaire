@@ -1,12 +1,11 @@
 import CardModel from "../../Model/Deck/Card";
 import Firework from "./Firework";
-import GlobalContext from "../Context";
 import React from "react";
+import useGlobalContext from "../GlobalContext";
 
 const CardFirework = (props: { model: CardModel }) => {
-    const { state, updateContext } = React.useContext(GlobalContext);
+    const { state, updateContext } = useGlobalContext();
     const [fire, setFire] = React.useState<boolean>(false);
-    if (!state) return null;
 
     React.useEffect(() => {
         if (props.model.success) {

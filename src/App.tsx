@@ -3,11 +3,12 @@ import "./App.css";
 import { LaunchSettings, defaultPlayerSettings } from "./Common";
 
 import Deck from "./Model/Deck/Deck";
-import Game from "./View/Game/Game";
 import GameModes from "./GameModes";
 import Home from "./View/UI/StartScreen/Home";
 import React from "react";
 import SuggestionModes from "./Model/Game/Settings/SuggestionModes";
+
+const Game = React.lazy(() => import("./View/Game/Game"));
 
 const App = () => {
     const defaultState = {

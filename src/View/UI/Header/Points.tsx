@@ -1,10 +1,9 @@
-import GlobalContext from "../../Context";
 import React from "react";
 import { toast } from "react-toastify";
+import useGlobalContext from "../../GlobalContext";
 
 const Points = () => {
-    const { state } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state } = useGlobalContext();
     const showToast = () => {
         toast.info(
             <ul>

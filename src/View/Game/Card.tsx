@@ -1,12 +1,12 @@
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
-import GlobalContext from "../Context";
-import PauseContext from "../PauseContext";
+import PauseContext from "./PauseContext";
 import React from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
+import useGlobalContext from "../GlobalContext";
 
 type CardProps = {
     index: number;
@@ -39,8 +39,7 @@ const Card = (props: CardProps) => {
     }
     const model = props.models[props.index];
     ReRender.displayName = "ReRender";
-    const { state, updateGameContext } = React.useContext(GlobalContext);
-    if (!state) return null;
+    const { state, updateGameContext } = useGlobalContext();
     const pause = React.useContext(PauseContext);
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const isFocused = state.focus.hasCard(model);

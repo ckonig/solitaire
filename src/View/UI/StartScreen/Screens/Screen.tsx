@@ -1,16 +1,16 @@
 import Controls from "./Controls";
 import Difficulty from "./Difficulty";
-import { NavigationContext } from "../Context";
 import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import React from "react";
-import ScreenContext from "./Context";
+import ScreenContext from "./ScreenContext";
 import Suggestions from "./Suggestions";
+import useNavigationContext from "../NavigationContext";
 
 const Screen = (props: { screen: string }) => {
     //@todo screen can be taken from navigation context, passed to innner renderer here
     //@todo load this screen after 1st selection incl. toggles and gamepads as asynchronous components
-    const { navigation, setNavigation } = React.useContext(NavigationContext);
+    const { navigation, setNavigation } = useNavigationContext();
     //@todo closeScreen can be defined in navigationContext
     const closeScreen = () =>
         setNavigation({
