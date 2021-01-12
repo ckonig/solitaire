@@ -24,7 +24,7 @@ const useEvaluation: (mode: string, token: number) => [number, () => void] = (mo
     return [falseResults, reset];
 };
 
-const Evaluator = (props: { token: number }) => {
+const _Evaluator = (props: { token: number }) => {
     const { state } = useGlobalContext();
     const [full, resetFull] = useEvaluation(SuggestionModes.FULL, props.token);
     const [regular, resetRegular] = useEvaluation(SuggestionModes.REGULAR, props.token);
@@ -99,6 +99,11 @@ const Evaluator = (props: { token: number }) => {
         }
     }, [full, regular, state.hand.currentCard()]);
     return null;
+};
+
+const Evaluator = () => {
+    const { state } = useGlobalContext();
+    return <_Evaluator token={state.token} />;
 };
 
 export default Evaluator;

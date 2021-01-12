@@ -7,7 +7,7 @@ import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import useGlobalContext from "../GlobalContext";
 
-const AutoSolve = (props: { canAutosolve: boolean }) => {
+const _AutoSolve = (props: { canAutosolve: boolean }) => {
     const [solving, setSolving] = React.useState(false);
     const { state, updateGameContext } = useGlobalContext();
     React.useEffect(() => {
@@ -18,6 +18,11 @@ const AutoSolve = (props: { canAutosolve: boolean }) => {
     }, [props.canAutosolve]);
     const canSolve = solving && state.settings.suggestionMode.key == SuggestionModes.NONE;
     return !canSolve ? null : <Solver />;
+};
+
+const AutoSolve = () => {
+    const { state } = useGlobalContext();
+    return <_AutoSolve canAutosolve={state.canAutoSolve()} />;
 };
 
 export default AutoSolve;

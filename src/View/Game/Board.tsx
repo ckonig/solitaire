@@ -3,16 +3,17 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 import { Slide, ToastContainer } from "react-toastify";
 
+import AutoSolver from "./AutoSolver";
 import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
 import DndPreview from "../../common/DndPreview";
-import FoundationStacks from "./Foundation";
+import Evaluator from "./Evaluator";
+import Foundation from "./Foundation";
 import Header from "../UI/Header/Header";
-import Judge from "./Judge";
 import Menu from "../UI/Menu";
 import React from "react";
 import Stock from "./Stock";
-import TableauStacks from "./Tableau";
+import Tableau from "./Tableau";
 import Waste from "./Waste";
 
 type BoardProps = { mode: string };
@@ -39,13 +40,14 @@ const Board = (props: BoardProps) => {
                     <div className="board-field spacer" ref={ref}>
                         {ref.current && <DndPreview reff={ref.current} />}
                     </div>
-                    <FoundationStacks />
-                    <TableauStacks />
+                    <Foundation />
+                    <Tableau />
                 </div>
             </div>
             <Dealer />
             <BoardNavigator />
-            <Judge />
+            <AutoSolver />
+            <Evaluator />
         </>
     );
 };

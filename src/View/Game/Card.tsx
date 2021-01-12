@@ -10,7 +10,6 @@ import useGlobalContext from "../GlobalContext";
 
 type CardProps = {
     index: number;
-    accepting?: boolean;
     models: CardModel[];
     isSuggested?: (index: number) => boolean | undefined;
     isSelected?: (index: number) => boolean;
@@ -127,7 +126,6 @@ const Card = (props: CardProps) => {
         className += model.canClick() ? " clickable" : "";
         className += hasSuggestion && !isFocused ? " card-suggested" : "";
         className += isFocused ? " card-focused" : "";
-        className += props.accepting ? " card-accepts" : "";
         return className;
     };
 

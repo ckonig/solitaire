@@ -8,7 +8,6 @@ import usePrevious from "./usePrevious";
 
 const Renderer = (props: { length: number; paused: boolean; started: number }) => {
     const context = useGlobalContext();
-
     const { length, started, paused } = props;
     const previous = usePrevious({ length, paused, started });
     React.useEffect(() => {

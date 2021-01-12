@@ -3,43 +3,30 @@ import CardModel from "../../Model/Deck/Card";
 import React from "react";
 import StackBase from "./StackBase";
 import TableauModel from "../../Model/Game/Tableau";
-import TableauStack from "../../Model/Game/TableauStack";
+import TableauStackModel from "../../Model/Game/TableauStack";
 import useBlinkEffect from "./useBlinkEffect";
-import { useDrop } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
+import { useStackDrop } from "./useStackDrop";
 
-type TableauProps = { index: number; model: TableauStack; parent: TableauModel };
+type TableauProps = { index: number; model: TableauStackModel; parent: TableauModel };
 
-const TableauStacks = () => {
+const Tableau = () => {
     const { state } = useGlobalContext();
     return (
         <>
             {state.tableau.stacks.map((tableau, index) => (
-                <Tableau key={index} index={index} model={tableau} parent={state.tableau} />
+                <TableauStack key={index} index={index} model={tableau} parent={state.tableau} />
             ))}
         </>
     );
 };
-export default TableauStacks;
+export default Tableau;
 
-const Tableau = (props: TableauProps) => {
+const TableauStack = (props: TableauProps) => {
     useBlinkEffect((s) => s.tableau.stacks[props.index]);
-    const [accepting, setAccepting] = React.useState<boolean>(false);
-    const { updateGameContext, state } = useGlobalContext();
-    const [, drop] = useDrop({
-        accept: "card",
-        canDrop: (item: any) => {
-            const accepts = props.model.accepts(item.model);
-            setAccepting(accepts);
-            return accepts;
-        },
-        drop: () => {
-            updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
-        },
-    });
-
+    const { state } = useGlobalContext();
+    const drop = useStackDrop(props.model);
     const cards = state.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
-
     let offset = 1;
     const getOffset = (index: number, cards: CardModel[]) => {
         for (let i = 0; i <= index; i++) {
@@ -58,7 +45,6 @@ const Tableau = (props: TableauProps) => {
             <Card
                 index={0}
                 key={0}
-                accepting={accepting}
                 models={cards}
                 blink={props.model.blinkFor}
                 isSuggested={(index) => props.model.suggestion && props.model.stack.length - 1 == index}

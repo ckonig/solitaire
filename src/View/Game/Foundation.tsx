@@ -1,39 +1,31 @@
 import Card from "./Card";
-import FoundationStack from "../../Model/Game/FoundationStack";
+import FoundationStackModel from "../../Model/Game/FoundationStack";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
-import { useDrop } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
+import { useStackDrop } from "./useStackDrop";
 
-type FoundationProps = { index: number; model: FoundationStack };
+type FoundationProps = { index: number; model: FoundationStackModel };
 
-const FoundationStacks = () => {
+const Foundation = () => {
     const { state } = useGlobalContext();
     return (
         <>
             {state.foundation.stacks.map((foundation, index) => (
-                <Foundation key={index} model={foundation} index={index} />
+                <FoundationStack key={index} model={foundation} index={index} />
             ))}
         </>
     );
 };
 
-export default FoundationStacks;
+export default Foundation;
 
-const Foundation = (props: FoundationProps) => {
+const FoundationStack = (props: FoundationProps) => {
     useBlinkEffect((model) => model.foundation.stacks[props.index]);
-    const { updateGameContext, state } = useGlobalContext();
+    const { state } = useGlobalContext();
     const model = props.model;
-    const [, drop] = useDrop({
-        accept: "card",
-        canDrop: (item: any) => {
-            return props.model.accepts(item.model);
-        },
-        drop: () => {
-            updateGameContext(props.model.clickEmpty({ isKeyBoard: false }));
-        },
-    });
+    const drop = useStackDrop(props.model);
     const cards = state.hand.source == model.source ? [...model.stack, ...state.hand.stack] : [...model.stack];
     return (
         <div className="board-field" key={props.index} ref={drop}>

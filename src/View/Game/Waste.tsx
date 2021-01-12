@@ -2,11 +2,11 @@ import Card from "./Card";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
-import { useDrop } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
+import { useStackDrop } from "./useStackDrop";
 
 const Waste = () => {
-    const { state, updateGameContext } = useGlobalContext();
+    const { state } = useGlobalContext();
     useBlinkEffect((model) => model.waste);
     const getOffset = (index: number) => {
         if (state.settings.launchSettings.drawMode == "single") {
@@ -25,23 +25,12 @@ const Waste = () => {
         return ((index - length - 2) % 3) + additionalOffset;
     };
 
-    const [, _drop] = useDrop({
-        accept: "card",
-        // eslint-disable-next-line no-unused-vars
-        canDrop: () => {
-            const accepts = state.hand.isFromWaste();
-            //setAccepting(accepts);
-            return accepts;
-        },
-        drop: () => {
-            updateGameContext(state.waste.clickEmpty({ isKeyBoard: false }));
-        },
-    });
+    const drop = useStackDrop(state.waste, () => state.hand.isFromWaste());
 
     const cards = state?.hand.source == state.waste.source ? [...state.waste.stack, ...state.hand.stack] : [...state.waste.stack];
 
     return (
-        <div className="board-field" ref={_drop}>
+        <div className="board-field" ref={drop}>
             <StackBase model={state.waste} />
             <Card
                 index={0}
