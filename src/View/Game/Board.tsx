@@ -5,9 +5,7 @@ import { Slide, ToastContainer } from "react-toastify";
 
 import BoardNavigator from "./Navigation/BoardNavigator";
 import Dealer from "./Dealer";
-import { DndProvider } from "react-dnd-multi-backend";
 import FoundationStacks from "./Foundation";
-import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
 import Header from "../UI/Header/Header";
 import Judge from "./Judge";
 import Menu from "../UI/Menu";
@@ -48,7 +46,7 @@ const Board = (props: BoardProps) => {
     //@todo use different IDs for draggable/droppable elements per user
     //then have central provider that lives forever
     return (
-        <DndProvider options={HTML5toTouch}>
+        <>
             <Menu />
             <Header mode={props.mode} />
             <ToastContainer
@@ -75,7 +73,7 @@ const Board = (props: BoardProps) => {
             <Dealer />
             <BoardNavigator />
             <Judge />
-        </DndProvider>
+        </>
     );
 };
 
