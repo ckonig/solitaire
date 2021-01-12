@@ -33,8 +33,4 @@ jobs:
 
             # Runs a set of commands using the runners shell
             - name: Build the package
-              run: |
-                  git config --global user.name $user_name
-                  git config --global user.email $user_email
-                  git remote set-url origin https://${github_token}@github.com/${repository}
-                  npm run predeploy
+              run: npm run predeploy
