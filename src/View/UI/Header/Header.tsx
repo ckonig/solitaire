@@ -15,7 +15,7 @@ const Header = (props: {mode: string}) => (
             <Points />
         </div>
         <Clock />
-        <div className="header-buttons">
+        <div className="header-buttons header-right">
             <Hint />
             <Undo />
             <ToggleMenu />

@@ -4,7 +4,6 @@ import Settings from "./Settings";
 export interface AppliedRating {
     points: number;
     text: string;
-    notified?: boolean;
 }
 
 export interface AppliedRatingWithId extends AppliedRating {
@@ -22,18 +21,6 @@ export default class Rating {
         this.multiplicator = 1;
         this.ratings = [];
     }
-
-    hasNotifications = () => {
-        return this.ratings.filter((r) => !r.notified).length > 0;
-    };
-
-    getNextNotification = () => {
-        return this.ratings.map((r, id) => ({ ...r, id })).filter((r) => !r.notified)[0];
-    };
-
-    setNotified = (n: number) => {
-        this.ratings[n].notified = true;
-    };
 
     applyRating = (points: number, text: string) => {
         console.debug("RATING:", text);

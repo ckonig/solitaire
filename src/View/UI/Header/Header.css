@@ -6,9 +6,8 @@
     font-size: 1.5em;
     padding-top: 0em;
 }
-
-.header-clock,
-.header-title {
+.heart-container,
+.header-clock {
     margin-top: 0.15em;
     margin-bottom: 0.25em;
     float: left;
@@ -18,12 +17,12 @@
     margin-left: 1em;
 }
 
-.header-buttons {
+.header-right {
     float: right;
     padding-right: 0.5em;
 }
 
-.header-buttons > div {
+.header > div > div {
     float: left;
 }
 
@@ -35,15 +34,14 @@
 
 .heart-container {
     margin-left: 0.5em;
-    float: left;
     text-align: left;
 }
 
-.header-buttons > div > button:disabled {
+.header > div > div > button:disabled {
     color: gray;
 }
 
-.header-buttons > div > button {
+.header > div > div > button {
     padding-top: 0em;
     margin-left: 0.75em;
     border-radius: 0.5em;
@@ -54,10 +52,10 @@
     background-color: transparent;
 }
 
-.singleplayer .header-buttons > div > button {
+.singleplayer .header > div > div > button {
     width: 1.5em;
 }
 
-.splitscreen .header-buttons > div > button {
+.splitscreen .header > div > div > button {
     width: 1.5em;
 }
