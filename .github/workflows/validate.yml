@@ -1,11 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Validate
 
 # Controls when the action will run.
 on:
     # Triggers the workflow on push or pull request events but only for the master branch
-    push:
+    pull_request:
         branches: [master]
 
     # Allows you to run this workflow manually from the Actions tab
@@ -32,14 +32,9 @@ jobs:
               run: npm install
 
             # Runs a set of commands using the runners shell
-            - name: Deploy to GitHub page
+            - name: Build the package
               run: |
                   git config --global user.name $user_name
                   git config --global user.email $user_email
                   git remote set-url origin https://${github_token}@github.com/${repository}
-                  npm run deploy
-              env:
-                  user_name: "github-actions[bot]"
-                  user_email: "github-actions[bot]@users.noreply.github.com"
-                  github_token: ${{ secrets.DEPLOYKEY }}
-                  repository: ${{ github.repository }}
+                  npm run predeploy
