@@ -29,7 +29,6 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
         setConsented,
     };
 
-    //@todo start() can be defined in StartScreenContext
     const start = (boardMode: string) => {
         const settings = {
             ...DifficultyOptions[state.difficultySettings].settings,

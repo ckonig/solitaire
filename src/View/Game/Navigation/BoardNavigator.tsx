@@ -75,7 +75,7 @@ const BoardNavigator = () => {
         },
 
         onUndo: () => {
-            //@todo use gamestate token to avoid double processing
+            //@todo use GlobalState token to avoid double processing
             replaceContext((_state) => {
                 const previous = _state.game.timemachine.popPreviousState(state.game.timemachine.previousStates.length - 1, state);
                 if (previous) {
