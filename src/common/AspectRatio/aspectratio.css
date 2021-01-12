@@ -1,5 +1,6 @@
 .appwrapper {
     text-align: center;
+    overflow: hidden;
 }
 .appwrapper-jail {
     position: absolute;
