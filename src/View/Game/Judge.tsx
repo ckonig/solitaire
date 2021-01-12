@@ -87,7 +87,13 @@ const Solver = () => {
 
 const useEvaluation: (mode: string, token: number) => [number, () => void] = (mode, token) => {
     const { state } = React.useContext(GlobalContext);
-    if (!state) return [0, () => {}];
+    if (!state)
+        return [
+            0,
+            () => {
+                throw "no state";
+            },
+        ];
     const [falseResults, setFalseResults] = React.useState<number>(0);
     const reset = () => setFalseResults(0);
     React.useEffect(() => {

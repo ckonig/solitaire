@@ -27,37 +27,37 @@ export type ISuggestionMode = {
 };
 
 export default class SuggestionModes {
-    static NONE: string = "NONE";
-    static SCORED: string = "SCORED";
-    static REGULAR: string = "REGULAR";
-    static FULL: string = "FULL";
-    static ONCE: string = "ONCE";
-    static TWICE: string = "TWICE";
+    static NONE = "NONE";
+    static SCORED = "SCORED";
+    static REGULAR = "REGULAR";
+    static FULL = "FULL";
+    static ONCE = "ONCE";
+    static TWICE = "TWICE";
     static raw: { [id: string]: ISuggestionMode } = {
         NONE: {
             label: "None",
-            description: 'No distractions. This enables one-time hints.',
+            description: "No distractions. This enables one-time hints.",
             supportsHints: true,
             icon: "❌",
         },
         SCORED: {
             label: "Scored",
-            description: 'Shows all actions that increase the score.',
+            description: "Shows all actions that increase the score.",
             icon: "🏆",
         },
         REGULAR: {
             label: "Regular",
-            description: 'Shows all possible actions except circular',
+            description: "Shows all possible actions except circular",
             icon: "💡",
         },
         FULL: {
             label: "Full",
-            description: 'Shows all possible actions, even if they are circular',
+            description: "Shows all possible actions, even if they are circular",
             icon: "🎓",
         },
         ONCE: {
             label: "Single Action",
-            description: 'triggered by manual hint in game',
+            description: "triggered by manual hint in game",
             isTemporary: true,
             next: "NONE",
             icon: "⏳",

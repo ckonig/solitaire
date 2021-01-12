@@ -1,26 +1,17 @@
 import BasicStack from "./BasicStack";
 import Card from "../Deck/Card";
-import { IStack } from "./IStack";
 import Settings from "./Settings";
-import { XY } from "../../View/UI/XY";
 
-export default class Stock extends BasicStack implements IStack {
+export default class Stock extends BasicStack {
     settings: Settings;
     recyclings: number;
     passes: number;
-    blinkFor: number;
-    unblink: () => void;
-    clickEmpty: (p: any) => (s: any) => void;
     constructor(stack: Card[], settings: Settings) {
         super("stock");
         this.settings = settings;
         this.stack = stack.map(this.setCardProperties);
         this.recyclings = 0;
         this.passes = -1;
-        // eslint-disable-next-line no-unused-vars
-        this.blinkFor = 0;
-        this.unblink = () => {};
-        this.clickEmpty = () => () => {};
         if (this.settings.launchSettings.recyclingMode == "1-pass") {
             this.passes = 1;
         }
@@ -29,10 +20,10 @@ export default class Stock extends BasicStack implements IStack {
         }
     }
 
-    setOnClick = (onClick: (c: any, p: XY, i: any) => (s: any) => void) => {
+    setOnClick = (onClick: (c: any, p: any, i: any) => (s: any) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
         this.stack.forEach((card, index) => {
-            card.onClick = (p: XY) => onClick({ ...card }, p, null);
+            card.onClick = (p: any) => onClick({ ...card }, p, null);
             card.canClick = () => index == this.stack.length - 1;
         });
     };

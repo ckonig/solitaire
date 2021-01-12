@@ -2,27 +2,19 @@ import Card from "../Deck/Card";
 import Hand from "./Hand";
 import HandHoldingStack from "./HandHoldingStack";
 import Settings from "./Settings";
-import { XY } from "../../View/UI/XY";
 
 export default class Waste extends HandHoldingStack {
     settings: Settings;
-    blinkFor: number;
-    unblink: () => void;
-    clickEmpty: (p: any) => (s: any) => void;
     constructor(settings: Settings, hand: Hand) {
         super("waste", hand);
         this.settings = settings;
-        // eslint-disable-next-line no-unused-vars
-        this.blinkFor = 0;
-        this.unblink = () => {};
-        this.clickEmpty = () => () => {};
     }
 
     //@todo include hand content for proper canClick
-    setOnClick = (onClick: (c: any, p: XY, i: any) => (s: any) => void) => {
+    setOnClick = (onClick: (c: any, p: any, i: any) => (s: any) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
         this.stack.forEach((card, index) => {
-            card.onClick = (p: XY) => onClick({ ...card }, p, null);
+            card.onClick = (p: any) => onClick({ ...card }, p, null);
             card.canClick = () => index == this.stack.length - 1;
         });
         this.hand.setOnClick(this);

@@ -19,7 +19,8 @@ export default class Card {
         this.suggestion = false;
         this.success = 0;
         this.canClick = () => false;
-        // eslint-disable-next-line no-unused-vars
+        
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         this.onClick = (_p) => (s: any) => {};
     }
 

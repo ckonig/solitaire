@@ -3,7 +3,12 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -11,8 +16,11 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": ["react", "prefer-arrow"],
+    "plugins": ["react", "prefer-arrow", "@typescript-eslint", "eslint-plugin-node"],
     "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-empty-function": 0,
         "react/prop-types": 0,
         "no-var": 1,
         "prefer-const": [
@@ -25,11 +33,11 @@
         "prefer-arrow/prefer-arrow-functions": [
             "warn",
             {
-              "disallowPrototype": true,
-              "singleReturnOnly": false,
-              "classPropertiesAllowed": false
+                "disallowPrototype": true,
+                "singleReturnOnly": false,
+                "classPropertiesAllowed": false
             }
-          ]
+        ]
     },
-    "parser": "babel-eslint"
+    "parser": "@typescript-eslint/parser"
 }

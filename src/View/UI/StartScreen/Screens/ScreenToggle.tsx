@@ -12,7 +12,7 @@ interface StaticScreenToggleProps {
     label: string;
     description: string;
     disabled?: boolean;
-    callBack: (s: boolean) => void;
+    callBack?: (s: boolean) => void;
     autoFocus?: boolean;
 }
 
@@ -33,7 +33,7 @@ const _ScreenToggle = (props: ToggleProps) => {
     const { navigation, setNavigation } = React.useContext(NavigationContext);
     const change = (val: boolean, pos: XY) => {
         setNavigation({ ...navigation, screen: pos });
-        props.callBack(val);
+        props.callBack && props.callBack(val);
     };
     useInitialFocus(props, inputEl, navigation.screen);
     return (

@@ -1,7 +1,7 @@
 import GlobalContext from "../Context";
 import React from "react";
 
-const Dealer: () => any = () => {
+const Dealer = () => {
     const { state, replaceContext } = React.useContext(GlobalContext);
     if (!state) return null;
     const timeouts: any[] = [];
@@ -28,7 +28,6 @@ const Dealer: () => any = () => {
                     clearTimeout(timeout);
                 });
         }, []);
-        React.useEffect(() => {}, [state.dealer.isDealt]);
     }
     return null;
 };

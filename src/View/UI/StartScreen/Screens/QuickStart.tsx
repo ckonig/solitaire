@@ -114,7 +114,6 @@ const QuickStart = () => {
                         label="Auto Deal"
                         description="Should the game draw one card from the stock every 5 seconds?"
                         value={false}
-                        callBack={() => {}}
                     />
                 </Row>
             </ScreenContent>

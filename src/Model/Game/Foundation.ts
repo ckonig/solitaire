@@ -5,19 +5,14 @@ import Suits, { Suit } from "../Deck/Suits";
 import Card from "../Deck/Card";
 import Hand from "./Hand";
 import HandHoldingStack from "./HandHoldingStack";
-import { IStack } from "./IStack";
 import Settings from "./Settings";
-import { XY } from "../../View/UI/XY";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
-export class FoundationStack extends HandHoldingStack implements IStack {
-    setOnClick: () => void = () => {};
+export class FoundationStack extends HandHoldingStack {
     acceptedCards: string[] = [];
     usedCards: any[] = [];
-    icon: string = "";
-    color: string = "";
-    blinkFor: number = 0;
-    clickEmpty: (p: any) => any = () => {};
+    icon = "";
+    color = "";
     getCurrentAccepted = () => {
         return this.acceptedCards[this.acceptedCards.length - 1];
     };
@@ -26,13 +21,19 @@ export class FoundationStack extends HandHoldingStack implements IStack {
         const currentAccepted = this.getCurrentAccepted();
         return this.icon == card.type.icon && currentAccepted == card.face;
     };
+    setOnClick = (onClick: (c: any, p: any) => (s: any) => void) => {
+        this.clickEmpty = (p) => onClick(null, p);
+        this.stack.forEach((card, sindex) => {
+            card.onClick = (p: any) => onClick({ ...card }, p);
+            card.canClick = () => sindex == this.stack.length - 1;
+        });
+        this.hand.setOnClick(this);
+    };
 }
 export default class Foundation {
     settings: Settings;
     hand: Hand;
     stacks: FoundationStack[];
-    blinkFor: number;
-    unblink: () => void;
     constructor(settings: Settings, hand: Hand) {
         this.settings = settings;
         this.hand = hand;
@@ -48,22 +49,14 @@ export default class Foundation {
         };
         const stacks = Object.keys(Suits)
             .map((key: string) => Suits[key])
-            .map((suit, index) => (template(index, suit)));
+            .map((suit, index) => template(index, suit));
         this.stacks = [...stacks];
-        // eslint-disable-next-line no-unused-vars
-        this.blinkFor = 0;
-        this.unblink = () => {};
     }
 
     //@todo include hand content for proper canClick
-    setOnClick = (onClick: (c: any, p: XY, index: number) => (s: any) => void) => {
+    setOnClick = (onClick: (c: any, p: any, index: number) => (s: any) => void) => {
         this.stacks.forEach((stack, index) => {
-            stack.clickEmpty = (p) => onClick(null, p, index);
-            stack.stack.forEach((card, sindex) => {
-                card.onClick = (p: XY) => onClick({ ...card }, p, index);
-                card.canClick = () => sindex == stack.stack.length - 1;
-            });
-            this.hand.setOnClick(stack);
+            stack.setOnClick((c: any, p: any) => onClick(c, p, index));
         });
     };
 

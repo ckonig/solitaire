@@ -65,7 +65,9 @@ export const NavigationContext = React.createContext<INavigationContext>({
         mainMenu: "",
         screeen: "",
     },
-    setNavigation: () => {},
+    setNavigation: () => {
+        console.log("todo implement");
+    },
 });
 
 const StartScreenContext = React.createContext<IStartScreenContext>({
@@ -78,7 +80,9 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         suggestionMode: SuggestionModes.REGULAR,
         players: defaultPlayerSettings,
     },
-    setState: () => {},
+    setState: () => {
+        console.log("todo implement");
+    },
 });
 
 export const Provider = StartScreenContext.Provider;
