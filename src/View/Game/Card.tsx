@@ -263,10 +263,14 @@ const FireworkWatcher = (props: { model: CardModel }) => {
         }
     }, [state?.token, props.model.success]);
     const FireWork = () => {
-        const count = 200;
+        const count = 100;
         const defaults = {
             ticks: 50,
             origin,
+            particleCount: 40,
+            startVelocity: 20,
+            decay:0.8,
+            spread: 360,
         };
 
         const fire = (particleRatio: any, opts: any) => {
@@ -277,30 +281,32 @@ const FireworkWatcher = (props: { model: CardModel }) => {
             );
         };
 
+ 
+
         fire(0.25, {
-            spread: 48,
+            //spread: 48,
             startVelocity: 55,
         });
         fire(0.2, {
-            spread: 120,
+            //spread: 120,
         });
         fire(0.35, {
-            spread: 160,
+           // spread: 160,
             decay: 0.91,
             scalar: 0.8,
         });
         fire(0.1, {
-            spread: 200,
+            //spread: 200,
             startVelocity: 25,
             decay: 0.92,
             scalar: 1.2,
         });
         fire(0.1, {
-            spread: 240,
+            //spread: 240,
             startVelocity: 45,
         });
         fire(0.1, {
-            spread: 359,
+            //spread: 359,
             startVelocity: 45,
         });
         return null;
