@@ -7,7 +7,13 @@ import useGlobalContext from "../GlobalContext";
 const EndScreen = () => {
     const { state, restart } = useGlobalContext();
     const pause = React.useContext(PauseContext);
+    
     //@todo show launch settings (draw mode, recycling mode)
+
+    //@todo show win or lose situation
+
+    //todo also support "give up" scenario if out of options?
+    
     return !state.game.isEnded ? null : (
         <div className="ui neutral endscreen">
             <div className="title">🥳</div>

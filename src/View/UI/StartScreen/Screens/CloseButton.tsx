@@ -1,8 +1,8 @@
 import React from "react";
-import ScreenContext from "./ScreenContext";
+import useNavigationContext from "../NavigationContext";
 
 const CloseButton = () => {
-    const { closeScreen } = React.useContext(ScreenContext);
+    const { closeScreen } = useNavigationContext();
     return (
         <div className="closer">
             <button onClick={closeScreen}>🗙</button>

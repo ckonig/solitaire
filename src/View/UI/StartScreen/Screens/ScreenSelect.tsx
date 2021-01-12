@@ -17,7 +17,7 @@ interface StaticSelectProps {
     callBack: (s: string) => void;
 }
 
-interface SelectProps extends StaticSelectProps {
+interface ScreenSelectProps extends StaticSelectProps {
     x: number;
     y: number;
     hasFocus: boolean;
@@ -28,7 +28,7 @@ interface _ScreenSelectProps extends StaticSelectProps {
     y?: number;
 }
 
-const _ScreenSelect = (props: SelectProps) => {
+const _ScreenSelect = (props: ScreenSelectProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { navigation, setNavigation } = useNavigationContext();

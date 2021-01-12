@@ -30,7 +30,8 @@ const _Evaluator = (props: { token: number }) => {
     const [regular, resetRegular] = useEvaluation(SuggestionModes.REGULAR, props.token);
     const [noRegularSince, setNoRegularSince] = React.useState<number>(0);
     const [noFullSince, setNoFullSince] = React.useState<number>(0);
-    //@todo move this to a generic place, also detect failure
+    
+    //@todo re-enable win detection
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // const tryDetectEnd = (state: Model) => {

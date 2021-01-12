@@ -1,7 +1,7 @@
 import "./StartScreen/Menu.scss";
 
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
-import useNavigationContext, { NavigationProvider, NavigationState } from "./StartScreen/NavigationContext";
+import useNavigationContext, { NavigationProvider } from "./StartScreen/NavigationContext";
 
 import { BoardContext } from "../Game/BoardContext";
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
@@ -16,25 +16,8 @@ import { XY } from "./XY";
 import useGlobalContext from "../GlobalContext";
 
 const _Menu = () => {
-    const [navigation, setNavigation] = React.useState<NavigationState>({
-        menu: {
-            x: 0,
-            y: 0,
-        },
-        screen: {
-            x: 0,
-            y: 0,
-        },
-        focus: "menu",
-        mainMenu: "",
-        screeen: "",
-    });
-    const navigationContext = {
-        navigation,
-        setNavigation,
-    };
     return (
-        <NavigationProvider value={navigationContext}>
+        <NavigationProvider>
             <Menu />
         </NavigationProvider>
     );

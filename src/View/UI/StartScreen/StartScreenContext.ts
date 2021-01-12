@@ -46,7 +46,8 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
     setState: () => {},
 });
 
-export const Provider = StartScreenContext.Provider;
+export const StartScreenProvider = StartScreenContext.Provider;
 
 const useStartScreenContext = () => React.useContext(StartScreenContext);
+
 export default useStartScreenContext;

@@ -1,10 +1,10 @@
-import { NavigationProvider, NavigationState } from "./NavigationContext";
-import { Provider, StartScreenState, defaultStartScreenState } from "./StartScreenContext";
+import { StartScreenProvider, StartScreenState, defaultStartScreenState } from "./StartScreenContext";
 
 import AspectRatio from "../../../common/AspectRatio/AspectRatio";
 import { CookieContextProvider } from "../CookieContext";
 import DifficultyOptions from "./DifficultyOptions";
 import { LaunchSettings } from "../../../Common";
+import { NavigationProvider } from "./NavigationContext";
 import Ratios from "../../../common/AspectRatio/Ratios";
 import React from "react";
 import Screen from "./Screens/Screen";
@@ -13,20 +13,6 @@ import StorageManager from "../StorageManager";
 
 const Home = (props: { start: (settings: LaunchSettings) => void }) => {
     const storage = new StorageManager();
-
-    const startPos = { x: 0, y: 0 };
-    const [navigation, setNavigation] = React.useState<NavigationState>({
-        menu: { ...startPos },
-        screen: { ...startPos },
-        focus: "menu",
-        mainMenu: "",
-        screeen: "",
-    });
-    const navigationContext = {
-        navigation,
-        setNavigation,
-    };
-
     const previous = storage.getPreviousState();
     const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
     const startScreenContext = {
@@ -62,14 +48,14 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
 
     return (
         <AspectRatio ratio={Ratios._16to9}>
-            <Provider value={startScreenContext}>
-                <NavigationProvider value={navigationContext}>
+            <StartScreenProvider value={startScreenContext}>
+                <NavigationProvider>
                     <CookieContextProvider value={cookieContext}>
                         <StartMenu start={start} />
-                        <Screen screen={navigation.screeen} />
+                        <Screen />
                     </CookieContextProvider>
                 </NavigationProvider>
-            </Provider>
+            </StartScreenProvider>
         </AspectRatio>
     );
 };
