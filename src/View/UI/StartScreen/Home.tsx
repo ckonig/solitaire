@@ -1,8 +1,10 @@
 import { NavigationProvider, NavigationState, Provider, StartScreenState, defaultStartScreenState } from "./Context";
 
+import AspectRatio from "../../../common/AspectRatio/AspectRatio";
 import { CookieContextProvider } from "../../Context";
 import DifficultyOptions from "./DifficultyOptions";
 import { LaunchSettings } from "../../../Common";
+import Ratios from "../../../common/AspectRatio/Ratios";
 import React from "react";
 import Screen from "./Screens/Screen";
 import StartMenu from "./Menu/StartMenu";
@@ -11,7 +13,6 @@ import StorageManager from "../StorageManager";
 const Home = (props: { start: (settings: LaunchSettings) => void }) => {
     const storage = new StorageManager();
 
-    //@todo wrap into custom hook
     const startPos = { x: 0, y: 0 };
     const [navigation, setNavigation] = React.useState<NavigationState>({
         menu: { ...startPos },
@@ -25,7 +26,6 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
         setNavigation,
     };
 
-    //@todo wrap into custom hook
     const previous = storage.getPreviousState();
     const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
     const startScreenContext = {
@@ -35,8 +35,7 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
             storage.store(s);
         },
     };
-    
-    //@todo wrap into custom hook
+
     const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
     const cookieContext = {
         consented,
@@ -61,14 +60,16 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
     };
 
     return (
-        <Provider value={startScreenContext}>
-            <NavigationProvider value={navigationContext}>
-                <CookieContextProvider value={cookieContext}>
-                    <StartMenu start={start} />
-                    <Screen screen={navigation.screeen} />
-                </CookieContextProvider>
-            </NavigationProvider>
-        </Provider>
+        <AspectRatio ratio={Ratios._16to9}>
+            <Provider value={startScreenContext}>
+                <NavigationProvider value={navigationContext}>
+                    <CookieContextProvider value={cookieContext}>
+                        <StartMenu start={start} />
+                        <Screen screen={navigation.screeen} />
+                    </CookieContextProvider>
+                </NavigationProvider>
+            </Provider>
+        </AspectRatio>
     );
 };
 export default Home;
