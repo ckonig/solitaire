@@ -1,4 +1,4 @@
-import { BoardContext } from "../BoardWrap";
+import { BoardContext } from "../BoardContext";
 import BoardGamePad from "./BoardGamePad";
 import BoardKeyboard from "./BoardKeyboard";
 import GlobalContext from "../../Context";

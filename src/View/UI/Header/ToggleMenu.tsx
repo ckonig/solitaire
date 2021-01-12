@@ -1,4 +1,4 @@
-import { BoardContext } from "../../Game/BoardWrap";
+import { BoardContext } from "../../Game/BoardContext";
 import PauseContext from "../../PauseContext";
 import React from "react";
 

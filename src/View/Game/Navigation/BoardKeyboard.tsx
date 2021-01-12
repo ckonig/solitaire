@@ -1,6 +1,6 @@
 import { Universal, getKeyboardLayout } from "../../../common/KeyboardLayouts";
 
-import { BoardContext } from "../BoardWrap";
+import { BoardContext } from "../BoardContext";
 import { CustomInputProps } from "./CustomInputProps";
 import GameModes from "../../../GameModes";
 import GlobalContext from "../../Context";

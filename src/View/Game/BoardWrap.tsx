@@ -1,17 +1,12 @@
 import { LaunchSettings, StateReplacer, StateUpdater } from "../../Common";
 
 import Board from "./Board";
+import {BoardProvider} from "./BoardContext";
 import Deck from "../../Model/Deck/Deck";
 import EndScreen from "../UI/EndScreen";
 import Model from "../../Model/Model";
 import { Provider } from "../Context";
 import React from "react";
-
-export const BoardContext = React.createContext({
-    player: 0,
-});
-
-const BoardProvider = BoardContext.Provider;
 
 interface BoardWrapProps {
     settings: LaunchSettings;
@@ -20,7 +15,7 @@ interface BoardWrapProps {
     player: number;
 }
 
-//We use class component here because setState allows partial updates 
+//We use class component here because setState allows partial updates
 export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
     constructor(props: BoardWrapProps) {
         super(props);

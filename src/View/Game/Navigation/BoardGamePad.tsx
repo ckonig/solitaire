@@ -1,4 +1,4 @@
-import { BoardContext } from "../BoardWrap";
+import { BoardContext } from "../BoardContext";
 import { CustomInputProps } from "./CustomInputProps";
 import GameModes from "../../../GameModes";
 import GamePad from "../../../common/GamePad";

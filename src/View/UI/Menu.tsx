@@ -3,7 +3,7 @@ import "./StartScreen/Menu.scss";
 import { NavigationContext, NavigationProvider, NavigationState } from "./StartScreen/Context";
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
 
-import { BoardContext } from "../Game/BoardWrap";
+import { BoardContext } from "../Game/BoardContext";
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
 import GameModes from "../../GameModes";
 import GlobalContext from "../Context";
