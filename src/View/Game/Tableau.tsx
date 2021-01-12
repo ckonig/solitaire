@@ -1,10 +1,10 @@
-import TableauModel, { TableauStack } from "../../Model/Game/Tableau";
-
 import Card from "./Card";
 import CardModel from "../../Model/Deck/Card";
 import GlobalContext from "../Context";
 import React from "react";
 import StackBase from "./StackBase";
+import TableauModel from "../../Model/Game/Tableau";
+import TableauStack from "../../Model/Game/TableauStack";
 import useBlinkEffect from "./useBlinkEffect";
 import { useDrop } from "react-dnd";
 

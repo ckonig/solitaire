@@ -1,5 +1,5 @@
 import Card from "./Card";
-import { FoundationStack } from "../../Model/Game/Foundation";
+import FoundationStack from "../../Model/Game/FoundationStack";
 import GlobalContext from "../Context";
 import React from "react";
 import StackBase from "./StackBase";
