@@ -27,7 +27,6 @@ const AutoSolve = () => {
 
 export default AutoSolve;
 
-//@todo auto-uncover as feature, in which case action is not undoable
 //@todo also start general confetti firework elements when autosolving
 
 const Solver = () => {
