@@ -1,3 +1,4 @@
+import Card from "../../Model/Deck/Card";
 import Model from "../../Model/Model";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
@@ -17,14 +18,14 @@ const FailDetector = () => {
         setNonStockSuggestions(copy.hasNonStockSuggestions());
     }, [state.token]);
 
+    const [stockSuggestionCards, setStockSuggestionCards] = React.useState<Card[]>([]);
+
     React.useEffect(() => {
         if (!state.hand.currentCard()) {
             //fail detection never ends the game, merely offers to quit or keep trying
             //it also aquaints the user with the possibiltiy of undoing or restarting to be helpful
-            if (!suggestions) {
-                //@todo SIMPLE FAIL DETECTION
-                //no full suggestions = no moves possible mean fail unless all cards are in foundation
-                console.log("no suggestions - looks like a loss");
+            if (nonStockSuggestions) {
+                setStockSuggestionCards([]);
             } else if (stockSuggestions && !nonStockSuggestions) {
                 //@todo CYCLING FAIL DETECTION
                 //even with a full suggestion available, the situation may be hopeless
@@ -37,9 +38,23 @@ const FailDetector = () => {
                 //once list has same length as stock + waste + hand(waste) we know it's over
                 //once we find a non-stock suggestion we empty out the list
                 console.log("only stock suggestions are suspicious, start to track cycle");
+                const top = state.stock.getTop();
+                if (top) {
+                    setStockSuggestionCards([...stockSuggestionCards, top]);
+                } 
+                if (state.stock.stack.length + state.waste.stack.length <= stockSuggestionCards.length) {
+                    console.log('we made a full cycle through the deck and had only stock suggestions, looks like a loss')
+                }
+                //however this whole fancy thing doesn't work if there are useless "full" suggestions.
+                //if the user is in full mode, and ignores these, it's a sign it's over
+                //if the user is in regular mode or lesser, we can recommend 
+            } else if (!suggestions) {
+                //@todo SIMPLE FAIL DETECTION
+                //no full suggestions = no moves possible mean fail unless all cards are in foundation
+                console.log("no suggestions - looks like a loss");
             }
         }
-    }, [suggestions, stockSuggestions, nonStockSuggestions]);
+    }, [suggestions, stockSuggestions, nonStockSuggestions, state.token]);
     return null;
 };
 
