@@ -1,10 +1,10 @@
-import GameContext from "./GameContext";
 import React from "react";
+import useGameContext from "./GameContext";
 import useGlobalContext from "../GlobalContext";
 
 const Dealer = () => {
     const { state, replaceContext } = useGlobalContext();
-    const { gameState, start } = React.useContext(GameContext);
+    const { gameState, start } = useGameContext();
     React.useEffect(() => {
         if (!gameState.started) {
             const timeouts: any[] = [];

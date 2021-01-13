@@ -47,11 +47,13 @@ const FailDetector = () => {
                 }
                 //however this whole fancy thing doesn't work if there are useless "full" suggestions.
                 //if the user is in full mode, and ignores these, it's a sign it's over
-                //if the user is in regular mode or lesser, we can recommend 
+                //if the user is in regular mode or lesser, we could recommend switching to full suggestions
+                //but that's not really the job of a faildetector
             } else if (!suggestions) {
                 //@todo SIMPLE FAIL DETECTION
                 //no full suggestions = no moves possible mean fail unless all cards are in foundation
                 console.log("no suggestions - looks like a loss");
+                //@todo implement menu clone that suggests to stop since there is nothing to do anymore
             }
         }
     }, [suggestions, stockSuggestions, nonStockSuggestions, state.token]);

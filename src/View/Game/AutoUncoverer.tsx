@@ -1,5 +1,5 @@
-import GameContext from "./GameContext";
 import React from "react";
+import useGameContext from "./GameContext";
 import useGlobalContext from "../GlobalContext";
 
 const Uncoverer = () => {
@@ -18,7 +18,7 @@ const Uncoverer = () => {
 
 const AutoUncoverer = () => {
     const { state } = useGlobalContext();
-    const { gameState } = React.useContext(GameContext);
+    const { gameState } = useGameContext();
     return !!state.settings.launchSettings.autoUncover && !!gameState.started && <Uncoverer /> || null;
 };
 

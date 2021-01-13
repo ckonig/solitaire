@@ -1,9 +1,8 @@
-import GameContext, { IGameState, defaultGameState } from "./GameContext";
-
 import AspectRatio from "../../common/AspectRatio/AspectRatio";
 import BoardWrap from "./BoardWrap";
 import Deck from "../../Model/Deck/Deck";
 import DelayedSuspense from "../../common/DelayedSuspense";
+import { GameContextProvider } from "./GameContext";
 import GameModes from "../../GameModes";
 import { LaunchSettings } from "../../Common";
 import { PauseProvider } from "./PauseContext";
@@ -54,21 +53,15 @@ const SplitScreen = (props: GameProps) => {
 };
 
 const Game = (props: GameProps) => {
-    const [gameState, setGameState] = React.useState<IGameState>(defaultGameState);
-    const context = {
-        gameState,
-        win: (player: number) => setGameState({ ...gameState, end: Date.now(), isEnded: true, winner: player }),
-        start: () => setGameState({ ...gameState, started: Date.now() }),
-    };
     return (
-        <GameContext.Provider value={context}>
-            <PauseProvider started={gameState.started}>
+        <GameContextProvider>
+            <PauseProvider>
                 <DelayedSuspense delay={500} fallback={<h3>Loading...</h3>}>
                     {props.launchState.boardMode == GameModes.SINGLEPLAYER && <SinglePlayer {...props} />}
                     {props.launchState.boardMode == GameModes.VERSUS && <SplitScreen {...props} />}
                 </DelayedSuspense>
             </PauseProvider>
-        </GameContext.Provider>
+        </GameContextProvider>
     );
 };
 

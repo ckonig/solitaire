@@ -1,11 +1,11 @@
 import { BoardContext } from "./BoardContext";
-import GameContext from "./GameContext";
 import React from "react";
+import useGameContext from "./GameContext";
 import useGlobalContext from "../GlobalContext";
 
 const Detector = () => {
     const { state } = useGlobalContext();
-    const { win } = React.useContext(GameContext);
+    const { win } = useGameContext();
     const { player } = React.useContext(BoardContext);
     React.useEffect(() => {
         if (!state.hand.currentCard() && state.foundation.countCards() == 52) {
@@ -17,8 +17,8 @@ const Detector = () => {
 
 const WinDetector = () => {
     const { state } = useGlobalContext();
-    const { gameState } = React.useContext(GameContext);
-    return !gameState.isEnded && !!state.settings.launchSettings.autoUncover && !!gameState.started && <Detector /> || null;
+    const { gameState } = useGameContext();
+    return (!gameState.isEnded && !!state.settings.launchSettings.autoUncover && !!gameState.started && <Detector />) || null;
 };
 
 export default WinDetector;
