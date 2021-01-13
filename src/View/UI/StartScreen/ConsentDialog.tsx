@@ -12,19 +12,20 @@ const ConsentDialog = (props: { consent: ConsentObject }) => {
     const { setConsented } = useCookieContext();
     const { toggleOverlay } = useOverlayContext();
     //@todo depending on state, use different colors and order of items.
-    //therefore, remove props
+    //also show different labels on buttons
     return (
         <NavigationProvider>
             <div className="overlay gamemenu menu">
                 <div className="startscreen-jail">
                     <div className="innermenu">
-                        <MenuTitle label="Cookie" />
+                        <MenuTitle label="🍪" />
                         <div className="announcement">{props.consent.prompt}</div>
                         <MenuTree keyboardLayout={Universal}>
                             <MenuButton
                                 icon="👍"
                                 title="I Accept"
                                 onClick={() => {
+                                    //@todo @bug setConsented can only work inside CookieContext but Overlay is outside
                                     setConsented(props.consent.confirm());
                                     toggleOverlay();
                                     //@todo after closing overlay, up & down nav works but not the action button
