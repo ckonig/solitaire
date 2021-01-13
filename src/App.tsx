@@ -5,6 +5,7 @@ import { LaunchSettings, defaultPlayerSettings } from "./Common";
 import Deck from "./Model/Deck/Deck";
 import GameModes from "./GameModes";
 import Home from "./View/UI/StartScreen/Home";
+import { OverlayContextProvider } from "./common/Overlay";
 import React from "react";
 import SuggestionModes from "./Model/Game/Settings/SuggestionModes";
 
@@ -30,6 +31,10 @@ const App = () => {
 
     const deck = new Deck().shuffle();
 
-    return launchState?.initialized ? <Game {...{ launchState, deck, restart }} /> : <Home start={start} />;
+    return (
+        <OverlayContextProvider>
+            {launchState?.initialized ? <Game {...{ launchState, deck, restart }} /> : <Home start={start} />}
+        </OverlayContextProvider>
+    );
 };
 export default App;

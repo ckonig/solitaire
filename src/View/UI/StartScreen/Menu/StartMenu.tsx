@@ -1,5 +1,6 @@
 import "../Menu.scss";
 
+import ConsentDialog from "../ConsentDialog";
 import GameModes from "../../../../GameModes";
 import MenuButton from "./MenuButton";
 import MenuTitle from "./MenuTitle";
@@ -11,10 +12,11 @@ import VerticalMenu from "./VerticalMenu";
 import { XY } from "../../XY";
 import useCookieContext from "../../CookieContext";
 import useNavigationContext from "../NavigationContext";
+import { useOverlayContext } from "../../../../common/Overlay";
 
 const StartMenu = (props: { start: (boardMode: string) => void }) => {
     const { navigation, setNavigation } = useNavigationContext();
-    const { consented, setConsented } = useCookieContext();
+    const { consented } = useCookieContext();
 
     const switchToScreen = (s: string, pos: XY) =>
         setNavigation({
@@ -44,31 +46,14 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
 
     const toggleMainMenu = (val: string, pos: XY) => switchToMenu(navigation.mainMenu !== val ? val : "", pos);
 
-    const toggleConsent = consented
-        ? () => {
-              const revoke = storage.revokeConsent();
-              //@todo use custom confirm dialog to support gamepad
-              if (confirm(revoke.prompt)) {
-                  revoke.confirm();
-                  setConsented(false);
-              }
-          }
-        : () => {
-              const consent = storage.giveConsent();
-              //@todo use custom confirm dialog to support gamepad
-              if (confirm(consent.prompt)) {
-                  consent.confirm();
-                  setConsented(true);
-              }
-          };
-
     const storage = new StorageManager();
+
+    const { toggleOverlay, overlayActive } = useOverlayContext();
 
     return (
         <VerticalMenu>
             <MenuTitle label="♦ Solitaire" />
-
-            <MenuTree keyboardLayout={Universal}>
+            <MenuTree keyboardLayout={Universal} disabled={overlayActive}>
                 <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} />
                 <MenuButton
                     icon="⚔️"
@@ -114,7 +99,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         onClick={(pos: XY) => toggleScreen("suggestions", pos)}
                         toggled={navigation.screeen == "suggestions"}
                     />
-                     <MenuButton
+                    <MenuButton
                         icon="🤖"
                         title="Support"
                         onClick={(pos: XY) => toggleScreen("support", pos)}
@@ -127,7 +112,11 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         toggled={navigation.screeen == "settings"}
                     />
                 </MenuButton>
-                <MenuButton icon="🍪" title={consented ? "Delete Cookie" : "Allow Cookie"} onClick={toggleConsent} toggled={false} />
+                <MenuButton
+                    icon="🍪"
+                    title={consented ? "Delete Cookie" : "Allow Cookie"}
+                    onClick={() => toggleOverlay(<ConsentDialog consent={storage.getDialog()} />)}
+                />
             </MenuTree>
         </VerticalMenu>
     );

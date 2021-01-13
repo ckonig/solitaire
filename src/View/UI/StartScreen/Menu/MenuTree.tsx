@@ -3,7 +3,7 @@ import React from "react";
 import TreeNavWrapper from "./TreeNavWrapper";
 import { TreeNavigator } from "./TreeNavigator";
 
-const MenuTree = (props: { children: any[]; keyboardLayout: KeyboardLayout }) => {
+const MenuTree = (props: { children: any[]; keyboardLayout: KeyboardLayout; disabled?: boolean }) => {
     const navigator = new TreeNavigator();
     navigator.rows = [];
     let index = -1;
@@ -19,7 +19,7 @@ const MenuTree = (props: { children: any[]; keyboardLayout: KeyboardLayout }) =>
     return (
         <>
             {props.children.map(addItem)}
-            <TreeNavWrapper navigator={navigator} keyboardLayout={props.keyboardLayout} />
+            <TreeNavWrapper disabled={props.disabled} navigator={navigator} keyboardLayout={props.keyboardLayout} />
         </>
     );
 };

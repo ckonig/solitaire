@@ -346,3 +346,11 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
 .gamemenu .title {
     font-size: 5em;
 }
+
+.gamemenu.overlay .innermenu {
+    background-color: black;
+    opacity: 1;
+    z-index: 1000;
+    border-style: solid;
+    border-color: black;
+}

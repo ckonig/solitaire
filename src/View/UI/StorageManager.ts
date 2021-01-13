@@ -1,22 +1,31 @@
 import { StartScreenState } from "./StartScreen/StartScreenContext";
 
+export interface ConsentObject {
+    prompt: string;
+    confirm: () => boolean;
+}
+
 export default class StorageManager {
     hasConsent = () => {
         const consent = localStorage.getItem("consent");
         return consent && !!parseInt(consent);
     };
 
-    giveConsent = () => ({
+    giveConsent: () => ConsentObject = () => ({
         prompt: "Allow this game to store settings, so your changes will stay. No data leaves your computer.",
         confirm: () => {
             localStorage.setItem("consent", "1");
+            return true;
         },
     });
-    
-    revokeConsent = () => ({
+
+    getDialog = () => (this.hasConsent() ? this.revokeConsent() : this.giveConsent());
+
+    revokeConsent: () => ConsentObject = () => ({
         prompt: "Delete all local stored data? All settings will be lost.",
         confirm: () => {
             localStorage.clear();
+            return false;
         },
     });
 
