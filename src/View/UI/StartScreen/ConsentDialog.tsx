@@ -16,7 +16,7 @@ const ConsentDialog = (props: { consent: ConsentObject }) => {
     //@todo custom css classes for dialog menus, no minimum height
     return (
         <NavigationProvider>
-            <div className="overlay gamemenu menu dialog">
+            <div className="gamemenu menu dialog">
                 <div className="startscreen-jail">
                     <div className="innermenu">
                         <MenuTitle label="🍪" />
