@@ -28,6 +28,7 @@ const AutoSolve = () => {
 export default AutoSolve;
 
 //@todo also start general confetti firework elements when autosolving
+//@todo autosolve looks and feels slow: disable individual fireworks & reduce timeout duration
 
 const Solver = () => {
     const { state, updateGameContext } = useGlobalContext();

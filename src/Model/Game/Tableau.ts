@@ -87,6 +87,7 @@ export default class Tableau extends MultiStack<TableauStack> {
         return false;
     };
 
+    //@todo entropy as animated effect, triggered after rendering gamestate like blink
     stackEntropy = (index: number) => {
         let entropy = this.settings.interactionEntropy;
         let next = 1;

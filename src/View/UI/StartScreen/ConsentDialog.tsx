@@ -13,6 +13,7 @@ const ConsentDialog = (props: { consent: ConsentObject }) => {
     const { toggleOverlay } = useOverlayContext();
     //@todo depending on state, use different colors and order of items.
     //also show different labels on buttons
+    //@todo custom css classes for dialog menus, no minimum height
     return (
         <NavigationProvider>
             <div className="overlay gamemenu menu">

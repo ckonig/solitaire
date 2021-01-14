@@ -105,7 +105,7 @@ const Card = (props: CardProps) => {
         };
 
         const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
-        //@todo A11Y allow keyboard actions in singleplayer
+        //@todo A11Y allow keyboard tab navigation in singleplayer
         if (model.onClick && !position.isKeyBoard) {
             updateGameContext((context) => {
                 model.onClick(position)(context);
@@ -164,6 +164,7 @@ const Card = (props: CardProps) => {
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
+    //@todo entropy as animated effect, triggered after rendering of action
 
     return (
         <>

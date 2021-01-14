@@ -11,6 +11,7 @@ const Screen = () => {
     //@todo load this screen after 1st selection incl. toggles and gamepads as asynchronous components
     const { navigation } = useNavigationContext();
     return <_Screen screen={navigation.screeen} />;
+    //@todo monitor gamepad connections, show toast when pad is connected
 };
 
 const _Screen = (props: { screen: string }) => {
