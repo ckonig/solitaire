@@ -1,3 +1,5 @@
+import "./Overlay.css";
+
 import React from "react";
 
 interface IOverlayContext {
@@ -13,21 +15,7 @@ const OverlayContext = React.createContext<IOverlayContext>({
 export const useOverlayContext = () => React.useContext(OverlayContext);
 
 const Overlay = (props: { children: any }) => {
-    return (
-        <div
-            style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: "rgba(0, 0, 0, 0.6",
-                zIndex: 100,
-            }}
-        >
-            {props.children}
-        </div>
-    );
+    return <div className="overlay">{props.children}</div>;
 };
 export const OverlayContextProvider = (props: { children: any }) => {
     const [overlayActive, setActive] = React.useState<boolean>(false);

@@ -90,6 +90,10 @@
     background-color: rgba(0, 0, 0, 0.95);
 }
 
+.dialog .innermenu {
+    min-height: 12.5%;
+}
+
 .startdetails {
     border-radius: 0.5em;
     position: relative;
@@ -341,6 +345,10 @@ $colors: #339900, #ffcc00, red, #99cc33, orange, brown;
     text-align: center;
     padding-bottom: 5%;
     font-size: 1.25em;
+}
+
+.dialog.gamemenu .announcement {
+    font-size: 2em;
 }
 
 .gamemenu .title {
