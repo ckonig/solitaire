@@ -26,10 +26,9 @@ const ConsentDialog = (props: { consent: ConsentObject }) => {
                                 icon="👍"
                                 title="I Accept"
                                 onClick={() => {
-                                    //@todo @bug setConsented can only work inside CookieContext but Overlay is outside
                                     setConsented(props.consent.confirm());
                                     toggleOverlay();
-                                    //@todo after closing overlay, up & down nav works but not the action button
+                                    //@todo @bug after closing overlay, up & down nav works but not the action button
                                 }}
                             />
                             <MenuButton icon="👎" title="No Thanks" onClick={() => toggleOverlay()} />

@@ -1,7 +1,6 @@
 import { StartScreenProvider, StartScreenState, defaultStartScreenState } from "./StartScreenContext";
 
 import AspectRatio from "../../../common/AspectRatio/AspectRatio";
-import { CookieContextProvider } from "../CookieContext";
 import DifficultyOptions from "./DifficultyOptions";
 import { LaunchSettings } from "../../../Common";
 import { NavigationProvider } from "./NavigationContext";
@@ -12,7 +11,7 @@ import StartMenu from "./Menu/StartMenu";
 import StorageManager from "../StorageManager";
 
 const Home = (props: { start: (settings: LaunchSettings) => void }) => {
-    const storage = new StorageManager();
+    const storage = StorageManager.getInstance();
     const previous = storage.getPreviousState();
     const [state, setState] = React.useState<StartScreenState>(previous ? previous : defaultStartScreenState);
     const startScreenContext = {
@@ -21,12 +20,6 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
             setState(s);
             storage.store(s);
         },
-    };
-
-    const [consented, setConsented] = React.useState<boolean>(!!storage.hasConsent());
-    const cookieContext = {
-        consented,
-        setConsented,
     };
 
     const start = (boardMode: string) => {
@@ -52,10 +45,8 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
         <AspectRatio ratio={Ratios._16to9}>
             <StartScreenProvider value={startScreenContext}>
                 <NavigationProvider>
-                    <CookieContextProvider value={cookieContext}>
-                        <StartMenu start={start} />
-                        <Screen />
-                    </CookieContextProvider>
+                    <StartMenu start={start} />
+                    <Screen />
                 </NavigationProvider>
             </StartScreenProvider>
         </AspectRatio>

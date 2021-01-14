@@ -6,6 +6,13 @@ export interface ConsentObject {
 }
 
 export default class StorageManager {
+    static instance: StorageManager;
+    static getInstance = () => {
+        if (!StorageManager.instance) {
+            StorageManager.instance = new StorageManager();
+        }
+        return StorageManager.instance;
+    };
     hasConsent = () => {
         const consent = localStorage.getItem("consent");
         return consent && !!parseInt(consent);
