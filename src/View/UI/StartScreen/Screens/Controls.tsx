@@ -3,6 +3,7 @@ import { ControlPresets, IControlPreset } from "../ControlsPresets";
 import CloseButton from "./CloseButton";
 import CookieBanner from "./CookieBanner";
 import GamePad from "../../../../common/GamePad";
+import GamepadLayout from "../../../../common/GamepadLayout";
 import React from "react";
 import Row from "./Row";
 import ScreenContent from "./ScreenContent";
@@ -13,6 +14,8 @@ import useNavigationContext from "../NavigationContext";
 import useStartScreenContext from "../StartScreenContext";
 
 const Controls = (props: { player: number }) => {
+    //@todo support custom keyboard / gamepad layouts
+
     const { state, setState } = useStartScreenContext();
     const { navigation } = useNavigationContext();
 
@@ -125,6 +128,7 @@ const Controls = (props: { player: number }) => {
                 </Row>
             </ScreenContent>
             <GamePad
+                layout={GamepadLayout}
                 gamepadIndex={0}
                 onUp={() => press(0)}
                 onDown={() => press(0)}
@@ -133,6 +137,7 @@ const Controls = (props: { player: number }) => {
                 onAction={() => press(0)}
             />
             <GamePad
+                layout={GamepadLayout}
                 gamepadIndex={1}
                 onUp={() => press(1)}
                 onDown={() => press(1)}

@@ -1,4 +1,5 @@
 import GamePad from "../../../../common/GamePad";
+import GamepadLayout from "../../../../common/GamepadLayout";
 import Keyboard from "../../../../common/Keyboard";
 import React from "react";
 import { ScreenNavigator } from "./ScreenNavigator";
@@ -29,7 +30,7 @@ const ScreenNavWrapper = (props: { navigator: ScreenNavigator; screen: string })
     return navigation.focus == "screen" ? (
         <>
             <Keyboard layout={Universal} {...inputHandlers} />
-            <GamePad {...inputHandlers} />
+            <GamePad layout={GamepadLayout} {...inputHandlers} />
         </>
     ) : null;
 };

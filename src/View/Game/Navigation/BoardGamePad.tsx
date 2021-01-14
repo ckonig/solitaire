@@ -2,6 +2,7 @@ import { BoardContext } from "../BoardContext";
 import { CustomInputProps } from "./CustomInputProps";
 import GameModes from "../../../GameModes";
 import GamePad from "../../../common/GamePad";
+import GamepadLayout from "../../../common/GamepadLayout";
 import Model from "../../../Model/Model";
 import React from "react";
 import useGlobalContext from "../../GlobalContext";
@@ -21,6 +22,7 @@ const BoardGamePad = (props: CustomInputProps) => {
 
     return isSinglePlayer || isGamePadDriven ? (
         <GamePad
+            layout={GamepadLayout}
             gamepadIndex={state.settings.launchSettings.players[player].inputLayout}
             onLeft={() => props.onLeft(switchToGamePad)}
             onRight={() => props.onRight(switchToGamePad)}

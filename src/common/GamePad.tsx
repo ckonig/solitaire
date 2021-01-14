@@ -1,3 +1,4 @@
+import { IGamepadLayout } from "../common/GamepadLayout";
 import { InputProps } from "./InputProps";
 import React from "react";
 import ReactGamePad from "react-gamepad";
@@ -5,41 +6,40 @@ import RenderAfter from "./RenderAfter";
 
 interface GamePadProps extends InputProps {
     gamepadIndex?: number;
+    layout: IGamepadLayout;
 }
 const GamePad = (props: GamePadProps) => {
+    const { layout } = props;
     const handlers = {
         onButtonDown: (e: string) => {
-            //@todo use layout abstraction like in keyboard
-            //@todo make layouts configurable (for visuals allow switching PS4 and XBOX layouts)
-            console.debug(e);
-            if (e == "DPadLeft") {
-                props.onLeft && props.onLeft();
-            }
-            if (e == "DPadRight") {
-                props.onRight && props.onRight();
-            }
-            if (e == "DPadUp") {
-                props.onUp && props.onUp();
-            }
-            if (e == "DPadDown") {
-                props.onDown && props.onDown();
-            }
-            if (e == "A") {
-                props.onAction && props.onAction();
-            }
-            if (e == "B") {
+            if (layout.cancel(e)) {
                 props.onCancel && props.onCancel();
             }
-            if (e == "X") {
-                props.onHint && props.onHint();
+            if (layout.left(e)) {
+                props.onLeft && props.onLeft();
             }
-            if (e == "Y") {
+            if (layout.right(e)) {
+                props.onRight && props.onRight();
+            }
+            if (layout.up(e)) {
+                props.onUp && props.onUp();
+            }
+            if (layout.down(e)) {
+                props.onDown && props.onDown();
+            }
+            if (layout.action(e)) {
+                props.onAction && props.onAction();
+            }
+            if (layout.undo(e)) {
                 props.onUndo && props.onUndo();
             }
-            if (e == "Start") {
+            if (layout.hint(e)) {
+                props.onHint && props.onHint();
+            }
+            if (layout.pause(e)) {
                 props.onPause && props.onPause();
             }
-            if (e == "Back") {
+            if (layout.menu(e)) {
                 props.onMenu && props.onMenu();
             }
         },

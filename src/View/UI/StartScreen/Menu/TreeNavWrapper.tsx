@@ -1,4 +1,5 @@
 import GamePad from "../../../../common/GamePad";
+import GamepadLayout from "../../../../common/GamepadLayout";
 import Keyboard from "../../../../common/Keyboard";
 import KeyboardLayout from "../../../../common/KeyboardLayouts";
 import React from "react";
@@ -29,7 +30,7 @@ const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout: Keybo
     return navigation.focus == "menu" && !props.disabled ? (
         <>
             <Keyboard layout={props.keyboardLayout} {...inputHandlers} />
-            <GamePad {...inputHandlers} />
+            <GamePad layout={GamepadLayout} {...inputHandlers} />
         </>
     ) : null;
 };
