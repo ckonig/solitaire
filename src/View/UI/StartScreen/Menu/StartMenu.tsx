@@ -6,7 +6,6 @@ import MenuButton from "./MenuButton";
 import MenuTitle from "./MenuTitle";
 import MenuTree from "./MenuTree";
 import React from "react";
-import StorageManager from "../../StorageManager";
 import { Universal } from "../../../../common/KeyboardLayouts";
 import VerticalMenu from "./VerticalMenu";
 import { XY } from "../../XY";
@@ -46,9 +45,18 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
 
     const toggleMainMenu = (val: string, pos: XY) => switchToMenu(navigation.mainMenu !== val ? val : "", pos);
 
-    const storage = new StorageManager();
-
     const { toggleOverlay, overlayActive } = useOverlayContext();
+    const _toggleOverlay = (children: any) => {
+        toggleOverlay(
+            children,
+            () => {
+                setNavigation({ ...navigation, focus: "dialog" });
+            },
+            () => {
+                setNavigation({ ...navigation, focus: "menu" });
+            }
+        );
+    };
 
     return (
         <VerticalMenu>
@@ -115,7 +123,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                 <MenuButton
                     icon="🍪"
                     title={consented ? "Delete Cookie" : "Allow Cookie"}
-                    onClick={() => toggleOverlay(<ConsentDialog consent={storage.getDialog()} />)}
+                    onClick={() => _toggleOverlay(<ConsentDialog />)}
                 />
             </MenuTree>
         </VerticalMenu>
