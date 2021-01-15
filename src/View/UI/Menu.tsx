@@ -3,17 +3,17 @@ import "./StartScreen/Menu.scss";
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
 import useNavigationContext, { NavigationProvider } from "./StartScreen/NavigationContext";
 
-import { BoardContext } from "../Game/BoardContext";
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
 import GameModes from "../../GameModes";
 import MenuButton from "./StartScreen/Menu/MenuButton";
 import MenuTitle from "./StartScreen/Menu/MenuTitle";
 import MenuTree from "./StartScreen/Menu/MenuTree";
-import PauseContext from "../Game/PauseContext";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import { XY } from "./XY";
+import { useBoardContext } from "../Game/BoardContext";
 import useGlobalContext from "../GlobalContext";
+import usePauseContext from "../Game/PauseContext";
 
 const _Menu = () => {
     return (
@@ -24,8 +24,8 @@ const _Menu = () => {
 };
 const Menu = () => {
     const { state, updateContext, replaceContext, restart } = useGlobalContext();
-    const pause = React.useContext(PauseContext);
-    const { player } = React.useContext(BoardContext);
+    const pause = usePauseContext();
+    const { player } = useBoardContext();
     const reset = () => {
         //this is a bad hack?
         pause.togglePause(true, -1);

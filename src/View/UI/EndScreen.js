@@ -1,16 +1,16 @@
 import "./Screens.scss";
 
-import PauseContext from "../Game/PauseContext";
 import React from "react";
 import useGlobalContext from "../GlobalContext";
+import usePauseContext from "../Game/PauseContext";
 
 const EndScreen = () => {
     const { state, restart } = useGlobalContext();
-    const pause = React.useContext(PauseContext);    
+    const pause = usePauseContext();
     //@todo show launch settings (draw mode, recycling mode)
     //@todo show win or lose situation
-    //@todo how to persist the result? from here? 
-    // Or track it via context from beginning on?    
+    //@todo how to persist the result? from here?
+    // Or track it via context from beginning on?
     return !state.game.isEnded ? null : (
         <div className="ui neutral endscreen">
             <div className="title">🥳</div>

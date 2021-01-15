@@ -1,16 +1,16 @@
 import { Universal, getKeyboardLayout } from "../../../common/KeyboardLayouts";
 
-import { BoardContext } from "../BoardContext";
 import { CustomInputProps } from "./CustomInputProps";
 import GameModes from "../../../GameModes";
 import Keyboard from "../../../common/Keyboard";
 import Model from "../../../Model/Model";
 import React from "react";
+import { useBoardContext } from "../BoardContext";
 import useGlobalContext from "../../GlobalContext";
 
 const BoardKeyboard = (props: CustomInputProps) => {
     const { state } = useGlobalContext();
-    const { player } = React.useContext(BoardContext);
+    const { player } = useBoardContext();
     const isKeyboardDriven = state.settings.launchSettings.inputMode === "keyboard";
     const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
     const layout = isSinglePlayer ? Universal : getKeyboardLayout(state.settings.launchSettings.players[player].inputLayout);

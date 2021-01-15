@@ -105,4 +105,6 @@ export const PauseProvider = (props: { children: any }) => {
     return <PauseContext.Provider value={context}>{props.children}</PauseContext.Provider>;
 };
 
-export default PauseContext;
+const usePauseContext = () => React.useContext(PauseContext);
+
+export default usePauseContext;

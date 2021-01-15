@@ -1,10 +1,10 @@
-import { BoardContext } from "../../Game/BoardContext";
-import PauseContext from "../../Game/PauseContext";
 import React from "react";
+import { useBoardContext } from "../../Game/BoardContext";
+import usePauseContext from "../../Game/PauseContext";
 
 const ToggleMenu = () => {
-    const paused = React.useContext(PauseContext);
-    const { player } = React.useContext(BoardContext);
+    const paused = usePauseContext();
+    const { player } = useBoardContext();
 
     return paused.state.showMenu ? null : (
         <div>

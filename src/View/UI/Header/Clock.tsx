@@ -1,9 +1,9 @@
-import PauseContext from "../../Game/PauseContext";
 import React from "react";
 import useGameContext from "../../Game/GameContext";
+import usePauseContext from "../../Game/PauseContext";
 
 const Clock = () => {
-    const { state, getElapsed } = React.useContext(PauseContext);
+    const { state, getElapsed } = usePauseContext();
     const { gameState } = useGameContext();
     const [elapsed, setElapsed] = React.useState("");
     React.useEffect(() => {

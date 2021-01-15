@@ -1,10 +1,10 @@
 import Card from "./Card";
-import PauseContext from "./PauseContext";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
 import useGameContext from "./GameContext";
 import useGlobalContext from "../GlobalContext";
+import usePauseContext from "./PauseContext";
 import usePrevious from "./usePrevious";
 
 const Renderer = (props: { length: number; paused: boolean; started: number }) => {
@@ -63,7 +63,7 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
 const Stock = () => {
     const { state } = useGlobalContext();
     useBlinkEffect((model) => model.stock);
-    const pause = React.useContext(PauseContext);
+    const pause = usePauseContext();
     const { gameState } = useGameContext();
     const { paused } = pause.state;
     return <Renderer length={state.stock.stack.length} paused={paused} started={gameState.started} />;

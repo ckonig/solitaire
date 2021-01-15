@@ -2,16 +2,16 @@ import MenuButton from "../UI/StartScreen/Menu/MenuButton";
 import MenuTitle from "../UI/StartScreen/Menu/MenuTitle";
 import MenuTree from "../UI/StartScreen/Menu/MenuTree";
 import { NavigationProvider } from "../UI/StartScreen/NavigationContext";
-import PauseContext from "./PauseContext";
 import React from "react";
 import { Universal } from "../../common/KeyboardLayouts";
 import useGlobalContext from "../GlobalContext";
+import usePauseContext from "./PauseContext";
 
 const PossibleFailScreen = () => {
     //@todo allow tracking refusal via props, for less certain cases.
     //this implementation will re-show the component after every move which is fine for now.
     const [refused, setRefused] = React.useState<boolean>(false);
-    const pause = React.useContext(PauseContext);
+    const pause = usePauseContext();
     //instead of immediate quit, use gamestate.giveUp
     //quitting via EndScreen
     //in versus this lets the other player gloat and confirm before exiting game
