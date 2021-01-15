@@ -10,17 +10,21 @@ const Firework = (props: { intensity: number }) => {
                 x: 0.5,
                 y: 0.33,
             };
+
+            const scalar = window.innerWidth / (1080 / 100) / 100;
             const defaults = {
                 ticks: 50,
                 origin,
                 particleCount: 40,
-                startVelocity: 20,
+                startVelocity: scalar * 20,
                 decay: 0.8,
                 spread: 360,
+                scalar: scalar,
             };
             const localConfetti = confetti.create(canvasRef.current, { resize: true });
 
             const fire = (particleRatio: number, opts: confetti.Options) => {
+                console.log("fire confetti", defaults.scalar, defaults.startVelocity);
                 localConfetti(
                     Object.assign({}, defaults, opts, {
                         particleCount: Math.floor(count * particleRatio),
@@ -29,23 +33,23 @@ const Firework = (props: { intensity: number }) => {
             };
 
             fire(0.25, {
-                startVelocity: 55,
+                startVelocity: scalar * 55,
             });
-            fire(0.2, {});
+            fire(0.2, {
+                decay: 1.2,
+            });
             fire(0.35, {
                 decay: 0.91,
-                scalar: 0.8,
+                scalar: scalar - 0.2,
             });
             fire(0.1, {
-                startVelocity: 25,
+                startVelocity: scalar * 25,
                 decay: 0.92,
-                scalar: 1.2,
+                scalar: scalar + 0.2,
             });
+            fire(0.1, {});
             fire(0.1, {
-                startVelocity: 45,
-            });
-            fire(0.1, {
-                startVelocity: 45,
+                startVelocity: scalar * 45,
             });
         }
     }, [canvasRef, props.intensity]);
