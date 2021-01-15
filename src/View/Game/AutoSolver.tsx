@@ -7,7 +7,7 @@ import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import useGlobalContext from "../GlobalContext";
 
-const _AutoSolve = (props: { canAutosolve: boolean }) => {
+const RenderAutoSolve = (props: { canAutosolve: boolean }) => {
     const [solving, setSolving] = React.useState(false);
     const { state, updateGameContext } = useGlobalContext();
     React.useEffect(() => {
@@ -20,12 +20,12 @@ const _AutoSolve = (props: { canAutosolve: boolean }) => {
     return !canSolve ? null : <Solver />;
 };
 
-const AutoSolve = () => {
+export const AutoSolver = () => {
     const { state } = useGlobalContext();
-    return <_AutoSolve canAutosolve={state.canAutoSolve()} />;
+    return <RenderAutoSolve canAutosolve={state.canAutoSolve()} />;
 };
 
-export default AutoSolve;
+export default AutoSolver;
 
 //@todo also start general confetti firework elements when autosolving
 //@todo autosolve looks and feels slow: disable individual fireworks & reduce timeout duration

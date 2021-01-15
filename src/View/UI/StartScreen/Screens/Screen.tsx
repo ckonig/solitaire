@@ -10,11 +10,11 @@ import useNavigationContext from "../NavigationContext";
 const Screen = () => {
     //@todo load this screen after 1st selection incl. toggles and gamepads as asynchronous components
     const { navigation } = useNavigationContext();
-    return <_Screen screen={navigation.screeen} />;
+    return <RenderScreen screen={navigation.screeen} />;
     //@todo monitor gamepad connections, show toast when pad is connected
 };
 
-const _Screen = (props: { screen: string }) => {
+const RenderScreen = (props: { screen: string }) => {
     //@todo add credits page
     return (
         <div className="startscreen-layout">

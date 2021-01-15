@@ -27,7 +27,7 @@ interface _ScreenToggleProps extends StaticScreenToggleProps {
     y?: number;
 }
 
-const _ScreenToggle = (props: ToggleProps) => {
+const RenderScreenToggle = (props: ToggleProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect(props, inputEl);
     const { navigation, setNavigation } = useNavigationContext();
@@ -66,7 +66,7 @@ const ScreenToggle = (props: _ScreenToggleProps) => {
     const hasFocus = (y: number, x: number) => navigation.focus === "screen" && navigation.screen.x === x && navigation.screen.y === y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (
-        <_ScreenToggle
+        <RenderScreenToggle
             x={pos.x}
             y={pos.y}
             disabled={!!props.disabled}

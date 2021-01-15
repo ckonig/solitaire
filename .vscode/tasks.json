@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+		{
+			"label": "dev",
+            "dependsOn": ["npm: ts-watch", "npm: es-watch", "npm: start"],
+            "problemMatcher": [],
+		},
+        {
+            "type": "npm",
+            "script": "start",
+            "problemMatcher": [],
+            "label": "npm: start",
+            "detail": "react-scripts start",
+           
+        },
+        {
+            "type": "npm",
+            "script": "ts-watch",
+            "problemMatcher": ["$tsc-watch"],
+            "label": "npm: ts-watch",
+            "detail": "tsc -w",
+            "isBackground": true
+        },
+        {
+            "type": "npm",
+            "script": "es-watch",
+            "problemMatcher": ["$eslint-stylish"],
+            "group": "build",
+            "label": "npm: es-watch",
+            "detail": "esw -w -f stylish \"src/**/*.{ts,tsx,js,jsx}\""
+        }
+    ]
+}

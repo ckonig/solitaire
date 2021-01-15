@@ -47,7 +47,7 @@ const MenuButton = (props: _MenuButtonProps) => {
     };
 
     return (
-        <_MenuButton
+        <RenderMenuButton
             title={props.title}
             x={props.x || 0}
             y={props.y || 0}
@@ -63,10 +63,10 @@ const MenuButton = (props: _MenuButtonProps) => {
             skip={props.skip}
         >
             {props.children?.map(addItem)}
-        </_MenuButton>
+        </RenderMenuButton>
     );
 };
-const _MenuButton = (props: MenuButtonProps) => {
+const RenderMenuButton = (props: MenuButtonProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
 
     let className = "";
