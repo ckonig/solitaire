@@ -8,9 +8,22 @@ import useGlobalContext from "../GlobalContext";
 import usePauseContext from "./PauseContext";
 
 const PossibleFailScreen = () => {
-    //@todo allow tracking refusal via props, for less certain cases.
-    //this implementation will re-show the component after every move which is fine for now.
+    const { state } = useGlobalContext();
     const [refused, setRefused] = React.useState<boolean>(false);
+    const [refusedSince, setRefusedSince] = React.useState<number>(0);
+    React.useEffect(() => {
+        if (!state.hand.currentCard()) {
+            if (refused) {
+                setRefusedSince(refusedSince + 1);
+            }
+            //@todo allow backoff controlling via props
+            //certain fail: 3, potential fail: 10
+            if (refusedSince >= 2) {
+                setRefusedSince(0);
+                setRefused(false);
+            }
+        }
+    }, [state.token]);
     const pause = usePauseContext();
     //instead of immediate quit, use gamestate.giveUp
     //quitting via EndScreen

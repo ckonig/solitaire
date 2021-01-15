@@ -10,17 +10,23 @@ const FailDetector = () => {
     const { state } = useGlobalContext();
     const { gameState } = useGameContext();
 
-    const [suggestions, setSuggestions] = React.useState<boolean>(false);
-    const [stockSuggestions, setStockSuggestions] = React.useState<boolean>(false);
-    const [nonStockSuggestions, setNonStockSuggestions] = React.useState<boolean>(false);
+    const [suggestions, setSuggestions] = React.useState<{ any: boolean; stock: boolean; nonStock: boolean }>({
+        any: false,
+        stock: false,
+        nonStock: false,
+    });
     React.useEffect(() => {
-        const copy = Model.copy(state);
-        copy.settings.suggestionMode = SuggestionModes.get(SuggestionModes.FULL);
-        copy.suggestor.evaluateOptions(copy);
-        setSuggestions(copy.hasSuggestions());
-        setStockSuggestions(copy._hasSuggestion(copy.stock));
-        setNonStockSuggestions(copy.hasNonStockSuggestions());
-    }, [state.token]);
+        if (gameState.started) {
+            const copy = Model.copy(state);
+            copy.settings.suggestionMode = SuggestionModes.get(SuggestionModes.FULL);
+            copy.suggestor.evaluateOptions(copy);
+            setSuggestions({
+                any: copy.hasSuggestions(),
+                stock: copy._hasSuggestion(copy.stock),
+                nonStock: copy.hasNonStockSuggestions(),
+            });
+        }
+    }, [state.token, gameState.started]);
 
     const [stockSuggestionCards, setStockSuggestionCards] = React.useState<Card[]>([]);
     const [isPossibleFail, setPossibleFail] = React.useState<boolean>(false);
@@ -28,10 +34,11 @@ const FailDetector = () => {
         if (!state.hand.currentCard() && gameState.started) {
             //fail detection never ends the game, merely offers to quit or keep trying
             //it also aquaints the user with the possibiltiy of undoing or restarting to be helpful
-            if (nonStockSuggestions) {
+            if (suggestions.nonStock) {
+                console.log("found suggestions, reset counter");
                 setStockSuggestionCards([]);
                 setPossibleFail(false);
-            } else if (stockSuggestions && !nonStockSuggestions) {
+            } else if (suggestions.stock && !suggestions.nonStock) {
                 //@todo CYCLING FAIL DETECTION
                 //even with a full suggestion available, the situation may be hopeless
                 //that is true if the suggestion concerns the stock
@@ -55,7 +62,7 @@ const FailDetector = () => {
                 //if the user is in full mode, and ignores these, it's a sign it's over
                 //if the user is in regular mode or lesser, we could recommend switching to full suggestions
                 //but that's not really the job of a faildetector
-            } else if (!suggestions) {
+            } else if (!suggestions.any) {
                 //@todo SIMPLE FAIL DETECTION
                 //no full suggestions = no moves possible mean fail unless all cards are in foundation
                 console.log("no suggestions - looks like a loss");
@@ -63,7 +70,7 @@ const FailDetector = () => {
                 //@todo implement menu clone that suggests to stop since there is nothing to do anymore
             }
         }
-    }, [suggestions, stockSuggestions, nonStockSuggestions, state.token, gameState.started]);
+    }, [suggestions]);
     return isPossibleFail ? <FailScreen /> : null;
 };
 
