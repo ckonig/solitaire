@@ -9,18 +9,17 @@ import usePauseContext from "./PauseContext";
 
 const PossibleFailScreen = () => {
     const { state } = useGlobalContext();
-    const [refused, setRefused] = React.useState<boolean>(false);
-    const [refusedSince, setRefusedSince] = React.useState<number>(0);
+    const [refused, setRefused] = React.useState<{ refused: boolean; since: number }>({ refused: false, since: 0 });
+    const refuse = (val: boolean) => {
+        setRefused({
+            refused: refused.since >= 3 ? false : val,
+            since: refused.since >= 3 ? 0 : refused.since + 1,
+        });
+    };
     React.useEffect(() => {
         if (!state.hand.currentCard()) {
-            if (refused) {
-                setRefusedSince(refusedSince + 1);
-            }
-            //@todo allow backoff controlling via props
-            //certain fail: 3, potential fail: 10
-            if (refusedSince >= 2) {
-                setRefusedSince(0);
-                setRefused(false);
+            if (refused.refused) {
+                refuse(true);
             }
         }
     }, [state.token]);
@@ -34,8 +33,8 @@ const PossibleFailScreen = () => {
             pause.toggleMenu(true);
         }
         return () => pause.toggleMenu(false);
-    }, [refused]);
-    return !refused ? (
+    }, [refused.refused]);
+    return !refused.refused ? (
         <NavigationProvider>
             <div className="gamemenu menu dialog">
                 <div className="startscreen-jail">
@@ -47,7 +46,7 @@ const PossibleFailScreen = () => {
                                 icon="▶️"
                                 title="Keep trying"
                                 onClick={() => {
-                                    setRefused(true);
+                                    refuse(true);
                                 }}
                             />
                             <MenuButton icon="🏳️" title="Give up" onClick={() => restart()} />
