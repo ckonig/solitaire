@@ -5,6 +5,11 @@ import "./aspectratio.css";
 import { Ratio } from "./Ratios";
 import React from "react";
 
+export const WindowDimensionContext = React.createContext<{ width: number; height: number }>({
+    width: window.innerWidth,
+    height: window.innerHeight,
+});
+
 export default class AspectRatio extends React.Component<{ ratio: Ratio }, { width: number; height: number }> {
     constructor(props: { ratio: Ratio; children: React.ReactNode }) {
         super(props);
@@ -28,13 +33,15 @@ export default class AspectRatio extends React.Component<{ ratio: Ratio }, { wid
     render() {
         const suffix = this.state.width >= this.state.height * this.props.ratio.multiplier ? "landscape" : "portrait";
         return (
-            <div className="appwrapper">
-                <div className={`appwrapper-${this.props.ratio.prefix}-` + suffix}>
-                    <div className={`appwrapper-${this.props.ratio.prefix}-` + suffix + "-inner"}>
-                        <div className="appwrapper-jail">{this.props.children}</div>
+            <WindowDimensionContext.Provider value={this.state}>
+                <div className="appwrapper">
+                    <div className={`appwrapper-${this.props.ratio.prefix}-` + suffix}>
+                        <div className={`appwrapper-${this.props.ratio.prefix}-` + suffix + "-inner"}>
+                            <div className="appwrapper-jail">{this.props.children}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </WindowDimensionContext.Provider>
         );
     }
 }

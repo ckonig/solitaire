@@ -1,21 +1,30 @@
 import React from "react";
+import { WindowDimensionContext } from "./AspectRatio/AspectRatio";
 import { usePreview } from "react-dnd-preview";
 
-const DndPreview = (props: { reff: any }) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { display, _itemType, item, style } = usePreview();
-    if (!display) {
+const DndPreview = (props: { reff: HTMLElement }) => {
+    const [rect, setRect] = React.useState<{ left: number; top: number }>();
+    const { width, height } = React.useContext(WindowDimensionContext);
+    React.useEffect(() => {
+        const domRect = props.reff.getBoundingClientRect();
+        setRect({
+            left: domRect.left * -1,
+            top: domRect.top * -1,
+        });
+        //@todo introduce resizeContext that we can subscribe to, so we only recalculate the BoundingClientRect of the container when window was resized
+    }, [props.reff, width, height]);
+    const { display, item, style } = usePreview();
+    if (!display || !rect || !item) {
         return null;
-    }
-    const rect = props.reff.getBoundingClientRect();
+    }   
     return (
         <div
             style={{
                 ...style,
                 position: "relative",
                 width: "100%",
-                left: rect.left * -1,
-                top: rect.top * -1,
+                left: rect.left,
+                top: rect.top,
                 zIndex: 2000,
                 opacity: 1,
             }}
