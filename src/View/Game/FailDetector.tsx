@@ -37,7 +37,6 @@ const FailDetector = () => {
             //fail detection never ends the game, merely offers to quit or keep trying
             //it also aquaints the user with the possibiltiy of undoing or restarting to be helpful
             if (suggestions.nonStock) {
-                console.log("found suggestions, reset counter");
                 setStockSuggestionCards([]);
                 setPossibleFail(false);
             } else if (suggestions.stock && !suggestions.nonStock) {
@@ -51,13 +50,11 @@ const FailDetector = () => {
                 //as long as stock suggestions come up we add to the list
                 //once list has same length as stock + waste + hand(waste) we know it's over
                 //once we find a non-stock suggestion we empty out the list
-                console.log("only stock suggestions are suspicious, start to track cycle");
                 const top = state.stock.getTop();
                 if (top) {
                     setStockSuggestionCards([...stockSuggestionCards, top]);
                 }
                 if (state.stock.stack.length + state.waste.stack.length <= stockSuggestionCards.length) {
-                    console.log("we made a full cycle through the deck and had only stock suggestions, looks like a loss");
                     setPossibleFail(true);
                 }
                 //however this whole fancy thing doesn't work if there are useless "full" suggestions.
@@ -67,7 +64,6 @@ const FailDetector = () => {
             } else if (!suggestions.any) {
                 //@todo SIMPLE FAIL DETECTION
                 //no full suggestions = no moves possible mean fail unless all cards are in foundation
-                console.log("no suggestions - looks like a loss");
                 setPossibleFail(true);
                 //@todo implement menu clone that suggests to stop since there is nothing to do anymore
             }
