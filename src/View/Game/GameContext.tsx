@@ -40,7 +40,15 @@ export const GameContextProvider = (props: { children: any }) => {
         gameState,
         win: (player: number) => setGameState({ ...gameState, end: Date.now(), isEnded: true, winner: player }),
         start: () => setGameState({ ...gameState, started: Date.now() }),
-        giveUp: (player: number) => setGameState({ ...gameState, end: Date.now(), isEnded: true, loser: player }),
+        giveUp: (player: number) => {
+            // @todo if one user gives up, the other should be allowed to continue to increase points
+            // - this motivates users to employ the undo function to keep trying
+            // @todo show dialog informaing that other user gave up as well
+            // - options: give up + continue
+            // @todo track "givenUp" status per player
+            // - winner is always the player with more points
+            setGameState({ ...gameState, end: Date.now(), isEnded: true, loser: player });
+        },
     };
     return <GameContext.Provider value={context}>{props.children}</GameContext.Provider>;
 };

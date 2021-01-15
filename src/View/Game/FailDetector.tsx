@@ -1,6 +1,6 @@
 import Card from "../../Model/Deck/Card";
-import FailScreen from "./PossibleFailScreen";
 import Model from "../../Model/Model";
+import PossibleFailScreen from "./PossibleFailScreen";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import useGameContext from "./GameContext";
@@ -71,7 +71,8 @@ const FailDetector = () => {
             }
         }
     }, [suggestions]);
-    return isPossibleFail ? <FailScreen /> : null;
+    
+    return isPossibleFail ? <PossibleFailScreen /> : null;
 };
 
 export default FailDetector;
