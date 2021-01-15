@@ -16,7 +16,7 @@ export default class TimeMachine {
         this.memorable = true;
         this.modified = true;
 
-        if (source == target) {
+        if (source === target) {
             this.memorable = false;
         }
     };
@@ -34,7 +34,7 @@ export default class TimeMachine {
     };
 
     popPreviousState = (id: number, current: any) => {
-        const isRequested = this.previousStates.length - 1 == id;
+        const isRequested = this.previousStates.length - 1 === id;
         const popPrevious = () => isRequested && this.previousStates && this.previousStates.pop();
         let previous = popPrevious();
         while (previous && (!previous.game.timemachine.memorable || this.modelEquals(previous, current)) && this.previousStates.length) {
@@ -62,7 +62,7 @@ export default class TimeMachine {
     }
 
     stackEquals = (a: IStack, b: IStack) => {
-        return a.stack.every((card, i) => Card.equals(card, b.stack[i]) && card.isHidden == b.stack[i].isHidden);
+        return a.stack.every((card, i) => Card.equals(card, b.stack[i]) && card.isHidden === b.stack[i].isHidden);
     };
 
     stacksEqual = (a: { stacks: IStack[] }, b: { stacks: IStack[] }) => {

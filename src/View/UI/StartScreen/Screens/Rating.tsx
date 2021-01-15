@@ -23,11 +23,11 @@ const Rating = () => {
         setState(next);
     };
 
-    const isActive = (id: number) => state.ratingPreset == id;
+    const isActive = (id: number) => state.ratingPreset === id;
 
     const getButtonClass = (id: number, pos: XY) => {
         let name = isActive(id) ? `active active-${id}` : `inactive-${id}`;
-        name += navigation.screen.x == pos.x && navigation.screen.y == pos.y ? " focused" : "";
+        name += navigation.screen.x === pos.x && navigation.screen.y === pos.y ? " focused" : "";
         return name;
     };
 
@@ -88,7 +88,7 @@ const Rating = () => {
                             key={preset.id}
                             icon={preset.icon}
                             id={preset.id}
-                            autoFocus={isActive(preset.id) || (state.ratingPreset == -1 && preset.id == 0)}
+                            autoFocus={isActive(preset.id) || (state.ratingPreset === -1 && preset.id === 0)}
                             className={(pos: XY) => getButtonClass(preset.id, pos)}
                             onClick={() => applyPreset(preset.id)}
                             lines={[preset.label]}

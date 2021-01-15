@@ -16,7 +16,7 @@ const _AutoSolve = (props: { canAutosolve: boolean }) => {
             setSolving(true);
         }
     }, [props.canAutosolve]);
-    const canSolve = solving && state.settings.suggestionMode.key == SuggestionModes.NONE;
+    const canSolve = solving && state.settings.suggestionMode.key === SuggestionModes.NONE;
     return !canSolve ? null : <Solver />;
 };
 

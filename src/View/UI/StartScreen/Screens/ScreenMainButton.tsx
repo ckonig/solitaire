@@ -14,14 +14,14 @@ interface ScreenMainButtonProps {
     disabled?: boolean;
 }
 const ScreenMainButton = (props: ScreenMainButtonProps) => {
-    if (typeof props.x == "undefined" || typeof props.y == "undefined") {
+    if (typeof props.x === "undefined" || typeof props.y === "undefined") {
         return null;
     }
 
     const pos = { x: props.x, y: props.y };
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const { navigation, setNavigation } = useNavigationContext();
-    const hasFocus = navigation.focus == "screen" && navigation.screen.x == props.x && navigation.screen.y == props.y;
+    const hasFocus = navigation.focus === "screen" && navigation.screen.x === props.x && navigation.screen.y === props.y;
     React.useEffect(() => {
         if (hasFocus && inputEl && inputEl.current && inputEl.current !== document.activeElement) {
             inputEl.current.focus();
@@ -35,8 +35,8 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
             inputEl &&
             inputEl.current &&
             inputEl.current !== document.activeElement &&
-            navigation.screen.x == -1 &&
-            navigation.screen.y == -1
+            navigation.screen.x === -1 &&
+            navigation.screen.y === -1
         ) {
             inputEl.current.focus();
         }

@@ -15,7 +15,7 @@ const Suggestions = () => {
 
     const suggestionModes = SuggestionModes.allSuggestionModes();
 
-    const isActive = (id: string) => state.suggestionMode == id;
+    const isActive = (id: string) => state.suggestionMode === id;
 
     const isDisabled = (id: string) => id !== SuggestionModes.NONE && state.ratingSettings.hintPenalty;
 

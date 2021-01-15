@@ -7,7 +7,7 @@ abstract class HandHoldingStack extends BasicStack {
         super(source);
         this.hand = hand;
     }
-    getHandContent = () => (this.hand.source == this.source ? this.hand.stack : []);
+    getHandContent = () => (this.hand.source === this.source ? this.hand.stack : []);
     getClickable = () => [...this.stack.filter((card) => card.canClick()), ...this.getHandContent().filter((card) => card.canClick())];
 }
 

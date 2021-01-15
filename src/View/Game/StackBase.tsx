@@ -9,7 +9,7 @@ const StackBase = (props: { model: IStack; children?: any | null }) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const { state, updateGameContext } = useGlobalContext();
     React.useEffect(() => {
-        if (state.focus.hasStack(props.model.source) && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
+        if (state.focus.hasStack(props.model.source) && state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER) {
             const current = inputEl && inputEl.current ? inputEl.current : null;
             current && current.focus();
         }
@@ -32,7 +32,7 @@ const StackBase = (props: { model: IStack; children?: any | null }) => {
 
     const onClick = (e: any) => {
         e.preventDefault();
-        const isKeyBoard = e.clientX == 0 && e.clientY == 0;
+        const isKeyBoard = e.clientX === 0 && e.clientY === 0;
         if (!isKeyBoard) {
             updateGameContext(props.model.clickEmpty({ isKeyBoard }));
         }

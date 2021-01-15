@@ -47,7 +47,7 @@ export const PauseProvider = (props: { children: any }) => {
     };
 
     const getElapsed = () => {
-        const padleft = (i: number) => ((i + "").length == 1 ? "0" + i : i);
+        const padleft = (i: number) => ((i + "").length === 1 ? "0" + i : i);
         let msec = getElapsedMs();
         const hh = Math.floor(msec / 1000 / 60 / 60);
         msec -= hh * 1000 * 60 * 60;

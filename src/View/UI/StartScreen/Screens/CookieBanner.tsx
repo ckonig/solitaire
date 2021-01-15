@@ -10,7 +10,7 @@ interface RenderCookieBannerProps extends ICookieContext, XY {}
 
 const RenderCookieBanner = (props: RenderCookieBannerProps) => {
     const { navigation } = useNavigationContext();
-    const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
+    const hasFocus = (y: number, x: number) => navigation.focus === "screen" && navigation.screen.x === x && navigation.screen.y === y;
     const inputEl = React.useRef<HTMLButtonElement>(null);
     useFocusEffect({ hasFocus: hasFocus(props.y, props.x) }, inputEl);
     let className = "cookiebanner";
@@ -42,7 +42,7 @@ const RenderCookieBanner = (props: RenderCookieBannerProps) => {
 };
 
 const CookieBanner = (props: { x?: number; y?: number }) => {
-    if (typeof props.x == "undefined" || typeof props.y == "undefined") {
+    if (typeof props.x === "undefined" || typeof props.y === "undefined") {
         return null;
     }
     const { consented, setConsented } = useCookieContext();

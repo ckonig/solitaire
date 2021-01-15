@@ -59,11 +59,11 @@ const _ScreenToggle = (props: ToggleProps) => {
 };
 
 const ScreenToggle = (props: _ScreenToggleProps) => {
-    if (typeof props.x == "undefined" || typeof props.y == "undefined") {
+    if (typeof props.x === "undefined" || typeof props.y === "undefined") {
         return null;
     }
     const { navigation } = useNavigationContext();
-    const hasFocus = (y: number, x: number) => navigation.focus == "screen" && navigation.screen.x == x && navigation.screen.y == y;
+    const hasFocus = (y: number, x: number) => navigation.focus === "screen" && navigation.screen.x === x && navigation.screen.y === y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (
         <_ScreenToggle

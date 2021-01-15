@@ -33,7 +33,7 @@ export default class Navigator {
             const row = this.rows[i];
             for (let j = 0; j < row.length; j++) {
                 const elem = row[j];
-                if (elem && elem.source == pos) {
+                if (elem && elem.source === pos) {
                     const zIndex = this.getZindex(elem, card);
                     this.currentIndex = { x: j, y: i, z: zIndex };
                     this.finishNav();
@@ -48,7 +48,7 @@ export default class Navigator {
     moveLeft = (pos: NavIndex) =>
         this.move(pos, () => {
             this.currentIndex.x--;
-            if (this.currentIndex.x == -1) {
+            if (this.currentIndex.x === -1) {
                 this.currentIndex.x = 6;
             }
         });
@@ -56,7 +56,7 @@ export default class Navigator {
     moveRight = (pos: NavIndex) =>
         this.move(pos, () => {
             this.currentIndex.x++;
-            if (this.currentIndex.x == 7) {
+            if (this.currentIndex.x === 7) {
                 this.currentIndex.x = 0;
             }
         });
@@ -67,7 +67,7 @@ export default class Navigator {
         }
         direction();
         const current = this.current();
-        if (current == undefined) {
+        if (!current) {
             this.move(this.currentIndex, direction);
         } else {
             this.currentIndex.z = current.getClickable().length - 1;
@@ -102,7 +102,7 @@ export default class Navigator {
     };
 
     toggleRow = (pickLast: boolean) => {
-        if (this.currentIndex.y == 0) {
+        if (this.currentIndex.y === 0) {
             this.currentIndex.y = 1;
         } else {
             this.currentIndex.y = 0;
@@ -138,15 +138,15 @@ export default class Navigator {
             this.model.focus.card.canClick() &&
             clickable &&
             clickable[this.currentIndex.z] &&
-            clickable[this.currentIndex.z].face == this.model.focus.card.face &&
-            clickable[this.currentIndex.z].type.icon == this.model.focus.card.type.icon
+            clickable[this.currentIndex.z].face === this.model.focus.card.face &&
+            clickable[this.currentIndex.z].type.icon === this.model.focus.card.type.icon
         ) {
             return (ctx: Model) => {
                 if (this.model.focus.card && this.model.focus.card.equals(before.card)) {
                     this.model.focus.card.onClick({ isKeyboard: true })(ctx);
                 }
             };
-        } else if (this.model.focus.stack && this.model.focus.stack == before.stack) {
+        } else if (this.model.focus.stack && this.model.focus.stack === before.stack) {
             return (ctx: Model) => {
                 this.current()?.clickEmpty({ isKeyboard: true })(ctx);
             };

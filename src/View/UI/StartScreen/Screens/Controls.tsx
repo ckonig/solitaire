@@ -46,8 +46,8 @@ const Controls = (props: { player: number }) => {
     const { consented } = useCookieContext();
 
     const playerHasSettings = (id: number, playerId: number) =>
-        state.players[playerId].inputLayout == ControlPresets[id].inputLayout &&
-        state.players[playerId].inputMethod == ControlPresets[id].inputMethod;
+        state.players[playerId].inputLayout === ControlPresets[id].inputLayout &&
+        state.players[playerId].inputMethod === ControlPresets[id].inputMethod;
 
     const isActive = (id: number) => playerHasSettings(id, props.player);
 
@@ -60,7 +60,7 @@ const Controls = (props: { player: number }) => {
 
     const getButtonClass = (id: number, pos: XY) => {
         let className = pos.x + "" + pos.y + " " + navigation.screen.x + "" + navigation.screen.y + " ";
-        className += navigation.screen.x == pos.x && navigation.screen.y == pos.y ? " focused" : "";
+        className += navigation.screen.x === pos.x && navigation.screen.y === pos.y ? " focused" : "";
         className += isActive(id) ? " active-0" : " inactive-0";
         className += blockedByOtherPlayers(id) ? " disabled" : "";
         return className;
@@ -72,7 +72,7 @@ const Controls = (props: { player: number }) => {
     };
 
     const getLines = (preset: IControlPreset) => {
-        if (preset.inputMethod == "gamepad") {
+        if (preset.inputMethod === "gamepad") {
             return [...preset.lines, pads[preset.inputLayout].found || pads[preset.inputLayout].buttonPressed ? "Connected" : "Not Found"];
         }
         return preset.lines;

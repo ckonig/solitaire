@@ -12,7 +12,7 @@ const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout: Keybo
     const { navigation, setNavigation } = useNavigationContext();
 
     const assignState = (result: XY) => {
-        if (navigation.focus == "menu") {
+        if (navigation.focus === "menu") {
             setNavigation({ ...navigation, menu: result });
         }
     };
@@ -27,7 +27,7 @@ const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout: Keybo
         onAction: () => navigator.action(navigation.menu),
     };
 
-    return navigation.focus == "menu" && !props.disabled ? (
+    return navigation.focus === "menu" && !props.disabled ? (
         <>
             <Keyboard layout={props.keyboardLayout} {...inputHandlers} />
             <GamePad layout={GamepadLayout} {...inputHandlers} />

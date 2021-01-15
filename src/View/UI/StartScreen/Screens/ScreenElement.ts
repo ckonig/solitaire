@@ -37,8 +37,8 @@ export const useInitialFocus = (props: Focusable, inputEl: React.RefObject<HTMLE
             inputEl &&
             inputEl.current &&
             inputEl.current !== document.activeElement &&
-            pos.x == -1 &&
-            pos.y == -1
+            pos.x === -1 &&
+            pos.y === -1
         ) {
             inputEl.current.focus();
         }

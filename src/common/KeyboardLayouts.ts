@@ -14,49 +14,49 @@ interface KeyboardLayout {
 export default KeyboardLayout;
 
 export const getKeyboardLayout = (id: number) => {
-    if (id == 0) return Wasd;
-    if (id == 1) return Arrows;
-    if (id == 2) return NumPad;
+    if (id === 0) return Wasd;
+    if (id === 1) return Arrows;
+    if (id === 2) return NumPad;
     throw new Error("Unknown keyboard layout ID");
 };
 
 export const Arrows: KeyboardLayout = {
-    up: (e) => e.keyCode == 38,
-    down: (e) => e.keyCode == 40,
-    right: (e) => e.keyCode == 39,
-    left: (e) => e.keyCode == 37,
-    cancel: (e) => e.keyCode == 27,
-    action: (e) => e.keyCode == 96,
-    undo: (e) => e.keyCode == 90 && e.ctrlKey,
-    hint: (e) => e.keyCode == 72,
-    pause: (e) => e.keyCode == 80,
-    menu: (e) => e.keyCode == 77,
+    up: (e) => e.keyCode === 38,
+    down: (e) => e.keyCode === 40,
+    right: (e) => e.keyCode === 39,
+    left: (e) => e.keyCode === 37,
+    cancel: (e) => e.keyCode === 27,
+    action: (e) => e.keyCode === 96,
+    undo: (e) => e.keyCode === 90 && e.ctrlKey,
+    hint: (e) => e.keyCode === 72,
+    pause: (e) => e.keyCode === 80,
+    menu: (e) => e.keyCode === 77,
 };
 
 export const Wasd: KeyboardLayout = {
-    up: (e) => e.keyCode == 87,
-    down: (e) => e.keyCode == 83,
-    right: (e) => e.keyCode == 68,
-    left: (e) => e.keyCode == 65,
-    cancel: (e) => e.keyCode == 69,
-    action: (e) => e.keyCode == 81,
-    undo: (e) => e.keyCode == 88,
-    hint: (e) => e.keyCode == 90,
-    pause: (e) => e.keyCode == 999,
-    menu: (e) => e.keyCode == 27,
+    up: (e) => e.keyCode === 87,
+    down: (e) => e.keyCode === 83,
+    right: (e) => e.keyCode === 68,
+    left: (e) => e.keyCode === 65,
+    cancel: (e) => e.keyCode === 69,
+    action: (e) => e.keyCode === 81,
+    undo: (e) => e.keyCode === 88,
+    hint: (e) => e.keyCode === 90,
+    pause: (e) => e.keyCode === 999,
+    menu: (e) => e.keyCode === 27,
 };
 
 export const NumPad: KeyboardLayout = {
-    up: (e) => e.keyCode == 104,
-    down: (e) => e.keyCode == 101,
-    right: (e) => e.keyCode == 102,
-    left: (e) => e.keyCode == 100,
-    cancel: (e) => e.keyCode == 105,
-    action: (e) => e.keyCode == 103,
-    undo: (e) => e.keyCode == 98,
-    hint: (e) => e.keyCode == 97,
-    pause: (e) => e.keyCode == 999,
-    menu: (e) => e.keyCode == 99,
+    up: (e) => e.keyCode === 104,
+    down: (e) => e.keyCode === 101,
+    right: (e) => e.keyCode === 102,
+    left: (e) => e.keyCode === 100,
+    cancel: (e) => e.keyCode === 105,
+    action: (e) => e.keyCode === 103,
+    undo: (e) => e.keyCode === 98,
+    hint: (e) => e.keyCode === 97,
+    pause: (e) => e.keyCode === 999,
+    menu: (e) => e.keyCode === 99,
 };
 
 export const Universal: KeyboardLayout = {

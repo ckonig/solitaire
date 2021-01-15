@@ -67,19 +67,19 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                     icon="⚔️"
                     title="Versus"
                     onClick={(pos: XY) => toggleMainMenu("versus", pos)}
-                    toggled={navigation.mainMenu == "versus"}
+                    toggled={navigation.mainMenu === "versus"}
                 >
                     <MenuButton
                         icon="🎮"
                         title="Player 1"
                         onClick={(pos: XY) => toggleScreen("controls0", pos)}
-                        toggled={navigation.screeen == "controls0"}
+                        toggled={navigation.screeen === "controls0"}
                     />
                     <MenuButton
                         icon="🎮"
                         title="Player 2"
                         onClick={(pos: XY) => toggleScreen("controls1", pos)}
-                        toggled={navigation.screeen == "controls1"}
+                        toggled={navigation.screeen === "controls1"}
                     />
                     <MenuButton icon="🎲" title="Start" onClick={() => props.start(GameModes.VERSUS)} />
                 </MenuButton>
@@ -87,37 +87,37 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                     icon="⚙️"
                     title="Options"
                     onClick={(pos: XY) => toggleMainMenu("custom", pos)}
-                    toggled={navigation.mainMenu == "custom"}
+                    toggled={navigation.mainMenu === "custom"}
                 >
                     <MenuButton
                         icon="💪"
                         title="Difficulty"
                         onClick={(pos: XY) => toggleScreen("difficulty", pos)}
-                        toggled={navigation.screeen == "difficulty"}
+                        toggled={navigation.screeen === "difficulty"}
                     />
                     <MenuButton
                         icon="⚖️"
                         title="Penalties"
                         onClick={(pos: XY) => toggleScreen("rating", pos)}
-                        toggled={navigation.screeen == "rating"}
+                        toggled={navigation.screeen === "rating"}
                     />
                     <MenuButton
                         icon="💡"
                         title="Suggestions"
                         onClick={(pos: XY) => toggleScreen("suggestions", pos)}
-                        toggled={navigation.screeen == "suggestions"}
+                        toggled={navigation.screeen === "suggestions"}
                     />
                     <MenuButton
                         icon="🤖"
                         title="Support"
                         onClick={(pos: XY) => toggleScreen("support", pos)}
-                        toggled={navigation.screeen == "support"}
+                        toggled={navigation.screeen === "support"}
                     />
                     <MenuButton
                         icon="🌪️"
                         title="Entropy"
                         onClick={(pos: XY) => toggleScreen("settings", pos)}
-                        toggled={navigation.screeen == "settings"}
+                        toggled={navigation.screeen === "settings"}
                     />
                 </MenuButton>
                 <MenuButton

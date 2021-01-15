@@ -10,7 +10,7 @@ import useGlobalContext from "../../GlobalContext";
 const BoardGamePad = (props: CustomInputProps) => {
     const { state } = useGlobalContext();
     const { player } = useBoardContext();
-    const isGamePadDriven = state.settings.launchSettings.inputMode == "gamepad";
+    const isGamePadDriven = state.settings.launchSettings.inputMode === "gamepad";
     const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
 
     const switchToGamePad = (ctx: Model) => {

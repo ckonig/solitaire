@@ -36,7 +36,7 @@ export default class Hand {
     };
 
     setOnClick = (model: IStack) => {
-        if (this.source && this.source == model.source) {
+        if (this.source && this.source === model.source) {
             let _onClick = model.clickEmpty;
             if (model.stack.length) {
                 _onClick = model.stack[model.stack.length - 1].onClick;
@@ -50,21 +50,21 @@ export default class Hand {
 
     isHoldingCard = () => !!this.stack.length;
 
-    isHoldingKing = () => this.isHoldingCard() && this.currentCard() && this.currentCard()?.face == "K";
+    isHoldingKing = () => this.isHoldingCard() && this.currentCard() && this.currentCard()?.face === "K";
 
     currentCard: () => Card | null = () => (this.isHoldingCard() && this.stack[0]) || null;
 
     hasMoreThanOneCard = () => this.stack.length > 1;
 
-    isFromCurrentSource = (card: Card) => (this.source && card.source == this.source) || null;
+    isFromCurrentSource = (card: Card) => (this.source && card.source === this.source) || null;
 
-    isFromWaste = () => this.source && this.source == "waste" || false;
+    isFromWaste = () => this.source && this.source === "waste" || false;
 
-    isFromFoundation = (index: number) => this.source && this.source == `foundation-${index}`;
+    isFromFoundation = (index: number) => this.source && this.source === `foundation-${index}`;
 
-    isFromTableau = (index: number) => this.source && this.source == `tableau-${index}`;
+    isFromTableau = (index: number) => this.source && this.source === `tableau-${index}`;
 
-    isFromAnyTableau = () => this.source && this.source.substring(0, 8) == "tableau-";
+    isFromAnyTableau = () => this.source && this.source.substring(0, 8) === "tableau-";
 
     getTableauIndex: () => number = () => (this.source && parseInt(this.source.substring(8))) || 0;
 

@@ -12,10 +12,10 @@ export default class Stock extends BasicStack {
         this.stack = stack.map(this.setCardProperties);
         this.recyclings = 0;
         this.passes = -1;
-        if (this.settings.launchSettings.recyclingMode == "1-pass") {
+        if (this.settings.launchSettings.recyclingMode === "1-pass") {
             this.passes = 1;
         }
-        if (this.settings.launchSettings.recyclingMode == "3-pass") {
+        if (this.settings.launchSettings.recyclingMode === "3-pass") {
             this.passes = 3;
         }
     }
@@ -24,7 +24,7 @@ export default class Stock extends BasicStack {
         this.clickEmpty = (p) => onClick(null, p, null);
         this.stack.forEach((card, index) => {
             card.onClick = (p: any) => onClick({ ...card }, p, null);
-            card.canClick = () => index == this.stack.length - 1;
+            card.canClick = () => index === this.stack.length - 1;
         });
     };
     accepts = () => false;
@@ -36,8 +36,8 @@ export default class Stock extends BasicStack {
 
     canRecycle() {
         return (
-            this.settings.launchSettings.recyclingMode == "infinite" ||
-            (this.settings.launchSettings.recyclingMode == "3-pass" && this.recyclings < 2)
+            this.settings.launchSettings.recyclingMode === "infinite" ||
+            (this.settings.launchSettings.recyclingMode === "3-pass" && this.recyclings < 2)
         );
     }
 
@@ -63,14 +63,14 @@ export default class Stock extends BasicStack {
 
     popTop = () => {
         let result: Card[] = [];
-        if (this.settings.launchSettings.drawMode == "single") {
+        if (this.settings.launchSettings.drawMode === "single") {
             const top = this.stack.pop();
             if (top) result = [top];
         }
-        if (this.settings.launchSettings.drawMode == "triple") {
+        if (this.settings.launchSettings.drawMode === "triple") {
             result = this.stack.splice(this.stack.length - 3);
         }
-        if (this.stack.length == 0) {
+        if (this.stack.length === 0) {
             this.passes--;
         }
 

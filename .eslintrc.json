@@ -19,7 +19,6 @@
     },
     "plugins": ["@typescript-eslint", "react", "prefer-arrow"],
     "rules": {
-        "eqeqeq": 0,
         "react/jsx-pascal-case": 0,
         "react-hooks/rules-of-hooks": 0,
         "no-mixed-operators": 0,

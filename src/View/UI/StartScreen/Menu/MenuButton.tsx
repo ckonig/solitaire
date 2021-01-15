@@ -29,7 +29,7 @@ interface MenuButtonProps extends StaticMenuButtonProps {
     onFocus: (pos: XY) => void;
 }
 const MenuButton = (props: _MenuButtonProps) => {
-    if (typeof props.x == "undefined" || typeof props.y == "undefined") {
+    if (typeof props.x === "undefined" || typeof props.y === "undefined") {
         return null;
     }
 
@@ -75,7 +75,7 @@ const _MenuButton = (props: MenuButtonProps) => {
         className += " indented";
     }
 
-    const shouldBeFocus = props.menuX == props.x && props.menuY == props.y && props.menuFocus == "menu";
+    const shouldBeFocus = props.menuX === props.x && props.menuY === props.y && props.menuFocus === "menu";
 
     if (shouldBeFocus && !props.skip) {
         className += " highlight";
@@ -83,9 +83,9 @@ const _MenuButton = (props: MenuButtonProps) => {
 
     React.useEffect(() => {
         if (
-            props.menuX == props.x &&
-            props.menuY == props.y &&
-            props.menuFocus == "menu" &&
+            props.menuX === props.x &&
+            props.menuY === props.y &&
+            props.menuFocus === "menu" &&
             inputEl.current &&
             inputEl.current !== document.activeElement
         ) {
@@ -102,7 +102,7 @@ const _MenuButton = (props: MenuButtonProps) => {
     const [isClicking, setClicking] = React.useState(false);
 
     const focus = () => {
-        if (!isClicking && !(props.menuX == props.x && props.menuY == props.y) && props.menuFocus == "menu") {
+        if (!isClicking && !(props.menuX === props.x && props.menuY === props.y) && props.menuFocus === "menu") {
             props.onFocus({ x: props.x, y: props.y });
             setClicking(false);
         }

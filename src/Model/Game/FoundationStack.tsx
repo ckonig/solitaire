@@ -22,14 +22,14 @@ export default class FoundationStack extends HandHoldingStack {
     accepts = (card: Card | null) => {
         if (!card) return false;
         const currentAccepted = this.getCurrentAccepted();
-        return this.icon == card.type.icon && currentAccepted == card.face;
+        return this.icon === card.type.icon && currentAccepted === card.face;
     };
     setOnClick = (onClick: (c: any, p: any) => (s: any) => void, hand: Hand) => {
         this.clickEmpty = (p) => onClick(null, p);
-        const cards = this.source == hand.source ? [...this.stack, ...hand.stack] : this.stack;
+        const cards = this.source === hand.source ? [...this.stack, ...hand.stack] : this.stack;
         cards.forEach((card, sindex) => {
             card.onClick = (p: any) => onClick({ ...card }, p);
-            card.canClick = () => sindex == cards.length - 1;
+            card.canClick = () => sindex === cards.length - 1;
         });
         this.hand.setOnClick(this);
     };

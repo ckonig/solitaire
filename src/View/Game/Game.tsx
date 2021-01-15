@@ -57,8 +57,8 @@ const Game = (props: GameProps) => {
         <GameContextProvider>
             <PauseProvider>
                 <DelayedSuspense delay={500} fallback={<h3>Loading...</h3>}>
-                    {props.launchState.boardMode == GameModes.SINGLEPLAYER && <SinglePlayer {...props} />}
-                    {props.launchState.boardMode == GameModes.VERSUS && <SplitScreen {...props} />}
+                    {props.launchState.boardMode === GameModes.SINGLEPLAYER && <SinglePlayer {...props} />}
+                    {props.launchState.boardMode === GameModes.VERSUS && <SplitScreen {...props} />}
                 </DelayedSuspense>
             </PauseProvider>
         </GameContextProvider>

@@ -9,16 +9,16 @@ const Waste = () => {
     const { state } = useGlobalContext();
     useBlinkEffect((model) => model.waste);
     const getOffset = (index: number) => {
-        if (state.settings.launchSettings.drawMode == "single") {
+        if (state.settings.launchSettings.drawMode === "single") {
             return 0;
         }
         const length = state.hand.isHoldingCard() && state.hand.isFromWaste() ? state.waste.stack.length + 1 : state.waste.stack.length;
         let additionalOffset = 2;
-        if (length == 2) {
+        if (length === 2) {
             additionalOffset = 1;
         }
 
-        if (length == 1) {
+        if (length === 1) {
             additionalOffset = 0;
         }
 
@@ -27,7 +27,7 @@ const Waste = () => {
 
     const drop = useStackDrop(state.waste, () => state.hand.isFromWaste());
 
-    const cards = state?.hand.source == state.waste.source ? [...state.waste.stack, ...state.hand.stack] : [...state.waste.stack];
+    const cards = state?.hand.source === state.waste.source ? [...state.waste.stack, ...state.hand.stack] : [...state.waste.stack];
 
     return (
         <div className="board-field" ref={drop}>
@@ -39,7 +39,7 @@ const Waste = () => {
                 offsetTop={(index) => (index / 2) * -1}
                 offsetLeft={(index) => getOffset(index)}
                 blink={state.waste.blinkFor}
-                isSuggested={(index) => state.waste.suggestion && index == state.waste.stack.length - 1}
+                isSuggested={(index) => state.waste.suggestion && index === state.waste.stack.length - 1}
                 isSelected={(index) => index > state.waste.stack.length - 1}
             />
         </div>

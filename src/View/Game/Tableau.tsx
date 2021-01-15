@@ -26,7 +26,7 @@ const TableauStack = (props: TableauProps) => {
     useBlinkEffect((s) => s.tableau.stacks[props.index]);
     const { state } = useGlobalContext();
     const drop = useStackDrop(props.model);
-    const cards = state.hand.source == props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
+    const cards = state.hand.source === props.model.source ? [...props.model.stack, ...state.hand.stack] : [...props.model.stack];
     let offset = 1;
     const getOffset = (index: number, cards: CardModel[]) => {
         for (let i = 0; i <= index; i++) {
@@ -47,7 +47,7 @@ const TableauStack = (props: TableauProps) => {
                 key={0}
                 models={cards}
                 blink={props.model.blinkFor}
-                isSuggested={(index) => props.model.suggestion && props.model.stack.length - 1 == index}
+                isSuggested={(index) => props.model.suggestion && props.model.stack.length - 1 === index}
                 offsetTop={(index, models) => getOffset(index, models)}
                 isSelected={(index) => index > props.model.stack.length - 1}
             />

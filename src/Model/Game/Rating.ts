@@ -38,7 +38,7 @@ export default class Rating {
 
     registerRecycle = () => {
         this.registerHint(this.settings.disableHint());
-        if (this.settings.launchSettings.drawMode == "single" && this.settings.launchSettings.recyclingMode == "infinite") {
+        if (this.settings.launchSettings.drawMode === "single" && this.settings.launchSettings.recyclingMode === "infinite") {
             if (this.points > 0) {
                 let diff = 0;
                 if (this.points < 100) {
@@ -84,15 +84,15 @@ export default class Rating {
     };
 
     rateMove(move: { source: string; target: string }, card: Card | null) {
-        const isTableau = (obj: string) => obj.substr(0, 7) == "tableau";
-        const isFoundation = (obj: string) => obj.substr(0, 10) == "foundation";
+        const isTableau = (obj: string) => obj.substr(0, 7) === "tableau";
+        const isFoundation = (obj: string) => obj.substr(0, 10) === "foundation";
         if (isTableau(move.source)) {
             if (isFoundation(move.target)) {
                 this.applyRating(10, "add 10 points for MOVE tableau -> foundation");
                 card && card.setSuccess(10);
                 return 10;
             }
-        } else if (move.source == "waste") {
+        } else if (move.source === "waste") {
             if (isFoundation(move.target)) {
                 this.applyRating(10, "add 10 points for MOVE waste -> foundation");
                 card && card.setSuccess(10);

@@ -4,15 +4,15 @@ import useGlobalContext from "../../GlobalContext";
 const Hearts = () => {
     const { state } = useGlobalContext();
     const getHearts = () => {
-        if (state.settings.launchSettings.recyclingMode == "infinite") {
+        if (state.settings.launchSettings.recyclingMode === "infinite") {
             return "🖤";
         }
 
-        if (state.settings.launchSettings.recyclingMode == "1-pass") {
+        if (state.settings.launchSettings.recyclingMode === "1-pass") {
             return state.stock.passes > 0 ? "❤️" : "💔";
         }
 
-        if (state.settings.launchSettings.recyclingMode == "3-pass") {
+        if (state.settings.launchSettings.recyclingMode === "3-pass") {
             const createString = (length: number, icon: string) =>
                 Array.from(new Array(length).keys())
                     .map(() => icon)

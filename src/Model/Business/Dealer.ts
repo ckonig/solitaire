@@ -14,7 +14,7 @@ export default class Dealer {
     }
 
     dealOne = (dealt: number, callback: any) => (state: Model) => {
-        if (dealt != state.dealer.dealt) {
+        if (dealt !== state.dealer.dealt) {
             return null;
         }
 
@@ -28,7 +28,7 @@ export default class Dealer {
     };
 
     dealAll = () => (state: Model) => {
-        if (this.dealt != state.dealer.dealt) {
+        if (this.dealt !== state.dealer.dealt) {
             return null;
         }
         while (!state.dealer.isDealt) {
@@ -44,20 +44,20 @@ export default class Dealer {
                 const newCard = stock.popOne();
                 if (newCard) {
                     newCard.source = tableau.stacks[i].source;
-                    if (stack.length == tableau.stacks.length - 1 - i) {
+                    if (stack.length === tableau.stacks.length - 1 - i) {
                         newCard.isHidden = false;
                     }
                     tableau.deal(newCard, i);
                     this.dealt++;
                     this.dealingAt++;
-                    if (this.dealingAt == tableau.stacks.length) {
+                    if (this.dealingAt === tableau.stacks.length) {
                         this.dealingAt = 0;
                     }
                     this.isDealt = false;
                 }
                 return;
             } else {
-                const isFirst = this.dealingAt == 0;
+                const isFirst = this.dealingAt === 0;
                 this.dealingAt = 0;
                 this.isDealt = isFirst;
                 return;

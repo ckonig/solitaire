@@ -9,7 +9,7 @@ const Detector = () => {
     React.useEffect(() => {
         const { win } = useGameContext();
         const { player } = useBoardContext();
-        if (!state.hand.currentCard() && state.foundation.countCards() == 52) {
+        if (!state.hand.currentCard() && state.foundation.countCards() === 52) {
             win(player);
         }
     }, [state.token, state.foundation, state.hand]);

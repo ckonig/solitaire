@@ -26,7 +26,7 @@ const FoundationStack = (props: FoundationProps) => {
     const { state } = useGlobalContext();
     const model = props.model;
     const drop = useStackDrop(props.model);
-    const cards = state.hand.source == model.source ? [...model.stack, ...state.hand.stack] : [...model.stack];
+    const cards = state.hand.source === model.source ? [...model.stack, ...state.hand.stack] : [...model.stack];
     return (
         <div className="board-field" key={props.index} ref={drop}>
             <StackBase model={model}>
@@ -37,7 +37,7 @@ const FoundationStack = (props: FoundationProps) => {
                 key={0}
                 models={cards}
                 blink={model.blinkFor}
-                isSuggested={(index) => model.suggestion && model.stack.length - 1 == index}
+                isSuggested={(index) => model.suggestion && model.stack.length - 1 === index}
                 isSelected={(index) => index > model.stack.length - 1}
             />
         </div>

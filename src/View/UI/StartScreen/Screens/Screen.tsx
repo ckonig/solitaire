@@ -19,13 +19,13 @@ const _Screen = (props: { screen: string }) => {
     return (
         <div className="startscreen-layout">
             <div className="startscreen-jail">
-                {props.screen == "rating" ? <Rating /> : null}
-                {props.screen == "difficulty" ? <Difficulty /> : null}
-                {props.screen == "settings" ? <QuickStart /> : null}
-                {props.screen == "suggestions" ? <Suggestions /> : null}
-                {props.screen == "support" ? <Support /> : null}
-                {props.screen == "controls0" ? <Controls player={0} /> : null}
-                {props.screen == "controls1" ? <Controls player={1} /> : null}
+                {props.screen === "rating" ? <Rating /> : null}
+                {props.screen === "difficulty" ? <Difficulty /> : null}
+                {props.screen === "settings" ? <QuickStart /> : null}
+                {props.screen === "suggestions" ? <Suggestions /> : null}
+                {props.screen === "support" ? <Support /> : null}
+                {props.screen === "controls0" ? <Controls player={0} /> : null}
+                {props.screen === "controls1" ? <Controls player={1} /> : null}
             </div>
         </div>
     );

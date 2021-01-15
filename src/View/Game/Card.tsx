@@ -49,7 +49,7 @@ const Card = (props: CardProps) => {
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
         },
-        canDrag: () => model.canClick() && !model.isHidden && (state.hand.currentCard() == null || model.equals(state.hand.currentCard())),
+        canDrag: () => model.canClick() && !model.isHidden && (state.hand.currentCard() === null || model.equals(state.hand.currentCard())),
         begin: () => {
             setDrag(true);
             //@todo if other card is still selected, drop it first.
@@ -76,14 +76,14 @@ const Card = (props: CardProps) => {
 
     const getRef = () => (model.canClick() ? dragRef : inputEl);
     React.useEffect(() => {
-        if (isFocused && state.settings.launchSettings.boardMode == GameModes.SINGLEPLAYER) {
+        if (isFocused && state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
         }
     }, [isFocused, state.focus.card]);
 
     const onClick = (e: any) => {
         e.preventDefault();
-        const isKeyBoard = e.clientX == 0 && e.clientY == 0;
+        const isKeyBoard = e.clientX === 0 && e.clientY === 0;
         let ele = e.target;
 
         while (ele && !ele.className.includes("card-base")) {

@@ -92,7 +92,7 @@ export default class Tableau extends MultiStack<TableauStack> {
         let entropy = this.settings.interactionEntropy;
         let next = 1;
         let top = this.getTop(index);
-        while (entropy && entropy != 0 && top) {
+        while (entropy && entropy !== 0 && top) {
             top.causeEntropy(entropy);
             entropy--;
             top = this.getTop(index, next);

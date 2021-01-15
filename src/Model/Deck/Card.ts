@@ -29,7 +29,7 @@ export default class Card {
     };
 
     causeEntropy = (lvl: number) => {
-        if (lvl == 0) {
+        if (lvl === 0) {
             this.entropyStyle = {};
             return;
         }
@@ -53,7 +53,7 @@ export default class Card {
     };
 
     static equals(card: Card, otherCard: Card) {
-        return (!card && !otherCard) || (card && otherCard && otherCard.face == card.face && otherCard.type.icon == card.type.icon);
+        return (!card && !otherCard) || (card && otherCard && otherCard.face === card.face && otherCard.type.icon === card.type.icon);
     }
 
     static copy = (orig: Card) => {

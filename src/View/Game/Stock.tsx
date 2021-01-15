@@ -18,12 +18,12 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
             started &&
             !paused &&
             previous &&
-            (previous?.length != length || previous?.started != started || previous?.paused != paused)
+            (previous?.length !== length || previous?.started !== started || previous?.paused !== paused)
         ) {
             timeout = setTimeout(() => {
                 context.updateContext((state) => {
                     if (
-                        length == state.stock.stack.length &&
+                        length === state.stock.stack.length &&
                         state.stock.passes > 0 &&
                         (state.stock.stack.length || state.waste.stack.length)
                     ) {
@@ -54,7 +54,7 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
                 offsetTop={(index) => (index / 2) * -1}
                 zIndex={0}
                 blink={context?.state?.stock.blinkFor}
-                isSuggested={(index) => context?.state?.stock.suggestion && index == context.state.stock.stack.length - 1}
+                isSuggested={(index) => context?.state?.stock.suggestion && index === context.state.stock.stack.length - 1}
             />
         </div>
     );

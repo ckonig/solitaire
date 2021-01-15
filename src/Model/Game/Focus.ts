@@ -31,7 +31,7 @@ export default class Focus {
     };
 
     unsetStack = (stack: string) => {
-        if (this.stack && stack && this.stack == stack) {
+        if (this.stack && stack && this.stack === stack) {
             this.stack = "";
         }
     };
@@ -43,5 +43,5 @@ export default class Focus {
 
     hasCard = (card: Card) => this.keyboard && this.validSettings() && this.card && card && Card.equals(this.card, card);
 
-    hasStack = (stack: string) => this.keyboard && this.validSettings() && this.stack && stack && this.stack == stack;
+    hasStack = (stack: string) => this.keyboard && this.validSettings() && this.stack && stack && this.stack === stack;
 }

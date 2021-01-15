@@ -5,7 +5,7 @@ import { XY } from "../../XY";
 export class ScreenNavigator extends AbstractNavigator implements NavHandler {
     moveUp: (x: number, y: number) => XY = (x, y) => {
         const rows = this.getRows();
-        if (y == 0) {
+        if (y === 0) {
             return this.goToRow({ x: x, y: rows.length - 1 });
         }
         return this.goToRow({ x: x, y: y - 1 });
@@ -13,7 +13,7 @@ export class ScreenNavigator extends AbstractNavigator implements NavHandler {
 
     moveDown: (x: number, y: number) => XY = (x, y) => {
         const rows = this.getRows();
-        if (y == rows.length - 1) {
+        if (y === rows.length - 1) {
             return this.goToRow({ x: x, y: 0 });
         }
         return this.goToRow({ x: x, y: y + 1 });
@@ -21,7 +21,7 @@ export class ScreenNavigator extends AbstractNavigator implements NavHandler {
 
     moveLeft: (x: number, y: number) => XY = (x, y) => {
         const row = this.getRow(y);
-        if (x == 0) {
+        if (x === 0) {
             return { x: row.buttons.length - 1, y: y };
         }
         return { x: x - 1, y: y };
@@ -29,7 +29,7 @@ export class ScreenNavigator extends AbstractNavigator implements NavHandler {
 
     moveRight: (x: number, y: number) => XY = (x, y) => {
         const row = this.getRow(y);
-        if (x == row.buttons.length - 1) {
+        if (x === row.buttons.length - 1) {
             return { x: 0, y: y };
         }
         return { x: x + 1, y: y };

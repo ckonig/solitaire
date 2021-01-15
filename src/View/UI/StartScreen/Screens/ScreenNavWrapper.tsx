@@ -12,7 +12,7 @@ const ScreenNavWrapper = (props: { navigator: ScreenNavigator; screen: string })
     const { navigation, setNavigation } = useNavigationContext();
 
     const assignState = (result: XY) => {
-        if (navigation.focus == "screen") {
+        if (navigation.focus === "screen") {
             setNavigation({ ...navigation, screen: result });
         }
     };
@@ -27,7 +27,7 @@ const ScreenNavWrapper = (props: { navigator: ScreenNavigator; screen: string })
         onAction: () => navigator.action(navigation.screen),
     };
 
-    return navigation.focus == "screen" ? (
+    return navigation.focus === "screen" ? (
         <>
             <Keyboard layout={Universal} {...inputHandlers} />
             <GamePad layout={GamepadLayout} {...inputHandlers} />

@@ -61,10 +61,10 @@ const Menu = () => {
     const remaining = pause.state.allowed - pause.state.pauses.length - 1;
 
     let announcement = `You can pause the game ${remaining} more times.`;
-    if (remaining == 1) {
+    if (remaining === 1) {
         announcement = `You can pause the game ${remaining} more time.`;
     }
-    if (remaining == 0) {
+    if (remaining === 0) {
         announcement = "This is the last remaining pause. If you continue, no more pause will be possible.";
     }
     if (remaining < 0) {
@@ -114,7 +114,7 @@ const Menu = () => {
                             icon="🌪️"
                             title="Entropy"
                             onClick={(pos: XY) => toggleMainMenu("entropy", pos)}
-                            toggled={navigation.mainMenu == "entropy"}
+                            toggled={navigation.mainMenu === "entropy"}
                         >
                             <MenuButton
                                 icon="🌪️"

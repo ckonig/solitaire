@@ -19,7 +19,7 @@ export default class Suggestions {
             !this.getUncoverOptions(state) &&
             !this.getPutdownSuggestions(state) &&
             !state.hand.isHoldingCard() &&
-            (!this.getPickupOptions(state) || state.settings.suggestionMode.key == SuggestionModes.FULL) &&
+            (!this.getPickupOptions(state) || state.settings.suggestionMode.key === SuggestionModes.FULL) &&
             (state.stock.getTop() || state.stock.canRecycle()) &&
             state.settings.suggestionMode.key !== SuggestionModes.SCORED
         ) {
@@ -28,7 +28,7 @@ export default class Suggestions {
     };
 
     getPutdownSuggestions = (state: Model, onlyUseful?: boolean) => {
-        if (!state.hand.isHoldingCard() || state.settings.suggestionMode.key == SuggestionModes.NONE) {
+        if (!state.hand.isHoldingCard() || state.settings.suggestionMode.key === SuggestionModes.NONE) {
             return 0;
         }
 
@@ -60,15 +60,15 @@ export default class Suggestions {
                 if (state.settings.suggestionMode.key === SuggestionModes.FULL || !state.hand.isFromTableau(index)) {
                     const isMoveOfKingBetweenEmptySlots =
                         state.hand.isHoldingKing() &&
-                        stack.stack.length == 0 &&
+                        stack.stack.length === 0 &&
                         state.hand.isFromAnyTableau() &&
-                        state.tableau.stacks[state.hand.getTableauIndex()].stack.length == 0;
+                        state.tableau.stacks[state.hand.getTableauIndex()].stack.length === 0;
 
                     const isMoveBetweenSimilarParentCards =
                         stack.stack.length > 0 &&
                         state.hand.isFromAnyTableau() &&
                         state.tableau.stacks[state.hand.getTableauIndex()].stack.length > 0 &&
-                        stack.stack[stack.stack.length - 1].face ==
+                        stack.stack[stack.stack.length - 1].face ===
                             state.tableau.stacks[state.hand.getTableauIndex()].stack[
                                 state.tableau.stacks[state.hand.getTableauIndex()].stack.length - 1
                             ].face &&
@@ -95,7 +95,7 @@ export default class Suggestions {
         const wasteState = Model.copy(state);
         this.waste.dispatchPickup(wasteState.waste.getTop(), null, wasteState);
         if (wasteState.game.timemachine.modified) {
-            if (this.getPutdownSuggestions(wasteState, true) > (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)) {
+            if (this.getPutdownSuggestions(wasteState, true) > (state.settings.suggestionMode.key === SuggestionModes.FULL ? 1 : 0)) {
                 state.waste.suggestion = true;
                 foundAny = true;
             }
@@ -111,7 +111,7 @@ export default class Suggestions {
                     if (tableauState.game.timemachine.modified) {
                         if (
                             this.getPutdownSuggestions(tableauState, true) >
-                            (state.settings.suggestionMode.key == SuggestionModes.FULL ? 1 : 0)
+                            (state.settings.suggestionMode.key === SuggestionModes.FULL ? 1 : 0)
                         ) {
                             tableau.stack[cardIndex].suggestion = true;
                             foundAny = true;

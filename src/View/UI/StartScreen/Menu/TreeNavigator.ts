@@ -4,7 +4,7 @@ import { XY } from "../../XY";
 
 export class TreeNavigator extends AbstractNavigator implements NavHandler {
     moveUp: (x: number, y: number) => XY = (x, y) => {
-        if (x == 0) {
+        if (x === 0) {
             return { x: this.rows.length - 1, y: 0 };
         }
 
@@ -12,7 +12,7 @@ export class TreeNavigator extends AbstractNavigator implements NavHandler {
             return { x: x, y: y - 1 };
         }
 
-        if (y == 0) {
+        if (y === 0) {
             const row = this.getRow(x - 1);
             if (row.toggled) {
                 return { x: x - 1, y: row.buttons.length - 1 };
@@ -26,7 +26,7 @@ export class TreeNavigator extends AbstractNavigator implements NavHandler {
 
     moveDown: (x: number, y: number) => XY = (x, y) => {
         const row = this.getRow(x);
-        if (y == 0 && row.toggled) {
+        if (y === 0 && row.toggled) {
             return { x: x, y: 1 };
         }
 

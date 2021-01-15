@@ -81,8 +81,8 @@ export default class Model {
 
     canAutoSolve = () => {
         return (
-            this.waste.stack.length == 0 &&
-            this.stock.stack.length == 0 &&
+            this.waste.stack.length === 0 &&
+            this.stock.stack.length === 0 &&
             this.tableau.stacks.every((s) => s.stack.every((c) => !c.isHidden))
         );
     };

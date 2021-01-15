@@ -15,10 +15,10 @@ const Difficulty = () => {
     const { state, setState } = useStartScreenContext();
     const { navigation } = useNavigationContext();
 
-    const isActive = (id: number) => state.difficultySettings == id;
+    const isActive = (id: number) => state.difficultySettings === id;
 
     const getButtonClass = (index: number, pos: XY) => {
-        const hasFocus = navigation.screen.x == pos.x && navigation.screen.y == pos.y;
+        const hasFocus = navigation.screen.x === pos.x && navigation.screen.y === pos.y;
         let name = isActive(index) ? `active active-${index}` : `inactive-${index}`;
         name += hasFocus ? " focused" : "";
         return name;
@@ -53,10 +53,10 @@ const Difficulty = () => {
                         <div className="title">Draw Mode</div>
                         <div className="toggle"></div>
                         <div className="description">
-                            {DifficultyOptions[state.difficultySettings].settings.drawMode == "triple"
+                            {DifficultyOptions[state.difficultySettings].settings.drawMode === "triple"
                                 ? "Turn 3 cards at once from the Stock to the Waste."
                                 : null}
-                            {DifficultyOptions[state.difficultySettings].settings.drawMode == "single"
+                            {DifficultyOptions[state.difficultySettings].settings.drawMode === "single"
                                 ? "Turn 1 card after the other from the Stock to the Waste."
                                 : null}
                         </div>
@@ -65,13 +65,13 @@ const Difficulty = () => {
                         <div className="title">Pass Limit</div>
                         <div className="toggle"></div>
                         <div className="description">
-                            {DifficultyOptions[state.difficultySettings].settings.recyclingMode == "1-pass"
+                            {DifficultyOptions[state.difficultySettings].settings.recyclingMode === "1-pass"
                                 ? "One pass through the deck. Waste can not be recycled to the Stock."
                                 : null}
-                            {DifficultyOptions[state.difficultySettings].settings.recyclingMode == "3-pass"
+                            {DifficultyOptions[state.difficultySettings].settings.recyclingMode === "3-pass"
                                 ? "Three passes through the deck. Waste can be recycled to Stock two times."
                                 : null}
-                            {DifficultyOptions[state.difficultySettings].settings.recyclingMode == "infinite"
+                            {DifficultyOptions[state.difficultySettings].settings.recyclingMode === "infinite"
                                 ? "No limit on passes through the deck. Waste can be recycled to Stock endlessly."
                                 : null}
                         </div>
