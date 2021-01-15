@@ -13,7 +13,7 @@ const CardFirework = (props: { model: CardModel }) => {
             const timeout = setTimeout(() => updateContext((ctx) => ctx.clearSuccess(props.model)), 25);
             return () => clearTimeout(timeout);
         }
-    }, [state?.token, props.model.success]);
+    }, [state?.token, props.model, updateContext, props.model.success]);
     return <>{fire && <Firework intensity={props.model.success} />}</>;
 };
 

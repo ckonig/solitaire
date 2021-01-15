@@ -40,7 +40,7 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
             }, 10000);
         }
         return () => clearTimeout(timeout);
-    }, [length, paused, started]);
+    }, [context, length, paused, previous, started]);
 
     if (!context || !context.state) return null;
 

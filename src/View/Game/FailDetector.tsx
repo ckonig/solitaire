@@ -26,7 +26,9 @@ const FailDetector = () => {
                 nonStock: copy.hasNonStockSuggestions(),
             });
         }
-    }, [state.token, gameState.started]);
+        //@todo use memo?
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.token]);
 
     const [stockSuggestionCards, setStockSuggestionCards] = React.useState<Card[]>([]);
     const [isPossibleFail, setPossibleFail] = React.useState<boolean>(false);
@@ -70,8 +72,10 @@ const FailDetector = () => {
                 //@todo implement menu clone that suggests to stop since there is nothing to do anymore
             }
         }
+        //@todo anti pattern?
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [suggestions]);
-    
+
     return isPossibleFail ? <PossibleFailScreen /> : null;
 };
 

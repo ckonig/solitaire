@@ -49,7 +49,7 @@ export default class Card {
     };
 
     equals = (other: Card | null) => {
-        return other && Card.equals(this, other) || false;
+        return (other && Card.equals(this, other)) || false;
     };
 
     static equals(card: Card, otherCard: Card) {

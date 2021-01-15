@@ -35,6 +35,8 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
         ) {
             inputEl.current.focus();
         }
+    // limited dependencies are on purpose to trigger this only once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputEl]);
     const focus = () => {
         if (!hasFocus) {

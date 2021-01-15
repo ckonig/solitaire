@@ -22,6 +22,7 @@ const PossibleFailScreen = () => {
                 refuse(true);
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.token]);
     const pause = usePauseContext();
     //instead of immediate quit, use gamestate.giveUp
@@ -33,6 +34,8 @@ const PossibleFailScreen = () => {
             pause.toggleMenu(true);
         }
         return () => pause.toggleMenu(false);
+    //@todo antipattern?
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refused.refused]);
     return !refused.refused ? (
         <NavigationProvider>

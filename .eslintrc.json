@@ -19,9 +19,6 @@
     },
     "plugins": ["@typescript-eslint", "react", "prefer-arrow"],
     "rules": {
-        "no-mixed-operators": 0,
-        "react-hooks/exhaustive-deps": 0,
-        "above-need-review": 0,
         "@typescript-eslint/explicit-module-boundary-types": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/no-empty-function": 0,

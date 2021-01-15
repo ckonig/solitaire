@@ -48,7 +48,7 @@ const Firework = (props: { intensity: number }) => {
                 startVelocity: 45,
             });
         }
-    }, [canvasRef]);
+    }, [canvasRef, props.intensity]);
 
     return <canvas ref={canvasRef}></canvas>;
 };

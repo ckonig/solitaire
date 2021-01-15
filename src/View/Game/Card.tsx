@@ -39,15 +39,11 @@ const Card = (props: CardProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
 
-    if (!props.models.length) {
-        return null;
-    }
     const model = props.models[props.index];
-    const isFocused = state.focus.hasCard(model);
+    const isFocused = model && state.focus.hasCard(model);
 
     const _isDrag = props.isDrag || isDrag;
-    //@todo fix hook order
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     const [{ opacity }, dragRef, preview] = useDrag({
         item: { type: "card", model: model, render: ReRender() },
         collect: (monitor) => {
@@ -74,20 +70,20 @@ const Card = (props: CardProps) => {
     });
 
     //Deactivate native dnd preview - it's fast but it's not working on mobile.
-    //@todo fix hook order
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     React.useEffect(() => {
         preview(getEmptyImage(), { captureDraggingState: true });
-    }, []);
+    }, [preview]);
 
     const getRef = () => (model.canClick() ? dragRef : inputEl);
-    //@todo fix hook order
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     React.useEffect(() => {
         if (isFocused && state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
         }
-    }, [isFocused, state.focus.card]);
+        //@todo how to one-time hook in valid way?
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isFocused]);
 
     const onClick = (e: any) => {
         e.preventDefault();
@@ -165,14 +161,20 @@ const Card = (props: CardProps) => {
         return {};
     };
 
-    let label = getStackLabel(model.source);
-    label += ": ";
-
-    label += model.isHidden ? "hidden card" : model.type.icon + model.face;
+    let label = "";
+    if (model) {
+        label = getStackLabel(model.source);
+        label += ": ";
+        label += model.isHidden ? "hidden card" : model.type.icon + model.face;
+    }
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
     //@todo entropy as animated effect, triggered after rendering of action
+
+    if (!props.models.length) {
+        return null;
+    }
 
     return (
         <>

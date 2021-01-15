@@ -8,7 +8,7 @@ const RenderAfter = (props: { children: ReactNode | ReactNode[] | null; delay: n
         }, props.delay);
 
         return () => clearTimeout(timeout);
-    }, []);
+    }, [props.delay]);
     if (hidden) return null;
     return <>{props.children}</>;
 };

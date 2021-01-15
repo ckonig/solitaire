@@ -29,6 +29,8 @@ const Dealer = () => {
                 return () => timeouts.forEach((timeout) => clearTimeout(timeout));
             }
         }
+        //@todo how to one-time hook in valid way?
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return null;
 };

@@ -15,7 +15,7 @@ const RenderAutoSolve = (props: { canAutosolve: boolean }) => {
             updateGameContext((ctx) => (ctx.settings.suggestionMode = SuggestionModes.get(SuggestionModes.NONE)));
             setSolving(true);
         }
-    }, [props.canAutosolve]);
+    }, [props.canAutosolve, updateGameContext]);
     const canSolve = solving && state.settings.suggestionMode.key === SuggestionModes.NONE;
     return !canSolve ? null : <Solver />;
 };

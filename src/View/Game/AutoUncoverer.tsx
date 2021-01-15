@@ -12,6 +12,7 @@ const Uncoverer = () => {
                 }
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.token]);
     return null;
 };
@@ -19,7 +20,7 @@ const Uncoverer = () => {
 const AutoUncoverer = () => {
     const { state } = useGlobalContext();
     const { gameState } = useGameContext();
-    return !!state.settings.launchSettings.autoUncover && !!gameState.started && <Uncoverer /> || null;
+    return !!state.settings.launchSettings.autoUncover && !!gameState.started ? <Uncoverer /> : null;
 };
 
 export default AutoUncoverer;

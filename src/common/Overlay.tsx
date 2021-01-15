@@ -20,6 +20,8 @@ const Overlay = (props: { children: any; before?: () => void; after?: () => void
         return () => {
             props.after && props.after();
         };
+        //@todo once-time rendering
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <div className="overlay">{props.children}</div>;
