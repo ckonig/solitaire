@@ -29,11 +29,11 @@ interface MenuButtonProps extends StaticMenuButtonProps {
     onFocus: (pos: XY) => void;
 }
 const MenuButton = (props: _MenuButtonProps) => {
+    const { navigation, setNavigation } = useNavigationContext();
+
     if (typeof props.x === "undefined" || typeof props.y === "undefined") {
         return null;
     }
-
-    const { navigation, setNavigation } = useNavigationContext();
 
     const onFocus = (pos: XY) => setNavigation({ ...navigation, menu: pos });
 

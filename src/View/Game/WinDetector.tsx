@@ -5,10 +5,10 @@ import useGlobalContext from "../GlobalContext";
 
 const Detector = () => {
     const { state } = useGlobalContext();
-
+    const { win } = useGameContext();
+    const { player } = useBoardContext();
+    
     React.useEffect(() => {
-        const { win } = useGameContext();
-        const { player } = useBoardContext();
         if (!state.hand.currentCard() && state.foundation.countCards() === 52) {
             win(player);
         }

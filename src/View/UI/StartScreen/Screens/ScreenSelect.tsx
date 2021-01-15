@@ -63,10 +63,10 @@ const RenderScreenSelect = (props: ScreenSelectProps) => {
 };
 
 const ScreenSelect = (props: _ScreenSelectProps) => {
+    const { navigation } = useNavigationContext();
     if (typeof props.x === "undefined" || typeof props.y === "undefined") {
         return null;
     }
-    const { navigation } = useNavigationContext();
     const hasFocus = (y: number, x: number) => navigation.focus === "screen" && navigation.screen.x === x && navigation.screen.y === y;
     const pos = { x: props.x || 0, y: props.y || 0 };
     return (

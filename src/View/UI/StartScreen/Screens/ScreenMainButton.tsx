@@ -14,11 +14,6 @@ interface ScreenMainButtonProps {
     disabled?: boolean;
 }
 const ScreenMainButton = (props: ScreenMainButtonProps) => {
-    if (typeof props.x === "undefined" || typeof props.y === "undefined") {
-        return null;
-    }
-
-    const pos = { x: props.x, y: props.y };
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const { navigation, setNavigation } = useNavigationContext();
     const hasFocus = navigation.focus === "screen" && navigation.screen.x === props.x && navigation.screen.y === props.y;
@@ -50,6 +45,13 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
         props.onClick();
         setNavigation({ ...navigation, screen: { x: props.x || 0, y: props.y || 0 } });
     };
+
+    if (typeof props.x === "undefined" || typeof props.y === "undefined") {
+        return null;
+    }
+
+    const pos = { x: props.x, y: props.y };
+
     return (
         <button onFocus={focus} ref={inputEl} key={props.id} disabled={props.disabled} className={props.className(pos)} onClick={click}>
             {props.icon}

@@ -33,17 +33,21 @@ const Card = (props: CardProps) => {
             }}
         />
     );
-    if (!props.models.length) {
-        return null;
-    }
-    const model = props.models[props.index];
     ReRender.displayName = "ReRender";
     const { state, updateGameContext } = useGlobalContext();
     const pause = usePauseContext();
     const inputEl = React.useRef<HTMLButtonElement>(null);
-    const isFocused = state.focus.hasCard(model);
     const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
+
+    if (!props.models.length) {
+        return null;
+    }
+    const model = props.models[props.index];
+    const isFocused = state.focus.hasCard(model);
+
     const _isDrag = props.isDrag || isDrag;
+    //@todo fix hook order
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [{ opacity }, dragRef, preview] = useDrag({
         item: { type: "card", model: model, render: ReRender() },
         collect: (monitor) => {
@@ -70,11 +74,15 @@ const Card = (props: CardProps) => {
     });
 
     //Deactivate native dnd preview - it's fast but it's not working on mobile.
+    //@todo fix hook order
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
         preview(getEmptyImage(), { captureDraggingState: true });
     }, []);
 
     const getRef = () => (model.canClick() ? dragRef : inputEl);
+    //@todo fix hook order
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
         if (isFocused && state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER) {
             inputEl && inputEl.current && inputEl.current.focus();
@@ -171,7 +179,7 @@ const Card = (props: CardProps) => {
             <div style={getStackbaseStyle()} className="stack-base">
                 <button
                     onFocus={() => {
-                        //@todo re-enable focusing 
+                        //@todo re-enable focusing
                         // updateContext((ctx) => {
                         //     ctx.navigator.update(model.source, props.model);
                         // });

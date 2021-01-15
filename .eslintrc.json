@@ -19,7 +19,6 @@
     },
     "plugins": ["@typescript-eslint", "react", "prefer-arrow"],
     "rules": {
-        "react-hooks/rules-of-hooks": 0,
         "no-mixed-operators": 0,
         "react-hooks/exhaustive-deps": 0,
         "above-need-review": 0,

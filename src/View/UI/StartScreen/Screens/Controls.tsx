@@ -19,12 +19,6 @@ const Controls = (props: { player: number }) => {
     const { state, setState } = useStartScreenContext();
     const { navigation } = useNavigationContext();
 
-    const player = state.players[props.player];
-
-    if (!player) {
-        return null;
-    }
-
     const [pads, setPads] = React.useState([
         {
             found: false,
@@ -44,6 +38,10 @@ const Controls = (props: { player: number }) => {
     };
 
     const { consented } = useCookieContext();
+    const player = state.players[props.player];
+    if (!player) {
+        return null;
+    }
 
     const playerHasSettings = (id: number, playerId: number) =>
         state.players[playerId].inputLayout === ControlPresets[id].inputLayout &&

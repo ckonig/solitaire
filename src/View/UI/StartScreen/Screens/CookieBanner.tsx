@@ -42,10 +42,10 @@ const RenderCookieBanner = (props: RenderCookieBannerProps) => {
 };
 
 const CookieBanner = (props: { x?: number; y?: number }) => {
+    const { consented, setConsented } = useCookieContext();
     if (typeof props.x === "undefined" || typeof props.y === "undefined") {
         return null;
     }
-    const { consented, setConsented } = useCookieContext();
     return <RenderCookieBanner x={props.x} y={props.y} consented={consented} setConsented={setConsented} />;
 };
 
