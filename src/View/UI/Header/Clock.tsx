@@ -14,7 +14,7 @@ const Clock = () => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [gameState.started, state.paused]);
+    }, [gameState.started, state.paused, getElapsed]);
 
     return !gameState.started || !elapsed ? null : (
         <div className="header-clock">

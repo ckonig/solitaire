@@ -11,9 +11,9 @@
         "javascript", "javascriptreact", "typescript", "typescriptreact", "html"
     ],
     "eslint.debug": true,
-    "eslint.run": "onSave",
     "eslint.workingDirectories": [
         "src"
     ],
-    "eslint.lintTask.enable": true
+    "eslint.lintTask.enable": true,
+    "eslint.codeActionsOnSave.mode": "all", 
 }

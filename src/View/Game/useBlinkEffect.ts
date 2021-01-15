@@ -8,8 +8,8 @@ type _selector = (model: Model) => IStack;
 const useBlinkEffect = (selector: _selector) => {
     const { updateContext, state } = useGlobalContext();
     const model = selector(state);
-    let timeout: any = null;
     React.useEffect(() => {
+        let timeout: any = null;
         if (state && selector(state).blinkFor) {
             timeout = setTimeout(
                 () =>
@@ -22,7 +22,7 @@ const useBlinkEffect = (selector: _selector) => {
         return () => {
             clearTimeout(timeout);
         };
-    }, [state, model.blinkFor]);
+    }, [state, model.blinkFor, updateContext, selector]);
 };
 
 export default useBlinkEffect;

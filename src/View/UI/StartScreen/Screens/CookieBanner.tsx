@@ -24,6 +24,8 @@ const RenderCookieBanner = (props: RenderCookieBannerProps) => {
             onClick={() => {
                 const storage = new StorageManager();
                 const consent = storage.giveConsent();
+                //@todo integrate with cookie dialog
+                // eslint-disable-next-line no-restricted-globals
                 if (!props.consented && confirm(consent.prompt)) {
                     consent.confirm();
                     props.setConsented(true);

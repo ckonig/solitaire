@@ -22,7 +22,7 @@ interface XGlobalContext {
 const useGlobalContext: () => XGlobalContext = () => {
     const ctx = React.useContext(GlobalContext);
     if (!ctx.state) {
-        throw "no state present";
+        throw new Error("no state present");
     }
     return { ...ctx, state: ctx.state };
 };

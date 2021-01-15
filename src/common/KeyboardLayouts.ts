@@ -17,7 +17,7 @@ export const getKeyboardLayout = (id: number) => {
     if (id == 0) return Wasd;
     if (id == 1) return Arrows;
     if (id == 2) return NumPad;
-    throw "Unknown keyboard layout ID";
+    throw new Error("Unknown keyboard layout ID");
 };
 
 export const Arrows: KeyboardLayout = {

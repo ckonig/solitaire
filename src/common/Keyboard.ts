@@ -7,6 +7,7 @@ interface KeyboardProps extends InputProps {
 }
 const Keyboard = (props: KeyboardProps) => {
     const navListener = (e: any) => {
+        // eslint-disable-next-line no-restricted-globals
         const evtobj = window.event ? event : e;
         const { layout } = props;
         if (layout.cancel(evtobj)) {

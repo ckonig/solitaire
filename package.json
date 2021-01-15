@@ -24,7 +24,9 @@
         "start": "react-scripts start",
         "predeploy": "react-scripts build",
         "deploy": "gh-pages -d build",
-        "analyze": "source-map-explorer 'build/static/js/*.js'"
+        "analyze": "source-map-explorer 'build/static/js/*.js'",
+        "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
+        "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\""
     },
     "eslintConfig": {
         "extends": [

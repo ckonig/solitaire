@@ -19,14 +19,14 @@ export default class Card {
         this.suggestion = false;
         this.success = 0;
         this.canClick = () => false;
-        
+
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         this.onClick = (_p) => (s: any) => {};
     }
 
-    setSuccess = (s : number) => {
+    setSuccess = (s: number) => {
         this.success = s;
-    }
+    };
 
     causeEntropy = (lvl: number) => {
         if (lvl == 0) {

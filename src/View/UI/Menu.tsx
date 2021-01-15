@@ -67,7 +67,9 @@ const Menu = () => {
     if (remaining == 0) {
         announcement = "This is the last remaining pause. If you continue, no more pause will be possible.";
     }
-    if (remaining < 0) [(announcement = "The game is not paused.")];
+    if (remaining < 0) {
+        announcement = "The game is not paused.";
+    }
 
     const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
     const keyboardLayout = isSinglePlayer ? Universal : getKeyboardLayout(state.settings.launchSettings.players[player].inputLayout);

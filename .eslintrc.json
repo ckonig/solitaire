@@ -20,6 +20,11 @@
     "plugins": ["@typescript-eslint", "react", "prefer-arrow"],
     "rules": {
         "eqeqeq": 0,
+        "react/jsx-pascal-case": 0,
+        "react-hooks/rules-of-hooks": 0,
+        "no-mixed-operators": 0,
+        "react-hooks/exhaustive-deps": 0,
+        "above-need-review": 0,
         "@typescript-eslint/explicit-module-boundary-types": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/no-empty-function": 0,
@@ -39,7 +44,9 @@
                 "singleReturnOnly": false,
                 "classPropertiesAllowed": false
             }
-        ]
+        ],
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"]
     },
     "parser": "@typescript-eslint/parser",
     "settings": {
