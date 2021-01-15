@@ -46,7 +46,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
     const toggleMainMenu = (val: string, pos: XY) => switchToMenu(navigation.mainMenu !== val ? val : "", pos);
 
     const { toggleOverlay, overlayActive } = useOverlayContext();
-    const _toggleOverlay = (children: any) => {
+    const _toggleOverlay = (children: React.ReactNode) => {
         toggleOverlay(
             children,
             () => {

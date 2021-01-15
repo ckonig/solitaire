@@ -13,7 +13,7 @@ export default class Dealer {
         this.isDealt = false;
     }
 
-    dealOne = (dealt: number, callback: any) => (state: Model) => {
+    dealOne = (dealt: number, callback: (n: number) => void) => (state: Model) => {
         if (dealt !== state.dealer.dealt) {
             return null;
         }

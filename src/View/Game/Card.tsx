@@ -1,7 +1,8 @@
+import React, { MouseEventHandler } from "react";
+
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
-import React from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
@@ -85,13 +86,13 @@ const Card = (props: CardProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isFocused]);
 
-    const onClick = (e: any) => {
+    const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
         const isKeyBoard = e.clientX === 0 && e.clientY === 0;
-        let ele = e.target;
+        let ele = e.target as HTMLElement;
 
-        while (ele && !ele.className.includes("card-base")) {
-            ele = ele.offsetParent;
+        while (ele && !ele.className.includes("card-base") && ele.offsetParent) {
+            ele = ele.offsetParent as HTMLElement;
         }
 
         const rect = ele.getBoundingClientRect();

@@ -1,6 +1,7 @@
 import Card from "../Deck/Card";
 import Hand from "./Hand";
 import HandHoldingStack from "./HandHoldingStack";
+import Model from "../Model";
 import { Suit } from "../Deck/Suits";
 import { getFoundationOrder } from "../Deck/DeckSize";
 
@@ -24,7 +25,7 @@ export default class FoundationStack extends HandHoldingStack {
         const currentAccepted = this.getCurrentAccepted();
         return this.icon === card.type.icon && currentAccepted === card.face;
     };
-    setOnClick = (onClick: (c: any, p: any) => (s: any) => void, hand: Hand) => {
+    setOnClick = (onClick: (c: any, p: any) => (s: Model) => void, hand: Hand) => {
         this.clickEmpty = (p) => onClick(null, p);
         const cards = this.source === hand.source ? [...this.stack, ...hand.stack] : this.stack;
         cards.forEach((card, sindex) => {

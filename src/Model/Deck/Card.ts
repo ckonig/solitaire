@@ -1,3 +1,4 @@
+import Model from "../Model";
 import { Suit } from "./Suits";
 
 export default class Card {
@@ -9,7 +10,7 @@ export default class Card {
     suggestion: boolean;
     success: number;
     canClick: () => boolean;
-    onClick: (_p: any) => (s: any) => void;
+    onClick: (_p: any) => (s: Model) => void;
     constructor(face: string, type: Suit, isHidden: boolean) {
         this.face = face;
         this.type = type;
@@ -21,7 +22,7 @@ export default class Card {
         this.canClick = () => false;
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        this.onClick = (_p) => (s: any) => {};
+        this.onClick = (_p) => (s: Model) => {};
     }
 
     setSuccess = (s: number) => {

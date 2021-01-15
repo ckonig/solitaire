@@ -34,7 +34,7 @@ const useGameContext = () => React.useContext(GameContext);
 
 export default useGameContext;
 
-export const GameContextProvider = (props: { children: any }) => {
+export const GameContextProvider = (props: { children: React.ReactNode }) => {
     const [gameState, setGameState] = React.useState<IGameState>(defaultGameState);
     const context = {
         gameState,

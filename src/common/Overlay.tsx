@@ -4,7 +4,7 @@ import React from "react";
 
 interface IOverlayContext {
     overlayActive: boolean;
-    toggleOverlay: (content?: any, before?: () => void, after?: () => void) => void;
+    toggleOverlay: (content?: React.ReactNode, before?: () => void, after?: () => void) => void;
 }
 
 const OverlayContext = React.createContext<IOverlayContext>({
@@ -14,7 +14,7 @@ const OverlayContext = React.createContext<IOverlayContext>({
 
 export const useOverlayContext = () => React.useContext(OverlayContext);
 
-const Overlay = (props: { children: any; before?: () => void; after?: () => void }) => {
+const Overlay = (props: { children: React.ReactNode; before?: () => void; after?: () => void }) => {
     React.useEffect(() => {
         props.before && props.before();
         return () => {
@@ -28,14 +28,14 @@ const Overlay = (props: { children: any; before?: () => void; after?: () => void
 };
 type callable = { call: () => void };
 const defaultCallable = { call: () => {} };
-export const OverlayContextProvider = (props: { children: any }) => {
+export const OverlayContextProvider = (props: { children: React.ReactNode }) => {
     const [overlayActive, setActive] = React.useState<boolean>(false);
-    const [content, setContent] = React.useState<any>(null);
+    const [content, setContent] = React.useState<React.ReactNode>(null);
     const [_after, setAfter] = React.useState<callable>(defaultCallable);
     const [_before, setBefore] = React.useState<callable>(defaultCallable);
     const context = {
         overlayActive,
-        toggleOverlay: (content?: any, before?: () => void, after?: () => void) => {
+        toggleOverlay: (content?: React.ReactNode, before?: () => void, after?: () => void) => {
             setActive(!!content);
             setContent(content);
             if (before) {

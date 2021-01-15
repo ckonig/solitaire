@@ -21,7 +21,7 @@ export default class TimeMachine {
         }
     };
 
-    pushPreviousState = (state: any) => {
+    pushPreviousState = (state: Model) => {
         const previous = this.previousStates[this.previousStates.length - 1];
         if (!previous || !this.modelEquals(state, previous)) {
             this.previousStates.push(state);
@@ -33,7 +33,7 @@ export default class TimeMachine {
         this.memorable = false;
     };
 
-    popPreviousState = (id: number, current: any) => {
+    popPreviousState = (id: number, current: Model) => {
         const isRequested = this.previousStates.length - 1 === id;
         const popPrevious = () => isRequested && this.previousStates && this.previousStates.pop();
         let previous = popPrevious();

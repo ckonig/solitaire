@@ -6,7 +6,7 @@ import { Ratio } from "./Ratios";
 import React from "react";
 
 export default class AspectRatio extends React.Component<{ ratio: Ratio }, { width: number; height: number }> {
-    constructor(props: any) {
+    constructor(props: { ratio: Ratio; children: React.ReactNode }) {
         super(props);
         this.state = { width: 0, height: 0 };
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);

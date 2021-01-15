@@ -12,7 +12,7 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
     const { length, started, paused } = props;
     const previous = usePrevious({ length, paused, started });
     React.useEffect(() => {
-        let timeout: any = null;
+        let timeout: NodeJS.Timeout | null = null;
         if (
             context.state.settings.launchSettings.speed &&
             started &&
@@ -39,7 +39,9 @@ const Renderer = (props: { length: number; paused: boolean; started: number }) =
                 });
             }, 10000);
         }
-        return () => clearTimeout(timeout);
+        return () => {
+            timeout && clearTimeout(timeout);
+        };
     }, [context, length, paused, previous, started]);
 
     if (!context || !context.state) return null;

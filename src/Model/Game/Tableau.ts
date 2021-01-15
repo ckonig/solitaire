@@ -1,5 +1,6 @@
 import Card from "../Deck/Card";
 import Hand from "./Hand";
+import Model from "../Model";
 import MultiStack from "./MultiStack";
 import Settings from "./Settings";
 import TableauStack from "./TableauStack";
@@ -18,8 +19,8 @@ export default class Tableau extends MultiStack<TableauStack> {
     }
 
     setOnClick = (
-        onClick: (a: any, b: any, index: number) => (s: any) => void,
-        onClickhidden: (a: any, b: any, index: number) => (s: any) => void
+        onClick: (a: any, b: any, index: number) => (s: Model) => void,
+        onClickhidden: (a: any, b: any, index: number) => (s: Model) => void
     ) => {
         this.stacks.forEach((stack, index) => {
             stack.setOnClick(

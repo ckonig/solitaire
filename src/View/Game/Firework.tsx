@@ -20,7 +20,7 @@ const Firework = (props: { intensity: number }) => {
             };
             const localConfetti = confetti.create(canvasRef.current, { resize: true });
 
-            const fire = (particleRatio: any, opts: any) => {
+            const fire = (particleRatio: number, opts: confetti.Options) => {
                 localConfetti(
                     Object.assign({}, defaults, opts, {
                         particleCount: Math.floor(count * particleRatio),

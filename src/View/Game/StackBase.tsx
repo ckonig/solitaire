@@ -1,10 +1,11 @@
+import React, { MouseEventHandler } from "react";
+
 import GameModes from "../../GameModes";
 import { IStack } from "../../Model/Game/Stack";
-import React from "react";
 import getStackLabel from "./StackDescription";
 import useGlobalContext from "../GlobalContext";
 
-const StackBase = (props: { model: IStack; children?: any | null }) => {
+const StackBase = (props: { model: IStack; children?: React.ReactNode }) => {
     let classname = "card-base socket";
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const { state, updateGameContext } = useGlobalContext();
@@ -30,7 +31,7 @@ const StackBase = (props: { model: IStack; children?: any | null }) => {
         classname += " socket-suggested";
     }
 
-    const onClick = (e: any) => {
+    const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
         const isKeyBoard = e.clientX === 0 && e.clientY === 0;
         if (!isKeyBoard) {

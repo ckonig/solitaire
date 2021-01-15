@@ -7,7 +7,6 @@ export default class Game {
     settings: Settings;
     rating: Rating;
     timemachine: TimeMachine;
-    paused: any;
     constructor(settings: Settings) {
         this.settings = settings;
         this.rating = new Rating(settings);
@@ -47,7 +46,6 @@ export default class Game {
         const copy = new Game(orig.settings);
         copy.timemachine = TimeMachine.copy(orig.timemachine);
         copy.rating = Rating.copy(orig.rating);
-        copy.paused = orig.paused;
         return copy;
     };
 }

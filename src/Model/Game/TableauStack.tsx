@@ -1,5 +1,6 @@
 import Card from "../Deck/Card";
 import HandHoldingStack from "./HandHoldingStack";
+import Model from "../Model";
 import { getTableauOrder } from "../Deck/DeckSize";
 
 export default class TableauStack extends HandHoldingStack {
@@ -23,7 +24,7 @@ export default class TableauStack extends HandHoldingStack {
         const top = this.getTop();
         return top.isHidden && card && card.equals(this.getTop());
     };
-    setOnClick = (onClick: (a: any, b: any) => (s: any) => void, onClickhidden: (a: any, b: any) => (s: any) => void) => {
+    setOnClick = (onClick: (a: any, b: any) => (s: Model) => void, onClickhidden: (a: any, b: any) => (s: Model) => void) => {
         this.clickEmpty = (p: any) => onClick(null, p);
         const cards = this.source === this.hand.source ? [...this.stack, ...this.hand.stack] : this.stack;
         cards.forEach((card, sindex) => {

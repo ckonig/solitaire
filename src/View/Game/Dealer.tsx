@@ -7,7 +7,7 @@ const Dealer = () => {
     const { gameState, start } = useGameContext();
     React.useEffect(() => {
         if (!gameState.started) {
-            const timeouts: any[] = [];
+            const timeouts: NodeJS.Timeout[] = [];
             if (state.settings.launchSettings.quickDeal) {
                 if (!state.dealer.isDealt) {
                     start();

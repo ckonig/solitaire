@@ -9,7 +9,7 @@ const useBlinkEffect = (selector: _selector) => {
     const { updateContext, state } = useGlobalContext();
     const model = selector(state);
     React.useEffect(() => {
-        let timeout: any = null;
+        let timeout: NodeJS.Timeout | null = null;
         if (state && selector(state).blinkFor) {
             timeout = setTimeout(
                 () =>
@@ -20,7 +20,7 @@ const useBlinkEffect = (selector: _selector) => {
             );
         }
         return () => {
-            clearTimeout(timeout);
+            timeout && clearTimeout(timeout);
         };
     }, [state, model.blinkFor, updateContext, selector]);
 };

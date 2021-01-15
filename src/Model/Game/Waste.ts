@@ -1,6 +1,7 @@
 import Card from "../Deck/Card";
 import Hand from "./Hand";
 import HandHoldingStack from "./HandHoldingStack";
+import Model from "../Model";
 import Settings from "./Settings";
 
 export default class Waste extends HandHoldingStack {
@@ -10,7 +11,7 @@ export default class Waste extends HandHoldingStack {
         this.settings = settings;
     }
 
-    setOnClick = (onClick: (c: any, p: any, i: any) => (s: any) => void) => {
+    setOnClick = (onClick: (c: any, p: any, i: any) => (s: Model) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
         const cards = this.source === this.hand.source ? [...this.stack, ...this.hand.stack] : this.stack;
         cards.forEach((card, index) => {

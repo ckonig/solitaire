@@ -1,5 +1,6 @@
 import BasicStack from "./Stack";
 import Card from "../Deck/Card";
+import Model from "../Model";
 import Settings from "./Settings";
 
 export default class Stock extends BasicStack {
@@ -20,7 +21,7 @@ export default class Stock extends BasicStack {
         }
     }
 
-    setOnClick = (onClick: (c: any, p: any, i: any) => (s: any) => void) => {
+    setOnClick = (onClick: (c: any, p: any, i: any) => (s: Model) => void) => {
         this.clickEmpty = (p) => onClick(null, p, null);
         this.stack.forEach((card, index) => {
             card.onClick = (p: any) => onClick({ ...card }, p, null);

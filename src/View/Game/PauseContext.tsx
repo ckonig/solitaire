@@ -38,7 +38,7 @@ export const defaultPauseContext = {
 
 const PauseContext = React.createContext<IPauseContext>(defaultPauseContext);
 
-export const PauseProvider = (props: { children: any }) => {
+export const PauseProvider = (props: { children: React.ReactNode }) => {
     const { gameState } = useGameContext();
     const [paused, setPaused] = React.useState<IPauseState>({ ...defaultPauseState });
     const getElapsedMs = () => {
@@ -84,7 +84,7 @@ export const PauseProvider = (props: { children: any }) => {
                 pauseStartedAt: 0,
                 paused: false,
                 showMenu: true,
-                showCards: false
+                showCards: false,
             });
         }
     };

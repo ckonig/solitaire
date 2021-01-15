@@ -6,7 +6,7 @@ export interface IStack {
     stack: Card[];
     getTop: () => Card | null;
     getClickable: () => Card[];
-    clickEmpty: (p: any) => (s: any) => void;
+    clickEmpty: (p: any) => (s: Model) => void;
     blinkFor: number;
     unblink: (model: Model) => void;
     suggestion: boolean;
@@ -24,9 +24,9 @@ abstract class BasicStack implements IStack {
     getClickable = () => this.stack.filter((card) => card.canClick());
     blinkFor = 0;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    onClick = (a: any) => (s: any) => {};
+    onClick = (a: any) => (s: Model) => {};
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    clickEmpty = (a: any) => (s: any) => {};
+    clickEmpty = (a: any) => (s: Model) => {};
     unblink: (model: Model) => void = () => {};
     abstract accepts: (card: Card | null) => boolean;
 }

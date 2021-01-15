@@ -1,6 +1,7 @@
 import Card from "../Deck/Card";
 import FoundationStack from "./FoundationStack";
 import Hand from "./Hand";
+import Model from "../Model";
 import MultiStack from "./MultiStack";
 import Settings from "./Settings";
 import Suits from "../Deck/Suits";
@@ -14,9 +15,9 @@ export default class Foundation extends MultiStack<FoundationStack> {
         ]);
     }
 
-    setOnClick = (onClick: (c: any, p: any, index: number) => (s: any) => void) => {
+    setOnClick = (onClick: (c: Card, p: any, index: number) => (s: Model) => void) => {
         this.stacks.forEach((stack, index) => {
-            stack.setOnClick((c: any, p: any) => onClick(c, p, index), this.hand);
+            stack.setOnClick((c: Card, p: any) => onClick(c, p, index), this.hand);
         });
     };
 
