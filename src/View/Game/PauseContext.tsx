@@ -1,7 +1,8 @@
 import React from "react";
+import useGameContext from "./GameContext";
 
 export interface IPauseState {
-    started: number;
+    //started: number;
     end: number;
     paused: boolean;
     pauses: number[];
@@ -10,14 +11,15 @@ export interface IPauseState {
     isSilent?: boolean;
     pausedBy: number;
     showMenu: boolean;
+    showCards: boolean;
 }
 export interface IPauseContext {
     state: IPauseState;
     togglePause: (isPaused: boolean, pausedBy: number) => void;
+    toggleMenu: (show: boolean) => void;
     getElapsed: () => string;
 }
-export const defaultPauseState = {
-    started: 0,
+export const defaultPauseState: IPauseState = {
     end: 0,
     paused: false,
     pauses: [],
@@ -25,20 +27,23 @@ export const defaultPauseState = {
     allowed: 5,
     pausedBy: -1,
     showMenu: false,
+    showCards: true,
 };
 export const defaultPauseContext = {
     state: defaultPauseState,
     togglePause: () => {},
+    toggleMenu: () => {},
     getElapsed: () => "",
 };
 
 const PauseContext = React.createContext<IPauseContext>(defaultPauseContext);
 
-export const PauseProvider = (props: any) => {
+export const PauseProvider = (props: { children: any }) => {
+    const { gameState } = useGameContext();
     const [paused, setPaused] = React.useState<IPauseState>({ ...defaultPauseState });
     const getElapsedMs = () => {
         const pauses = paused.pauses.reduce((a, b) => a + b, 0);
-        return (paused.end || paused.pauseStartedAt || Date.now()) - props.started - pauses;
+        return (paused.end || paused.pauseStartedAt || Date.now()) - gameState.started - pauses;
     };
 
     const getElapsed = () => {
@@ -61,6 +66,7 @@ export const PauseProvider = (props: any) => {
                 pauseStartedAt: 0,
                 paused: false,
                 showMenu: false,
+                showCards: true,
             });
         } else if (paused.pauses.length < paused.allowed) {
             setPaused({
@@ -69,6 +75,7 @@ export const PauseProvider = (props: any) => {
                 pauseStartedAt: Date.now(),
                 paused: true,
                 showMenu: true,
+                showCards: false,
             });
         } else {
             setPaused({
@@ -77,12 +84,21 @@ export const PauseProvider = (props: any) => {
                 pauseStartedAt: 0,
                 paused: false,
                 showMenu: true,
+                showCards: false
             });
         }
     };
+    const toggleMenu = (show: boolean) => {
+        setPaused({
+            ...paused,
+            showMenu: show,
+            showCards: true,
+        });
+    };
     const context = {
-        state: { ...paused, started: props.started },
+        state: { ...paused, started: gameState.started },
         togglePause,
+        toggleMenu,
         getElapsed,
     };
 

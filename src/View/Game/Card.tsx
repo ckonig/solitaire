@@ -171,6 +171,7 @@ const Card = (props: CardProps) => {
             <div style={getStackbaseStyle()} className="stack-base">
                 <button
                     onFocus={() => {
+                        //@todo re-enable focusing 
                         // updateContext((ctx) => {
                         //     ctx.navigator.update(model.source, props.model);
                         // });
@@ -183,14 +184,14 @@ const Card = (props: CardProps) => {
                     ref={getRef()}
                     className={getClassName()}
                     onClick={onClick}
-                    disabled={!model.canClick() || pause.state.paused}
+                    disabled={!model.canClick() || !pause.state.showCards}
                     tabIndex={model.canClick() ? 0 : -1}
                     aria-label={label}
                     title={label}
                 >
                     <CardFirework model={model} />
                     <div className="card-content">
-                        {model.isHidden || pause.state.paused ? (
+                        {model.isHidden || !pause.state.showCards ? (
                             <div className="card-back">&nbsp;</div>
                         ) : (
                             <div className="card-grid-container">

@@ -51,6 +51,7 @@ const Board = (props: BoardProps) => {
             <AutoSolver />
             <WinDetector />
             <FailDetector />
+            
             <AutoUncoverer />
         </>
     );

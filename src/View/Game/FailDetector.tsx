@@ -1,11 +1,15 @@
 import Card from "../../Model/Deck/Card";
+import FailScreen from "./PossibleFailScreen";
 import Model from "../../Model/Model";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
+import useGameContext from "./GameContext";
 import useGlobalContext from "../GlobalContext";
 
 const FailDetector = () => {
     const { state } = useGlobalContext();
+    const { gameState } = useGameContext();
+
     const [suggestions, setSuggestions] = React.useState<boolean>(false);
     const [stockSuggestions, setStockSuggestions] = React.useState<boolean>(false);
     const [nonStockSuggestions, setNonStockSuggestions] = React.useState<boolean>(false);
@@ -19,13 +23,14 @@ const FailDetector = () => {
     }, [state.token]);
 
     const [stockSuggestionCards, setStockSuggestionCards] = React.useState<Card[]>([]);
-
+    const [isPossibleFail, setPossibleFail] = React.useState<boolean>(false);
     React.useEffect(() => {
-        if (!state.hand.currentCard()) {
+        if (!state.hand.currentCard() && gameState.started) {
             //fail detection never ends the game, merely offers to quit or keep trying
             //it also aquaints the user with the possibiltiy of undoing or restarting to be helpful
             if (nonStockSuggestions) {
                 setStockSuggestionCards([]);
+                setPossibleFail(false);
             } else if (stockSuggestions && !nonStockSuggestions) {
                 //@todo CYCLING FAIL DETECTION
                 //even with a full suggestion available, the situation may be hopeless
@@ -41,9 +46,10 @@ const FailDetector = () => {
                 const top = state.stock.getTop();
                 if (top) {
                     setStockSuggestionCards([...stockSuggestionCards, top]);
-                } 
+                }
                 if (state.stock.stack.length + state.waste.stack.length <= stockSuggestionCards.length) {
-                    console.log('we made a full cycle through the deck and had only stock suggestions, looks like a loss')
+                    console.log("we made a full cycle through the deck and had only stock suggestions, looks like a loss");
+                    setPossibleFail(true);
                 }
                 //however this whole fancy thing doesn't work if there are useless "full" suggestions.
                 //if the user is in full mode, and ignores these, it's a sign it's over
@@ -53,11 +59,12 @@ const FailDetector = () => {
                 //@todo SIMPLE FAIL DETECTION
                 //no full suggestions = no moves possible mean fail unless all cards are in foundation
                 console.log("no suggestions - looks like a loss");
+                setPossibleFail(true);
                 //@todo implement menu clone that suggests to stop since there is nothing to do anymore
             }
         }
-    }, [suggestions, stockSuggestions, nonStockSuggestions, state.token]);
-    return null;
+    }, [suggestions, stockSuggestions, nonStockSuggestions, state.token, gameState.started]);
+    return isPossibleFail ? <FailScreen /> : null;
 };
 
 export default FailDetector;

@@ -6,7 +6,7 @@ const ToggleMenu = () => {
     const paused = React.useContext(PauseContext);
     const { player } = React.useContext(BoardContext);
 
-    return (
+    return paused.state.showMenu ? null : (
         <div>
             <button title="Settings" onClick={() => paused.togglePause(!paused.state.paused, player)}>
                 <span className="icon">☰</span>
