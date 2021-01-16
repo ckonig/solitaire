@@ -41,10 +41,11 @@ const useCardStyle = (model: CardModel | null, props: CardProps, _isDrag: () => 
     return cardStyle;
 };
 
+//@todo this makes the card flash when placing on green table. class is first assigned empty
 const useClassName = (model: CardModel | null, props: CardProps, _isDrag: () => boolean, isFocused: () => boolean) => {
     const getClassName = useCallback(() => {
         if (!model) {
-            return "";
+            return "card card-base";
         }
         const hasSuggestion = (props.isSuggested && props.isSuggested(props.index)) || model.suggestion;
         let className = `card card-base suit-${model.type.icon}`;
@@ -129,7 +130,7 @@ const Card = (props: CardProps) => {
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
 
-    const model = props.models[props.index];
+    const model: CardModel = props.models[props.index];
     const isFocused = useCallback(() => !!model && state.focus.hasCard(model), [model, state.focus]);
 
     const _isDrag = useCallback(() => props.isDrag || isDrag, [props.isDrag, isDrag]);

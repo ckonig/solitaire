@@ -4,7 +4,7 @@ import confetti from "canvas-confetti";
 const Firework = (props: { intensity: number }) => {
     const canvasRef = React.createRef<HTMLCanvasElement>();
     React.useEffect(() => {
-        if (canvasRef && canvasRef.current) {
+        if (canvasRef && canvasRef.current && props.intensity) {
             const count = 15 * props.intensity;
             const origin = {
                 x: 0.5,

@@ -1,7 +1,7 @@
 import { LaunchSettings, StateReplacer, StateUpdater } from "../../Common";
 
 import Board from "./Board";
-import {BoardProvider} from "./BoardContext";
+import { BoardProvider } from "./BoardContext";
 import Deck from "../../Model/Deck/Deck";
 import EndScreen from "../UI/EndScreen";
 import Model from "../../Model/Model";
@@ -37,6 +37,18 @@ export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
         this.replaceContext((state) => {
             state.game.timemachine.modified = false;
             const previous = Model.copy(state);
+            if (previous.game.timemachine.previousStates.length) {
+                previous.game.timemachine.previousStates = [
+                    //@todo this also assigns non-memorable states
+                    //@todo instead of array, always have single previous state
+                    //@todo this could still grow too big in memory
+                    //@todo implement model.boardEquals and pointsEquals to get rid of 'memorable' states?
+                    previous.game.timemachine.previousStates[previous.game.timemachine.previousStates.length - 1],
+                ];
+            } else {
+                previous.game.timemachine.previousStates = [];
+            }
+
             modifier(state);
             if (state.game.timemachine.modified) {
                 state.game.timemachine.pushPreviousState(previous);
