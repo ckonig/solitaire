@@ -2,7 +2,10 @@ import Model from "../Model";
 import { Suit } from "./Suits";
 
 export default class Card {
+    //@todo name denomination
     face: string;
+    //remove type & replace with suit = type.icon; color=type.color
+    // or icon=suit.icon; color=suit.color
     type: Suit;
     isHidden: boolean;
     entropyStyle: any;
