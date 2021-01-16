@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/solitaire/static/js/main.504e1c0d.chunk.js",
-    "main.js.map": "/solitaire/static/js/main.504e1c0d.chunk.js.map",
+    "main.js": "/solitaire/static/js/main.705e3a11.chunk.js",
+    "main.js.map": "/solitaire/static/js/main.705e3a11.chunk.js.map",
     "runtime-main.js": "/solitaire/static/js/runtime-main.d4efbcaf.js",
     "runtime-main.js.map": "/solitaire/static/js/runtime-main.d4efbcaf.js.map",
     "static/css/2.4025a48a.chunk.css": "/solitaire/static/css/2.4025a48a.chunk.css",
@@ -26,6 +26,6 @@
   "entrypoints": [
     "static/js/runtime-main.d4efbcaf.js",
     "static/js/3.1d3a19ac.chunk.js",
-    "static/js/main.504e1c0d.chunk.js"
+    "static/js/main.705e3a11.chunk.js"
   ]
 }
