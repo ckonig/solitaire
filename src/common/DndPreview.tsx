@@ -16,7 +16,7 @@ const DndPreview = (props: { reff: HTMLElement }) => {
     const { display, item, style } = usePreview();
     if (!display || !rect || !item) {
         return null;
-    }   
+    }
     return (
         <div
             style={{

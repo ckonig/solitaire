@@ -3,7 +3,7 @@ import React, { MouseEventHandler, useCallback } from "react";
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
-import { getEmptyImage } from "react-dnd-html5-backend";
+import { getEmptyImage } from "@pspdfkit-labs/react-dnd-html5-backend";
 import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
@@ -153,9 +153,13 @@ const Card = (props: CardProps) => {
         end: (_item, monitor) => {
             setDrag(false);
             if (!monitor.didDrop()) {
-                updateGameContext((context) => {
-                    model.onClick({ isKeyboard: false })(context);
-                });
+                setTimeout(
+                    () =>
+                        updateGameContext((context) => {
+                            model.onClick({ isKeyboard: false })(context);
+                        }),
+                    1
+                );
             }
         },
     });

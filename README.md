@@ -12,9 +12,11 @@ Serves as general playground for JavaScript, TypeScript, React and (S)CSS.
 ```bash
 git clone git@github.com:ckonig/solitaire.git
 cd solitaire
-npm install
-npm start
+yarn
+yarn start
 ```
+
+When working with Visual Studio Code, use the `dev` task to run `tsc` and `es-lint` as separate tasks with the correct error catchers.
 
 ## Available Scripts
 

@@ -14,5 +14,9 @@
     "eslint.workingDirectories": [
         "src"
     ],
-    "eslint.codeActionsOnSave.mode": "all", 
+    "eslint.codeActionsOnSave.mode": "all",
+    "npm.packageManager": "yarn",
+    "eslint.packageManager": "yarn",
+    "prettier.packageManager": "yarn",
+    
 }
