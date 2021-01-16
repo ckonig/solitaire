@@ -6,6 +6,7 @@ export default class Card {
     face: string;
     //remove type & replace with suit = type.icon; color=type.color
     // or icon=suit.icon; color=suit.color
+    //@todo add rank ?
     type: Suit;
     isHidden: boolean;
     entropyStyle: any;

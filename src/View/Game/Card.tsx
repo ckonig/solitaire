@@ -223,6 +223,9 @@ const Card = (props: CardProps) => {
         return null;
     }
 
+    //@todo creating a custom face was fun, but the users deserve a more professional looking SVG
+    //e.g. https://totalnonsense.com/download/download-vector-playing-cards/
+
     return (
         <>
             <div style={stackbaseStyle} className="stack-base">
