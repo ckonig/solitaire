@@ -1,6 +1,6 @@
 # Solitaire React App
 
-![CICD Workflow](https://github.com/ckonig/solitaire/workflows/CI/badge.svg?branch=master)
+![CICD Workflow](https://github.com/ckonig/solitaire/workflows/CI/badge.svg?branch=main)
 
 An implementation of the classic Solitaire game.\
 Serves as general playground for JavaScript, TypeScript, React and (S)CSS.
