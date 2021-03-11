@@ -6,7 +6,7 @@
     "dependencies": {
         "@pspdfkit-labs/react-dnd-html5-backend": "^11.1.8",
         "@pspdfkit-labs/react-dnd-touch-backend": "^11.1.8",
-        "canvas-confetti": "^1.3.2",
+        "canvas-confetti": "^1.4.0",
         "node-sass": "^4.14.1",
         "react": "^17.0.1",
         "react-dnd": "^11.1.3",
