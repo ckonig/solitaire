@@ -19,7 +19,7 @@
     },
     "scripts": {
         "start": "react-scripts start --resolve-plugins-relative-to",
-        "predeploy": "react-scripts build",
+        "predeploy": "react-scripts build --profile",
         "deploy": "gh-pages -d build",
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "es-watch": "esw src -w -f stylish --ext .js,.jsx,.ts,.tsx",
