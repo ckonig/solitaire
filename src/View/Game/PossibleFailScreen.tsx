@@ -25,6 +25,7 @@ const PossibleFailScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.token]);
     const pause = usePauseContext();
+    //@todo
     //instead of immediate quit, use gamestate.giveUp, then allow quitting via EndScreen
     //in versus this lets the other player gloat and confirm before exiting game
     const { restart } = useGlobalContext();
