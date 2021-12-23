@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback, useContext } from "react";
+import React, { MouseEventHandler, useCallback } from "react";
 
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
