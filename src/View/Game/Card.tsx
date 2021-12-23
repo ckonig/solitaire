@@ -136,20 +136,21 @@ const Card = (props: CardProps) => {
     const _isDrag = useCallback(() => props.isDrag || isDrag, [props.isDrag, isDrag]);
 
     const [{ opacity }, dragRef, preview] = useDrag({
-        item: { type: "card", model: model, render: ReRender() },
-        collect: (monitor) => {
-            return { opacity: monitor.isDragging() ? 1 : 1 };
-        },
-        canDrag: () => model.canClick() && !model.isHidden && (state.hand.currentCard() === null || model.equals(state.hand.currentCard())),
-        begin: () => {
-            setDrag(true);
-            //@todo if other card is still selected, drop it first.
+        type: 'card',
+        item: (_monitor) => {
+            setDrag(true)
             if (model.onClick && (!props.isSelected || !props.isSelected(props.index))) {
                 updateGameContext((context) => {
                     model.onClick({ isKeyboard: false })(context);
                 });
             }
+            return { type: "card", model: model, render: ReRender() }
         },
+        collect: (monitor) => {
+            return { opacity: monitor.isDragging() ? 1 : 1 };
+        },
+        canDrag: () => model.canClick() && !model.isHidden && (state.hand.currentCard() === null || model.equals(state.hand.currentCard())),
+
         end: (_item, monitor) => {
             setDrag(false);
             if (!monitor.didDrop()) {
