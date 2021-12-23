@@ -23,7 +23,7 @@ export default class FoundationStack extends HandHoldingStack {
     accepts = (card: Card | null) => {
         if (!card) return false;
         const currentAccepted = this.getCurrentAccepted();
-        return this.icon === card.type.icon && currentAccepted === card.face;
+        return this.icon === card.type.icon && currentAccepted === card.denomination;
     };
     setOnClick = (onClick: (c: any, p: any) => (s: Model) => void, hand: Hand) => {
         this.clickEmpty = (p) => onClick(null, p);

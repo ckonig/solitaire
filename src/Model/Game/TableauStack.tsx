@@ -8,16 +8,16 @@ export default class TableauStack extends HandHoldingStack {
     accepts = (current: Card | null) => {
         const top = this.getTop();
         if (!top) {
-            return (current && current.face === "K") || false;
+            return (current && current.denomination === "K") || false;
         }
         if (this.source === current?.source) return true;
         if (top.isHidden) {
             return false;
         }
         const range = [...getTableauOrder()];
-        const currentIndex = current ? range.indexOf(current.face) : 0;
-        const topIndex = range.indexOf(top.face);
-        return currentIndex + 1 === topIndex && current?.type.color !== top.type.color && top.face !== "A";
+        const currentIndex = current ? range.indexOf(current.denomination) : 0;
+        const topIndex = range.indexOf(top.denomination);
+        return currentIndex + 1 === topIndex && current?.type.color !== top.type.color && top.denomination !== "A";
     };
     getTop = (offset?: number) => this.stack[this.stack.length - 1 - (offset || 0)];
     canUncover = (card: Card) => {

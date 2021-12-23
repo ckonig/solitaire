@@ -50,7 +50,7 @@ export default class Hand {
 
     isHoldingCard = () => !!this.stack.length;
 
-    isHoldingKing = () => this.isHoldingCard() && this.currentCard() && this.currentCard()?.face === "K";
+    isHoldingKing = () => this.isHoldingCard() && this.currentCard() && this.currentCard()?.denomination === "K";
 
     currentCard: () => Card | null = () => (this.isHoldingCard() && this.stack[0]) || null;
 

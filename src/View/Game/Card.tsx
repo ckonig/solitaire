@@ -92,7 +92,7 @@ const useLabel = (model: CardModel | null) => {
         if (model) {
             let l = getStackLabel(model.source);
             l += ": ";
-            l += model.isHidden ? "hidden card" : model.type.icon + model.face;
+            l += model.isHidden ? "hidden card" : model.type.icon + model.denomination;
             setLabel(l);
         }
     }, [model]);
@@ -230,7 +230,7 @@ const Card = (props: CardProps) => {
         return null;
     }
 
-    //@todo creating a custom face was fun, but the users deserve a more professional looking SVG
+    //@todo creating a custom layout was fun, but the users deserve a more professional looking SVG
     //e.g. https://totalnonsense.com/download/download-vector-playing-cards/
 
     return (
@@ -266,21 +266,21 @@ const Card = (props: CardProps) => {
                                     <div className="align-center">{model.type.icon}</div>
                                 </div>
                                 <div>
-                                    <div className="align-left">{model.face}</div>
+                                    <div className="align-left">{model.denomination}</div>
                                 </div>
                                 <div>&nbsp;</div>
                                 <div>
                                     <div className="align-center">{model.type.icon}</div>
                                 </div>
                                 <div className="mainface">
-                                    <div className="align-center">{model.face} </div>
+                                    <div className="align-center">{model.denomination} </div>
                                 </div>
                                 <div>
                                     <div className="align-center">{model.type.icon}</div>
                                 </div>
                                 <div>&nbsp;</div>
                                 <div>
-                                    <div className="align-right">{model.face}</div>
+                                    <div className="align-right">{model.denomination}</div>
                                 </div>
                                 <div>
                                     <div className="align-center">{model.type.icon}</div>

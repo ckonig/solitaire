@@ -68,10 +68,10 @@ export default class Suggestions {
                         stack.stack.length > 0 &&
                         state.hand.isFromAnyTableau() &&
                         state.tableau.stacks[state.hand.getTableauIndex()].stack.length > 0 &&
-                        stack.stack[stack.stack.length - 1].face ===
+                        stack.stack[stack.stack.length - 1].denomination ===
                             state.tableau.stacks[state.hand.getTableauIndex()].stack[
                                 state.tableau.stacks[state.hand.getTableauIndex()].stack.length - 1
-                            ].face &&
+                            ].denomination &&
                         !state.tableau.getTop(state.hand.getTableauIndex()).isHidden;
 
                     const isNotLoop = !isMoveOfKingBetweenEmptySlots && !isMoveBetweenSimilarParentCards;

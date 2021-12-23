@@ -2,8 +2,7 @@ import Model from "../Model";
 import { Suit } from "./Suits";
 
 export default class Card {
-    //@todo name denomination
-    face: string;
+    denomination: string;
     //remove type & replace with suit = type.icon; color=type.color
     // or icon=suit.icon; color=suit.color
     //@todo add rank ?
@@ -15,8 +14,8 @@ export default class Card {
     success: number;
     canClick: () => boolean;
     onClick: (_p: any) => (s: Model) => void;
-    constructor(face: string, type: Suit, isHidden: boolean) {
-        this.face = face;
+    constructor(denomination: string, type: Suit, isHidden: boolean) {
+        this.denomination = denomination;
         this.type = type;
         this.isHidden = isHidden;
         this.entropyStyle = {};
@@ -58,11 +57,11 @@ export default class Card {
     };
 
     static equals(card: Card, otherCard: Card) {
-        return (!card && !otherCard) || (card && otherCard && otherCard.face === card.face && otherCard.type.icon === card.type.icon);
+        return (!card && !otherCard) || (card && otherCard && otherCard.denomination === card.denomination && otherCard.type.icon === card.type.icon);
     }
 
     static copy = (orig: Card) => {
-        const copy = new Card(orig.face, orig.type, orig.isHidden);
+        const copy = new Card(orig.denomination, orig.type, orig.isHidden);
         copy.source = orig.source;
         copy.entropyStyle = { ...orig.entropyStyle };
         copy.canClick = orig.canClick;

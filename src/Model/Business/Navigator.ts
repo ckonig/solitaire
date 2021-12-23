@@ -138,7 +138,7 @@ export default class Navigator {
             this.model.focus.card.canClick() &&
             clickable &&
             clickable[this.currentIndex.z] &&
-            clickable[this.currentIndex.z].face === this.model.focus.card.face &&
+            clickable[this.currentIndex.z].denomination === this.model.focus.card.denomination &&
             clickable[this.currentIndex.z].type.icon === this.model.focus.card.type.icon
         ) {
             return (ctx: Model) => {

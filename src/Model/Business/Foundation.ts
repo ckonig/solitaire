@@ -18,7 +18,7 @@ export default class Foundation implements ClickHandler {
 
     dispatchPickup = (_card: Card | null, position: any, state: Model, index: number) => {
         const card = state.foundation.getTop(index);
-        if (card && state.foundation.getPreviousUsed(index) === card.face) {
+        if (card && state.foundation.getPreviousUsed(index) === card.denomination) {
             state.hand.pickUp([state.foundation.remove(index, card)], card.source, position) && state.game.registerPickup();
         } else {
             this.blink(state, index);
