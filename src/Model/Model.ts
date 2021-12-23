@@ -118,7 +118,7 @@ export default class Model {
         return this;
     };
 
-    static getInitialState = (launchSettings: LaunchSettings, deck: Deck) => {
+    static getInitialState = (launchSettings: LaunchSettings, deck: Deck, player: number) => {
         const settings = new Settings(launchSettings);
         const hand = new Hand();
         const state = {
@@ -129,7 +129,7 @@ export default class Model {
             hand: hand,
             game: new Game(settings),
             settings: settings,
-            focus: new Focus(settings),
+            focus: new Focus(settings, player),
             token: 0,
         };
         return new Model(state);

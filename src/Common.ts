@@ -35,8 +35,6 @@ export interface PlayerSettings {
 export interface LaunchSettings extends RatingSettings {
     recyclingMode: string;
     drawMode: string;
-    //@todo remove, this is contained in playersettings
-    inputMode: string;
     interactionEntropy: number;
     baseEntropy: number;
     suggestionMode: string;

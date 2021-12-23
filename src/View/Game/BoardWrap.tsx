@@ -19,7 +19,7 @@ interface BoardWrapProps {
 export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
     constructor(props: BoardWrapProps) {
         super(props);
-        this.state = Model.getInitialState(props.settings, props.deck);
+        this.state = Model.getInitialState(props.settings, props.deck, props.player);
     }
 
     //replacecontext is hard replacement, for restart and undo

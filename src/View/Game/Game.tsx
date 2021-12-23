@@ -28,26 +28,16 @@ const SinglePlayer = (props: GameProps) => {
 
 const SplitScreen = (props: GameProps) => {
     const { launchState, deck, restart } = props;
+    const Wrap = (i: number) => (
+        <div className={"layout-grid-container " + launchState.boardMode}>
+            <BoardWrap player={0} settings={launchState} restart={restart} deck={deck.copy()} />
+        </div>
+    );
 
     return (
         <div className="game-layout-container splitscreen">
-            <div className={"layout-grid-container " + launchState.boardMode}>
-                <BoardWrap
-                    player={0}
-                    settings={{ ...launchState, inputMode: launchState.players[0].inputMethod }}
-                    restart={restart}
-                    deck={deck.copy()}
-                />
-            </div>
-
-            <div className={"layout-grid-container " + launchState.boardMode}>
-                <BoardWrap
-                    player={1}
-                    settings={{ ...launchState, inputMode: launchState.players[1].inputMethod }}
-                    restart={restart}
-                    deck={deck.copy()}
-                />
-            </div>
+            {Wrap(0)}
+            {Wrap(1)}
         </div>
     );
 };

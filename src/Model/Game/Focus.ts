@@ -6,14 +6,16 @@ export default class Focus {
     card: Card | null;
     stack: string;
     keyboard: boolean;
-    constructor(settings: Settings) {
+    player: number;
+    constructor(settings: Settings, player: number) {
         this.settings = settings;
         this.card = null;
         this.stack = "";
         this.keyboard = false;
+        this.player = player;
     }
 
-    validSettings = () => this.settings.launchSettings.inputMode !== "mouse";
+    validSettings = () => this.settings.launchSettings.players[this.player].inputMethod !== "mouse";
 
     isKeyBoard = (isKeyboard: boolean) => {
         this.keyboard = isKeyboard;

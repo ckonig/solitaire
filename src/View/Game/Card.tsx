@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback } from "react";
+import React, { MouseEventHandler, useCallback, useContext } from "react";
 
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
@@ -8,6 +8,7 @@ import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
 import usePauseContext from "./PauseContext";
+import { useBoardContext } from "./BoardContext";
 
 const useCardStyle = (model: CardModel | null, props: CardProps, _isDrag: () => boolean, opacity: any) => {
     const getCardStyle = useCallback(() => {
@@ -112,6 +113,7 @@ type CardProps = {
 };
 
 const Card = (props: CardProps) => {
+    const { player } = useBoardContext();
     const ReRender = () => (
         <Card
             {...{
@@ -210,7 +212,7 @@ const Card = (props: CardProps) => {
             updateGameContext((context) => {
                 model.onClick(position)(context);
                 if (isSinglePlayer) {
-                    context.settings.launchSettings.inputMode = "mouse";
+                    context.settings.launchSettings.players[player].inputMethod = "mouse";
                 }
             });
         }

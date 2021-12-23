@@ -11,14 +11,14 @@ import useGlobalContext from "../../GlobalContext";
 const BoardKeyboard = (props: CustomInputProps) => {
     const { state } = useGlobalContext();
     const { player } = useBoardContext();
-    const isKeyboardDriven = state.settings.launchSettings.inputMode === "keyboard";
+    const isKeyboardDriven = state.settings.launchSettings.players[player].inputMethod === "keyboard";
     const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
     const layout = isSinglePlayer ? Universal : getKeyboardLayout(state.settings.launchSettings.players[player].inputLayout);
 
     const switchToKeyboard = (ctx: Model) => {
         ctx.focus.isKeyBoard(true);
         if (isSinglePlayer) {
-            ctx.settings.launchSettings.inputMode = "keyboard";
+            ctx.settings.launchSettings.players[player].inputMethod = "keyboard";
         }
     };
 
