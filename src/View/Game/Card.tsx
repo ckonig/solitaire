@@ -3,7 +3,7 @@ import React, { MouseEventHandler, useCallback, useContext } from "react";
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
-import { getEmptyImage } from "@pspdfkit-labs/react-dnd-html5-backend";
+import { getEmptyImage } from "react-dnd-html5-backend";
 import getStackLabel from "./StackDescription";
 import { useDrag } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
@@ -138,15 +138,15 @@ const Card = (props: CardProps) => {
     const _isDrag = useCallback(() => props.isDrag || isDrag, [props.isDrag, isDrag]);
 
     const [{ opacity }, dragRef, preview] = useDrag({
-        type: 'card',
+        type: "card",
         item: (_monitor) => {
-            setDrag(true)
+            setDrag(true);
             if (model.onClick && (!props.isSelected || !props.isSelected(props.index))) {
                 updateGameContext((context) => {
                     model.onClick({ isKeyboard: false })(context);
                 });
             }
-            return { type: "card", model: model, render: ReRender() }
+            return { type: "card", model: model, render: ReRender() };
         },
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };

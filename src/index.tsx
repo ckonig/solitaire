@@ -1,6 +1,6 @@
 import DelayedSuspense from "./common/DelayedSuspense";
 import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "@pspdfkit-labs/react-dnd-html5-backend";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import React from "react";
 import ReactDOM from "react-dom";
 

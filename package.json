@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@pspdfkit-labs/react-dnd-html5-backend": "^11.1.8",
+        "react-dnd-html5-backend": "^14.0.2",
         "canvas-confetti": "^1.4.0",
         "node-sass": "^7.0.0",
         "react": "^17.0.2",
