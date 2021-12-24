@@ -4,7 +4,7 @@ import GamePad from "../../../common/GamePad";
 import GamepadLayout from "../../../common/GamepadLayout";
 import Model from "../../../Model/Model";
 import React from "react";
-import { useBoardContext } from "../Context/BoardContext";
+import { useBoardContext } from "../../Context/BoardContext";
 import useGlobalContext from "../../GlobalContext";
 
 const BoardGamePad = (props: CustomInputProps) => {

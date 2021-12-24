@@ -1,18 +1,18 @@
 import useStartScreenContext, { StartScreenState } from "../StartScreenContext";
 
-import CloseButton from "./CloseButton";
-import CookieBanner from "./CookieBanner";
+import CloseButton from "../Common/CloseButton";
+import CookieBanner from "../Common/CookieBanner";
 import RatingPresets from "../RatingOptions";
 import { RatingSettings } from "../../../../Common";
 import React from "react";
-import Row from "./Row";
-import ScreenContent from "./ScreenContent";
-import ScreenMainButton from "./ScreenMainButton";
-import ScreenToggle from "./ScreenToggle";
+import Row from "../Navigation/Row";
+import ScreenContent from "../Navigation/ScreenContent";
+import ScreenMainButton from "../Common/ScreenMainButton";
+import ScreenToggle from "../Common/ScreenToggle";
 import SuggestionModes from "../../../../Model/Game/Settings/SuggestionModes";
 import { XY } from "../../XY";
 import useCookieContext from "../../CookieContext";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 const Rating = () => {
     const { state, setState } = useStartScreenContext();

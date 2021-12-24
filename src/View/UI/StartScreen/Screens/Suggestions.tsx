@@ -1,11 +1,11 @@
 import SuggestionModes, { SuggestionMode } from "../../../../Model/Game/Settings/SuggestionModes";
 
-import CloseButton from "./CloseButton";
-import CookieBanner from "./CookieBanner";
+import CloseButton from "../Common/CloseButton";
+import CookieBanner from "../Common/CookieBanner";
 import React from "react";
-import Row from "./Row";
-import ScreenContent from "./ScreenContent";
-import ScreenToggle from "./ScreenToggle";
+import Row from "../Navigation/Row";
+import ScreenContent from "../Navigation/ScreenContent";
+import ScreenToggle from "../Common/ScreenToggle";
 import useCookieContext from "../../CookieContext";
 import useStartScreenContext from "../StartScreenContext";
 

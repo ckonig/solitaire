@@ -1,5 +1,5 @@
 import React from "react";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 const CloseButton = () => {
     const { closeScreen } = useNavigationContext();

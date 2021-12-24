@@ -2,7 +2,7 @@ import Icon from "@mdi/react";
 import React from "react";
 import { TreeNavigator } from "./TreeNavigator";
 import { XY } from "../../XY";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 interface _MenuButtonProps extends StaticMenuButtonProps {
     x?: number;

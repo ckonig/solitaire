@@ -24,7 +24,7 @@ import { Universal } from "../../../../common/KeyboardLayouts";
 import VerticalMenu from "./VerticalMenu";
 import { XY } from "../../XY";
 import useCookieContext from "../../CookieContext";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 import { useOverlayContext } from "../../../../common/Overlay";
 
 const StartMenu = (props: { start: (boardMode: string) => void }) => {

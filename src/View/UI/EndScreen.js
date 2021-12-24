@@ -2,7 +2,7 @@ import "./Screens.scss";
 
 import React from "react";
 import useGlobalContext from "../GlobalContext";
-import usePauseContext from "../Game/Context/PauseContext";
+import usePauseContext from "../Context/PauseContext";
 
 const EndScreen = () => {
     const { state, restart } = useGlobalContext();

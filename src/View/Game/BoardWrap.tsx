@@ -1,7 +1,7 @@
 import { LaunchSettings, StateReplacer, StateUpdater } from "../../Common";
 
 import Board from "./Board";
-import { BoardProvider } from "./Context/BoardContext";
+import { BoardProvider } from "../Context/BoardContext";
 import Deck from "../../Model/Deck/Deck";
 import EndScreen from "../UI/EndScreen";
 import Model from "../../Model/Model";

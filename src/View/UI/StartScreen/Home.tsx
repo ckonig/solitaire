@@ -3,7 +3,7 @@ import { StartScreenProvider, StartScreenState, defaultStartScreenState } from "
 import AspectRatio from "../../../common/AspectRatio/AspectRatio";
 import DifficultyOptions from "./DifficultyOptions";
 import { LaunchSettings } from "../../../Common";
-import { NavigationProvider } from "./NavigationContext";
+import { NavigationProvider } from "./Navigation/NavigationContext";
 import Ratios from "../../../common/AspectRatio/Ratios";
 import React from "react";
 import Screen from "./Screens/Screen";

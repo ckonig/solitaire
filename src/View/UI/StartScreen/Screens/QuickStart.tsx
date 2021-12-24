@@ -1,10 +1,10 @@
-import CloseButton from "./CloseButton";
-import CookieBanner from "./CookieBanner";
+import CloseButton from "../Common/CloseButton";
+import CookieBanner from "../Common/CookieBanner";
 import EntropyLevels from "../../../../Model/Game/Settings/EntropyLevels";
 import React from "react";
-import Row from "./Row";
-import ScreenContent from "./ScreenContent";
-import ScreenSelect from "./ScreenSelect";
+import Row from "../Navigation/Row";
+import ScreenContent from "../Navigation/ScreenContent";
+import ScreenSelect from "../Common/ScreenSelect";
 import useCookieContext from "../../CookieContext";
 import useStartScreenContext from "../StartScreenContext";
 

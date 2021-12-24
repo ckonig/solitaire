@@ -1,16 +1,16 @@
 import { ControlPresets, IControlPreset } from "../ControlsPresets";
 
-import CloseButton from "./CloseButton";
-import CookieBanner from "./CookieBanner";
+import CloseButton from "../Common/CloseButton";
+import CookieBanner from "../Common/CookieBanner";
 import GamePad from "../../../../common/GamePad";
 import GamepadLayout from "../../../../common/GamepadLayout";
 import React from "react";
-import Row from "./Row";
-import ScreenContent from "./ScreenContent";
-import ScreenMainButton from "./ScreenMainButton";
+import Row from "../Navigation/Row";
+import ScreenContent from "../Navigation/ScreenContent";
+import ScreenMainButton from "../Common/ScreenMainButton";
 import { XY } from "../../XY";
 import useCookieContext from "../../CookieContext";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 import useStartScreenContext from "../StartScreenContext";
 
 const Controls = (props: { player: number }) => {

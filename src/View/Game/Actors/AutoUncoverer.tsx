@@ -1,5 +1,5 @@
 import React from "react";
-import useGameContext from "../Context/GameContext";
+import useGameContext from "../../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";
 
 const Uncoverer = () => {

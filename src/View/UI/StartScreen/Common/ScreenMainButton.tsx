@@ -1,7 +1,7 @@
 import Icon from "@mdi/react";
 import React from "react";
 import { XY } from "../../XY";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 interface ScreenMainButtonProps {
     x?: number;

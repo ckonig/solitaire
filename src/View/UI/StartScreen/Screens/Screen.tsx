@@ -5,7 +5,7 @@ import Rating from "./Rating";
 import React from "react";
 import Suggestions from "./Suggestions";
 import Support from "./Support";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 const Screen = () => {
     //@todo load this screen after 1st selection incl. toggles and gamepads as asynchronous components

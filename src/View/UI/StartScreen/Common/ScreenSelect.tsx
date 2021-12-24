@@ -1,7 +1,7 @@
-import { getScreenElementClassName, useFocusEffect } from "./ScreenElement";
+import { getScreenElementClassName, useFocusEffect } from "../Navigation/ScreenElement";
 
 import React from "react";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 export type SelectItem = {
     label: string;

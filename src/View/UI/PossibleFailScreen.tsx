@@ -1,13 +1,13 @@
 import { mdiFlagOutline, mdiHandBackLeft, mdiPlay } from "@mdi/js";
 
-import MenuButton from "../UI/StartScreen/Menu/MenuButton";
-import MenuTitle from "../UI/StartScreen/Menu/MenuTitle";
-import MenuTree from "../UI/StartScreen/Menu/MenuTree";
-import { NavigationProvider } from "../UI/StartScreen/NavigationContext";
+import MenuButton from "./StartScreen/Menu/MenuButton";
+import MenuTitle from "./StartScreen/Menu/MenuTitle";
+import MenuTree from "./StartScreen/Menu/MenuTree";
+import { NavigationProvider } from "./StartScreen/Navigation/NavigationContext";
 import React from "react";
 import { Universal } from "../../common/KeyboardLayouts";
 import useGlobalContext from "../GlobalContext";
-import usePauseContext from "./Context/PauseContext";
+import usePauseContext from "../Context/PauseContext";
 
 const PossibleFailScreen = () => {
     const { state } = useGlobalContext();

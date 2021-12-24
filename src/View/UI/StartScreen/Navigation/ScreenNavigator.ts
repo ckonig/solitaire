@@ -1,5 +1,5 @@
-import AbstractNavigator from "../AbstractNavigator";
-import { NavHandler } from "../../NavHandler";
+import AbstractNavigator from "./AbstractNavigator";
+import { NavHandler } from "./NavHandler";
 import { XY } from "../../XY";
 
 export class ScreenNavigator extends AbstractNavigator implements NavHandler {

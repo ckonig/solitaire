@@ -1,12 +1,12 @@
 import "./react-toggle.css";
 
-import { getScreenElementClassName, useFocusEffect, useInitialFocus } from "./ScreenElement";
+import { getScreenElementClassName, useFocusEffect, useInitialFocus } from "../Navigation/ScreenElement";
 
 import Icon from "@mdi/react";
 import React from "react";
 import Toggle from "react-toggle";
 import { XY } from "../../XY";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 interface StaticScreenToggleProps {
     value: boolean;

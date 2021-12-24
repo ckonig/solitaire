@@ -1,6 +1,6 @@
 import React from "react";
-import { useBoardContext } from "../Context/BoardContext";
-import useGameContext from "../Context/GameContext";
+import { useBoardContext } from "../../Context/BoardContext";
+import useGameContext from "../../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";
 
 const Detector = () => {

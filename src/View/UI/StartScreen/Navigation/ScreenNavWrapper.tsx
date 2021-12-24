@@ -5,7 +5,7 @@ import React from "react";
 import { ScreenNavigator } from "./ScreenNavigator";
 import { Universal } from "../../../../common/KeyboardLayouts";
 import { XY } from "../../XY";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "./NavigationContext";
 
 const ScreenNavWrapper = (props: { navigator: ScreenNavigator; screen: string }) => {
     const { navigator } = props;

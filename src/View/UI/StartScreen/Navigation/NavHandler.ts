@@ -1,4 +1,4 @@
-import { XY } from "./XY";
+import { XY } from "../../XY";
 
 export interface NavHandler {
     moveUp: (x: number, y: number) => XY;

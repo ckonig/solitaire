@@ -2,7 +2,7 @@ import "./StartScreen/Menu.scss";
 
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
 import { mdiDelete, mdiPlay, mdiRecycle, mdiSleep, mdiWeatherTornado, mdiWeatherWindy } from "@mdi/js";
-import useNavigationContext, { NavigationProvider } from "./StartScreen/NavigationContext";
+import useNavigationContext, { NavigationProvider } from "./StartScreen/Navigation/NavigationContext";
 
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
 import GameModes from "../../GameModes";
@@ -12,9 +12,9 @@ import MenuTree from "./StartScreen/Menu/MenuTree";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import { XY } from "./XY";
-import { useBoardContext } from "../Game/Context/BoardContext";
+import { useBoardContext } from "../Context/BoardContext";
 import useGlobalContext from "../GlobalContext";
-import usePauseContext from "../Game/Context/PauseContext";
+import usePauseContext from "../Context/PauseContext";
 
 const _Menu = () => {
     return (

@@ -5,7 +5,7 @@ import KeyboardLayout from "../../../../common/KeyboardLayouts";
 import React from "react";
 import { TreeNavigator } from "../Menu/TreeNavigator";
 import { XY } from "../../XY";
-import useNavigationContext from "../NavigationContext";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 const TreeNavWrapper = (props: { navigator: TreeNavigator; keyboardLayout: KeyboardLayout; disabled?: boolean }) => {
     const { navigator } = props;

@@ -3,8 +3,8 @@ import useCookieContext, { ICookieContext } from "../../CookieContext";
 import React from "react";
 import StorageManager from "../../StorageManager";
 import { XY } from "../../XY";
-import { useFocusEffect } from "./ScreenElement";
-import useNavigationContext from "../NavigationContext";
+import { useFocusEffect } from "../Navigation/ScreenElement";
+import useNavigationContext from "../Navigation/NavigationContext";
 
 interface RenderCookieBannerProps extends ICookieContext, XY {}
 

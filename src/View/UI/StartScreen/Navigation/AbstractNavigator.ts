@@ -1,4 +1,4 @@
-import { XY } from "../XY";
+import { XY } from "../../XY";
 
 export default class AbstractNavigator {
     rows: any[];

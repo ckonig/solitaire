@@ -1,5 +1,5 @@
-import AbstractNavigator from "../AbstractNavigator";
-import { NavHandler } from "../../NavHandler";
+import AbstractNavigator from "../Navigation/AbstractNavigator";
+import { NavHandler } from "../Navigation/NavHandler";
 import { XY } from "../../XY";
 
 export class TreeNavigator extends AbstractNavigator implements NavHandler {

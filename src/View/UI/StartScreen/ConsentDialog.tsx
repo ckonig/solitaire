@@ -3,7 +3,7 @@ import { mdiCookie, mdiThumbDown, mdiThumbUp } from "@mdi/js";
 import MenuButton from "./Menu/MenuButton";
 import MenuTitle from "./Menu/MenuTitle";
 import MenuTree from "./Menu/MenuTree";
-import { NavigationProvider } from "./NavigationContext";
+import { NavigationProvider } from "./Navigation/NavigationContext";
 import React from "react";
 import StorageManager from "../StorageManager";
 import { Universal } from "../../../common/KeyboardLayouts";
