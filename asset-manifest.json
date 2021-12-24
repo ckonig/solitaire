@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/solitaire/static/js/main.d9bbd84c.js",
-    "static/css/501.e744ea23.chunk.css": "/solitaire/static/css/501.e744ea23.chunk.css",
-    "static/js/501.b2935966.chunk.js": "/solitaire/static/js/501.b2935966.chunk.js",
-    "static/css/324.88f6dbb3.chunk.css": "/solitaire/static/css/324.88f6dbb3.chunk.css",
-    "static/js/324.2d9b1e32.chunk.js": "/solitaire/static/js/324.2d9b1e32.chunk.js",
-    "static/js/713.9e767397.chunk.js": "/solitaire/static/js/713.9e767397.chunk.js",
-    "static/js/618.9386529f.chunk.js": "/solitaire/static/js/618.9386529f.chunk.js",
+    "main.js": "/solitaire/static/js/main.cf957986.js",
+    "static/css/119.05bb0867.chunk.css": "/solitaire/static/css/119.05bb0867.chunk.css",
+    "static/js/119.7846ff81.chunk.js": "/solitaire/static/js/119.7846ff81.chunk.js",
+    "static/css/561.d6a01c1d.chunk.css": "/solitaire/static/css/561.d6a01c1d.chunk.css",
+    "static/js/561.5b959357.chunk.js": "/solitaire/static/js/561.5b959357.chunk.js",
+    "static/js/563.4b9f1044.chunk.js": "/solitaire/static/js/563.4b9f1044.chunk.js",
+    "static/js/951.3ce6268b.chunk.js": "/solitaire/static/js/951.3ce6268b.chunk.js",
     "static/media/felt.png": "/solitaire/static/media/felt.5b148bae5dfea30bd1f1.png",
     "index.html": "/solitaire/index.html",
-    "main.d9bbd84c.js.map": "/solitaire/static/js/main.d9bbd84c.js.map",
-    "501.e744ea23.chunk.css.map": "/solitaire/static/css/501.e744ea23.chunk.css.map",
-    "501.b2935966.chunk.js.map": "/solitaire/static/js/501.b2935966.chunk.js.map",
-    "324.88f6dbb3.chunk.css.map": "/solitaire/static/css/324.88f6dbb3.chunk.css.map",
-    "324.2d9b1e32.chunk.js.map": "/solitaire/static/js/324.2d9b1e32.chunk.js.map",
-    "713.9e767397.chunk.js.map": "/solitaire/static/js/713.9e767397.chunk.js.map",
-    "618.9386529f.chunk.js.map": "/solitaire/static/js/618.9386529f.chunk.js.map"
+    "main.cf957986.js.map": "/solitaire/static/js/main.cf957986.js.map",
+    "119.05bb0867.chunk.css.map": "/solitaire/static/css/119.05bb0867.chunk.css.map",
+    "119.7846ff81.chunk.js.map": "/solitaire/static/js/119.7846ff81.chunk.js.map",
+    "561.d6a01c1d.chunk.css.map": "/solitaire/static/css/561.d6a01c1d.chunk.css.map",
+    "561.5b959357.chunk.js.map": "/solitaire/static/js/561.5b959357.chunk.js.map",
+    "563.4b9f1044.chunk.js.map": "/solitaire/static/js/563.4b9f1044.chunk.js.map",
+    "951.3ce6268b.chunk.js.map": "/solitaire/static/js/951.3ce6268b.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.d9bbd84c.js"
+    "static/js/main.cf957986.js"
   ]
 }
