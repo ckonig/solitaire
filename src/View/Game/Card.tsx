@@ -218,7 +218,7 @@ const Card = (props: CardProps) => {
     //@todo creating a custom layout was fun, but the users deserve a more professional looking SVG
     //e.g. https://totalnonsense.com/download/download-vector-playing-cards/
 
-    const SuitIcon = () => <Icon size={2} color={model.type.color} path={model.type.icon}/>
+    const SuitIcon = () => <Icon size={1.2} color={model.type.color} path={model.type.icon}/>
 
     return (
         <>
