@@ -43,7 +43,7 @@ export default class Focus {
         this.stack = stack;
     };
 
-    hasCard = (card: Card) => this.keyboard && this.validSettings() && !!this.card && !!card && Card.equals(this.card, card);
+    hasCard = (card: Card) => this.keyboard && this.validSettings() && Card.equals(this.card, card);
 
     hasStack = (stack: string) => this.keyboard && this.validSettings() && this.stack && stack && this.stack === stack;
 }

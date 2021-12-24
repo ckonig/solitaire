@@ -56,7 +56,7 @@ export default class Card {
         return (other && Card.equals(this, other)) || false;
     };
 
-    static equals(card: Card, otherCard: Card) {
+    static equals(card: Card | null, otherCard: Card | null) {
         return (!card && !otherCard) || (card && otherCard && otherCard.denomination === card.denomination && otherCard.type.icon === card.type.icon);
     }
 

@@ -1,35 +1,31 @@
-import React, { MouseEventHandler } from "react";
+import React, { MouseEventHandler, useCallback } from "react";
 
-import GameModes from "../../GameModes";
 import { IStack } from "../../Model/Game/Stack";
 import getStackLabel from "./StackDescription";
 import useGlobalContext from "../GlobalContext";
 
 const StackBase = (props: { model: IStack; children?: React.ReactNode }) => {
-    let classname = "card-base socket";
-    const inputEl = React.useRef<HTMLButtonElement>(null);
     const { state, updateGameContext } = useGlobalContext();
-    React.useEffect(() => {
-        if (state.focus.hasStack(props.model.source) && state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER) {
-            const current = inputEl && inputEl.current ? inputEl.current : null;
-            current && current.focus();
-        }
-    });
-    if (!props.model.stack.length) {
-        if (props.model.blinkFor) {
-            classname += " socket-blink";
-        } else if (state.focus.hasStack(props.model.source)) {
-            classname += " socket-focused";
+    
+    const getClassName = useCallback(() => {
+        let classname = "card-base socket";
+        if (!props.model.stack.length) {
+            if (props.model.blinkFor) {
+                classname += " socket-blink";
+            } else if (state.focus.hasStack(props.model.source)) {
+                classname += " socket-focused";
+            } else {
+                classname += " socket-empty";
+            }
         } else {
-            classname += " socket-empty";
+            classname += " socket-full";
         }
-    } else {
-        classname += " socket-full";
-    }
 
-    if (props.model.suggestion && !props.model.stack.length) {
-        classname += " socket-suggested";
-    }
+        if (props.model.suggestion && !props.model.stack.length) {
+            classname += " socket-suggested";
+        }
+        return classname;
+    }, [props.model.stack.length, props.model.suggestion, props.model.blinkFor, props.model.source, state.focus]);
 
     const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
@@ -44,16 +40,7 @@ const StackBase = (props: { model: IStack; children?: React.ReactNode }) => {
 
     return (
         <button
-            onFocus={() => {
-                // updateContext((ctx) => {
-                //     ctx.navigator.update(props.model.parent);
-                // });
-            }}
-            onBlur={() => {
-                // updateContext((ctx) => ctx.focus.unsetStack(props.model.parent));
-            }}
-            ref={inputEl}
-            className={classname}
+            className={getClassName()}
             onClick={onClick}
             disabled={!!props.model.stack.length}
             tabIndex={!props.model.stack.length ? 0 : -1}

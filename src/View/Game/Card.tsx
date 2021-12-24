@@ -4,11 +4,10 @@ import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
 import { getEmptyImage } from "react-dnd-html5-backend";
-import getStackLabel from "./StackDescription";
+import { useBoardContext } from "./BoardContext";
 import { useDrag } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
 import usePauseContext from "./PauseContext";
-import { useBoardContext } from "./BoardContext";
 
 const useCardStyle = (model: CardModel | null, props: CardProps, _isDrag: () => boolean, opacity: any) => {
     const getCardStyle = useCallback(() => {
@@ -86,20 +85,6 @@ const useStackBaseStyle = (model: CardModel | null) => {
     return stackbaseStyle;
 };
 
-const useLabel = (model: CardModel | null) => {
-    const [label, setLabel] = React.useState("");
-    React.useEffect(() => {
-        if (model) {
-            let l = getStackLabel(model.source);
-            l += ": ";
-            l += model.isHidden ? "hidden card" : model.type.icon + model.denomination;
-            setLabel(l);
-        }
-    }, [model]);
-
-    return label;
-};
-
 type CardProps = {
     index: number;
     models: CardModel[];
@@ -112,31 +97,28 @@ type CardProps = {
     isDrag?: boolean;
 };
 
+const ReRender = (props: CardProps) => (
+    <Card
+        {...{
+            ...props,
+            models: props.models.slice(props.index, props.models.length),
+            offsetLeft: () => 0,
+            isSelected: () => false,
+            index: 0,
+        }}
+    />
+);
+ReRender.displayName = "ReRender";
+
 const Card = (props: CardProps) => {
     const { player } = useBoardContext();
-    const ReRender = () => (
-        <Card
-            {...{
-                ...props,
-                models: props.models.slice(props.index, props.models.length),
-                offsetLeft: () => 0,
-                isSelected: () => false,
-                index: 0,
-                isDrag: isDrag,
-            }}
-        />
-    );
-    ReRender.displayName = "ReRender";
     const { state, updateGameContext } = useGlobalContext();
     const pause = usePauseContext();
     const inputEl = React.useRef<HTMLButtonElement>(null);
     const [isDrag, setDrag] = React.useState<boolean>(!!props.isDrag);
-
     const model: CardModel = props.models[props.index];
-    const isFocused = useCallback(() => !!model && state.focus.hasCard(model), [model, state.focus]);
-
+    const isFocused = useCallback(() => (!!model && state.focus.hasCard(model)) || false, [model, state.focus]);
     const _isDrag = useCallback(() => props.isDrag || isDrag, [props.isDrag, isDrag]);
-
     const [{ opacity }, dragRef, preview] = useDrag({
         type: "card",
         item: (_monitor) => {
@@ -146,7 +128,7 @@ const Card = (props: CardProps) => {
                     model.onClick({ isKeyboard: false })(context);
                 });
             }
-            return { type: "card", model: model, render: ReRender() };
+            return { type: "card", model: model, render: ReRender(props) };
         },
         collect: (monitor) => {
             return { opacity: monitor.isDragging() ? 1 : 1 };
@@ -168,7 +150,6 @@ const Card = (props: CardProps) => {
     });
 
     //Deactivate native dnd preview - it's fast but it's not working on mobile.
-
     React.useEffect(() => {
         preview(getEmptyImage(), { captureDraggingState: true });
     }, [preview]);
@@ -185,6 +166,9 @@ const Card = (props: CardProps) => {
 
     const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
+        //@todo catch all focuses in hidden input element on board
+        //then remove isKeyboard logic from card
+        //tab nav wont be supported
         const isKeyBoard = e.clientX === 0 && e.clientY === 0;
         let ele = e.target as HTMLElement;
 
@@ -206,8 +190,8 @@ const Card = (props: CardProps) => {
             },
         };
 
+        // When clicking on a card, move the focus (switch from keyboard to mouse nav)
         const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
-        //@todo A11Y allow keyboard tab navigation in singleplayer
         if (model.onClick && !position.isKeyBoard) {
             updateGameContext((context) => {
                 model.onClick(position)(context);
@@ -217,10 +201,10 @@ const Card = (props: CardProps) => {
             });
         }
     };
+
     const className = useClassName(model, props, _isDrag, isFocused);
     const cardStyle = useCardStyle(model, props, _isDrag, opacity);
     const stackbaseStyle = useStackBaseStyle(model);
-    const label = useLabel(model);
 
     // @todo 3d flip https://3dtransforms.desandro.com/card-flip on unhide
     // https://medium.com/hackernoon/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
@@ -237,24 +221,12 @@ const Card = (props: CardProps) => {
         <>
             <div style={stackbaseStyle} className="stack-base">
                 <button
-                    onFocus={() => {
-                        //@todo re-enable focusing
-                        // updateContext((ctx) => {
-                        //     ctx.navigator.update(model.source, props.model);
-                        // });
-                    }}
-                    onBlur={() => {
-                        //updateContext((ctx) => ctx.focus.unsetCard(props.model));
-                    }}
                     style={cardStyle}
-                    // ref={inputEl}
                     ref={getRef()}
                     className={className}
                     onClick={onClick}
                     disabled={!model.canClick() || !pause.state.showCards}
                     tabIndex={model.canClick() ? 0 : -1}
-                    aria-label={label}
-                    title={label}
                 >
                     <CardFirework model={model} />
                     <div className="card-content">
