@@ -1,3 +1,4 @@
+import Icon from "@mdi/react";
 import React from "react";
 import { TreeNavigator } from "./TreeNavigator";
 import { XY } from "../../XY";
@@ -124,7 +125,7 @@ const RenderMenuButton = (props: MenuButtonProps) => {
                 disabled={props.skip}
                 onMouseDown={() => setClicking(true)}
             >
-                <div className="icon">{props.icon}</div>
+                <div className="icon"><Icon path={props.icon} size="1em" /></div>
                 <div className="label">{props.title}</div>
             </button>
             <div>{!props.toggled ? null : props.children}</div>

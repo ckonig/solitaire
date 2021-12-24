@@ -1,6 +1,7 @@
 import "./StartScreen/Menu.scss";
 
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
+import { mdiDelete, mdiPlay, mdiRecycle, mdiWeatherTornado, mdiWeatherWindy } from "@mdi/js";
 import useNavigationContext, { NavigationProvider } from "./StartScreen/NavigationContext";
 
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
@@ -97,7 +98,7 @@ const Menu = () => {
                     <div className="announcement">{announcement}</div>
                     <MenuTree keyboardLayout={keyboardLayout}>
                         <MenuButton
-                            icon="▶️"
+                            icon={mdiPlay}
                             title="Resume"
                             onClick={() => {
                                 toggleMenu();
@@ -111,13 +112,13 @@ const Menu = () => {
                             }}
                         />
                         <MenuButton
-                            icon="🌪️"
+                            icon={mdiWeatherTornado}
                             title="Entropy"
                             onClick={(pos: XY) => toggleMainMenu("entropy", pos)}
                             toggled={navigation.mainMenu === "entropy"}
                         >
                             <MenuButton
-                                icon="🌪️"
+                                icon={mdiWeatherTornado}
                                 title={`Base Entropy: ${EntropyLevels[state.settings.baseEntropy]}`}
                                 onClick={() => {
                                     setBaseEntropy(
@@ -126,7 +127,7 @@ const Menu = () => {
                                 }}
                             />
                             <MenuButton
-                                icon="🌬️"
+                                icon={mdiWeatherWindy}
                                 title={`Action Entropy: ${EntropyLevels[state.settings.interactionEntropy]}`}
                                 onClick={() => {
                                     setInteractionEntropy(
@@ -138,12 +139,12 @@ const Menu = () => {
                             />
                         </MenuButton>
                         <MenuButton
-                            icon="♻️"
+                            icon={mdiRecycle}
                             title="Restart Game"
                             onClick={() => reset()}
                             skip={!state.game.timemachine.previousStates.length}
                         />
-                        <MenuButton icon="🗑️" title="Quit Game" onClick={() => restart()} />
+                        <MenuButton icon={mdiDelete} title="Quit Game" onClick={() => restart()} />
                     </MenuTree>
                 </div>
             </div>

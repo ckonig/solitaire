@@ -1,3 +1,5 @@
+import { mdiClose, mdiLightbulb, mdiSchool, mdiTimerSand, mdiTrophy } from '@mdi/js';
+
 export class SuggestionMode {
     key: string;
     label: string;
@@ -38,29 +40,29 @@ export default class SuggestionModes {
             label: "None",
             description: "No distractions. This enables one-time hints.",
             supportsHints: true,
-            icon: "❌",
+            icon: mdiClose,
         },
         SCORED: {
             label: "Scored",
             description: "Shows all actions that increase the score.",
-            icon: "🏆",
+            icon: mdiTrophy,
         },
         REGULAR: {
             label: "Regular",
             description: "Shows all possible actions except circular",
-            icon: "💡",
+            icon: mdiLightbulb ,
         },
         FULL: {
             label: "Full",
             description: "Shows all possible actions, even if they are circular",
-            icon: "🎓",
+            icon: mdiSchool ,
         },
         ONCE: {
             label: "Single Action",
             description: "triggered by manual hint in game",
             isTemporary: true,
             next: "NONE",
-            icon: "⏳",
+            icon: mdiTimerSand ,
         },
     };
     static get = (key: string) => new SuggestionMode(key, SuggestionModes.raw[key]);

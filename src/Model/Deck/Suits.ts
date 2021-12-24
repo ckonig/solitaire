@@ -1,7 +1,4 @@
-import { mdiCardsClub } from '@mdi/js';
-import { mdiCardsDiamond } from '@mdi/js';
-import { mdiCardsHeart } from '@mdi/js';
-import { mdiCardsSpade } from '@mdi/js';
+import { mdiCardsClub, mdiCardsDiamond, mdiCardsHeart, mdiCardsSpade } from "@mdi/js";
 
 export interface Suit {
     icon: string;

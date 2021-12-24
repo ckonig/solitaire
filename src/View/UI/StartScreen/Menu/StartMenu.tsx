@@ -1,5 +1,18 @@
 import "../Menu.scss";
 
+import {
+    mdiArmFlex,
+    mdiCardsPlayingOutline,
+    mdiCog,
+    mdiControllerClassic,
+    mdiCookie,
+    mdiLightbulb,
+    mdiRobot,
+    mdiScaleBalance,
+    mdiSwordCross,
+    mdiWeatherTornado,
+} from "@mdi/js";
+
 import ConsentDialog from "../ConsentDialog";
 import GameModes from "../../../../GameModes";
 import MenuButton from "./MenuButton";
@@ -62,66 +75,66 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
         <VerticalMenu>
             <MenuTitle label="♦ Solitaire" />
             <MenuTree keyboardLayout={Universal} disabled={overlayActive}>
-                <MenuButton icon="🎲" title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} />
+                <MenuButton icon={mdiCardsPlayingOutline} title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} />
                 <MenuButton
-                    icon="⚔️"
+                    icon={mdiSwordCross}
                     title="Versus"
                     onClick={(pos: XY) => toggleMainMenu("versus", pos)}
                     toggled={navigation.mainMenu === "versus"}
                 >
                     <MenuButton
-                        icon="🎮"
+                        icon={mdiControllerClassic}
                         title="Player 1"
                         onClick={(pos: XY) => toggleScreen("controls0", pos)}
                         toggled={navigation.screeen === "controls0"}
                     />
                     <MenuButton
-                        icon="🎮"
+                        icon={mdiControllerClassic}
                         title="Player 2"
                         onClick={(pos: XY) => toggleScreen("controls1", pos)}
                         toggled={navigation.screeen === "controls1"}
                     />
-                    <MenuButton icon="🎲" title="Start" onClick={() => props.start(GameModes.VERSUS)} />
+                    <MenuButton icon={mdiCardsPlayingOutline} title="Start" onClick={() => props.start(GameModes.VERSUS)} />
                 </MenuButton>
                 <MenuButton
-                    icon="⚙️"
+                    icon={mdiCog}
                     title="Options"
                     onClick={(pos: XY) => toggleMainMenu("custom", pos)}
                     toggled={navigation.mainMenu === "custom"}
                 >
                     <MenuButton
-                        icon="💪"
+                        icon={mdiArmFlex}
                         title="Difficulty"
                         onClick={(pos: XY) => toggleScreen("difficulty", pos)}
                         toggled={navigation.screeen === "difficulty"}
                     />
                     <MenuButton
-                        icon="⚖️"
+                        icon={mdiScaleBalance}
                         title="Penalties"
                         onClick={(pos: XY) => toggleScreen("rating", pos)}
                         toggled={navigation.screeen === "rating"}
                     />
                     <MenuButton
-                        icon="💡"
+                        icon={mdiLightbulb}
                         title="Suggestions"
                         onClick={(pos: XY) => toggleScreen("suggestions", pos)}
                         toggled={navigation.screeen === "suggestions"}
                     />
                     <MenuButton
-                        icon="🤖"
+                        icon={mdiRobot}
                         title="Support"
                         onClick={(pos: XY) => toggleScreen("support", pos)}
                         toggled={navigation.screeen === "support"}
                     />
                     <MenuButton
-                        icon="🌪️"
+                        icon={mdiWeatherTornado}
                         title="Entropy"
                         onClick={(pos: XY) => toggleScreen("settings", pos)}
                         toggled={navigation.screeen === "settings"}
                     />
                 </MenuButton>
                 <MenuButton
-                    icon="🍪"
+                    icon={mdiCookie}
                     title={consented ? "Delete Cookie" : "Allow Cookie"}
                     onClick={() => _toggleOverlay(<ConsentDialog />)}
                 />
