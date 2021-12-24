@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffectOnce } from "react-use";
 import useGameContext from "../../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";

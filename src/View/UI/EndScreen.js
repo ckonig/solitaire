@@ -11,6 +11,8 @@ const EndScreen = () => {
     //@todo show win or lose situation
     //@todo how to persist the result? from here?
     // Or track it via context from beginning on?
+
+    //@todo use new ui elements
     return !state.game.isEnded ? null : (
         <div className="ui neutral endscreen">
             <div className="title">🥳</div>

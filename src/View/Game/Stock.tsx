@@ -5,7 +5,7 @@ import useBlinkEffect from "./Hooks/useBlinkEffect";
 import useGameContext from "../Context/GameContext";
 import useGlobalContext from "../GlobalContext";
 import usePauseContext from "../Context/PauseContext";
-import usePrevious from "./Hooks/usePrevious";
+import { usePrevious } from "react-use";
 
 const Renderer = (props: { length: number; paused: boolean; started: number }) => {
     const context = useGlobalContext();
