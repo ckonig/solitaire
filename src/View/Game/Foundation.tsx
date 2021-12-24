@@ -1,5 +1,6 @@
 import Card from "./Card";
 import FoundationStackModel from "../../Model/Game/FoundationStack";
+import Icon from "@mdi/react";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
@@ -30,7 +31,9 @@ const FoundationStack = (props: FoundationProps) => {
     return (
         <div className="board-field" key={props.index} ref={drop}>
             <StackBase model={model}>
-                <div className={"align-center foundation-base suit-" + model.icon}>{model.icon}</div>
+                <div className={"align-center foundation-base suit-" + model.icon}>
+                    <Icon path={model.icon} size={4} horizontal  color={model.color} />
+                </div>
             </StackBase>
             <Card
                 index={0}

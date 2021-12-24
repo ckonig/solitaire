@@ -3,6 +3,7 @@ import React, { MouseEventHandler, useCallback } from "react";
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
+import Icon from '@mdi/react'
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { useBoardContext } from "./BoardContext";
 import { useDrag } from "react-dnd";
@@ -48,7 +49,7 @@ const useClassName = (model: CardModel | null, props: CardProps, _isDrag: () => 
             return "card card-base";
         }
         const hasSuggestion = (props.isSuggested && props.isSuggested(props.index)) || model.suggestion;
-        let className = `card card-base suit-${model.type.icon}`;
+        let className = `card card-base card-${model.type.color}`;
         className +=
             (!props.isSelected || !props.isSelected(props.index)) && !isFocused() && !hasSuggestion ? ` card-stack-${model.source}` : "";
         className += !_isDrag() && props.isSelected && props.isSelected(props.index) && !_isDrag() ? " card-selected" : "";
@@ -217,6 +218,8 @@ const Card = (props: CardProps) => {
     //@todo creating a custom layout was fun, but the users deserve a more professional looking SVG
     //e.g. https://totalnonsense.com/download/download-vector-playing-cards/
 
+    const SuitIcon = () => <Icon size={2} color={model.type.color} path={model.type.icon}/>
+
     return (
         <>
             <div style={stackbaseStyle} className="stack-base">
@@ -235,27 +238,27 @@ const Card = (props: CardProps) => {
                         ) : (
                             <div className="card-grid-container">
                                 <div>
-                                    <div className="align-center">{model.type.icon}</div>
+                                    <div className="align-center"><SuitIcon/></div>
                                 </div>
                                 <div>
                                     <div className="align-left">{model.denomination}</div>
                                 </div>
                                 <div>&nbsp;</div>
                                 <div>
-                                    <div className="align-center">{model.type.icon}</div>
+                                    <div className="align-center"><SuitIcon/></div>
                                 </div>
                                 <div className="mainface">
                                     <div className="align-center">{model.denomination} </div>
                                 </div>
                                 <div>
-                                    <div className="align-center">{model.type.icon}</div>
+                                    <div className="align-center"><SuitIcon/></div>
                                 </div>
                                 <div>&nbsp;</div>
                                 <div>
                                     <div className="align-right">{model.denomination}</div>
                                 </div>
                                 <div>
-                                    <div className="align-center">{model.type.icon}</div>
+                                    <div className="align-center"><SuitIcon/></div>
                                 </div>
                             </div>
                         )}

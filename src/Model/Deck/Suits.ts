@@ -1,3 +1,8 @@
+import { mdiCardsClub } from '@mdi/js';
+import { mdiCardsDiamond } from '@mdi/js';
+import { mdiCardsHeart } from '@mdi/js';
+import { mdiCardsSpade } from '@mdi/js';
+
 export interface Suit {
     icon: string;
     color: string;
@@ -5,19 +10,19 @@ export interface Suit {
 
 const Suits: { [id: string]: Suit } = {
     heart: {
-        icon: "♥",
+        icon: mdiCardsHeart,
         color: "red",
     },
     club: {
-        icon: "♣",
+        icon: mdiCardsClub,
         color: "black",
     },
     diamond: {
-        icon: "♦",
+        icon: mdiCardsDiamond,
         color: "red",
     },
     spade: {
-        icon: "♠",
+        icon: mdiCardsSpade,
         color: "black",
     },
 };

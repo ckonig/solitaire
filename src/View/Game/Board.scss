@@ -187,11 +187,6 @@ button {
     box-shadow: 0vw 0vw 0.4vw 0.4vw $selected;
 }
 
-// .card-accepts.suit-♥,
-// .card-accepts.suit-♦ {
-//     color: green;
-// }
-
 .card-suggested {
     box-shadow: 0vw 0vw 0.4vw 0.4vw $suggested;
     animation: cardBlinker 2s linear infinite;
@@ -290,13 +285,11 @@ button {
     border-width: 0.025em;
 }
 
-.suit-♥,
-.suit-♦ {
+.card-red {
     color: red;
 }
 
-.suit-♣,
-.suit-♠ {
+.card-black {
     color: black;
 }
 

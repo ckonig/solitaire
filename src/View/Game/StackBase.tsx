@@ -1,7 +1,6 @@
 import React, { MouseEventHandler, useCallback } from "react";
 
 import { IStack } from "../../Model/Game/Stack";
-import getStackLabel from "./StackDescription";
 import useGlobalContext from "../GlobalContext";
 
 const StackBase = (props: { model: IStack; children?: React.ReactNode }) => {
@@ -35,17 +34,12 @@ const StackBase = (props: { model: IStack; children?: React.ReactNode }) => {
         }
     };
 
-    let label = getStackLabel(props.model.source);
-    label += ": empty socket";
-
     return (
         <button
             className={getClassName()}
             onClick={onClick}
             disabled={!!props.model.stack.length}
             tabIndex={!props.model.stack.length ? 0 : -1}
-            aria-label={label}
-            title={label}
         >
             {props.children}
         </button>
