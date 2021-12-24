@@ -2,6 +2,7 @@ import "./react-toggle.css";
 
 import { getScreenElementClassName, useFocusEffect, useInitialFocus } from "./ScreenElement";
 
+import Icon from "@mdi/react";
 import React from "react";
 import Toggle from "react-toggle";
 import { XY } from "../../XY";
@@ -10,6 +11,7 @@ import useNavigationContext from "../NavigationContext";
 interface StaticScreenToggleProps {
     value: boolean;
     label: string;
+    icon: string;
     description: string;
     disabled?: boolean;
     callBack?: (s: boolean) => void;
@@ -38,7 +40,7 @@ const RenderScreenToggle = (props: ToggleProps) => {
     useInitialFocus(props, inputEl, navigation.screen);
     return (
         <div className={getScreenElementClassName("togglecontainer", props)}>
-            <div className="title">{props.label}</div>
+            <div className="title">{props.icon && <Icon size="0.8em" path={props.icon} />} {props.label}</div>
             <div className="toggle">
                 <Toggle
                     ref={inputEl}
@@ -69,6 +71,7 @@ const ScreenToggle = (props: _ScreenToggleProps) => {
         <RenderScreenToggle
             x={pos.x}
             y={pos.y}
+            icon={props.icon}
             disabled={!!props.disabled}
             hasFocus={hasFocus(pos.y, pos.x)}
             label={props.label}

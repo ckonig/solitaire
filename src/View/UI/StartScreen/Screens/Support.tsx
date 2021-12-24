@@ -24,6 +24,7 @@ const Support = () => {
                 </Row>
                 <Row>
                     <ScreenToggle
+                    icon={""}
                         label="Auto Resolve"
                         description="Enable this to automatically resolve the board once all cards are uncovered and moved to the tableau."
                         value={state.autoResolve}
@@ -31,6 +32,7 @@ const Support = () => {
                         autoFocus={true}
                     />
                     <ScreenToggle
+                    icon={""}
                         label="Auto Uncover"
                         description="Should the game automatically uncover cards for you?"
                         value={state.autoUncover}
@@ -39,12 +41,14 @@ const Support = () => {
                 </Row>
                 <Row>
                     <ScreenToggle
+                    icon={""}
                         label="Instant Deal"
                         description="Should the deal animation at the beginning of the game be skipped?"
                         value={state.quickDeal}
                         callBack={setQuickDeal}
                     />
                     <ScreenToggle
+                    icon={""}
                         label="Auto Draw"
                         description="Should the game automatically draw from the stock every 10 seconds?"
                         value={state.speed}

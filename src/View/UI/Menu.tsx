@@ -1,7 +1,7 @@
 import "./StartScreen/Menu.scss";
 
 import { Universal, getKeyboardLayout } from "../../common/KeyboardLayouts";
-import { mdiDelete, mdiPlay, mdiRecycle, mdiWeatherTornado, mdiWeatherWindy } from "@mdi/js";
+import { mdiDelete, mdiPlay, mdiRecycle, mdiSleep, mdiWeatherTornado, mdiWeatherWindy } from "@mdi/js";
 import useNavigationContext, { NavigationProvider } from "./StartScreen/NavigationContext";
 
 import EntropyLevels from "../../Model/Game/Settings/EntropyLevels";
@@ -80,7 +80,7 @@ const Menu = () => {
             <div className="gamemenu menu">
                 <div className="startscreen-jail">
                     <div className="innermenu">
-                        <MenuTitle label="😴" />
+                        <MenuTitle icon={mdiSleep } />
                         {pause.state.pausedBy}
                         <div className="announcement">{announcement}</div>
                     </div>
@@ -93,7 +93,7 @@ const Menu = () => {
         <div className="gamemenu menu">
             <div className="startscreen-jail">
                 <div className="innermenu">
-                    <MenuTitle label="😴" />
+                    <MenuTitle icon={mdiSleep } />
 
                     <div className="announcement">{announcement}</div>
                     <MenuTree keyboardLayout={keyboardLayout}>

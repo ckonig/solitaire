@@ -1,3 +1,5 @@
+import { mdiBeach, mdiScaleBalance, mdiTrophy } from "@mdi/js";
+
 import { RatingSettings } from "../../../Common";
 import { StartScreenState } from "./StartScreenContext";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
@@ -44,21 +46,21 @@ export default class RatingPresets {
     static ALL: RatingPreset[] = [
         {
             id: 0,
-            icon: "🌴",
+            icon: mdiBeach ,
             label: "Chill",
             settings: { ...RatingPresets.CHILL },
             apply: (s) => apply(RatingPresets.CHILL, s, 0),
         },
         {
             id: 1,
-            icon: "⚖️",
+            icon: mdiScaleBalance,
             label: "Regular",
             settings: { ...RatingPresets.REGULAR },
             apply: (s) => apply(RatingPresets.REGULAR, s, 1),
         },
         {
             id: 2,
-            icon: "🏆",
+            icon: mdiTrophy ,
             label: "Competitive",
             settings: { ...RatingPresets.COMPETITIVE },
             apply: (s) => apply(RatingPresets.COMPETITIVE, s, 2),

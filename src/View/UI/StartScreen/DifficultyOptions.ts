@@ -1,3 +1,5 @@
+import { mdiDuck, mdiGoogleDownasaur, mdiKangaroo, mdiKoala, mdiRodent, mdiShark, mdiSnake } from "@mdi/js";
+
 export interface DifficultyOption {
     id: number;
     settings: {
@@ -11,37 +13,37 @@ const DifficultyOptions: DifficultyOption[] = [
     {
         id: 0,
         settings: { drawMode: "single", recyclingMode: "infinite" },
-        icon: "🐭",
+        icon: mdiDuck ,
         lines: ["Turn 1 card", "No Limit"],
     },
     {
         id: 1,
         settings: { drawMode: "single", recyclingMode: "3-pass" },
-        icon: "🐹",
+        icon: mdiKangaroo ,
         lines: ["Turn 1 card", "Three passes"],
     },
     {
         id: 2,
         settings: { drawMode: "single", recyclingMode: "1-pass" },
-        icon: "🐰",
+        icon: mdiShark  ,
         lines: ["Turn 1 card", "Only a single pass"],
     },
     {
         id: 3,
         settings: { drawMode: "triple", recyclingMode: "infinite" },
-        icon: "🐨",
+        icon: mdiRodent  ,
         lines: ["Turn 3 cards", "No limit"],
     },
     {
         id: 4,
         settings: { drawMode: "triple", recyclingMode: "3-pass" },
-        icon: "🐼",
+        icon: mdiSnake  ,
         lines: ["Turn 3 cards ", "Three passes"],
     },
     {
         id: 5,
         settings: { drawMode: "triple", recyclingMode: "1-pass" },
-        icon: "🐻",
+        icon: mdiGoogleDownasaur ,
         lines: ["Turn 3 cards ", "Only a single pass"],
     },
 ];

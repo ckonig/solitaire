@@ -1,3 +1,5 @@
+import { mdiCookie, mdiThumbDown, mdiThumbUp } from "@mdi/js";
+
 import MenuButton from "./Menu/MenuButton";
 import MenuTitle from "./Menu/MenuTitle";
 import MenuTree from "./Menu/MenuTree";
@@ -20,11 +22,11 @@ const ConsentDialog = () => {
             <div className="gamemenu menu dialog">
                 <div className="startscreen-jail">
                     <div className="innermenu">
-                        <MenuTitle label="🍪" />
+                        <MenuTitle icon={mdiCookie  } />
                         <div className="announcement">{consent.prompt}</div>
                         <MenuTree keyboardLayout={Universal}>
                             <MenuButton
-                                icon="👍"
+                                icon={mdiThumbUp}
                                 title={consented ? "Delete cookie": "Allow cookie"}
                                 onClick={() => {
                                     setConsented(consent.confirm());
@@ -32,7 +34,7 @@ const ConsentDialog = () => {
                                     //@todo @bug after closing overlay, up & down nav works but not the action button
                                 }}
                             />
-                            <MenuButton icon="👎" title="Cancel" onClick={() => toggleOverlay()} />
+                            <MenuButton icon={mdiThumbDown } title="Cancel" onClick={() => toggleOverlay()} />
                         </MenuTree>
                     </div>
                 </div>

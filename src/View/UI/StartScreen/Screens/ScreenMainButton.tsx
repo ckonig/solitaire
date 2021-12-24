@@ -1,3 +1,4 @@
+import Icon from "@mdi/react";
 import React from "react";
 import { XY } from "../../XY";
 import useNavigationContext from "../NavigationContext";
@@ -56,7 +57,7 @@ const ScreenMainButton = (props: ScreenMainButtonProps) => {
 
     return (
         <button onFocus={focus} ref={inputEl} key={props.id} disabled={props.disabled} className={props.className(pos)} onClick={click}>
-            {props.icon}
+            <Icon path={props.icon} size="1em" />
             {props.lines.map((line: string, index: number) => (
                 <div key={index}>{line}</div>
             ))}

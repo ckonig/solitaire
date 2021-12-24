@@ -97,12 +97,14 @@ const Rating = () => {
                 </Row>
                 <Row>
                     <ScreenToggle
+                        icon={""}
                         label="Undo Penalty"
                         description="Undo is enabled, but excessive use will be painful. This penalty starts with 2 and increases exponentially."
                         value={!!state.ratingSettings.undoPenalty}
                         callBack={setUndoPenalty}
                     />
                     <ScreenToggle
+                    icon={""}
                         label="Time Penalty"
                         description="Fast players are rewarded with a time bonus, slow players will be punished."
                         value={!!state.ratingSettings.timedMode}
@@ -111,12 +113,14 @@ const Rating = () => {
                 </Row>
                 <Row>
                     <ScreenToggle
+                    icon={""}
                         label="Hint Penalty"
                         description="Each manual hint will reduce the number of points by 10. This setting disables automatic suggestions. "
                         value={!!state.ratingSettings.hintPenalty}
                         callBack={setHintPenalty}
                     />
                     <ScreenToggle
+                    icon={""}
                         label="Miss Penalty"
                         description="Be careful where you click, as each invalid action will lead to a penalty of 10 points."
                         value={!!state.ratingSettings.missPenalty}

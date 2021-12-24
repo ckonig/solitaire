@@ -23,7 +23,8 @@ const Suggestions = () => {
         <ScreenToggle
             value={isActive(mode.key)}
             disabled={isDisabled(mode.key)}
-            label={mode.icon + " " + mode.label}
+            label={mode.label}
+            icon={mode.icon}
             callBack={() => setState({ ...state, suggestionMode: mode.key })}
             description={mode.description}
             key={index}

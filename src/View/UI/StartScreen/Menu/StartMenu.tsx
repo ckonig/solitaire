@@ -2,6 +2,7 @@ import "../Menu.scss";
 
 import {
     mdiArmFlex,
+    mdiCardsDiamond,
     mdiCardsPlayingOutline,
     mdiCog,
     mdiControllerClassic,
@@ -73,7 +74,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
 
     return (
         <VerticalMenu>
-            <MenuTitle label="♦ Solitaire" />
+            <MenuTitle icon={mdiCardsDiamond } label="Solitaire" />
             <MenuTree keyboardLayout={Universal} disabled={overlayActive}>
                 <MenuButton icon={mdiCardsPlayingOutline} title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} />
                 <MenuButton

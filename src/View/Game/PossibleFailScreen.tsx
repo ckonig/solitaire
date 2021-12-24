@@ -1,3 +1,5 @@
+import { mdiFlagOutline, mdiHandBackLeft, mdiPlay } from "@mdi/js";
+
 import MenuButton from "../UI/StartScreen/Menu/MenuButton";
 import MenuTitle from "../UI/StartScreen/Menu/MenuTitle";
 import MenuTree from "../UI/StartScreen/Menu/MenuTree";
@@ -22,7 +24,7 @@ const PossibleFailScreen = () => {
                 refuse(true);
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.token]);
     const pause = usePauseContext();
     //@todo
@@ -34,25 +36,25 @@ const PossibleFailScreen = () => {
             pause.toggleMenu(true);
         }
         return () => pause.toggleMenu(false);
-    //@todo antipattern?
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        //@todo antipattern?
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refused.refused]);
     return !refused.refused ? (
         <NavigationProvider>
             <div className="gamemenu menu dialog">
                 <div className="startscreen-jail">
                     <div className="innermenu">
-                        <MenuTitle label="✋" />
+                        <MenuTitle icon={mdiHandBackLeft} />
                         <div className="announcement">The game might be over</div>
                         <MenuTree keyboardLayout={Universal}>
                             <MenuButton
-                                icon="▶️"
+                                icon={mdiPlay}
                                 title="Keep trying"
                                 onClick={() => {
                                     refuse(true);
                                 }}
                             />
-                            <MenuButton icon="🏳️" title="Give up" onClick={() => restart()} />
+                            <MenuButton icon={mdiFlagOutline} title="Give up" onClick={() => restart()} />
                         </MenuTree>
                     </div>
                 </div>
