@@ -4,9 +4,9 @@ import React from "react";
 import StackBase from "./StackBase";
 import TableauModel from "../../Model/Game/Tableau";
 import TableauStackModel from "../../Model/Game/TableauStack";
-import useBlinkEffect from "./useBlinkEffect";
+import useBlinkEffect from "./Hooks/useBlinkEffect";
 import useGlobalContext from "../GlobalContext";
-import { useStackDrop } from "./useStackDrop";
+import { useStackDrop } from "./Hooks/useStackDrop";
 
 type TableauProps = { index: number; model: TableauStackModel; parent: TableauModel };
 

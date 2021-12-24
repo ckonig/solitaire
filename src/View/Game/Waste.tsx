@@ -1,9 +1,9 @@
 import Card from "./Card";
 import React from "react";
 import StackBase from "./StackBase";
-import useBlinkEffect from "./useBlinkEffect";
+import useBlinkEffect from "./Hooks/useBlinkEffect";
 import useGlobalContext from "../GlobalContext";
-import { useStackDrop } from "./useStackDrop";
+import { useStackDrop } from "./Hooks/useStackDrop";
 
 const Waste = () => {
     const { state } = useGlobalContext();

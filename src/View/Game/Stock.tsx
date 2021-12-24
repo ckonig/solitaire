@@ -1,11 +1,11 @@
 import Card from "./Card";
 import React from "react";
 import StackBase from "./StackBase";
-import useBlinkEffect from "./useBlinkEffect";
+import useBlinkEffect from "./Hooks/useBlinkEffect";
 import useGameContext from "./Context/GameContext";
 import useGlobalContext from "../GlobalContext";
 import usePauseContext from "./Context/PauseContext";
-import usePrevious from "./usePrevious";
+import usePrevious from "./Hooks/usePrevious";
 
 const Renderer = (props: { length: number; paused: boolean; started: number }) => {
     const context = useGlobalContext();

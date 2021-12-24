@@ -1,7 +1,7 @@
-import { IStack } from "../../Model/Game/Stack";
-import Model from "../../Model/Model";
+import { IStack } from "../../../Model/Game/Stack";
+import Model from "../../../Model/Model";
 import React from "react";
-import useGlobalContext from "../GlobalContext";
+import useGlobalContext from "../../GlobalContext";
 
 type _selector = (model: Model) => IStack;
 

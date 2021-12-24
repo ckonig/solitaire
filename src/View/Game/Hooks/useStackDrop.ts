@@ -1,6 +1,6 @@
-import { IStack } from "../../Model/Game/Stack";
+import { IStack } from "../../../Model/Game/Stack";
 import { useDrop } from "react-dnd";
-import useGlobalContext from "../GlobalContext";
+import useGlobalContext from "../../GlobalContext";
 
 export const useStackDrop = (model: IStack, accepts?: (c: any) => boolean) => {
     const { updateGameContext } = useGlobalContext();

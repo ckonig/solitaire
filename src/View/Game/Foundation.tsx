@@ -3,9 +3,9 @@ import FoundationStackModel from "../../Model/Game/FoundationStack";
 import Icon from "@mdi/react";
 import React from "react";
 import StackBase from "./StackBase";
-import useBlinkEffect from "./useBlinkEffect";
+import useBlinkEffect from "./Hooks/useBlinkEffect";
 import useGlobalContext from "../GlobalContext";
-import { useStackDrop } from "./useStackDrop";
+import { useStackDrop } from "./Hooks/useStackDrop";
 
 type FoundationProps = { index: number; model: FoundationStackModel };
 
