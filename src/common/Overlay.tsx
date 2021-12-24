@@ -1,6 +1,7 @@
 import "./Overlay.css";
 
 import React from "react";
+import { useEffectOnce } from "react-use";
 
 interface IOverlayContext {
     overlayActive: boolean;
@@ -15,14 +16,12 @@ const OverlayContext = React.createContext<IOverlayContext>({
 export const useOverlayContext = () => React.useContext(OverlayContext);
 
 const Overlay = (props: { children: React.ReactNode; before?: () => void; after?: () => void }) => {
-    React.useEffect(() => {
+    useEffectOnce(() => {
         props.before && props.before();
         return () => {
             props.after && props.after();
         };
-        //@todo once-time rendering
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    });
 
     return <div className="overlay">{props.children}</div>;
 };

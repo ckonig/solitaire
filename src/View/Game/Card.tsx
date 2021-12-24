@@ -3,7 +3,7 @@ import React, { MouseEventHandler, useCallback } from "react";
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
-import Icon from '@mdi/react'
+import Icon from "@mdi/react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { useBoardContext } from "../Context/BoardContext";
 import { useDrag } from "react-dnd";
@@ -157,14 +157,6 @@ const Card = (props: CardProps) => {
 
     const getRef = useCallback(() => (model.canClick() ? dragRef : inputEl), [inputEl, model, dragRef]);
 
-    React.useEffect(() => {
-        if (isFocused() && state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER) {
-            inputEl && inputEl.current && inputEl.current.focus();
-        }
-        //@todo how to one-time hook in valid way?
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isFocused]);
-
     const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
         //@todo catch all focuses in hidden input element on board
@@ -192,6 +184,7 @@ const Card = (props: CardProps) => {
         };
 
         // When clicking on a card, move the focus (switch from keyboard to mouse nav)
+        // @todo do the same on drag start
         const isSinglePlayer = state.settings.launchSettings.boardMode === GameModes.SINGLEPLAYER;
         if (model.onClick && !position.isKeyBoard) {
             updateGameContext((context) => {
@@ -218,7 +211,11 @@ const Card = (props: CardProps) => {
     //@todo creating a custom layout was fun, but the users deserve a more professional looking SVG
     //e.g. https://totalnonsense.com/download/download-vector-playing-cards/
 
-    const SuitIcon = () => <Icon size="0.8em" color={model.type.color} path={model.type.icon}/>
+    const SuitIcon = () => (
+        <div className="align-center">
+            <Icon size="0.8em" color={model.type.color} path={model.type.icon} />
+        </div>
+    );
 
     return (
         <>
@@ -238,27 +235,27 @@ const Card = (props: CardProps) => {
                         ) : (
                             <div className="card-grid-container">
                                 <div>
-                                    <div className="align-center"><SuitIcon/></div>
+                                    <SuitIcon />
                                 </div>
                                 <div>
                                     <div className="align-left">{model.denomination}</div>
                                 </div>
                                 <div>&nbsp;</div>
                                 <div>
-                                    <div className="align-center"><SuitIcon/></div>
+                                    <SuitIcon />
                                 </div>
                                 <div className="mainface">
                                     <div className="align-center">{model.denomination} </div>
                                 </div>
                                 <div>
-                                    <div className="align-center"><SuitIcon/></div>
+                                    <SuitIcon />
                                 </div>
                                 <div>&nbsp;</div>
                                 <div>
                                     <div className="align-right">{model.denomination}</div>
                                 </div>
                                 <div>
-                                    <div className="align-center"><SuitIcon/></div>
+                                    <SuitIcon />
                                 </div>
                             </div>
                         )}

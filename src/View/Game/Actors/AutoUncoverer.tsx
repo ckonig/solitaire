@@ -1,10 +1,11 @@
 import React from "react";
 import useGameContext from "../../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";
+import useTokenEffect from "../../useGlobalTokenEffect";
 
 const Uncoverer = () => {
     const { state, updateGameContext } = useGlobalContext();
-    React.useEffect(() => {
+    useTokenEffect(() => {
         if (!state.hand.currentCard()) {
             state.tableau.stacks.forEach((stack) => {
                 if (stack.getTop() && stack.getTop().isHidden && stack.getTop().canClick()) {
@@ -12,8 +13,7 @@ const Uncoverer = () => {
                 }
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.token]);
+    });
     return null;
 };
 

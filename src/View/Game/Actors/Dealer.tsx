@@ -1,11 +1,12 @@
 import React from "react";
+import { useEffectOnce } from "react-use";
 import useGameContext from "../../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";
 
 const Dealer = () => {
     const { state, replaceContext } = useGlobalContext();
     const { gameState, start } = useGameContext();
-    React.useEffect(() => {
+    useEffectOnce(() => {
         if (!gameState.started) {
             const timeouts: NodeJS.Timeout[] = [];
             if (state.settings.launchSettings.quickDeal) {
@@ -29,9 +30,7 @@ const Dealer = () => {
                 return () => timeouts.forEach((timeout) => clearTimeout(timeout));
             }
         }
-        //@todo how to one-time hook in valid way?
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    });
     return null;
 };
 export default Dealer;

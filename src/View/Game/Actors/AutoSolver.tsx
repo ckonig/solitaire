@@ -51,8 +51,7 @@ const Solver = () => {
                 if (copy._hasSuggestion(copy.tableau)) {
                     const suggestedTableaus = copy.tableau.stacks.filter((s) => copy._hasSuggestion(s));
                     if (suggestedTableaus.length) {
-                        const suggestedTableau = suggestedTableaus[0];
-                        const suggestedCards = suggestedTableau.stack.filter((c) => c.suggestion);
+                        const suggestedCards = suggestedTableaus[0].stack.filter((c) => c.suggestion);
                         if (suggestedCards.length) {
                             const suggestedCard = suggestedCards[0];
                             updateGameContext(suggestedCard.onClick({ isKeyboard: false }));

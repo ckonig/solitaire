@@ -5,6 +5,7 @@ import React from "react";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
 import useGameContext from "../../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";
+import useTokenEffect from "../../useGlobalTokenEffect";
 
 const FailDetector = () => {
     const { state } = useGlobalContext();
@@ -15,7 +16,7 @@ const FailDetector = () => {
         stock: false,
         nonStock: false,
     });
-    React.useEffect(() => {
+    useTokenEffect(() => {
         if (gameState.started) {
             const copy = Model.copy(state);
             copy.settings.suggestionMode = SuggestionModes.get(SuggestionModes.FULL);
@@ -26,9 +27,7 @@ const FailDetector = () => {
                 nonStock: copy.hasNonStockSuggestions(),
             });
         }
-        //@todo use memo?
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.token]);
+    });
 
     const [stockSuggestionCards, setStockSuggestionCards] = React.useState<Card[]>([]);
     const [isPossibleFail, setPossibleFail] = React.useState<boolean>(false);

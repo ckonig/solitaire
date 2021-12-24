@@ -8,6 +8,7 @@ import React from "react";
 import { Universal } from "../../common/KeyboardLayouts";
 import useGlobalContext from "../GlobalContext";
 import usePauseContext from "../Context/PauseContext";
+import useTokenEffect from "../useGlobalTokenEffect";
 
 const PossibleFailScreen = () => {
     const { state } = useGlobalContext();
@@ -18,14 +19,11 @@ const PossibleFailScreen = () => {
             since: refused.since >= 3 ? 0 : refused.since + 1,
         });
     };
-    React.useEffect(() => {
-        if (!state.hand.currentCard()) {
-            if (refused.refused) {
-                refuse(true);
-            }
+    useTokenEffect(() => {
+        if (!state.hand.currentCard() && refused.refused) {
+            refuse(true);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.token]);
+    });
     const pause = usePauseContext();
     //@todo
     //instead of immediate quit, use gamestate.giveUp, then allow quitting via EndScreen

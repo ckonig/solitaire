@@ -42,7 +42,7 @@ export const useInitialFocus = (props: Focusable, inputEl: React.RefObject<HTMLE
         ) {
             inputEl.current.focus();
         }
-        //@todo how to one-time hook in valid way?
+        // this hooks only works once, when ref is assigned
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputEl]);
 };
