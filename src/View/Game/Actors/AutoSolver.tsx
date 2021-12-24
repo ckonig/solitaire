@@ -2,10 +2,10 @@
 //  - check if the board can auto-resolve and offer to complete automatically
 //  - auto-complete becomes button in header and option in menu
 
-import Model from "../../Model/Model";
+import Model from "../../../Model/Model";
 import React from "react";
-import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
-import useGlobalContext from "../GlobalContext";
+import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
+import useGlobalContext from "../../GlobalContext";
 
 const RenderAutoSolve = (props: { canAutosolve: boolean }) => {
     const [solving, setSolving] = React.useState(false);

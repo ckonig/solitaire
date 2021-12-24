@@ -1,10 +1,10 @@
-import Card from "../../Model/Deck/Card";
-import Model from "../../Model/Model";
-import PossibleFailScreen from "./PossibleFailScreen";
+import Card from "../../../Model/Deck/Card";
+import Model from "../../../Model/Model";
+import PossibleFailScreen from "../PossibleFailScreen";
 import React from "react";
-import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
-import useGameContext from "./GameContext";
-import useGlobalContext from "../GlobalContext";
+import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
+import useGameContext from "../GameContext";
+import useGlobalContext from "../../GlobalContext";
 
 const FailDetector = () => {
     const { state } = useGlobalContext();

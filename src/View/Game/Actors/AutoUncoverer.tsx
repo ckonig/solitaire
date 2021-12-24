@@ -1,6 +1,6 @@
 import React from "react";
-import useGameContext from "./GameContext";
-import useGlobalContext from "../GlobalContext";
+import useGameContext from "../GameContext";
+import useGlobalContext from "../../GlobalContext";
 
 const Uncoverer = () => {
     const { state, updateGameContext } = useGlobalContext();

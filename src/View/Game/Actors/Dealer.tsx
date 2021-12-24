@@ -1,6 +1,6 @@
 import React from "react";
-import useGameContext from "./GameContext";
-import useGlobalContext from "../GlobalContext";
+import useGameContext from "../GameContext";
+import useGlobalContext from "../../GlobalContext";
 
 const Dealer = () => {
     const { state, replaceContext } = useGlobalContext();

@@ -3,12 +3,12 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 import { Slide, ToastContainer } from "react-toastify";
 
-import AutoSolver from "./AutoSolver";
-import AutoUncoverer from "./AutoUncoverer";
+import AutoSolver from "./Actors/AutoSolver";
+import AutoUncoverer from "./Actors/AutoUncoverer";
 import BoardNavigator from "./Navigation/BoardNavigator";
-import Dealer from "./Dealer";
+import Dealer from "./Actors/Dealer";
 import DndPreview from "../../common/DndPreview";
-import FailDetector from "./FailDetector";
+import FailDetector from "./Actors/FailDetector";
 import Foundation from "./Foundation";
 import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu";
@@ -16,7 +16,7 @@ import React from "react";
 import Stock from "./Stock";
 import Tableau from "./Tableau";
 import Waste from "./Waste";
-import WinDetector from "./WinDetector";
+import WinDetector from "./Actors/WinDetector";
 
 type BoardProps = { mode: string };
 const Board = (props: BoardProps) => {

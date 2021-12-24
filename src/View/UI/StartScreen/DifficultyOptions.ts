@@ -1,4 +1,4 @@
-import { mdiDuck, mdiGoogleDownasaur, mdiKangaroo, mdiKoala, mdiRodent, mdiShark, mdiSnake } from "@mdi/js";
+import { mdiDuck, mdiGoogleDownasaur, mdiKangaroo, mdiRodent, mdiShark, mdiSnake } from "@mdi/js";
 
 export interface DifficultyOption {
     id: number;
