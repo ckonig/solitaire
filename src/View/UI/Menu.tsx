@@ -12,9 +12,9 @@ import MenuTree from "./StartScreen/Menu/MenuTree";
 import React from "react";
 import SuggestionModes from "../../Model/Game/Settings/SuggestionModes";
 import { XY } from "./XY";
-import { useBoardContext } from "../Game/BoardContext";
+import { useBoardContext } from "../Game/Context/BoardContext";
 import useGlobalContext from "../GlobalContext";
-import usePauseContext from "../Game/PauseContext";
+import usePauseContext from "../Game/Context/PauseContext";
 
 const _Menu = () => {
     return (

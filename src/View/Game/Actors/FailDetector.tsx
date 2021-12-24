@@ -3,7 +3,7 @@ import Model from "../../../Model/Model";
 import PossibleFailScreen from "../PossibleFailScreen";
 import React from "react";
 import SuggestionModes from "../../../Model/Game/Settings/SuggestionModes";
-import useGameContext from "../GameContext";
+import useGameContext from "../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";
 
 const FailDetector = () => {

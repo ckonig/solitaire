@@ -7,7 +7,7 @@ import { NavigationProvider } from "../UI/StartScreen/NavigationContext";
 import React from "react";
 import { Universal } from "../../common/KeyboardLayouts";
 import useGlobalContext from "../GlobalContext";
-import usePauseContext from "./PauseContext";
+import usePauseContext from "./Context/PauseContext";
 
 const PossibleFailScreen = () => {
     const { state } = useGlobalContext();

@@ -5,10 +5,10 @@ import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
 import Icon from '@mdi/react'
 import { getEmptyImage } from "react-dnd-html5-backend";
-import { useBoardContext } from "./BoardContext";
+import { useBoardContext } from "./Context/BoardContext";
 import { useDrag } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
-import usePauseContext from "./PauseContext";
+import usePauseContext from "./Context/PauseContext";
 
 const useCardStyle = (model: CardModel | null, props: CardProps, _isDrag: () => boolean, opacity: any) => {
     const getCardStyle = useCallback(() => {

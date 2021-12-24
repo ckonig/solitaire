@@ -2,9 +2,9 @@ import Card from "./Card";
 import React from "react";
 import StackBase from "./StackBase";
 import useBlinkEffect from "./useBlinkEffect";
-import useGameContext from "./GameContext";
+import useGameContext from "./Context/GameContext";
 import useGlobalContext from "../GlobalContext";
-import usePauseContext from "./PauseContext";
+import usePauseContext from "./Context/PauseContext";
 import usePrevious from "./usePrevious";
 
 const Renderer = (props: { length: number; paused: boolean; started: number }) => {

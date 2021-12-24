@@ -2,9 +2,9 @@ import BoardGamePad from "./BoardGamePad";
 import BoardKeyboard from "./BoardKeyboard";
 import Model from "../../../Model/Model";
 import React from "react";
-import { useBoardContext } from "../BoardContext";
+import { useBoardContext } from "../Context/BoardContext";
 import useGlobalContext from "../../GlobalContext";
-import usePauseContext from "../PauseContext";
+import usePauseContext from "../Context/PauseContext";
 
 type _mod = (state: Model) => void;
 

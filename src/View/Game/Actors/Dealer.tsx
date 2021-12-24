@@ -1,5 +1,5 @@
 import React from "react";
-import useGameContext from "../GameContext";
+import useGameContext from "../Context/GameContext";
 import useGlobalContext from "../../GlobalContext";
 
 const Dealer = () => {

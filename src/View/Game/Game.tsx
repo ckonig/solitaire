@@ -2,10 +2,10 @@ import AspectRatio from "../../common/AspectRatio/AspectRatio";
 import BoardWrap from "./BoardWrap";
 import Deck from "../../Model/Deck/Deck";
 import DelayedSuspense from "../../common/DelayedSuspense";
-import { GameContextProvider } from "./GameContext";
+import { GameContextProvider } from "./Context/GameContext";
 import GameModes from "../../GameModes";
 import { LaunchSettings } from "../../Common";
-import { PauseProvider } from "./PauseContext";
+import { PauseProvider } from "./Context/PauseContext";
 import Ratios from "../../common/AspectRatio/Ratios";
 import React from "react";
 

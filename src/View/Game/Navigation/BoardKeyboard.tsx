@@ -5,7 +5,7 @@ import GameModes from "../../../GameModes";
 import Keyboard from "../../../common/Keyboard";
 import Model from "../../../Model/Model";
 import React from "react";
-import { useBoardContext } from "../BoardContext";
+import { useBoardContext } from "../Context/BoardContext";
 import useGlobalContext from "../../GlobalContext";
 
 const BoardKeyboard = (props: CustomInputProps) => {
