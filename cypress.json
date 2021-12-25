@@ -1,3 +1,5 @@
 {
-    "defaultCommandTimeout": 40000
+    "projectId": "i4hm1x",
+    "defaultCommandTimeout": 40000,
+    "video": false
 }
