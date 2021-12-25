@@ -19,7 +19,7 @@ const SinglePlayer = (props: GameProps) => {
     const { launchState, deck, restart } = props;
     return (
         <AspectRatio ratio={Ratios._4to3}>
-            <div className={"layout-grid-container singleplayer"}>
+            <div className={"layout-grid-container " + launchState.boardMode}>
                 <BoardWrap player={0} settings={launchState} restart={restart} deck={deck} />
             </div>
         </AspectRatio>
@@ -30,7 +30,7 @@ const SplitScreen = (props: GameProps) => {
     const { launchState, deck, restart } = props;
     const Wrap = (i: number) => (
         <div className={"layout-grid-container " + launchState.boardMode}>
-            <BoardWrap player={0} settings={launchState} restart={restart} deck={deck.copy()} />
+            <BoardWrap player={i} settings={launchState} restart={restart} deck={deck.copy()} />
         </div>
     );
 
