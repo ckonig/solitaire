@@ -12,6 +12,7 @@ describe("Menu", () => {
             cy.contains("Allow Cookie");
         });
         it("Options has subitems", () => {
+            cy.contains("Options").click();
             cy.contains("Difficulty");
             cy.contains("Penalties");
             cy.contains("Suggestions");
