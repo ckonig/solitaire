@@ -30,7 +30,7 @@ describe("My First Test", () => {
         });
 
         it("Stock has X cards", () => {
-            cy.get(".board-field.stock").within(() => cy.get(".card", { timeout: 20000 }).should("have.length", 24));
+            cy.get(".board-field.stock").within(() => cy.get(".card").should("have.length", 24));
         });
 
         it("Waste is empty", () => {
