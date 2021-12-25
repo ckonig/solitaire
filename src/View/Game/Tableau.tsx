@@ -39,8 +39,10 @@ const TableauStack = (props: TableauProps) => {
         return offset;
     };
 
+    const classNames = "board-field tableau tableau-" + props.index
+
     return (
-        <div className="board-field" ref={drop}>
+        <div className={classNames} ref={drop}>
             <StackBase model={props.model} />
             <Card
                 index={0}

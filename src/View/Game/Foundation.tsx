@@ -29,7 +29,7 @@ const FoundationStack = (props: FoundationProps) => {
     const drop = useStackDrop(props.model);
     const cards = props.hand.source === model.source ? [...model.stack, ...props.hand.stack] : [...model.stack];
     return (
-        <div className="board-field" key={props.index} ref={drop}>
+        <div className="board-field foundation" key={props.index} ref={drop}>
             <StackBase model={model}>
                 <div className={"align-center foundation-base suit-" + model.icon}>
                     <Icon path={model.icon} size="1em" horizontal  color={model.color} />

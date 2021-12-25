@@ -30,7 +30,7 @@ const Waste = () => {
     const cards = state?.hand.source === state.waste.source ? [...state.waste.stack, ...state.hand.stack] : [...state.waste.stack];
 
     return (
-        <div className="board-field" ref={drop}>
+        <div className="board-field waste" ref={drop}>
             <StackBase model={state.waste} />
             <Card
                 index={0}
