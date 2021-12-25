@@ -6,21 +6,23 @@ describe("Menu", () => {
     });
 
     describe("Options", () => {
-        it("Options has subitems", () => {
-            cy.contains("Difficulty");
-            cy.contains("Penalties");
-            cy.contains("Suggestions");
-            cy.contains("Support");
-            cy.contains("Entropy");
-        });
         describe("Difficulty Screen", () => {
-            it("has basic elements", () => {
+            beforeEach(() => {
                 cy.contains("Difficulty").click();
+            });
+            it("has basic elements", () => {
                 cy.contains("No limit");
                 cy.contains("Three passes");
                 cy.contains("Only a single pass");
                 cy.contains("Turn 1 card");
                 cy.contains("Turn 3 cards");
+            });
+            it("shows cookie banner", () => {
+                cy.contains("Changes on this page will be lost");
+            });
+            it("has default preset", () => {
+                cy.contains("Turn 1 card after the other from the Stock to the Waste.");
+                cy.contains("Three passes through the deck. Waste can be recycled to Stock two times.");
             });
         });
     });

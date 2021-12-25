@@ -11,5 +11,12 @@ describe("Menu", () => {
             cy.contains("Options");
             cy.contains("Allow Cookie");
         });
+        it("Options has subitems", () => {
+            cy.contains("Difficulty");
+            cy.contains("Penalties");
+            cy.contains("Suggestions");
+            cy.contains("Support");
+            cy.contains("Entropy");
+        });
     });
 });
