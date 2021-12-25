@@ -1,30 +1,10 @@
 /* eslint-disable no-undef */
-describe("My First Test", () => {
-    beforeEach(() => {
-        cy.visit("http://localhost:3000/solitaire");
-    });
-
-    describe("Menu Structure", () => {
-        it("Has all main menu entries", () => {
-            cy.contains("Single Player");
-            cy.contains("Versus");
-            cy.contains("Options");
-            cy.contains("Allow Cookie");
-        });
-    });
-
-    describe("Starts new SinglePlayer", () => {
-        beforeEach(() => {
+describe("SinglePlayer", () => {
+    describe("New Game", () => {
+        before(() => {
+            cy.visit("http://localhost:3000/solitaire");
             cy.contains("Single Player").click();
         });
-
-        it("Board has all fields", () => {
-            cy.get(".board-field.stock").should("have.length", 1);
-            cy.get(".board-field.waste").should("have.length", 1);
-            cy.get(".board-field.foundation").should("have.length", 4);
-            cy.get(".board-field.tableau").should("have.length", 7);
-        });
-
         it("Every tableau stack has 1 uncovered card", () => {
             cy.get(".mainface").should("have.length", 7);
         });
