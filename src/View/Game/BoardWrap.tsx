@@ -16,6 +16,7 @@ interface BoardWrapProps {
 }
 
 //We use class component here because setState allows partial updates
+//in theory, useState supports partial updates and bailouts too but needs testing of Object.is compatibility on Model 
 export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
     constructor(props: BoardWrapProps) {
         super(props);
