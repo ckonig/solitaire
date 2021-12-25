@@ -37,9 +37,6 @@ jobs:
             - name: Install dependencies
               run: yarn install
 
-            - name: Cypress
-              run: yarn cypress run
-
             # Runs a set of commands using the runners shell
             - name: Deploy to GitHub page
               run: |
