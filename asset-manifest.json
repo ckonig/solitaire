@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/solitaire/static/js/main.cf957986.js",
+    "main.js": "/solitaire/static/js/main.7c36081e.js",
     "static/css/119.05bb0867.chunk.css": "/solitaire/static/css/119.05bb0867.chunk.css",
-    "static/js/119.7846ff81.chunk.js": "/solitaire/static/js/119.7846ff81.chunk.js",
-    "static/css/561.d6a01c1d.chunk.css": "/solitaire/static/css/561.d6a01c1d.chunk.css",
-    "static/js/561.5b959357.chunk.js": "/solitaire/static/js/561.5b959357.chunk.js",
+    "static/js/119.c276fe81.chunk.js": "/solitaire/static/js/119.c276fe81.chunk.js",
+    "static/css/454.5f2006f7.chunk.css": "/solitaire/static/css/454.5f2006f7.chunk.css",
+    "static/js/454.f9635aca.chunk.js": "/solitaire/static/js/454.f9635aca.chunk.js",
     "static/js/563.4b9f1044.chunk.js": "/solitaire/static/js/563.4b9f1044.chunk.js",
     "static/js/951.3ce6268b.chunk.js": "/solitaire/static/js/951.3ce6268b.chunk.js",
     "static/media/felt.png": "/solitaire/static/media/felt.5b148bae5dfea30bd1f1.png",
     "index.html": "/solitaire/index.html",
-    "main.cf957986.js.map": "/solitaire/static/js/main.cf957986.js.map",
+    "main.7c36081e.js.map": "/solitaire/static/js/main.7c36081e.js.map",
     "119.05bb0867.chunk.css.map": "/solitaire/static/css/119.05bb0867.chunk.css.map",
-    "119.7846ff81.chunk.js.map": "/solitaire/static/js/119.7846ff81.chunk.js.map",
-    "561.d6a01c1d.chunk.css.map": "/solitaire/static/css/561.d6a01c1d.chunk.css.map",
-    "561.5b959357.chunk.js.map": "/solitaire/static/js/561.5b959357.chunk.js.map",
+    "119.c276fe81.chunk.js.map": "/solitaire/static/js/119.c276fe81.chunk.js.map",
+    "454.5f2006f7.chunk.css.map": "/solitaire/static/css/454.5f2006f7.chunk.css.map",
+    "454.f9635aca.chunk.js.map": "/solitaire/static/js/454.f9635aca.chunk.js.map",
     "563.4b9f1044.chunk.js.map": "/solitaire/static/js/563.4b9f1044.chunk.js.map",
     "951.3ce6268b.chunk.js.map": "/solitaire/static/js/951.3ce6268b.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.cf957986.js"
+    "static/js/main.7c36081e.js"
   ]
 }
