@@ -75,16 +75,18 @@ const BoardNavigator = () => {
         },
 
         onUndo: () => {
-            //@todo use GlobalState token to avoid double processing (pass in token via props to always have updated version)
-            replaceContext((_state) => {
-                const previous = _state.game.timemachine.popPreviousState(state.game.timemachine.previousStates.length - 1, state);
-                if (previous) {
-                    previous.game.rating.penalize(_state.game.rating);
-                    return previous;
-                }
+            if (state.settings.featureSwitches.undo) {
+                //@todo use GlobalState token to avoid double processing (pass in token via props to always have updated version)
+                replaceContext((_state) => {
+                    const previous = _state.game.timemachine.popPreviousState(state.game.timemachine.previousStates.length - 1, state);
+                    if (previous) {
+                        previous.game.rating.penalize(_state.game.rating);
+                        return previous;
+                    }
 
-                return null;
-            });
+                    return null;
+                });
+            }
         },
         onMenu: (modifier: _mod) => {
             updateContext((state) => {

@@ -31,6 +31,7 @@ const App = () => {
         interactionEntropy: 0,
         baseEntropy: 0,
         suggestionMode: SuggestionModes.NONE,
+        featureSwitches: {undo: true, confetti: true}
     };
 
     const [launchState, setLaunchState] = React.useState<LaunchSettings>(defaultState);

@@ -16,7 +16,7 @@ const Undo = () => {
             return null;
         });
 
-    if (!state.game.timemachine.previousStates.length) {
+    if (!state.game.timemachine.previousStates.length || !state.settings.featureSwitches.undo) {
         return null;
     }
 

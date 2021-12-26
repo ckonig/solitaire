@@ -1,6 +1,5 @@
+import { FeatureSwitches, LaunchSettings } from "../../Common";
 import SuggestionModes, { SuggestionMode } from "./Settings/SuggestionModes";
-
-import { LaunchSettings } from "../../Common";
 
 export default class Settings {
     launchSettings: LaunchSettings;
@@ -8,6 +7,8 @@ export default class Settings {
     interactionEntropy: number;
     suggestionModes: SuggestionMode[];
     suggestionMode: SuggestionMode;
+    featureSwitches: FeatureSwitches;
+
 
     constructor(launchSettings: LaunchSettings) {
         this.launchSettings = launchSettings;
@@ -15,6 +16,7 @@ export default class Settings {
         this.interactionEntropy = launchSettings.interactionEntropy;
         this.suggestionModes = SuggestionModes.allSuggestionModes();
         this.suggestionMode = SuggestionModes.get(launchSettings.suggestionMode);
+        this.featureSwitches = launchSettings.featureSwitches;
     }
 
     setSuggestionMode = (sm: string) => {

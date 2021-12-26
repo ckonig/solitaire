@@ -44,6 +44,7 @@ export interface LaunchSettings extends RatingSettings {
     quickDeal?: boolean;
     speed?: boolean;
     autoUncover?: boolean;
+    featureSwitches: FeatureSwitches;
 }
 
 export interface ClickHandler {
@@ -58,6 +59,11 @@ export interface RatingSettings {
     hintPenalty?: boolean;
     timedMode?: boolean;
     missPenalty?: boolean;
+}
+
+export interface FeatureSwitches {
+    confetti?: boolean;
+    undo?: boolean;
 }
 
 export interface EntropySettings {

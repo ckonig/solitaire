@@ -8,6 +8,7 @@ import {
     mdiControllerClassic,
     mdiCookie,
     mdiLightbulb,
+    mdiPoll,
     mdiRobot,
     mdiScaleBalance,
     mdiSwordCross,
@@ -74,7 +75,7 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
 
     return (
         <VerticalMenu>
-            <MenuTitle icon={mdiCardsDiamond } label="Solitaire" />
+            <MenuTitle icon={mdiCardsDiamond} label="Solitaire" />
             <MenuTree keyboardLayout={Universal} disabled={overlayActive}>
                 <MenuButton icon={mdiCardsPlayingOutline} title="Single Player" onClick={() => props.start(GameModes.SINGLEPLAYER)} />
                 <MenuButton
@@ -132,6 +133,12 @@ const StartMenu = (props: { start: (boardMode: string) => void }) => {
                         title="Entropy"
                         onClick={(pos: XY) => toggleScreen("settings", pos)}
                         toggled={navigation.screeen === "settings"}
+                    />
+                    <MenuButton
+                        icon={mdiPoll}
+                        title="Performance"
+                        onClick={(pos: XY) => toggleScreen("performance", pos)}
+                        toggled={navigation.screeen === "performance"}
                     />
                 </MenuButton>
                 <MenuButton

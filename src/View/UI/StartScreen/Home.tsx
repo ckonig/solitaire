@@ -37,6 +37,7 @@ const Home = (props: { start: (settings: LaunchSettings) => void }) => {
             initialized: true,
             suggestionMode: state.suggestionMode,
             inputMode: "",
+            featureSwitches: { ...state.featureSwitches },
         };
         props.start(settings);
     };

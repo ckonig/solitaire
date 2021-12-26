@@ -19,6 +19,7 @@ describe("Menu", () => {
             cy.contains("Suggestions");
             cy.contains("Support");
             cy.contains("Entropy");
+            cy.contains("Performance");
         });
 
         describe("keyboard navigation", () => {

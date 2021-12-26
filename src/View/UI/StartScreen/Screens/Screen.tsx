@@ -1,5 +1,6 @@
 import Controls from "./Controls";
 import Difficulty from "./Difficulty";
+import Performance from "./Performance";
 import QuickStart from "./QuickStart";
 import Rating from "./Rating";
 import React from "react";
@@ -26,6 +27,7 @@ const RenderScreen = (props: { screen: string }) => {
                 {props.screen === "support" ? <Support /> : null}
                 {props.screen === "controls0" ? <Controls player={0} /> : null}
                 {props.screen === "controls1" ? <Controls player={1} /> : null}
+                {props.screen === "performance" ? <Performance /> : null}
             </div>
         </div>
     );
