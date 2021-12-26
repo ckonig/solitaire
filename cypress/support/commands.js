@@ -1,3 +1,4 @@
+import config from "./defaultConfig";
 /* eslint-disable no-undef */
 import { gamepad } from "./gamepad";
 
@@ -8,6 +9,30 @@ Cypress.Commands.add("getHighlight", () => cy.get(".highlight"));
 Cypress.Commands.add("shouldHaveTitle", { prevSubject: "element" }, (subject, options) => {
     return cy.wrap(subject).invoke("attr", "title").should("eq", options);
 });
+
+Cypress.Commands.add("assertToggleContainer", (row, index, value) =>
+    cy
+        .get(".row")
+        .eq(row)
+        .within(() =>
+            cy
+                .get(".togglecontainer")
+                .eq(index)
+                .within(() => (value ? cy.get(".react-toggle--checked") : cy.get(".react-toggle--checked").should("not.exist")))
+        )
+);
+
+Cypress.Commands.add("toggleToggleContainer", (row, index) =>
+    cy
+        .get(".row")
+        .eq(row)
+        .within(() =>
+            cy
+                .get(".togglecontainer")
+                .eq(index)
+                .within(() => cy.get(".react-toggle").first().click())
+        )
+);
 
 // Keyboard
 
@@ -42,3 +67,16 @@ Cypress.Commands.add("assertTableauSize", (t, i) => cy.get(`.tableau-${t}`).with
 Cypress.Commands.add("assertFoundationSize", (t, i) => cy.get(`.foundation-${t}`).within(() => cy.get(".card").should("have.length", i)));
 Cypress.Commands.add("dealFromStock", () => cy.get(".board-field.stock").within(() => cy.get(".card").last().click()));
 Cypress.Commands.add("recycle", () => cy.get(".board-field.stock").within(() => cy.get(".socket-empty").click()));
+
+// Boot
+Cypress.Commands.add("withConfig", (mod) =>
+    cy.setLocalStorage("state", () => {
+        const conf = config;
+        mod(conf);
+        return conf;
+    })
+);
+
+Cypress.Commands.add("assertStoreConfig", (mod) => {
+    mod(localStorage.getItem("state"));
+});

@@ -1,20 +1,7 @@
-/* eslint-disable no-undef */
-
-const assertToggleContainer = (row, index, value) =>
-    cy
-        .get(".row")
-        .eq(row)
-        .within(() =>
-            cy
-                .get(".togglecontainer")
-                .eq(index)
-                .within(() => (value ? cy.get(".react-toggle--checked") : cy.get(".react-toggle--checked").should("not.exist")))
-        );
-
-const assertHintPenalty = (value) => assertToggleContainer(3, 0, value);
-const assertMissPenalty = (value) => assertToggleContainer(3, 1, value);
-const assertUndoPenalty = (value) => assertToggleContainer(2, 0, value);
-const assertTimePenalty = (value) => assertToggleContainer(2, 1, value);
+const assertHintPenalty = (value) => cy.assertToggleContainer(3, 0, value);
+const assertMissPenalty = (value) => cy.assertToggleContainer(3, 1, value);
+const assertUndoPenalty = (value) => cy.assertToggleContainer(2, 0, value);
+const assertTimePenalty = (value) => cy.assertToggleContainer(2, 1, value);
 
 const assertPreset = (undo, time, hint, miss) => {
     assertUndoPenalty(undo);
@@ -66,6 +53,7 @@ describe("Menu", () => {
                 cy.get(".row").eq(1).get(".inactive-2").last().click();
                 assertHardPreset();
             });
+            //@todo test individual toggle boxes
         });
     });
 });
