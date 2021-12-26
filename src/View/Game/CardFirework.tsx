@@ -7,11 +7,15 @@ const CardFirework = (props: { model: CardModel }) => {
     const { state, updateContext } = useGlobalContext();
 
     React.useEffect(() => {
-        if (props.model.success) {
+        if (props.model.success && state.settings.featureSwitches.confetti) {
             const timeout = setTimeout(() => updateContext((ctx) => ctx.clearSuccess(props.model)));
             return () => clearTimeout(timeout);
         }
-    }, [state?.token, props.model, updateContext, props.model.success]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.model.success]);
+    if (!state.settings.featureSwitches.confetti) {
+        return null;
+    }
     return <Firework intensity={props.model.success} />;
 };
 
