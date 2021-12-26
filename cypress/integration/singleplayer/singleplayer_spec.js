@@ -5,6 +5,7 @@ describe("SinglePlayer", () => {
             cy.visit("http://localhost:3000/solitaire");
             cy.contains("Single Player").click();
         });
+        // @todo convert to custom commands
         it("Every tableau stack has 1 uncovered card", () => {
             cy.get(".mainface").should("have.length", 7);
         });
