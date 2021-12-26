@@ -21,7 +21,7 @@ describe("Menu", () => {
     });
 
     describe("Options", () => {
-        describe("Difficulty Screen", () => {
+        describe("Penalties Screen", () => {
             beforeEach(() => {
                 cy.contains("Penalties").click();
             });
