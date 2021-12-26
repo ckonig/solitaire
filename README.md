@@ -1,5 +1,6 @@
-# Solitaire React App 
-![CICD Workflow](https://github.com/ckonig/solitaire/workflows/CI/badge.svg?branch=main) 
+# Solitaire React App
+
+![CICD Workflow](https://github.com/ckonig/solitaire/workflows/CI/badge.svg?branch=main)
 
 ![Cypress Workflow](https://github.com/ckonig/solitaire/workflows/Cypress%20Free/badge.svg?branch=main)
 

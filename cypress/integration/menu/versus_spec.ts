@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 const checkCookieBanner = () =>
     it("shows cookie banner", () => {
         cy.contains("Changes on this page will be lost");
@@ -16,7 +14,7 @@ const checkControlSetup = () =>
 
 describe("Menu", () => {
     beforeEach(() => {
-        cy.visit("http://localhost:3000/solitaire");
+        cy.startWithGamepad();
         cy.contains("Versus").click();
     });
 
@@ -45,6 +43,36 @@ describe("Menu", () => {
             });
             checkControlSetup();
             checkCookieBanner();
+        });
+
+        describe("Controls", () => {
+            const checkGamepadStatus = (index, status) => {
+                cy.get(".row")
+                    .eq(1)
+                    .within(() =>
+                        cy
+                            .get("button")
+                            .eq(index + 1)
+                            .within(() => cy.contains(status))
+                    );
+            };
+            it.only("Finds a connected gamepad", () => {
+                cy.contains("Player 1").click();
+                checkGamepadStatus(0, "Not Found");
+                checkGamepadStatus(1, "Not Found");
+                cy.gamepad(0).connect();
+                checkGamepadStatus(0, "Not Found");
+                cy.gamepad(0).pressButton("any");
+                checkGamepadStatus(0, "Connected");
+                checkGamepadStatus(1, "Not Found");
+
+                //@todo fix second fake gamepad
+                // cy.gamepad(1).connect();
+                // checkGamepadStatus(0, "Connected");
+                // cy.gamepad(1).pressButton("any");
+                // checkGamepadStatus(0, "Connected");
+                // checkGamepadStatus(1, "Connected");
+            });
         });
     });
 });
