@@ -23,6 +23,7 @@ declare global {
             assertTableauSize: (index: number, size: number) => Chainable<Subject>;
             assertFoundationSize: (index: number, size: number) => Chainable<Subject>;
             assertUncoveredCardsCount: (count: number) => Chainable<Subject>;
+            dealFromStock: () => Chainable<Subject>;
 
             // Boot
             withConfig: (mod: (config: StartScreenState) => void) => Chainable<Subject>;
