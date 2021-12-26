@@ -1,9 +1,12 @@
-# Solitaire React App
+# Solitaire React App 
+![CICD Workflow](https://github.com/ckonig/solitaire/workflows/CI/badge.svg?branch=main) 
 
-![CICD Workflow](https://github.com/ckonig/solitaire/workflows/CI/badge.svg?branch=main)
+![Cypress Workflow](https://github.com/ckonig/solitaire/workflows/Cypress%20Free/badge.svg?branch=main)
 
 An implementation of the classic Solitaire game.\
-Serves as general playground for JavaScript, TypeScript, React and (S)CSS.
+A playground for JavaScript, TypeScript, React, Cypress and (S)CSS.
+
+## Demo
 
 [Try it out](https://ckonig.github.io/solitaire)
 
@@ -20,21 +23,28 @@ When working with Visual Studio Code, use the `dev` task to run `tsc` and `es-li
 
 ## Available Scripts
 
-### `npm start`
+### `yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm run predeploy`
+### `yarn run predeploy`
 
 Builds the latest version of the game.
 
-### `npm run analyze`
+### `yarn run analyze`
 
 Analyze the dependencies, module sizes and code splitting.
 
-### `npm run deploy`
+### `yarn run deploy`
 
-Builds the latest version of the game and deploys it to the [github page](https://ckonig.github.io/solitaire/).
-
+Builds the latest version of the game and deploys it to the [github page](https://ckonig.github.io/solitaire/).\
 Enabled by [gh-pages](https://www.npmjs.com/package/gh-pages).
+
+### `yarn cypress run`
+
+Runs the cypress tests once in headless mode.
+
+### `npx cypress open`
+
+Launches the interactive cypress test runner.
