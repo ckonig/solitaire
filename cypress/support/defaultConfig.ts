@@ -1,6 +1,6 @@
 import { StartScreenState } from "../../src/View/UI/StartScreen/StartScreenContext";
 
-const conf = {
+const defaultConfig = {
     ratingSettings: {
         timedMode: true,
         missPenalty: false,
@@ -34,4 +34,4 @@ const conf = {
     },
 } as StartScreenState;
 
-export default conf;
+export default defaultConfig;

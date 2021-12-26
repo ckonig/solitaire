@@ -14,7 +14,7 @@ const checkControlSetup = () =>
 
 describe("Menu", () => {
     beforeEach(() => {
-        cy.startWithGamepad();
+        cy.visitWithGamepad("http://localhost:3000/solitaire");
         cy.contains("Versus").click();
     });
 

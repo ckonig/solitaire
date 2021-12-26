@@ -6,12 +6,6 @@ describe("Menu", () => {
                 cy.contains("Options").click();
                 cy.contains("Support").click();
             });
-            it("has basic elements", () => {
-                cy.contains("Auto Resolve");
-                cy.contains("Auto Uncover");
-                cy.contains("Instant Deal");
-                cy.contains("Auto Draw");
-            });
             describe("Without consent", () => {
                 it("shows cookie banner", () => {
                     cy.contains("Changes on this page will be lost");
@@ -34,6 +28,9 @@ describe("Menu", () => {
                 beforeEach(() => {
                     cy.get(".cookiebanner").first().click();
                 });
+                it("shows no cookie banner", () => {
+                    cy.contains("Changes on this page will be lost").should("not.exist");
+                });
                 describe("changes settings in localstorage", () => {
                     const validateLocalStorage = (r, i, setting, defaultValue) => {
                         cy.assertToggleContainer(r, i, defaultValue);
@@ -51,7 +48,24 @@ describe("Menu", () => {
                     it("Instant Deal", () => validateLocalStorage(2, 0, "quickDeal", false));
                     it("Auto Draw", () => validateLocalStorage(2, 1, "speed", false));
                 });
-                //@todo test with keyboard
+            });
+        });
+        describe("Support Screen", () => {
+            describe("with artifical config", () => {
+                describe("overrides default config", () => {
+                    const validatePreConfig = (r, i, setting, defaultValue) => {
+                        cy.withConfig((config) => {
+                            config[setting] = !defaultValue;
+                        }).visit("http://localhost:3000/solitaire");
+                        cy.contains("Options").click();
+                        cy.contains("Support").click();
+                        cy.assertToggleContainer(r, i, !defaultValue);
+                    };
+                    it("Auto Resolve", () => validatePreConfig(1, 0, "autoResolve", true));
+                    it("Auto Uncover", () => validatePreConfig(1, 1, "autoUncover", false));
+                    it("Instant Deal", () => validatePreConfig(2, 0, "quickDeal", false));
+                    it("Auto Draw", () => validatePreConfig(2, 1, "speed", false));
+                });
             });
         });
     });

@@ -1,3 +1,5 @@
+import { ChromeGamepadArray, FakeGamepad, GamePadEvent, Gamepad } from "./IGamePad";
+
 const button = () => ({
     pressed: false,
     touched: false,
@@ -21,33 +23,14 @@ const pads: ChromeGamepadArray = {
     length: 4,
 };
 
-interface GamePadEvent extends Event {
-    gamepad: any;
-}
-
-interface Gamepad {
-    connected: boolean;
-}
-
-interface ChromeGamepadArray {
-    0: Gamepad;
-    1: Gamepad;
-    2: Gamepad;
-    3: Gamepad;
-    length: number;
-}
-
-export interface FakeGamepad {
-    getGamepads: () => ChromeGamepadArray;
-    connect: () => void;
-    disconnect: () => void;
-    pressButton: (button: string) => void;
-}
-
-export const gamepad: (index: number) => FakeGamepad = (index: number) => ({
-    getGamepads: () => {
-        return pads;
-    },
+export const gamepad: (index?: number) => FakeGamepad = (index = 0) => ({
+    inject: () =>
+        ({
+            // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+            onBeforeLoad(win) {
+                win.navigator.getGamepads = () => pads;
+            },
+        } as Partial<any>),
     connect: () => {
         const event = new Event("gamepadconnected") as GamePadEvent;
         pads[index].connected = true;
@@ -93,4 +76,3 @@ export const gamepad: (index: number) => FakeGamepad = (index: number) => ({
         // pads[index].timestamp = Math.floor(Date.now() / 1000);
     },
 });
-
