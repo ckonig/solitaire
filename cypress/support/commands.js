@@ -45,7 +45,9 @@ Cypress.Commands.add("pressButton", { prevSubject: "gamepad" }, (s, b) => s.pres
 
 // Board
 Cypress.Commands.add("assertUncoveredCardsCount", (i) => cy.get(".mainface").should("have.length", i));
-Cypress.Commands.add("assertStockSize", (i) => cy.get(".board-field.stock").within(() => cy.get(".card").should("have.length", i)));
+Cypress.Commands.add("assertStockSize", (i, wait = Cypress.config().defaultCommandTimeout) =>
+    cy.get(".board-field.stock").within(() => cy.get(".card", { timeout: wait }).should("have.length", i))
+);
 Cypress.Commands.add("assertWasteSize", (i) => cy.get(".board-field.waste").within(() => cy.get(".card").should("have.length", i)));
 Cypress.Commands.add("assertTableauSize", (t, i) => cy.get(`.tableau-${t}`).within(() => cy.get(".card").should("have.length", i)));
 Cypress.Commands.add("assertFoundationSize", (t, i) => cy.get(`.foundation-${t}`).within(() => cy.get(".card").should("have.length", i)));

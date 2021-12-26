@@ -18,7 +18,7 @@ declare global {
             gamepad: (i: number) => FakeGamepad;
 
             // Board
-            assertStockSize: (size: number) => Chainable<Subject>;
+            assertStockSize: (size: number, wait?: number) => Chainable<Subject>;
             assertWasteSize: (size: number) => Chainable<Subject>;
             assertTableauSize: (index: number, size: number) => Chainable<Subject>;
             assertFoundationSize: (index: number, size: number) => Chainable<Subject>;

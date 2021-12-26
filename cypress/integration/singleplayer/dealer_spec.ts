@@ -1,7 +1,7 @@
 describe("SinglePlayer", () => {
     describe("New Game", () => {
-        const validateBoard = () => {
-            cy.assertStockSize(24)
+        const validateBoard = (wait = undefined) => {
+            cy.assertStockSize(24, wait)
                 .assertWasteSize(0)
                 .assertTableauSize(0, 7)
                 .assertTableauSize(1, 6)
@@ -35,7 +35,8 @@ describe("SinglePlayer", () => {
                     config.quickDeal = true;
                 }).visit("http://localhost:3000/solitaire");
                 cy.contains("Single Player").click();
-                validateBoard();
+                //force stock size to be updated after 1ms
+                validateBoard(1);
             });
         });
     });
