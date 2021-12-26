@@ -1,4 +1,6 @@
+import Icon from "@mdi/react";
 import React from "react";
+import { mdiTrophy } from "@mdi/js";
 import { toast } from "react-toastify";
 import useGlobalContext from "../../GlobalContext";
 
@@ -19,7 +21,9 @@ const Points = () => {
     return (
         <div>
             <button title="Points" onClick={showToast}>
-                <span className="icon">🏆</span>
+                <span className="icon">
+                    <Icon path={mdiTrophy} size=".9em" />
+                </span>
             </button>
             {state?.game.rating.points}
         </div>

@@ -1,5 +1,7 @@
+import Icon from "@mdi/react";
 import Model from "../../../Model/Model";
 import React from "react";
+import { mdiLightbulb } from "@mdi/js";
 import useGlobalContext from "../../GlobalContext";
 
 const Hint = () => {
@@ -18,7 +20,10 @@ const Hint = () => {
     return !isVisible(state) ? null : (
         <div>
             <button title="Hint" onClick={() => suggestOnce()} disabled={isDisabled(state)}>
-                <span className="icon">💡</span>
+                <span className="icon">
+                    {" "}
+                    <Icon path={mdiLightbulb} size=".9em" />
+                </span>
             </button>
         </div>
     );
