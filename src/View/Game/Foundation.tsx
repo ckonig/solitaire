@@ -8,7 +8,7 @@ import useBlinkEffect from "./Hooks/useBlinkEffect";
 import useGlobalContext from "../GlobalContext";
 import { useStackDrop } from "./Hooks/useStackDrop";
 
-type FoundationProps = { index: number; model: FoundationStackModel, hand:  Hand};
+type FoundationProps = { index: number; model: FoundationStackModel; hand: Hand };
 
 const Foundation = () => {
     const { state } = useGlobalContext();
@@ -28,11 +28,12 @@ const FoundationStack = (props: FoundationProps) => {
     const model = props.model;
     const drop = useStackDrop(props.model);
     const cards = props.hand.source === model.source ? [...model.stack, ...props.hand.stack] : [...model.stack];
+    const classnames = "board-field foundation foundation-" + props.index;
     return (
-        <div className="board-field foundation" key={props.index} ref={drop}>
+        <div className={classnames} key={props.index} ref={drop}>
             <StackBase model={model}>
                 <div className={"align-center foundation-base suit-" + model.icon}>
-                    <Icon path={model.icon} size="1em" horizontal  color={model.color} />
+                    <Icon path={model.icon} size="1em" horizontal color={model.color} />
                 </div>
             </StackBase>
             <Card
