@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/solitaire/static/js/main.426ab9c2.js",
+    "main.js": "/solitaire/static/js/main.7875dc7e.js",
     "static/css/119.05bb0867.chunk.css": "/solitaire/static/css/119.05bb0867.chunk.css",
     "static/js/119.c276fe81.chunk.js": "/solitaire/static/js/119.c276fe81.chunk.js",
     "static/css/454.5f2006f7.chunk.css": "/solitaire/static/css/454.5f2006f7.chunk.css",
-    "static/js/454.844444ad.chunk.js": "/solitaire/static/js/454.844444ad.chunk.js",
+    "static/js/454.a272c7bc.chunk.js": "/solitaire/static/js/454.a272c7bc.chunk.js",
     "static/js/563.4b9f1044.chunk.js": "/solitaire/static/js/563.4b9f1044.chunk.js",
-    "static/js/951.3ce6268b.chunk.js": "/solitaire/static/js/951.3ce6268b.chunk.js",
+    "static/js/951.fe8bf1c0.chunk.js": "/solitaire/static/js/951.fe8bf1c0.chunk.js",
     "static/media/felt.png": "/solitaire/static/media/felt.5b148bae5dfea30bd1f1.png",
     "index.html": "/solitaire/index.html",
-    "main.426ab9c2.js.map": "/solitaire/static/js/main.426ab9c2.js.map",
+    "main.7875dc7e.js.map": "/solitaire/static/js/main.7875dc7e.js.map",
     "119.05bb0867.chunk.css.map": "/solitaire/static/css/119.05bb0867.chunk.css.map",
     "119.c276fe81.chunk.js.map": "/solitaire/static/js/119.c276fe81.chunk.js.map",
     "454.5f2006f7.chunk.css.map": "/solitaire/static/css/454.5f2006f7.chunk.css.map",
-    "454.844444ad.chunk.js.map": "/solitaire/static/js/454.844444ad.chunk.js.map",
+    "454.a272c7bc.chunk.js.map": "/solitaire/static/js/454.a272c7bc.chunk.js.map",
     "563.4b9f1044.chunk.js.map": "/solitaire/static/js/563.4b9f1044.chunk.js.map",
-    "951.3ce6268b.chunk.js.map": "/solitaire/static/js/951.3ce6268b.chunk.js.map"
+    "951.fe8bf1c0.chunk.js.map": "/solitaire/static/js/951.fe8bf1c0.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.426ab9c2.js"
+    "static/js/main.7875dc7e.js"
   ]
 }
