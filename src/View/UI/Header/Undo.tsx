@@ -1,8 +1,9 @@
+import Icon from "@mdi/react";
 import React from "react";
+import { mdiArrowULeftBottom } from "@mdi/js";
 import useGlobalContext from "../../GlobalContext";
 
 const Undo = () => {
-    //@todo use GlobalState token to avoid double processing
     const { state, replaceContext } = useGlobalContext();
 
     const undo = () =>
@@ -23,10 +24,13 @@ const Undo = () => {
         <div>
             <button
                 disabled={!state.game.timemachine.previousStates.length}
-                title={"Undo (Penalty:" + Math.pow(2, state.game.rating.multiplicator) + ")"}
+                title={"Undo"}
+                data-penalty={Math.pow(2, state.game.rating.multiplicator)}
                 onClick={undo}
             >
-                <span className="icon">⏪</span>
+                <span className="icon">
+                    <Icon path={mdiArrowULeftBottom} size=".8em" />
+                </span>
             </button>
         </div>
     );
