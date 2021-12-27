@@ -2417,7 +2417,7 @@ at-least-node@^1.0.0:
   resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-autoprefixer@^10.4.0:
+autoprefixer@^10.0.4, autoprefixer@^10.4.0:
   version "10.4.0"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.0.tgz#c3577eb32a1079a440ec253e404eaf1eb21388c8"
   integrity sha512-7FdJ1ONtwzV1G43GDD0kpVMn/qbiNqyOPMFTX5nRffI+7vgWoFEc6DcXOxHJxrWNDXrZh18eDsZjvZGUljSRGA==
@@ -3923,9 +3923,9 @@ eslint-plugin-import@^2.25.3:
     tsconfig-paths "^3.11.0"
 
 eslint-plugin-jest@^25.3.0:
-  version "25.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-25.3.0.tgz#6c04bbf13624a75684a05391a825b58e2e291950"
-  integrity sha512-79WQtuBsTN1S8Y9+7euBYwxIOia/k7ykkl9OCBHL3xuww5ecursHy/D8GCIlvzHVWv85gOkS5Kv6Sh7RxOgK1Q==
+  version "25.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-25.3.1.tgz#7d4c2c8e61435b0648b7c01fa410bca049cb62fd"
+  integrity sha512-xqHeZAIa4uXgI+UyYkSh210y+gZso/WTkO2a5dlHk2EXNc8yc5EYmTUehSn7lZvM29KeXyOZWg3kBUugk/QweQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^5.0.0"
 
@@ -7422,7 +7422,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.2:
+prop-types@^15.7.2, prop-types@^15.8.0:
   version "15.8.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.0.tgz#d237e624c45a9846e469f5f31117f970017ff588"
   integrity sha512-fDGekdaHh65eI3lMi5OnErU6a8Ighg2KjcjQxO7m8VHyWjcPyj5kiOgV1LQDOOOgVy3+5FgjXvdSSX7B8/5/4g==
@@ -7628,9 +7628,9 @@ react-toastify@^8.1.0:
   dependencies:
     clsx "^1.1.1"
 
-react-toggle@ckonig/react-toggle#release2:
+react-toggle@ckonig/react-toggle#release4:
   version "4.1.1"
-  resolved "https://codeload.github.com/ckonig/react-toggle/tar.gz/05d24697c4120930a1e61f4f4184bf93ec89ed7e"
+  resolved "https://codeload.github.com/ckonig/react-toggle/tar.gz/cd7d3cea3c9bb979ed7981702f99a8170f5c37eb"
   dependencies:
     classnames "^2.2.5"
 
