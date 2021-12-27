@@ -16,7 +16,7 @@ describe("Single Player", () => {
                 () => expectSuggestions((suggest) => (suggest.waste = true)),
                 () => expectSuggestions((suggest) => (suggest.foundation = { ...suggest.foundation, 2: true })),
                 () => {},
-                () => {},
+                () => expectSuggestions((suggest) => (suggest.tableau = { ...suggest.tableau, 4: true })),
             ]);
         });
     });

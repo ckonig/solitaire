@@ -35,11 +35,16 @@ Cypress.Commands.add("hasNoWasteSuggestion", () => hasNoStackSuggestion("waste")
 // tableau
 Cypress.Commands.add("assertTableauSize", (t, i) => cy.get(`.tableau-${t}`).within(() => cy.get(".card").should("have.length", i)));
 Cypress.Commands.add("clickOnTableau", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".card").last().click()));
-Cypress.Commands.add("clickOnEmptyTableau", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".socket-empty").last().click()));
+Cypress.Commands.add("clickOnEmptyTableau", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".socket-empty").first().click()));
 Cypress.Commands.add("clickOnTableauCard", (stack, card) =>
     cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).get(".align-left").first().click())
 );
-Cypress.Commands.add("hasTableauSuggestion", (stack, card) =>
+Cypress.Commands.add("hasTableauEmptySuggestion", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".socket-suggested")));
+Cypress.Commands.add("hasNoTableauEmptySuggestion", (stack) =>
+    cy.get(`.tableau-${stack}`).within(() => cy.get(".socket-suggested").should("not.exist"))
+);
+Cypress.Commands.add("hasTableauSuggestion", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".card-suggested")));
+Cypress.Commands.add("hasTableauCardSuggestion", (stack, card) =>
     cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).should("have.class", "card-suggested"))
 );
 Cypress.Commands.add("hasNoTableauSuggestion", (stack) =>
@@ -60,6 +65,11 @@ Cypress.Commands.add("clickOnFoundation", (stack) => cy.get(`.foundation-${stack
 Cypress.Commands.add("clickOnEmptyFoundation", (stack) =>
     cy.get(`.foundation-${stack}`).within(() => cy.get(".socket-empty").last().click())
 );
-Cypress.Commands.add("hasFoundationEmptySuggestion", (stack) =>
-    cy.get(`.foundation-${stack}`).within(() => cy.get(".card-base").first().should("have.class", "socket-suggested"))
+Cypress.Commands.add("hasFoundationEmptySuggestion", (stack) => cy.get(`.foundation-${stack}`).within(() => cy.get(".socket-suggested")));
+Cypress.Commands.add("hasNoFoundationEmptySuggestion", (stack) =>
+    cy.get(`.foundation-${stack}`).within(() => cy.get(".socket-suggested").should("not.exist"))
+);
+Cypress.Commands.add("hasFoundationSuggestion", (stack) => cy.get(`.foundation-${stack}`).within(() => cy.get(".card-suggested")));
+Cypress.Commands.add("hasNoFoundationSuggestion", (stack) =>
+    cy.get(`.foundation-${stack}`).within(() => cy.get(".card-suggested").should("not.exist"))
 );

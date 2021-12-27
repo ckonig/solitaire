@@ -30,26 +30,33 @@ const expectSuggestions = (mod: (suggest: SuggestionExpectations) => void) => {
     }
 
     Object.keys(expectation.foundation).forEach((key) => {
-        if (expectation.foundation[key]) {
+        if (expectation.foundation[key] === true) {
             //@todo also check top card if not empty
             cy.hasFoundationEmptySuggestion(parseInt(key));
+        } else if (expectation.foundation[key] === false) {
+            cy.hasNoFoundationSuggestion(parseInt(key));
+            cy.hasNoFoundationEmptySuggestion(parseInt(key));
+        } else if (typeof expectation.foundation[key] === "number") {
+            //@todo also check top card if not empty
+            cy.hasFoundationSuggestion(parseInt(key));
         }
     });
 
     Object.keys(expectation.tableau).forEach((key) => {
         if (expectation.tableau[key] === true) {
-            //@todo check if any
+            cy.hasTableauEmptySuggestion(parseInt(key));
         } else if (expectation.tableau[key] === false) {
             cy.hasNoTableauSuggestion(parseInt(key));
+            cy.hasNoTableauEmptySuggestion(parseInt(key));
         }
         if (Array.isArray(expectation.tableau[key])) {
             expectation.tableau[key].forEach((element) => {
-                cy.hasTableauSuggestion(parseInt(key), element);
+                cy.hasTableauCardSuggestion(parseInt(key), element);
             });
             //@todo validate there are no other suggestions in stack
         }
         if (typeof expectation.tableau[key] == "number") {
-            cy.hasTableauSuggestion(parseInt(key), expectation.tableau[key]);
+            cy.hasTableauCardSuggestion(parseInt(key), expectation.tableau[key]);
             //@todo check there is no other suggestion
         }
     });
