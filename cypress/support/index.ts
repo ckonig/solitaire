@@ -24,6 +24,15 @@ declare global {
             assertFoundationSize: (index: number, size: number) => Chainable<Subject>;
             assertUncoveredCardsCount: (count: number) => Chainable<Subject>;
             dealFromStock: () => Chainable<Subject>;
+            hasWasteSuggestion: () => Chainable<Subject>;
+            hasStockSuggestion: () => Chainable<Subject>;
+            hasNoStockSuggestion: () => Chainable<Subject>;
+            hasFoundationEmptySuggestion: (stack: number) => Chainable<Subject>;
+            hasTableauSuggestion: (stack: number, card: number) => Chainable<Subject>;
+            hasNoTableauSuggestion: (stack: number, card: number) => Chainable<Subject>;
+            clickOnWaste: () => Chainable<Subject>;
+            clickOnTableau: (stack: number) => Chainable<Subject>;
+            clickOnTableauCard: (stack: number, card: number) => Chainable<Subject>;
 
             // Boot
             withConfig: (mod: (config: StartScreenState) => void) => Chainable<Subject>;

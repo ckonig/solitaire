@@ -53,6 +53,39 @@ Cypress.Commands.add("assertTableauSize", (t, i) => cy.get(`.tableau-${t}`).with
 Cypress.Commands.add("assertFoundationSize", (t, i) => cy.get(`.foundation-${t}`).within(() => cy.get(".card").should("have.length", i)));
 Cypress.Commands.add("dealFromStock", () => cy.get(".board-field.stock").within(() => cy.get(".card").last().click()));
 Cypress.Commands.add("recycle", () => cy.get(".board-field.stock").within(() => cy.get(".socket-empty").click()));
+Cypress.Commands.add("hasWasteSuggestion", () =>
+    cy.get(`.board-field.waste`).within(() => cy.get(".card").last().should("have.class", "card-suggested"))
+);
+Cypress.Commands.add("hasStockSuggestion", () =>
+    cy.get(`.board-field.stock`).within(() => cy.get(".card").last().should("have.class", "card-suggested"))
+);
+Cypress.Commands.add("hasNoStockSuggestion", () =>
+    cy.get(`.board-field.stock`).within(() =>
+        cy
+            .get(".card")
+            .last()
+            .should((c) => c.not(".card-suggested"))
+    )
+);
+Cypress.Commands.add("hasFoundationEmptySuggestion", (stack) =>
+    cy.get(`.foundation-${stack}`).within(() => cy.get(".card-base").first().should("have.class", "socket-suggested"))
+);
+Cypress.Commands.add("hasTableauSuggestion", (stack, card) =>
+    cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).should("have.class", "card-suggested"))
+);
+Cypress.Commands.add("hasNoTableauSuggestion", (stack, card) =>
+    cy.get(`.tableau-${stack}`).within(() =>
+        cy
+            .get(".card")
+            .eq(card)
+            .should(($c) => $c.not(".class-suggested"))
+    )
+);
+Cypress.Commands.add("clickOnWaste", () => cy.get(".board-field.waste").within(() => cy.get(".card").last().click()));
+Cypress.Commands.add("clickOnTableau", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".card").last().click()));
+Cypress.Commands.add("clickOnTableauCard", (stack, card) =>
+    cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).get(".align-left").first().click())
+);
 
 // Boot
 Cypress.Commands.add("withConfig", (mod) => {
