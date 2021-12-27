@@ -24,7 +24,7 @@ Cypress.Commands.add("hasStockSuggestion", () => hasStackSuggestion("stock"));
 Cypress.Commands.add("hasNoStockSuggestion", () => hasNoStackSuggestion("stock"));
 
 // waste
-Cypress.Commands.add("assertWasteSize", (i, wait = Cypress.config().defaultCommandTimeout) => assertStackSize("stock", i, wait));
+Cypress.Commands.add("assertWasteSize", (i, wait = Cypress.config().defaultCommandTimeout) => assertStackSize("waste", i, wait));
 Cypress.Commands.add("clickOnWaste", () => clickOnStack("waste"));
 Cypress.Commands.add("clickOnEmptyWaste", () => clickOnEmptyStack("waste"));
 Cypress.Commands.add("hasWasteSuggestion", () => hasStackSuggestion("waste"));
