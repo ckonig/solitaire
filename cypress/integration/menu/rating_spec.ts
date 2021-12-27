@@ -53,7 +53,7 @@ describe("Menu", () => {
                 cy.get(".row").eq(1).get(".inactive-2").last().click();
                 assertHardPreset();
             });
-            //@todo test individual toggle boxes
+            //@todo test individual toggle boxes with localStorage
         });
     });
 });
