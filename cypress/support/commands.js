@@ -56,16 +56,14 @@ Cypress.Commands.add("recycle", () => cy.get(".board-field.stock").within(() => 
 Cypress.Commands.add("hasWasteSuggestion", () =>
     cy.get(`.board-field.waste`).within(() => cy.get(".card").last().should("have.class", "card-suggested"))
 );
+Cypress.Commands.add("hasNoWasteSuggestion", () =>
+    cy.get(`.board-field.waste`).within(() => cy.get(".card").should((s) => s.not("exist") || s.not(".card-suggested")))
+);
 Cypress.Commands.add("hasStockSuggestion", () =>
     cy.get(`.board-field.stock`).within(() => cy.get(".card").last().should("have.class", "card-suggested"))
 );
 Cypress.Commands.add("hasNoStockSuggestion", () =>
-    cy.get(`.board-field.stock`).within(() =>
-        cy
-            .get(".card")
-            .last()
-            .should((c) => c.not(".card-suggested"))
-    )
+    cy.get(`.board-field.stock`).within(() => cy.get(".card").should((s) => s.not("exist") || s.not(".card-suggested")))
 );
 Cypress.Commands.add("hasFoundationEmptySuggestion", (stack) =>
     cy.get(`.foundation-${stack}`).within(() => cy.get(".card-base").first().should("have.class", "socket-suggested"))
