@@ -22,7 +22,7 @@ export const defaultStartScreenState: StartScreenState = {
         baseEntropy: TouchDetector() ? 1 : 2,
         interactionEntropy: TouchDetector() ? 1 : 2,
     },
-    featureSwitches: { undo: true, confetti: true },
+    featureSwitches: { undo: true, confetti: true, shuffle: true },
     suggestionMode: SuggestionModes.REGULAR,
     players: defaultPlayerSettings,
 };
@@ -52,7 +52,7 @@ const StartScreenContext = React.createContext<IStartScreenContext>({
         autoUncover: false,
         speed: false,
         suggestionMode: SuggestionModes.REGULAR,
-        featureSwitches: { undo: true, confetti: true },
+        featureSwitches: { undo: true, confetti: true, shuffle: true },
         players: defaultPlayerSettings,
     },
     setState: () => {},

@@ -64,6 +64,7 @@ export interface RatingSettings {
 export interface FeatureSwitches {
     confetti?: boolean;
     undo?: boolean;
+    shuffle: boolean;
 }
 
 export interface EntropySettings {

@@ -31,7 +31,7 @@ const App = () => {
         interactionEntropy: 0,
         baseEntropy: 0,
         suggestionMode: SuggestionModes.NONE,
-        featureSwitches: {undo: true, confetti: true}
+        featureSwitches: { undo: true, confetti: true, shuffle: true },
     };
 
     const [launchState, setLaunchState] = React.useState<LaunchSettings>(defaultState);
@@ -39,7 +39,8 @@ const App = () => {
     const start = (settings: LaunchSettings) => setLaunchState({ ...settings, initialized: true });
     const restart = () => setLaunchState(defaultState);
 
-    const deck = new Deck().shuffle();
+    const previous = storage.getPreviousState();
+    const deck = !previous || previous.featureSwitches.shuffle ? new Deck().shuffle() : new Deck();
 
     return (
         <CookieContextProvider value={cookieContext}>

@@ -18,7 +18,7 @@ const defaultConfig = {
         interactionEntropy: 2,
     },
     suggestionMode: "NONE",
-    featureSwitches: { undo: true, confetti: true },
+    featureSwitches: { undo: true, confetti: true, shuffle: true },
     players: {
         0: {
             id: 0,

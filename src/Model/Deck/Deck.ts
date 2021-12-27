@@ -1,12 +1,13 @@
 import Card from "./Card";
-import { DeckSize } from "./DeckSize";
 import Suits from "./Suits";
+import { getFoundationOrder } from "./DeckSize";
 
 export default class Deck {
     cards: Card[];
     constructor() {
         const keys = Object.keys(Suits);
-        this.cards = DeckSize.map((deckSize) => [...keys.map((key) => new Card(deckSize, Suits[key], true))])
+        this.cards = getFoundationOrder()
+            .map((deckSize) => [...keys.map((key) => new Card(deckSize, Suits[key], true))])
             .flat()
             .reverse();
     }
