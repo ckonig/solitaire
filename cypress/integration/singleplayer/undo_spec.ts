@@ -39,8 +39,8 @@ describe("SinglePlayer", () => {
                 cy.clickOnTableau(4).clickOnTableau(5);
                 cy.assertTableauSize(4, 2).assertTableauSize(5, 3);
                 cy.clickOnTableau(4);
-                undoButton();
-                undoButton();
+                undoButton().click();
+                undoButton().click();
                 cy.assertTableauSize(4, 3).assertTableauSize(5, 2);
 
                 cy.assertTableauSize(3, 5).assertTableauSize(1, 5);
