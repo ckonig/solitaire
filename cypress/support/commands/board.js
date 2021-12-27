@@ -42,12 +42,15 @@ Cypress.Commands.add("clickOnTableauCard", (stack, card) =>
 Cypress.Commands.add("hasTableauSuggestion", (stack, card) =>
     cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).should("have.class", "card-suggested"))
 );
-Cypress.Commands.add("hasNoTableauSuggestion", (stack, card) =>
+Cypress.Commands.add("hasNoTableauSuggestion", (stack) =>
+    cy.get(`.tableau-${stack}`).within(() => cy.get(".card-suggested").should("not.exist"))
+);
+Cypress.Commands.add("hasNoTableauCardSuggestion", (stack, card) =>
     cy.get(`.tableau-${stack}`).within(() =>
         cy
             .get(".card")
             .eq(card)
-            .should(($c) => $c.not(".class-suggested"))
+            .should(($c) => $c.not(".card-suggested"))
     )
 );
 

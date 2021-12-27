@@ -30,7 +30,8 @@ declare global {
             hasNoStockSuggestion: () => Chainable<Subject>;
             hasFoundationEmptySuggestion: (stack: number) => Chainable<Subject>;
             hasTableauSuggestion: (stack: number, card: number) => Chainable<Subject>;
-            hasNoTableauSuggestion: (stack: number, card: number) => Chainable<Subject>;
+            hasNoTableauSuggestion: (stack: number) => Chainable<Subject>;
+            hasNoTableauCardSuggestion: (stack: number, card: number) => Chainable<Subject>;
             clickOnWaste: () => Chainable<Subject>;
             clickOnTableau: (stack: number) => Chainable<Subject>;
             clickOnEmptyTableau: (stack: number) => Chainable<Subject>;
