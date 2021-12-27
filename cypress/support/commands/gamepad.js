@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import { gamepad } from "./gamepad";
+import { gamepad } from "../gamepad";
 
 Cypress.Commands.add("gamepad", (i) => gamepad(i));
 Cypress.Commands.add("connect", { prevSubject: "gamepad" }, (s) => s.connect());
