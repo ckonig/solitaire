@@ -8,6 +8,7 @@ describe("Single Player", () => {
                 config.featureSwitches.undo = false;
             }).visit("http://localhost:3000/solitaire");
             cy.contains("Single Player").click();
+            cy.contains("00:02"); //make sure all started
         });
 
         const assertMenuOpen = () => {
@@ -23,7 +24,7 @@ describe("Single Player", () => {
             assertMenuOpen();
         });
         it("Can be opened via Escape Key", () => {
-            cy.get("body").type("{esc}");
+            openMenu();
             assertMenuOpen();
         });
         it("Counts pauses until no pause left", () => {
