@@ -33,7 +33,10 @@ declare global {
             hasNoTableauSuggestion: (stack: number, card: number) => Chainable<Subject>;
             clickOnWaste: () => Chainable<Subject>;
             clickOnTableau: (stack: number) => Chainable<Subject>;
+            clickOnEmptyTableau: (stack: number) => Chainable<Subject>;
             clickOnTableauCard: (stack: number, card: number) => Chainable<Subject>;
+            clickOnFoundation: (stack: number) => Chainable<Subject>;
+            clickOnEmptyFoundation: (stack: number) => Chainable<Subject>;
 
             // Boot
             withConfig: (mod: (config: StartScreenState) => void) => Chainable<Subject>;

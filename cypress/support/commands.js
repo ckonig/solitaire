@@ -84,6 +84,11 @@ Cypress.Commands.add("clickOnTableau", (stack) => cy.get(`.tableau-${stack}`).wi
 Cypress.Commands.add("clickOnTableauCard", (stack, card) =>
     cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).get(".align-left").first().click())
 );
+Cypress.Commands.add("clickOnFoundation", (stack) => cy.get(`.foundation-${stack}`).within(() => cy.get(".card").last().click()));
+Cypress.Commands.add("clickOnEmptyFoundation", (stack) =>
+    cy.get(`.foundation-${stack}`).within(() => cy.get(".socket-empty").last().click())
+);
+Cypress.Commands.add("clickOnEmptyTableau", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".socket-empty").last().click()));
 
 // Boot
 Cypress.Commands.add("withConfig", (mod) => {

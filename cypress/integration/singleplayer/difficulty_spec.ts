@@ -3,6 +3,8 @@ describe("SinglePlayer", () => {
         const validateDraw = (i, j) => {
             cy.withConfig((config) => {
                 config.quickDeal = true;
+                config.featureSwitches.confetti = false;
+                config.featureSwitches.undo = false;
                 config.difficultySettings = i;
             }).visit("http://localhost:3000/solitaire");
             cy.contains("Single Player").click();
@@ -33,15 +35,19 @@ describe("SinglePlayer", () => {
             };
             describe("no limit shows 1 heart", () => {
                 //@todo differentiate single icons
+                //then test hearts changing through recycling
                 it("single draw", () => validateHearts(0, 1));
                 it("triple draw", () => validateHearts(3, 1));
             });
             describe("1 pass shows 1 heart", () => {
                 //@todo differentiate single icons
+                //then test hearts changing through recycling
                 it("single draw", () => validateHearts(1, 1));
                 it("triple draw", () => validateHearts(4, 1));
             });
             describe("3 pass shows three hearts", () => {
+                //@todo differentiate single icons
+                //then test hearts changing through recycling
                 it("single draw", () => validateHearts(2, 3));
                 it("triple draw", () => validateHearts(5, 3));
             });

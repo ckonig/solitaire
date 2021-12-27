@@ -75,28 +75,13 @@ describe("Single Player", () => {
 
                 //@todo move assertions to callbacks. Use same flow for all suggestion mode tests.
 
-                expectSuggestions((suggest) => {
-                    suggest.tableau = { ...suggest.tableau, 1: 5, 2: 4, 4: 2 };
-                });
-
+                expectSuggestions((suggest) => (suggest.tableau = { ...suggest.tableau, 1: 5, 2: 4, 4: 2 }));
                 cy.clickOnTableau(4);
-
-                expectSuggestions((suggest) => {
-                    suggest.tableau = { ...suggest.tableau, 5: 1 };
-                });
-
+                expectSuggestions((suggest) => (suggest.tableau = { ...suggest.tableau, 5: 1 }));
                 cy.clickOnTableau(5);
-
-                expectSuggestions((suggest) => {
-                    suggest.tableau = { ...suggest.tableau, 4: 1 };
-                });
-
+                expectSuggestions((suggest) => (suggest.tableau = { ...suggest.tableau, 4: 1 }));
                 cy.clickOnTableau(4);
-
-                expectSuggestions((suggest) => {
-                    suggest.tableau = { ...suggest.tableau, 1: 5, 2: 4, 4: 1, 5: 1 };
-                });
-
+                expectSuggestions((suggest) => (suggest.tableau = { ...suggest.tableau, 1: 5, 2: 4, 4: 1, 5: 1 }));
                 cy.clickOnTableau(4);
                 cy.clickOnTableau(5);
                 cy.clickOnTableau(4);
@@ -115,24 +100,51 @@ describe("Single Player", () => {
                 cy.clickOnTableau(0);
                 cy.clickOnTableau(6);
                 cy.clickOnTableau(0);
-
-                expectSuggestions((suggest) => {
-                    suggest.stock = true;
-                });
-
+                expectSuggestions((suggest) => (suggest.stock = true));
                 cy.dealFromStock();
-
-                expectSuggestions((suggest) => {
-                    suggest.waste = true;
-                });
-
+                expectSuggestions((suggest) => (suggest.waste = true));
                 [...Array(7)].forEach(() => cy.dealFromStock());
-
                 cy.clickOnWaste();
+                expectSuggestions((suggest) => (suggest.foundation = { ...suggest.foundation, 1: true }));
+                cy.clickOnEmptyFoundation(1);
+                expectSuggestions((suggest) => (suggest.waste = true));
+                cy.clickOnWaste();
+                expectSuggestions((suggest) => (suggest.foundation = { ...suggest.foundation, 2: true }));
+                cy.clickOnEmptyFoundation(2);
+                cy.clickOnWaste().clickOnEmptyFoundation(3);
+                cy.clickOnWaste().clickOnFoundation(2);
+                cy.clickOnWaste().clickOnFoundation(3);
+                cy.clickOnWaste().clickOnEmptyFoundation(0);
+                cy.clickOnWaste().clickOnFoundation(3);
+                cy.clickOnWaste().clickOnFoundation(0);
+                cy.clickOnWaste().clickOnFoundation(1);
+                cy.clickOnWaste().clickOnFoundation(0);
+                cy.clickOnWaste().clickOnFoundation(1);
+                cy.clickOnWaste().clickOnFoundation(2);
+                cy.clickOnWaste().clickOnFoundation(1);
+                cy.clickOnWaste().clickOnFoundation(2);
+                cy.clickOnWaste().clickOnFoundation(3);
+                cy.clickOnWaste().clickOnFoundation(2);
+                // @todo validate suggestions on filled foundation stack too
+                cy.clickOnWaste().clickOnFoundation(3);
+                cy.clickOnWaste().clickOnFoundation(0);
+                cy.clickOnWaste().clickOnFoundation(3);
+                cy.clickOnWaste().clickOnFoundation(0);
+                cy.clickOnWaste().clickOnFoundation(1);
+                cy.clickOnWaste().clickOnFoundation(0);
+                cy.clickOnWaste().clickOnFoundation(1);
+                cy.clickOnWaste().clickOnFoundation(2);
+                cy.clickOnTableau(0).clickOnFoundation(1).clickOnTableau(0);
+                cy.clickOnTableau(1).clickOnFoundation(2).clickOnTableau(1);
+                cy.clickOnTableau(0).clickOnFoundation(2).clickOnTableau(0);
+                cy.clickOnTableauCard(3,3).clickOnTableau(0).clickOnTableau(3);
+                cy.clickOnTableau(3).clickOnTableau(2).clickOnTableau(3);
+                cy.clickOnTableau(3).clickOnTableau(5).clickOnTableau(3);
+                cy.clickOnTableau(4).clickOnTableau(3);
 
-                expectSuggestions((suggest) => {
-                    suggest.foundation = { ...suggest.foundation, 1: true };
-                });
+                cy.clickOnTableauCard(3,0);
+                //@todo check suggestions on empty tableau
+                cy.clickOnEmptyTableau(4);
             });
         });
         describe("scored", () => {
