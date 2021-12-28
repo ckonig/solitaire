@@ -19,7 +19,7 @@ describe("Menu", () => {
                 cy.contains("Three passes through the deck. Waste can be recycled to Stock two times.");
             });
             describe("With consent", () => {
-                it("it stores setings to local storage", () => {
+                it("it stores settings to local storage", () => {
                     cy.get(".cookiebanner").click();
                     cy.get(".content").within(() => {
                         cy.get(".row")

@@ -4,7 +4,6 @@ import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import GameModes from "../../GameModes";
 import Icon from "@mdi/react";
-import { getEmptyImage } from "react-dnd-html5-backend";
 import { useBoardContext } from "../Context/BoardContext";
 import { useDrag } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
@@ -120,7 +119,7 @@ const Card = (props: CardProps) => {
     const model: CardModel = props.models[props.index];
     const isFocused = useCallback(() => (!!model && state.focus.hasCard(model)) || false, [model, state.focus]);
     const _isDrag = useCallback(() => props.isDrag || isDrag, [props.isDrag, isDrag]);
-    const [{ opacity }, dragRef, preview] = useDrag({
+    const [{ opacity }, dragRef] = useDrag({
         type: "card",
         item: (_monitor) => {
             setDrag(true);
@@ -150,10 +149,14 @@ const Card = (props: CardProps) => {
         },
     });
 
-    //Deactivate native dnd preview - it's fast but it's not working on mobile.
-    React.useEffect(() => {
-        preview(getEmptyImage(), { captureDraggingState: true });
-    }, [preview]);
+    //@todo the following makes preview work on mobile
+    //leaving it disabled make it faster on desktop (drag stack)
+
+    // _preview comes from useDrag() call
+
+    // React.useEffect(() => {
+    //     _preview(getEmptyImage(), { captureDraggingState: true });
+    // }, [_preview]);
 
     const getRef = useCallback(() => (model.canClick() ? dragRef : inputEl), [inputEl, model, dragRef]);
 
@@ -210,6 +213,11 @@ const Card = (props: CardProps) => {
 
     //@todo creating a custom layout was fun, but the users deserve a more professional looking SVG
     //e.g. https://totalnonsense.com/download/download-vector-playing-cards/
+    //const newFace = Cards.club[2]
+    //console.log(newFace);
+    //@todo use new SVG card faces and backs
+    //@todo attribution
+    //use like <img src={Cards.club[2]}/>
 
     const SuitIcon = () => (
         <div className="align-center">
