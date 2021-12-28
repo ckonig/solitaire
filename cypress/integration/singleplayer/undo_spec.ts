@@ -1,3 +1,5 @@
+import SuggestionModes from "../../../src/Model/Game/Settings/SuggestionModes";
+
 describe("SinglePlayer", () => {
     describe("Undo", () => {
         const undoButton = () => cy.get('button[title="Undo"]');
@@ -8,6 +10,7 @@ describe("SinglePlayer", () => {
                     config.difficultySettings = 3;
                     config.featureSwitches.shuffle = false;
                     config.featureSwitches.confetti = false;
+                    config.suggestionMode = SuggestionModes.NONE;
                 }).visit("http://localhost:3000/solitaire");
                 cy.contains("Single Player").click();
             });
@@ -31,7 +34,7 @@ describe("SinglePlayer", () => {
                 cy.assertWasteSize(0).assertStockSize(24);
             });
 
-            it.only("can undo uncover and move", () => {
+            it("can undo uncover and move", () => {
                 cy.assertTableauSize(3, 4).assertTableauSize(1, 6);
                 cy.clickOnTableau(1).clickOnTableau(3);
                 cy.assertTableauSize(3, 5).assertTableauSize(1, 5);
@@ -56,6 +59,8 @@ describe("SinglePlayer", () => {
                     config.quickDeal = true;
                     config.difficultySettings = 3;
                     config.featureSwitches.undo = false;
+                    config.featureSwitches.confetti = false;
+                    config.suggestionMode = SuggestionModes.NONE;
                 }).visit("http://localhost:3000/solitaire");
                 cy.contains("Single Player").click();
             });

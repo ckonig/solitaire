@@ -13,6 +13,8 @@ const defaultExpectation = () =>
         foundation: { 0: false, 1: false, 2: false, 3: false },
     } as SuggestionExpectations);
 
+//@todo this is too slow. Count all suggestions across board instead of negative testing per board field.
+
 const expectSuggestions = (mod: (suggest: SuggestionExpectations) => void) => {
     const expectation = defaultExpectation();
     mod(expectation);
@@ -31,13 +33,11 @@ const expectSuggestions = (mod: (suggest: SuggestionExpectations) => void) => {
 
     Object.keys(expectation.foundation).forEach((key) => {
         if (expectation.foundation[key] === true) {
-            //@todo also check top card if not empty
             cy.hasFoundationEmptySuggestion(parseInt(key));
         } else if (expectation.foundation[key] === false) {
             cy.hasNoFoundationSuggestion(parseInt(key));
             cy.hasNoFoundationEmptySuggestion(parseInt(key));
         } else if (typeof expectation.foundation[key] === "number") {
-            //@todo also check top card if not empty
             cy.hasFoundationSuggestion(parseInt(key));
         }
     });

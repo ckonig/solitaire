@@ -1,4 +1,7 @@
 type func = () => void;
+
+//@todo test one-time suggestions too
+
 const flow = (mode: string, expectations: func[]) => {
     cy.withConfig((config) => {
         config.featureSwitches.shuffle = false;

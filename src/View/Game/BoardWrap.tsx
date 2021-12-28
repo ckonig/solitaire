@@ -16,7 +16,7 @@ interface BoardWrapProps {
 }
 
 //We use class component here because setState allows partial updates
-//in theory, useState supports partial updates and bailouts too but needs testing of Object.is compatibility on Model 
+//in theory, useState supports partial updates and bailouts too but needs testing of Object.is compatibility on Model
 export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
     constructor(props: BoardWrapProps) {
         super(props);
@@ -37,27 +37,37 @@ export default class BoardWrap extends React.Component<BoardWrapProps, Model> {
     updateGameContext = (modifier: StateUpdater) =>
         this.replaceContext((state) => {
             state.game.timemachine.modified = false;
-            const previous = Model.copy(state);
-            if (previous.game.timemachine.previousStates.length) {
-                previous.game.timemachine.previousStates = [
-                    //@todo this also assigns non-memorable states
-                    //@todo instead of array, always have single previous state
-                    //@todo this could still grow too big in memory
-                    //@todo implement model.boardEquals and pointsEquals to get rid of 'memorable' states?
-                    previous.game.timemachine.previousStates[previous.game.timemachine.previousStates.length - 1],
-                ];
+            if (state.settings.featureSwitches.undo) {
+                const previous = Model.copy(state);
+                if (previous.game.timemachine.previousStates.length) {
+                    previous.game.timemachine.previousStates = [
+                        //@todo this also assigns non-memorable states
+                        //@todo instead of array, always have single previous state
+                        //@todo this could still grow too big in memory
+                        //@todo implement model.boardEquals and pointsEquals to get rid of 'memorable' states?
+                        previous.game.timemachine.previousStates[previous.game.timemachine.previousStates.length - 1],
+                    ];
+                } else {
+                    previous.game.timemachine.previousStates = [];
+                }
+
+                modifier(state);
+                if (state.game.timemachine.modified) {
+                    state.game.timemachine.pushPreviousState(previous);
+
+                    state.setToken(Math.random());
+                    return state;
+                }
+
+                return null;
             } else {
-                previous.game.timemachine.previousStates = [];
+                modifier(state);
+                if (state.game.timemachine.modified) {
+                    state.setToken(Math.random());
+                    return state;
+                }
+                return null;
             }
-
-            modifier(state);
-            if (state.game.timemachine.modified) {
-                state.game.timemachine.pushPreviousState(previous);
-                state.setToken(Math.random());
-                return state;
-            }
-
-            return null;
         });
 
     //on every render, we refresh the click handlers in the model and the suggestions
