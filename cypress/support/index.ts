@@ -25,6 +25,7 @@ declare global {
             assertFoundationSize: (index: number, size: number) => Chainable<Subject>;
             assertUncoveredCardsCount: (count: number) => Chainable<Subject>;
             dealFromStock: () => Chainable<Subject>;
+            recycle: () => Chainable<Subject>;
             hasWasteSuggestion: () => Chainable<Subject>;
             hasNoWasteSuggestion: () => Chainable<Subject>;
             hasStockSuggestion: () => Chainable<Subject>;
