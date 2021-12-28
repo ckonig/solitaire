@@ -13,5 +13,6 @@ Cypress.Commands.add("right", { prevSubject: "gamepad" }, (s) => s.right());
 Cypress.Commands.add("action", { prevSubject: "gamepad" }, (s) => s.action());
 Cypress.Commands.add("cancel", { prevSubject: "gamepad" }, (s) => s.cancel());
 Cypress.Commands.add("menu", { prevSubject: "gamepad" }, (s) => s.menu());
+Cypress.Commands.add("undo", { prevSubject: "gamepad" }, (s) => s.undo());
 
 Cypress.Commands.add("visitWithGamepad", (url) => cy.visit(url, gamepads().inject()));

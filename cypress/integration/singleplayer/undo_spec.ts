@@ -12,7 +12,7 @@ describe("SinglePlayer", () => {
                     config.featureSwitches.shuffle = false;
                     config.featureSwitches.confetti = false;
                     config.suggestionMode = SuggestionModes.NONE;
-                }).visit("http://localhost:3000/solitaire");
+                }).visitWithGamepad("http://localhost:3000/solitaire");
                 cy.contains("Single Player").click();
             });
 
@@ -32,6 +32,12 @@ describe("SinglePlayer", () => {
             it("Ctrl+Z works like the undo button", () => {
                 cy.assertStockSize(24).dealFromStock().assertWasteSize(3).assertStockSize(21);
                 keyboard().undo();
+                cy.assertWasteSize(0).assertStockSize(24);
+            });
+
+            it("Gamepad works too", () => {
+                cy.assertStockSize(24).dealFromStock().assertWasteSize(3).assertStockSize(21);
+                cy.gamepad(0).undo();
                 cy.assertWasteSize(0).assertStockSize(24);
             });
 
