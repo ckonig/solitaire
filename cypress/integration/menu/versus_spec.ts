@@ -62,14 +62,14 @@ describe("Menu", () => {
                 checkGamepadStatus(1, "Not Found");
                 cy.gamepad(0).connect();
                 checkGamepadStatus(0, "Not Found");
-                cy.gamepad(0).pressButton("A");
+                cy.gamepad(0).action();
                 checkGamepadStatus(0, "Connected");
                 checkGamepadStatus(1, "Not Found");
 
                 //@todo fix second fake gamepad
                 // cy.gamepad(1).connect();
                 // checkGamepadStatus(0, "Connected");
-                // cy.gamepad(1).pressButton("A");
+                // cy.gamepad(1).action();
                 // checkGamepadStatus(0, "Connected");
                 // checkGamepadStatus(1, "Connected");
             });

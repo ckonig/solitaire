@@ -1,5 +1,7 @@
 import { GamePadEvent, Gamepad } from "./IGamePad";
 
+import { ITestKeyboard } from "./keyboard";
+
 const XboxReference = {
     buttons: ["A", "B", "X", "Y", "LB", "RB", "LT", "RT", "Back", "Start", "LS", "RS", "DPadUp", "DPadDown", "DPadLeft", "DPadRight"],
     axis: ["LeftStickX", "-LeftStickY", "RightStickX", "-RightStickY"],
@@ -59,7 +61,7 @@ export class TestGamepads {
         } as Partial<any>);
 }
 
-export class TestGamepad {
+export class TestGamepad implements ITestKeyboard {
     private pad: Gamepad;
     constructor(pad: Gamepad) {
         this.pad = pad;
@@ -99,6 +101,16 @@ export class TestGamepad {
         //wait for press up
         cy.wait(duration * 11);
     };
+
+    left = () => this.pressButton("DPadLeft");
+    right = () => this.pressButton("DPadRight");
+    down = () => this.pressButton("DPadDown");
+    up = () => this.pressButton("DPadUp");
+    action = () => this.pressButton("A");
+    cancel = () => this.pressButton("B");
+    undo = () => this.pressButton("Y");
+    menu = () => this.pressButton("Back")
+    //@todo undo hint pause
 }
 
 const _gamepads = new TestGamepads();

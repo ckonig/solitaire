@@ -33,7 +33,7 @@ describe("Single Player", () => {
             assertMenuOpen();
         });
         it("Can be opened via gamepad Back Key", () => {
-            cy.gamepad(0).pressButton("Back");
+            cy.gamepad(0).menu();
             assertMenuOpen();
         });
         it("Counts pauses until no pause left", () => {

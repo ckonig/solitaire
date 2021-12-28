@@ -1,14 +1,14 @@
 export interface ITestKeyboard {
-    left: () => Cypress.Chainable;
-    right: () => Cypress.Chainable;
-    down: () => Cypress.Chainable;
-    up: () => Cypress.Chainable;
-    action: () => Cypress.Chainable;
-    cancel: () => Cypress.Chainable;
-    undo: () => Cypress.Chainable;
+    left: () => void;
+    right: () => void;
+    down: () => void;
+    up: () => void;
+    action: () => void;
+    cancel: () => void;
+    undo: () => void;
 }
 
-class TestKeyboard implements ITestKeyboard {
+export class TestKeyboard implements ITestKeyboard {
     type = (cmd: string) => cy.get("body").type(cmd);
     left = () => this.type("{leftarrow}");
     right = () => this.type("{rightarrow}");
