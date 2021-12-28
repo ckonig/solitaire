@@ -14,9 +14,6 @@ describe("Menu", () => {
                 cy.contains("Turn 1 card");
                 cy.contains("Turn 3 cards");
             });
-            it("shows cookie banner", () => {
-                cy.contains("Changes on this page will be lost");
-            });
             it("has default preset", () => {
                 cy.contains("Turn 1 card after the other from the Stock to the Waste.");
                 cy.contains("Three passes through the deck. Waste can be recycled to Stock two times.");
@@ -44,6 +41,8 @@ describe("Menu", () => {
                     });
                 });
             });
+
+            //@todo test settings handling without consent
 
             describe("with preloaded config", () => {
                 it("overrides default config", () => {

@@ -1,3 +1,5 @@
+import keyboard from "../../support/keyboard";
+
 const assertHintPenalty = (value) => cy.assertToggleContainer(3, 0, value);
 const assertMissPenalty = (value) => cy.assertToggleContainer(3, 1, value);
 const assertUndoPenalty = (value) => cy.assertToggleContainer(2, 0, value);
@@ -16,7 +18,7 @@ const assertHardPreset = () => assertPreset(1, 1, 1, 1);
 
 describe("Menu", () => {
     beforeEach(() => {
-        cy.visit("http://localhost:3000/solitaire");
+        cy.visitWithGamepad("http://localhost:3000/solitaire");
         cy.contains("Options").click();
     });
 
@@ -37,23 +39,78 @@ describe("Menu", () => {
             it("shows cookie banner", () => {
                 cy.contains("Changes on this page will be lost");
             });
-            it("has default preset", () => {
-                cy.get(".content").within(() => {
-                    cy.get(".row")
-                        .eq(1)
-                        .within(() => cy.get(".active-1"));
-                    assertMediumPreset();
+            describe("presets", () => {
+                it("has default preset", () => {
+                    cy.get(".content").within(() => {
+                        cy.get(".row")
+                            .eq(1)
+                            .within(() => cy.get(".active-1"));
+                        assertMediumPreset();
+                    });
+                });
+                it("can switch to easy preset", () => {
+                    cy.get(".row").eq(1).get(".inactive-0").first().click();
+                    assertEasyPreset();
+                });
+                it("can switch to hard preset", () => {
+                    cy.get(".row").eq(1).get(".inactive-2").last().click();
+                    assertHardPreset();
                 });
             });
-            it("can switch to easy preset", () => {
-                cy.get(".row").eq(1).get(".inactive-0").first().click();
-                assertEasyPreset();
+            //@todo test individual toggle boxes with localStorage and connection with presets
+            describe("Navigation", () => {
+                const flow = (nav: any) => {
+                    cy.get(".active-1.focused");
+                    nav().left();
+                    cy.get(".inactive-0.focused");
+                    nav().left();
+                    cy.get(".inactive-2.focused");
+                    nav().left();
+                    cy.get(".active-1.focused");
+                    nav().left();
+                    nav().down();
+                    cy.get(".row")
+                        .eq(2)
+                        .within(() => cy.get(".togglecontainer").first().should("have.class", "focused"));
+                    nav().right();
+                    cy.get(".row")
+                        .eq(2)
+                        .within(() => cy.get(".togglecontainer").last().should("have.class", "focused"));
+                    nav().down();
+                    nav().down();
+                    cy.get(".cookiebanner.focused");
+                    nav().down();
+                    cy.get(".inactive-0.focused");
+                    nav().up();
+                    cy.get(".cookiebanner.focused");
+                    nav().action();
+                    cy.get(".inactive-0.focused");
+                    nav().right();
+                    cy.get(".active-1.focused");
+                    nav().right();
+                    cy.get(".inactive-2.focused");
+                    nav().down();
+                    cy.get(".row")
+                        .eq(2)
+                        .within(() => cy.get(".togglecontainer").last().should("have.class", "focused"));
+                    nav().down();
+                    cy.get(".row")
+                        .eq(3)
+                        .within(() => cy.get(".togglecontainer").last().should("have.class", "focused"));
+                    nav().action();
+                    cy.get(".inactive-1");
+                    nav().action();
+                    cy.get(".active-1");
+                    nav().down();
+                    cy.get(".active-1.focused");
+                };
+                it("works with keyboard", () => {
+                    flow(() => keyboard());
+                });
+                it("works with keyboard", () => {
+                    flow(() => cy.gamepad(0));
+                });
             });
-            it("can switch to hard preset", () => {
-                cy.get(".row").eq(1).get(".inactive-2").last().click();
-                assertHardPreset();
-            });
-            //@todo test individual toggle boxes with localStorage
         });
     });
 });
