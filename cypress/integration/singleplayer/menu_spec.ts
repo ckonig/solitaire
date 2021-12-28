@@ -1,3 +1,5 @@
+import keyboard from "../../support/keyboard";
+
 describe("Single Player", () => {
     describe("In Game Menu", () => {
         beforeEach(() => {
@@ -6,7 +8,7 @@ describe("Single Player", () => {
                 config.quickDeal = true;
                 config.featureSwitches.confetti = false;
                 config.featureSwitches.undo = false;
-            }).visit("http://localhost:3000/solitaire");
+            }).visitWithGamepad("http://localhost:3000/solitaire");
             cy.contains("Single Player").click();
             cy.contains("00:02"); //make sure all started
         });
@@ -16,15 +18,22 @@ describe("Single Player", () => {
             cy.contains("Restart Game");
             cy.contains("Quit Game");
         };
-        const openMenu = () => cy.get("body").type("{esc}");
-        const closeAndReopen = () => cy.get("body").type("{q}").type("{esc}");
+        const openMenu = () => keyboard().cancel();
+        const closeAndReopen = () => {
+            keyboard().action();
+            keyboard().cancel();
+        };
 
         it("Can be opened via button click", () => {
             cy.get('button[title="Settings"]').first().click();
             assertMenuOpen();
         });
-        it("Can be opened via Escape Key", () => {
+        it("Can be opened via keyboard Escape Key", () => {
             openMenu();
+            assertMenuOpen();
+        });
+        it("Can be opened via gamepad Back Key", () => {
+            cy.gamepad(0).pressButton("Back");
             assertMenuOpen();
         });
         it("Counts pauses until no pause left", () => {

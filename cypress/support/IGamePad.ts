@@ -4,6 +4,9 @@ export interface GamePadEvent extends Event {
 
 export interface Gamepad {
     connected: boolean;
+    axes:number[];
+    buttons:any[];
+    timestamp: number;
 }
 
 export interface ChromeGamepadArray {

@@ -1,28 +1,30 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "typeRoots": [ "./types", "./node_modules/@types"]
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": ["node_modules", "types"],
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "typeRoots": [
+            "./types",
+            "./node_modules/@types",
+            "node_modules/cypress/types/index.d.ts",
+            "node_modules/cypress/types/blob-util.d.ts",
+            "node_modules/cypress/types/minimatch.d.ts",
+            "node_modules/cypress/types/bluebird.d.ts",
+            "cypress/**/*.ts"
+        ]
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "types"]
 }

@@ -1,4 +1,5 @@
 import SuggestionModes from "../../../src/Model/Game/Settings/SuggestionModes";
+import keyboard from "../../support/keyboard";
 
 describe("SinglePlayer", () => {
     describe("Undo", () => {
@@ -30,7 +31,7 @@ describe("SinglePlayer", () => {
 
             it("Ctrl+Z works like the undo button", () => {
                 cy.assertStockSize(24).dealFromStock().assertWasteSize(3).assertStockSize(21);
-                cy.get("body").type("{ctrl}z");
+                keyboard().undo();
                 cy.assertWasteSize(0).assertStockSize(24);
             });
 
@@ -74,7 +75,7 @@ describe("SinglePlayer", () => {
                 cy.assertWasteSize(0).assertStockSize(24);
                 cy.dealFromStock();
                 cy.assertWasteSize(3).assertStockSize(21);
-                cy.get("body").type("{ctrl}z");
+                keyboard().undo();
                 cy.assertWasteSize(3).assertStockSize(21);
             });
         });

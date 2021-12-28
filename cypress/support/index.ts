@@ -1,4 +1,5 @@
-import { FakeGamepad } from "./IGamePad";
+import { TestGamepad, TestGamepads } from "./gamepad";
+
 import { StartScreenState } from "../../src/View/UI/StartScreen/StartScreenContext";
 
 declare global {
@@ -7,15 +8,15 @@ declare global {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         interface Chainable<Subject> {
             // Main Menu
+            highlightShouldHaveTitle: (v: string) => Chainable<Subject>;
 
             // Screens
             assertToggleContainer: (row: number, index: number, value: boolean) => void;
             toggleToggleContainer: (row: number, index: number) => Chainable<Subject>;
 
-            //Keyboard
-
             // Gamepad
-            gamepad: (i: number) => FakeGamepad;
+            gamepad: (i: number) => TestGamepad;
+            gamepads: (i: number) => TestGamepads;
 
             // Board
             assertStockSize: (size: number, wait?: number) => Chainable<Subject>;

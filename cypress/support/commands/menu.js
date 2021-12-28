@@ -1,9 +1,6 @@
 /* eslint-disable no-undef */
 
-Cypress.Commands.add("getHighlight", () => cy.get(".highlight"));
-Cypress.Commands.add("shouldHaveTitle", { prevSubject: "element" }, (subject, options) => {
-    return cy.wrap(subject).invoke("attr", "title").should("eq", options);
-});
+Cypress.Commands.add("highlightShouldHaveTitle", (title) => cy.get(`button[title="${title}"].highlight`))//.should("have.class", "highlight"));
 
 Cypress.Commands.add("assertToggleContainer", (row, index, value) =>
     cy
