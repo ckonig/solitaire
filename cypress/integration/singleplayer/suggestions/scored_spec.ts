@@ -4,7 +4,7 @@ import flow from "./flow";
 
 describe("Single Player", () => {
     describe("Suggestions", () => {
-        it.only("scored", () => {
+        it("scored", () => {
             flow(SuggestionModes.SCORED, [
                 () => expectSuggestions(() => {}),
                 () => expectSuggestions(() => {}),

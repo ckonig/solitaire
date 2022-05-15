@@ -3,7 +3,7 @@ import CLUB10 from "./CLUB-10.svg";
 import CLUB11 from "./CLUB-11-JACK.svg";
 import CLUB12 from "./CLUB-12-QUEEN.svg";
 import CLUB13 from "./CLUB-13-KING.svg";
-import CLUB2 from "./CLUB-2.min.svg";
+import CLUB2 from "./CLUB-2.svg";
 import CLUB3 from "./CLUB-3.svg";
 import CLUB4 from "./CLUB-4.svg";
 import CLUB5 from "./CLUB-5.svg";
@@ -16,7 +16,7 @@ import DIAMOND10 from "./DIAMOND-10.svg";
 import DIAMOND11 from "./DIAMOND-11-JACK.svg";
 import DIAMOND12 from "./DIAMOND-12-QUEEN.svg";
 import DIAMOND13 from "./DIAMOND-13-KING.svg";
-import DIAMOND2 from "./DIAMOND-2.min.svg";
+import DIAMOND2 from "./DIAMOND-2.svg";
 import DIAMOND3 from "./DIAMOND-3.svg";
 import DIAMOND4 from "./DIAMOND-4.svg";
 import DIAMOND5 from "./DIAMOND-5.svg";
@@ -29,7 +29,7 @@ import HEART10 from "./HEART-10.svg";
 import HEART11 from "./HEART-11-JACK.svg";
 import HEART12 from "./HEART-12-QUEEN.svg";
 import HEART13 from "./HEART-13-KING.svg";
-import HEART2 from "./HEART-2.min.svg";
+import HEART2 from "./HEART-2.svg";
 import HEART3 from "./HEART-3.svg";
 import HEART4 from "./HEART-4.svg";
 import HEART5 from "./HEART-5.svg";
@@ -42,7 +42,7 @@ import SPADE10 from "./SPADE-10.svg";
 import SPADE11 from "./SPADE-11-JACK.svg";
 import SPADE12 from "./SPADE-12-QUEEN.svg";
 import SPADE13 from "./SPADE-13-KING.svg";
-import SPADE2 from "./SPADE-2.min.svg";
+import SPADE2 from "./SPADE-2.svg";
 import SPADE3 from "./SPADE-3.svg";
 import SPADE4 from "./SPADE-4.svg";
 import SPADE5 from "./SPADE-5.svg";
@@ -50,6 +50,29 @@ import SPADE6 from "./SPADE-6.svg";
 import SPADE7 from "./SPADE-7.svg";
 import SPADE8 from "./SPADE-8.svg";
 import SPADE9 from "./SPADE-9.svg";
+
+interface SuitCards {
+    2: string;
+    3: string;
+    4: string;
+    5: string;
+    6: string;
+    7: string;
+    8: string;
+    9: string;
+    10: string;
+    J: string;
+    Q: string;
+    K: string;
+    A: string;
+}
+
+interface ICards {
+    heart: SuitCards;
+    club: SuitCards;
+    diamond: SuitCards;
+    spade: SuitCards;
+}
 
 const Cards = {
     heart: {
@@ -112,5 +135,5 @@ const Cards = {
         K: SPADE13,
         A: SPADE1,
     },
-};
+} as ICards;
 export default Cards;

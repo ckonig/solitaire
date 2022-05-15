@@ -14,7 +14,7 @@ const clickOnStack = (type) => cy.get(`.board-field.${type}`).within(() => cy.ge
 const clickOnEmptyStack = (type) => cy.get(`.board-field.${type}`).within(() => cy.get(".socket-empty").click());
 
 // whole board
-Cypress.Commands.add("assertUncoveredCardsCount", (i) => cy.get(".mainface").should("have.length", i));
+Cypress.Commands.add("assertUncoveredCardsCount", (i) => cy.get("img").should("have.length", i));
 
 // stock
 Cypress.Commands.add("assertStockSize", (i, wait = Cypress.config().defaultCommandTimeout) => assertStackSize("stock", i, wait));
@@ -37,7 +37,7 @@ Cypress.Commands.add("assertTableauSize", (t, i) => cy.get(`.tableau-${t}`).with
 Cypress.Commands.add("clickOnTableau", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".card").last().click()));
 Cypress.Commands.add("clickOnEmptyTableau", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".socket-empty").first().click()));
 Cypress.Commands.add("clickOnTableauCard", (stack, card) =>
-    cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).get(".align-left").first().click())
+    cy.get(`.tableau-${stack}`).within(() => cy.get(".card").eq(card).get('.card-content').first().get('img').first().click({force: true}))
 );
 Cypress.Commands.add("hasTableauEmptySuggestion", (stack) => cy.get(`.tableau-${stack}`).within(() => cy.get(".socket-suggested")));
 Cypress.Commands.add("hasNoTableauEmptySuggestion", (stack) =>

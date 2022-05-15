@@ -56,7 +56,7 @@ describe("Menu", () => {
                             .within(() => cy.contains(status))
                     );
             };
-            it.only("Finds a connected gamepad", () => {
+            it("Finds a connected gamepad", () => {
                 cy.contains("Player 1").click();
                 checkGamepadStatus(0, "Not Found");
                 checkGamepadStatus(1, "Not Found");

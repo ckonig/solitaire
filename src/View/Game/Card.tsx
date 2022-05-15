@@ -2,6 +2,7 @@ import React, { MouseEventHandler, useCallback } from "react";
 
 import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
+import Cards from "../../Cards/cards";
 import GameModes from "../../GameModes";
 import Icon from "@mdi/react";
 import { useBoardContext } from "../Context/BoardContext";
@@ -48,7 +49,7 @@ const useClassName = (model: CardModel | null, props: CardProps, _isDrag: () => 
             return "card card-base";
         }
         const hasSuggestion = (props.isSuggested && props.isSuggested(props.index)) || model.suggestion;
-        let className = `card card-base card-${model.type.color}`;
+        let className = "card card-base";
         className +=
             (!props.isSelected || !props.isSelected(props.index)) && !isFocused() && !hasSuggestion ? ` card-stack-${model.source}` : "";
         className += !_isDrag() && props.isSelected && props.isSelected(props.index) && !_isDrag() ? " card-selected" : "";
@@ -211,20 +212,6 @@ const Card = (props: CardProps) => {
         return null;
     }
 
-    //@todo creating a custom layout was fun, but the users deserve a more professional looking SVG
-    //e.g. https://totalnonsense.com/download/download-vector-playing-cards/
-    //const newFace = Cards.club[2]
-    //console.log(newFace);
-    //@todo use new SVG card faces and backs
-    //@todo attribution
-    //use like <img src={Cards.club[2]}/>
-
-    const SuitIcon = () => (
-        <div className="align-center">
-            <Icon size="0.8em" color={model.type.color} path={model.type.icon} />
-        </div>
-    );
-
     return (
         <>
             <div style={stackbaseStyle} className="stack-base">
@@ -241,31 +228,8 @@ const Card = (props: CardProps) => {
                         {model.isHidden || !pause.state.showCards ? (
                             <div className="card-back">&nbsp;</div>
                         ) : (
-                            <div className="card-grid-container">
-                                <div>
-                                    <SuitIcon />
-                                </div>
-                                <div>
-                                    <div className="align-left">{model.denomination}</div>
-                                </div>
-                                <div>&nbsp;</div>
-                                <div>
-                                    <SuitIcon />
-                                </div>
-                                <div className="mainface">
-                                    <div className="align-center">{model.denomination} </div>
-                                </div>
-                                <div>
-                                    <SuitIcon />
-                                </div>
-                                <div>&nbsp;</div>
-                                <div>
-                                    <div className="align-right">{model.denomination}</div>
-                                </div>
-                                <div>
-                                    <SuitIcon />
-                                </div>
-                            </div>
+                            //@todo attribution  https://totalnonsense.com/download/download-vector-playing-cards/
+                            <img width={"100%"} src={(Cards as any)[model.type.name][model.denomination]} alt={`${model.type.name} ${model.denomination}`} />
                         )}
                     </div>
                 </button>

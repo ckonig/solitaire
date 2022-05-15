@@ -12,10 +12,12 @@ export default class FoundationStack extends HandHoldingStack {
         this.usedCards = [];
         this.icon = suit.icon;
         this.color = suit.color;
+        this.name = suit.name;
     }
     acceptedCards: string[] = [];
     usedCards: any[] = [];
     icon = "";
+    name = "";
     color = "";
     getCurrentAccepted = () => {
         return this.acceptedCards[this.acceptedCards.length - 1];
