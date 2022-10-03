@@ -4,7 +4,6 @@ import CardFirework from "./CardFirework";
 import CardModel from "../../Model/Deck/Card";
 import Cards from "../../Cards/cards";
 import GameModes from "../../GameModes";
-import Icon from "@mdi/react";
 import { useBoardContext } from "../Context/BoardContext";
 import { useDrag } from "react-dnd";
 import useGlobalContext from "../GlobalContext";
