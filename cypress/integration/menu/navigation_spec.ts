@@ -49,13 +49,12 @@ describe("Menu", () => {
             cy.highlightShouldHaveTitle("Start");
         };
 
-        //@todo test in-screen navigation too
-
         describe("works with keyboard", () => {
             it("Up/down works as expected", () => {
                 flow(() => keyboard());
             });
         });
+        
         describe("works with gamepad", () => {
             it("Up/down works as expected", () => {
                 cy.gamepad(0).connect();
